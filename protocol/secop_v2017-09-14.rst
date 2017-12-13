@@ -659,26 +659,26 @@ SEC node property
 module description
 ^^^^^^^^^^^^^^^^^^
 
-  .. image:: images/module_description.png
-     :alt: module_description ::= '{' (module_property ( ',' module_property)* )? '}'
+.. image:: images/module_description.png
+   :alt: module_description ::= '{' (module_property ( ',' module_property)* )? '}'
 
 module property
 ^^^^^^^^^^^^^^^
 
-  .. image:: images/module_property.png
-     :alt: module_property ::= property |  ( '"parameters":' '[' (name ',' properties (',' name ',' properties)*)? ']') |  ( '"commands":' '[' (name ',' properties (',' name ',' properties)*)? ']')
+.. image:: images/module_property.png
+   :alt: module_property ::= property |  ( '"parameters":' '[' (name ',' properties (',' name ',' properties)*)? ']') |  ( '"commands":' '[' (name ',' properties (',' name ',' properties)*)? ']')
 
 properties
 ^^^^^^^^^^
 
-  .. image:: images/properties.png
-     :alt: properties ::=  '{' (property ( ',' property)* )? '}'
+.. image:: images/properties.png
+   :alt: properties ::=  '{' (property ( ',' property)* )? '}'
 
 property
 ^^^^^^^^
 
-  .. image:: images/property.png
-     :alt: property ::= (name ':' property_value)
+.. image:: images/property.png
+   :alt: property ::= (name ':' property_value)
 
 
 SEC Node Properties
