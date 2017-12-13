@@ -178,36 +178,33 @@ proposed further commands:
 Properties
 ----------
 
-*definition of properties to be rewitten, see* `SECoP issue 5`_
-
   Definition: Properties
-    Parameters have a value, live properties and descriptive properties. All properties have a predefined name and meaning.
-    
-  Live Properties
-    Properties which change their value during an experiment. 
-    
-  Descriptive Properties
-    Properties that do not change during an experiment. They describe the usage of the parameter.
+    The static information about parameters, modules and SEC nodes is
+    constructed from properties with predefined names and meanings.
 
+For a list of properties see chapter "Descriptive Data".
 
-Live Properties (or *qualifiers* ?) are optional.
+Qualifiers    
+----------
 
-There are currently only 2 live properties:
+Qualifiers are live (changing) information about parameters.
 
--  timestamp (named ‘t’ in the proposed syntax). The time when the
+Currently 3 qualifiers are defined:
+
+-  value (mandatory)
+
+-  timestamp (named "t" in the message). The time when the
    parameter has changed or was verified/measured (when no timestamp
-   is given, the ECS should use the time of the update message as
+   is given, the ECS may use the time of the update message as
    the timestamp)
 
--  sigma (named ‘e’ in the proposed syntax). The uncertainty of a
+-  sigma (named "e" in the message). The uncertainty of a
    measurement (default: unspecified)
 
-other live properties might be added later to the standard.
+other qualifiers might be added later to the standard.
 
-For a list of descriptive properties see chapter "Descriptive Data".
-
-Classes
--------
+Interface Classes
+-----------------
 
 The idea is, that the ECS can determine the functionality of a module
 from its class.
@@ -392,12 +389,10 @@ Example:
 .. code::
 
   > describe
-  < describing PSI\_MP03 {"modules":["t1",["class":[ "temperature\_sensor","readable"],"parameters":["value", ...
+  < describing . {"modules":["t1",["class":[ "temperature\_sensor","readable"],"parameters":["value", ...
 
-It is not yet clear what the second item in the reply message should be.
-In this example it is the equipment ID, but this is redundant, as
-"equipment_id" is also a SEC node property.
-See `SECoP Issue 2`_ (Equipment ID in Describing Message)
+The dot (second item in the reply message) is a placeholder, needed because
+the third part of the message is always JSON, and for extensibility reasons.
 
 Remark:
 this reply might be a very long line, no line breaks are allowed in the
@@ -425,12 +420,12 @@ from the client. The value is a JSON array with the value as its first
 element, and an JSON object containing the qualifiers (live properties)
 as its second element:
 
-"t": the timestamp (recommended, when the system has a synchronized
+"t": the timestamp (recommended when the system has a synchronized
 time, the format is fractional seconds since 1970-01-01T00:00:00+00:00)
 
-See also `SECoP Issue 3`_ (Timestamps)
+See also _SECoP Issue 3_ (Timestamps)
 
-"e": the error of the quantity (optional)
+"e": the uncertainity of the quantity (optional)
 
 Example:
 
@@ -652,37 +647,37 @@ The format of the descriptive data is JSON, as all other data in SECoP.
 SEC node description
 ^^^^^^^^^^^^^^^^^^^^
 
-  .. image:: diagram/sec_node_description.png
+  .. image:: images/sec_node_description.png
      :alt: SEC_node_description ::= '{' (SEC_node_property ( ',' SEC_node_property)* )? '}'
      
 SEC node property
 ^^^^^^^^^^^^^^^^^
 
-  .. image:: diagram/sec_node_property.png
+  .. image:: images/sec_node_property.png
      :alt: SEC_node_property ::= property |  ( '"modules":' '[' (name ',' module_description (',' name ',' module_description)*)? ']')
 
 module description
 ^^^^^^^^^^^^^^^^^^
 
-  .. image:: diagram/module_description.png
+  .. image:: images/module_description.png
      :alt: module_description ::= '{' (module_property ( ',' module_property)* )? '}'
 
 module property
 ^^^^^^^^^^^^^^^
 
-  .. image:: diagram/module_property.png
+  .. image:: images/module_property.png
      :alt: module_property ::= property |  ( '"parameters":' '[' (name ',' properties (',' name ',' properties)*)? ']') |  ( '"commands":' '[' (name ',' properties (',' name ',' properties)*)? ']')
 
 properties
 ^^^^^^^^^^
 
-  .. image:: diagram/properties.png
+  .. image:: images/properties.png
      :alt: properties ::=  '{' (property ( ',' property)* )? '}'
 
 property
 ^^^^^^^^
 
-  .. image:: diagram/property.png
+  .. image:: images/property.png
      :alt: property ::= (name ':' property_value)
 
 
@@ -700,7 +695,7 @@ communication of a SEC node.
 -  **firmware** (optional, a string describing the version of the SEC node software)
 
 -  **timeout** (optional value in seconds, a SEC node should be able to respond within
-   a time well below this value. Default: 3 sec, see `SECoP issue 4`_ )
+   a time well below this value. Default: 3 sec, see _SECoP issue 4_ )
 
 
 Module Properties
@@ -717,9 +712,9 @@ Module Properties
    mandatory
 
 -  **group** (optional, identifier, may contain ':' which may be interpreted as path separator)
-   (*see* `SECoP issue 8`_)
+   (*see* _SECoP issue 8_)
    
--  **meaning**, **importance** (*see* `SECoP issue 9`_)
+-  **meaning**, **importance** (*see* _SECoP issue 9_)
 
 
 Parameter Properties
@@ -738,7 +733,7 @@ Parameter Properties
    hint to the UI for the amount of exposed parameters. (optional)
 
 -  **group** (optional, identifier, may contain ':' which may be interpreted as path separator)
-   (*see* `SECoP issue 8`_)
+   (*see* _SECoP issue 8_)
 
 Data Types
 ----------
