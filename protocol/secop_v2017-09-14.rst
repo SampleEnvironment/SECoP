@@ -914,11 +914,12 @@ struct
         |
         | might be null
 
-.. _`SECoP Issue 2`: SECoP_Issues/issue_2.html
-.. _`SECoP Issue 3`: SECoP_Issues/issue_3.html
-.. _`SECoP Issue 4`: SECoP_Issues/issue_4.html
-.. _`SECoP issue 5`: SECoP_issues/issue_5.html
-.. _`SECoP Issue 6`: SECoP_Issues/issue_6.html
-.. _`SECoP Issue 7`: SECoP_Issues/issue_7.html
-.. _`SECoP issue 8`: SECoP_issues/issue_8.html
-.. _`SECoP issue 9`: SECoP_issues/issue_9.html
+..
+  .. _`SECoP Issue 2`: SECoP_Issues/issue_2.html
+  .. _`SECoP Issue 3`: SECoP_Issues/issue_3.html
+  .. _`SECoP Issue 4`: SECoP_Issues/issue_4.html
+  .. _`SECoP issue 5`: SECoP_issues/issue_5.html
+  .. _`SECoP Issue 6`: SECoP_Issues/issue_6.html
+  .. _`SECoP Issue 7`: SECoP_Issues/issue_7.html
+  .. _`SECoP issue 8`: SECoP_issues/issue_8.html
+  .. _`SECoP issue 9`: SECoP_issues/issue_9.html
