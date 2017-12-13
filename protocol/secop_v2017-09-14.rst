@@ -647,14 +647,14 @@ The format of the descriptive data is JSON, as all other data in SECoP.
 SEC node description
 ^^^^^^^^^^^^^^^^^^^^
 
-  .. image:: images/sec_node_description.png
-     :alt: SEC_node_description ::= '{' (SEC_node_property ( ',' SEC_node_property)* )? '}'
+.. image:: images/sec_node_description.png
+   :alt: SEC_node_description ::= '{' (SEC_node_property ( ',' SEC_node_property)* )? '}'
      
 SEC node property
 ^^^^^^^^^^^^^^^^^
 
-  .. image:: images/sec_node_property.png
-     :alt: SEC_node_property ::= property |  ( '"modules":' '[' (name ',' module_description (',' name ',' module_description)*)? ']')
+.. image:: images/sec_node_property.png
+   :alt: SEC_node_property ::= property |  ( '"modules":' '[' (name ',' module_description (',' name ',' module_description)*)? ']')
 
 module description
 ^^^^^^^^^^^^^^^^^^
