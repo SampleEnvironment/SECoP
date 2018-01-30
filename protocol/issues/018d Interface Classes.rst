@@ -21,7 +21,7 @@ on other features or on the interface class.
 
 Discussion
 ----------
-Explicit listing of *features* seems better than guessing them from the existence of parameters.
+Explicit listing of features seems better than guessing them from the existence of parameters.
 
 Open question: how to figure out the difference of an unknown base class to a known base class?
 
