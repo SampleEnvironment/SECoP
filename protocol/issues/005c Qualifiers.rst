@@ -1,5 +1,5 @@
-SECoP Issue 5: Definition of the term 'Property' (under discussion)
-===================================================================
+SECoP Issue 5: Definition of the term 'Qualifier' (closed)
+==========================================================
 
 The definition as in SECoP V2016-11-30 draft is not very consistent.
 
@@ -23,12 +23,15 @@ The section with the definition of properties has to be rewritten.
 Opinions
 --------
 
-Enrico proposed to name live data like timestamps and sigma 'qualifiers'.
+Enrico proposed to name live data like timestamps and sigma *qualifiers*.
 
 Markus supports this. He would be happy also with an other term than
-'qualifiers', but definitely does not like the terms 'live properties' and
-'descriptive properties', as two different things share the same name.
+*qualifiers*, but definitely does not like the terms *live properties* and
+*descriptive properties*, as two different things share the same name.
 
 
 Decision
 --------
+
+additional information transported with an update message like timestamps and
+sigma are called *qualifiers*.
