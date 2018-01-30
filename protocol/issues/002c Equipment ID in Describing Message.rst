@@ -1,5 +1,5 @@
-SECoP Issue 2: Equipment ID in Describing Message (under discussion)
-====================================================================
+SECoP Issue 2: Equipment ID in Describing Message (closed)
+==========================================================
 
 The equipment ID is a SEC node property, and it is therefore redundant
 to put it as the second item of the describe message.
@@ -20,3 +20,9 @@ We should use key keyword ALL (Markus Zolliker)
 
 Decision
 --------
+
+The decision was taken to use a bare period as placeholder:
+
+..code::
+
+  describing . {"modules": ...
