@@ -11,7 +11,7 @@ participants:
  * Frank Wutzler
  * Enrico Faulhaber
 
-.. contents:: Inhaltsverzeichnis
+.. contents:: Contents
     :local:
     :depth: 2
 
@@ -30,7 +30,7 @@ perception of SECoP seems suboptimal therefore we want to
 
  * Eddy mentions some critisism (by others), that information about SECoP was difficult or not at all to be found.
 
-.. todo::
+.. highlights:: Todo:
     An new, short overview shall be created by HZB (i.e. Frank)
 
 
@@ -42,7 +42,7 @@ SECoP from our point of view:
    * provides an api
    * wants to achieve interoperability between facilities
 
-.. todo::
+.. highlights:: Todo:
     All committee members should be contributors to the SECoP github project
 
 
@@ -53,7 +53,7 @@ Agenda topic: discussion about issues
  * a discussion about the different ways to handle tickets/issues with redmone/github/in a repo ensures.
  * the discussion broadens about documentation/issue change tracking, rights for modification/merge
 
-.. todo::
+.. highlights:: Todo:
     result is: we try to use the github workflow for documentation (as wiki) and issues (as topics)
 
 Agenda topic: HZB SECoP dll: current status
@@ -81,7 +81,7 @@ New problems found:
         * while reading a SECoP value (JSON value), the code surrounds the value with brackets ('[' value ']'), reads it with its library and takes the first element
         * when writing a SECoP value, you generate a JSON array of one element, convert it with the JSON library to a string and remove the surrounding brackets.
 
-.. todo::
+.. highlights:: Todo:
    create an Issue to document this.
 
 Discussion about access control:
@@ -90,7 +90,7 @@ Discussion about access control:
  * we rely on existing network solutions (bind to local port, use SSL Server, use multiple 'view' nodes)
  * agreement, that access control is not part of SECoP
 
-.. todo::
+.. highlights:: Todo:
     open an closed issue documenting this discussion
 
 
@@ -99,20 +99,21 @@ Agenda Topic: Issues inside the playground-protocol-documentation
 
  * overview of the current Issues
 
-.. note::
+.. highlights:: note:
+
     * a lengthy discussion about how to proceed ensures
     * followed by a discussion about delayed change/commit of parameters, changing multiple parameters 'at once'
     * discussing commons and differences between start, pause, continue and stop
     * discussion is postponed without result
 
-.. todo::
+.. highlights:: Todo:
     create an Issue for starting or synchronizing disjunct hw-modules (possible delegated to other SEC-Nodes)
 
-.. todo::
+.. highlights:: Todo:
     create an Issue to collect uses case for:
      * different kinds of HW (different parameter setting with respect to starting)
 
-.. todo::
+.. highlights:: Todo:
     create an Issue (to be discussed) for:
      * reading the (RO) target parameter gives you the HW value
      * if there is no start command available, writing to the (RW) wanted_target starts the action
@@ -130,7 +131,7 @@ Agenda Topic: Issues inside the playground-protocol-documentation
 Agenda Topic: discussion about the definition of pause/stop/start/shutdown
 --------------------------------------------------------------------------
 
-.. todo:: make an issue about the start/stop/pause/shutdown commands
+.. highlights:: Todo: make an issue about the start/stop/pause/shutdown commands
        not all commands must always be implemented, but if they are implemented, they have a predefined meaning to it
        AND
        if somebody want to implement something with the predefined meaning, it must be with the predefined name
@@ -142,7 +143,7 @@ Agenda Topic: timestamps: mandatory or optional
  * timestamps are (still) fractional unix time with a resolution of at least seconds
  * SEC-node implementor decides about implemented resolution
 
-.. todo:: document this in an Issue
+.. highlights:: Todo: document this in an Issue
 
 Agenda Topic: Interfaceclasses
 ------------------------------
@@ -156,7 +157,7 @@ Agenda Topic: Interfaceclasses
  * Markus proposes to use just Features then.
 
 
-.. todo:: create an Issue for documenting this and for discussing it later in more detail
+.. highlights:: Todo: create an Issue for documenting this and for discussing it later in more detail
 
 Agenda Topic: discussing existing Issues
 ----------------------------------------
@@ -177,11 +178,11 @@ Agenda Topic: discussing existing Issues
  11) giving only module name for read/update/event request are extended with :value or :target: agreement on not specifying this.
      Clients are not allowed to use it, servers may support it but it is non-standard behaviour.
 
-.. todo:: Issue 11 is still coded as second part of Issue 10 -> split it (Markus)
+.. highlights:: Todo: Issue 11 is still coded as second part of Issue 10 -> split it (Markus)
 
-.. todo:: create an Issue about providing a mean to set the SEC-nodes clock from the ECS side.
+.. highlights:: Todo: create an Issue about providing a mean to set the SEC-nodes clock from the ECS side.
 
-.. note:: Klaus and Eddy leaving at this point
+.. highlights:: note: Klaus and Eddy leaving at this point
 
 
 Agenda Topic: Grouping/Hierachy (Issue 8)
@@ -194,7 +195,7 @@ Agenda Topic: Grouping/Hierachy (Issue 8)
  * agreement, closing this issue
 
 
-.. todo:: create an Issue for PID tables
+.. highlights:: Todo: create an Issue for PID tables
 
 
 Topic: handling of driver generated timestamps in the HZB-DLL
@@ -204,7 +205,7 @@ Topic: handling of driver generated timestamps in the HZB-DLL
  2) if configured to do so, a NAN timestamp is replaced after the callback with the current time
  3) if the timestamp is still NAN (or not expressable by digits), it is NOT send
 
-.. todo:: @Frank: document this !
+.. highlights:: Todo: @Frank: document this !
 
 
 Discussion about activate/deactivate
@@ -214,15 +215,15 @@ Discussion about activate/deactivate
  * there are very rare cases where a value can (not yet) be determined. In this case it is acceptable to send a null value.
  * a null value is also accepted when setting parameters of a complex datatype and not all members shall be updated.
 
-.. todo:: create an issue about the usage of null
+.. highlights:: Todo: create an issue about the usage of null
 
-.. note:: tour around PSI
+.. highlights:: note: tour around PSI
 
-.. note:: presentation of the SEA and SICS concept by Markus Zolliker
+.. highlights:: note:: presentation of the SEA and SICS concept by Markus Zolliker
 
-.. note:: detailed showcase of the HZB-DLL source
+.. highlights:: note:: detailed showcase of the HZB-DLL source
 
-.. note:: we need more use cases and sequencediagrams
+.. highlights:: note:: we need more use cases and sequencediagrams
 
 
 29.11.2017
@@ -237,4 +238,4 @@ Discussion about activate/deactivate
  * fixing the amagnet
  * discussing error propagation (bugs in hw-driver)
 
-.. note:: meeting was closed around 14:30
+.. highlights:: note:: meeting was closed around 14:30
