@@ -1,5 +1,5 @@
-SECoP Issue 3: SECoP Timestamp Format (closed)
-==============================================
+SECoP Issue 3: Timestamp Format (closed)
+========================================
 
 Proposals for the timestamp format are:
 
@@ -45,3 +45,4 @@ Decision
 --------
 
 At the meeting in Berlin (2017-05-30) the attendes decided for "Fractional Unix Time".
+The resolution of the timestamp depends on the hardware, but must be at least one second.
