@@ -1,5 +1,8 @@
-SECoP Issue 14: Synchonisation of Hardware Modules on Different SEC Nodes (not yet defined)
-===========================================================================================
+SECoP Issue 14: Synchonisation of Hardware Modules on Different SEC Nodes (unspecified)
+=======================================================================================
 
-The item appeared in the minutes of the meeting on 27 november 2017.
-The person interested in this should try to make a proposal.
+From the minutes of the meeting on 27 november 2017:
+
+create an Issue for starting or synchronizing disjunct hw-modules (possible delegated to other SEC-Nodes)
+
+Who makes a proposal?
