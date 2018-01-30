@@ -219,11 +219,11 @@ Discussion about activate/deactivate
 
 .. highlights:: note: tour around PSI
 
-.. highlights:: note:: presentation of the SEA and SICS concept by Markus Zolliker
+.. highlights:: note: presentation of the SEA and SICS concept by Markus Zolliker
 
-.. highlights:: note:: detailed showcase of the HZB-DLL source
+.. highlights:: note: detailed showcase of the HZB-DLL source
 
-.. highlights:: note:: we need more use cases and sequencediagrams
+.. highlights:: note: we need more use cases and sequencediagrams
 
 
 29.11.2017
@@ -238,4 +238,4 @@ Discussion about activate/deactivate
  * fixing the amagnet
  * discussing error propagation (bugs in hw-driver)
 
-.. highlights:: note:: meeting was closed around 14:30
+.. highlights:: note: meeting was closed around 14:30
