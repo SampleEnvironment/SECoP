@@ -51,5 +51,8 @@ gets more complicated. Alternatives:
 1) a sophisticated SEC Node may compare the new values with the old ones, and send only the changed elements.
 2) split a complex parameter into different parameters.
 
-Markus' opinion: do not allow, or introduce a property *allow_null_elements*=true on the parameters which accept this behaviour.
+Opinions:
+---------
+
+Markus: do not allow *null* in *change* messages, or introduce a property *allow_null_elements*=true on the parameters which accept this behaviour.
 
