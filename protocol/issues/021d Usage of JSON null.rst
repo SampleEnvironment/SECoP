@@ -10,6 +10,7 @@ Usage on null values in *update* messages
 On an *activate* request, the SEC node has to send *update* messages for the values of
 all parameters, before sending the *active* message. The *update* replies might
 contain null values for the following cases:
+
 * the implementation is designed not to trigger readings on an *activate* request, and
   the value is not polled yet
 * the hardware is not initialized yet
@@ -32,8 +33,10 @@ Discussion
 Usage on null values in *update* messages
 #########################################
 
-* is it allowed that a complex datatype contains *null* elements in an update message,
-  in case the data is only partly invalid?
+Is it allowed that a complex datatype contains *null* elements in an update message,
+in case the data is only partly invalid? What about replies to *read* messages with
+a complex datatype? In this case, an error message would suppress the information
+about the valid elements ...
   
 
 Usage on null values in *change* messages
