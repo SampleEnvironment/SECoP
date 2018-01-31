@@ -57,5 +57,5 @@ gets more complicated. Alternatives:
 Opinions:
 ---------
 
-Markus: do not allow *null* in *change* messages, or introduce a property *allow_null_elements*=true on the parameters which accept this behaviour.
+Markus: do not allow *null* in *change* messages, or introduce a property *allow_null_elements=true* on the parameters which accept this behaviour.
 
