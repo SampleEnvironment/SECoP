@@ -1,4 +1,4 @@
-SECoP Issue 17: Support for Start/Stop/Pause/Shutdown Commands
+SECoP Issue 15: Support for Start/Stop/Pause/Shutdown Commands
 ==============================================================
 
 Initially, only one command was predefined:
