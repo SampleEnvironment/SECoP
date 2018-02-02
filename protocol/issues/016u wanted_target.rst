@@ -1,3 +1,6 @@
+SECoP Issue 16: wanted_target Parameter
+=======================================
+
 From the minutes of the meeting on 27 november 2017:
 
 create an Issue (to be discussed) for:
