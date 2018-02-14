@@ -594,16 +594,18 @@ Timeout Issues / Heartbeat
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In order to detect that the other end of the communication is not dead,
-a heartbeat may be sent. The second part of the message (the id) may
+a heartbeat may be sent. The second part of the message (the id) must
 not contain a space and should be short. It may be omitted. The reply
 will contain exactly the same id.
 
-A SEC node might also decide to close a connection when it gets no
-messages for a certain time. The mechanism is under discussion.
-
-Generally speaking: both
-ECS and SEC side needs to be aware that the other side may close the
-connection at any time!
+Generally speaking: both ECS and SEC side needs to be aware that the other
+side may close the connection at any time! On reconnect, it is recommended,
+that the ECS does send a *IDN? and a describe message. If the reponses match
+the responses from the previous connection, the ECS should continue
+as if no interruption happend. If the response of the description does not
+match, it is up to the ECS how to handle this.
+Naturally, if the previous connection was in asynchronous mode, an activate
+message has to be sent before it can continue as before.
 
 Example:
 
@@ -616,8 +618,7 @@ The "pong" message has an additional function: it sends back the time
 on the server, if it supports timestamps. This can be used to
 synchronize the time.
 
-See also *SECoP Issue 4 (Timeout), SECoP Issue 6 (Keep Alive),
-SECoP Issue 3 (Timestamps) or SECoP Issue 7 (Time Synchronization)*
+*Related SECoP Issues: 3 (Timestamps), 4 (Timeout), 6 (Keep Alive), 7 (Time Synchronization)*
 
 Multiple Connections
 --------------------
