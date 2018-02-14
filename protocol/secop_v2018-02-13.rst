@@ -722,8 +722,14 @@ Module Properties
    
 -  **meaning** is a module property with a tuple as its value, with the following two elements:
 
-     * a string from an extensible list of meanings
-     * a value describing the importance, with the following values
+     * a string from an extensible list of predefined meaning (*not yet confirmed*):
+     
+       * **sample_temperature**
+       * **sample_temperature_regulation** (top be specified only, if different from sample_temperature)
+       * **sample_magnetic_field**
+       * **sample_rotation**
+       
+     * a value describing the importance, with the following values:
 
        - 10 means the instrument/beamline (Example: room temperature sensor always present)
        - 20 means the surrounding sample environemnt (Example: VTI temperature)
