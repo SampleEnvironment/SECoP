@@ -35,4 +35,4 @@ arguments arise.
 --------------
 
 The main content of the issue is agreed, but it is containing a list
-of confirmed and proposed items.
+of confirmed and proposed items. 
