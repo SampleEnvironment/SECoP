@@ -71,8 +71,8 @@ Confirmed
 To be confirmed
 ---------------
 
-sample_temperature_sensor
-sample_temperature_regulation
-sample_magnetic_field
-sample_rotation
+* sample_temperature_sensor
+* sample_temperature_regulation
+* sample_magnetic_field
+* sample_rotation
 
