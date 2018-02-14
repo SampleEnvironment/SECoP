@@ -71,8 +71,8 @@ Confirmed
 To be confirmed
 ---------------
 
-* sample_temperature_sensor
-* sample_temperature_regulation
+* sample_temperature
+* sample_temperature_regulation (top be specified only, if different from sample_temperature)
 * sample_magnetic_field
 * sample_rotation
 
