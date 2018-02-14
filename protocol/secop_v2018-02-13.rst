@@ -722,12 +722,12 @@ Module Properties
    
 -  **meaning** is a module property with a tuple as its value, with the following two elements:
 
-     * a string from an extensible list of predefined meaning (*not yet confirmed*):
+     * a string from an extensible list of predefined meanings (*not yet confirmed*):
      
-       * **sample_temperature**
-       * **sample_temperature_regulation** (top be specified only, if different from sample_temperature)
-       * **sample_magnetic_field**
-       * **sample_rotation**
+       * 'sample_temperature'
+       * 'sample_temperature_regulation' (top be specified only, if different from sample_temperature)
+       * 'sample_magnetic_field'
+       * 'sample_rotation'
        
      * a value describing the importance, with the following values:
 
