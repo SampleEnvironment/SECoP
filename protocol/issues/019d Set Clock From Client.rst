@@ -22,3 +22,7 @@ suggests that relative timestamps should be used in case of a SEC node with no
 synchronized clock, and no standard of clock setting over SECoP should be provided.
 
 
+Decision
+--------
+
+Rejected at the meeting 2018-02-13 in Grenoble
