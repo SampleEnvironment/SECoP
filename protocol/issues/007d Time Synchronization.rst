@@ -27,3 +27,10 @@ What should the client do when *none* is specified, but a timestamp
 is delivered on a parameter? Is this a violation of the protocol, or should the
 client ignore the timestamp?
 
+Decision
+--------
+The ECS can easily detect if the clock is accurate enough by sending a ping
+command. If the timestamp delivered by the pong message lies between the
+time the ping message was sent and the pong message was received, then the
+timestamp can be trusted, else the ECS might record the time shift and decide to
+use relative times.
