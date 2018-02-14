@@ -259,7 +259,7 @@ ascii letters, digits and underscore, where a digit may not
 appear as the first character. Identifiers starting with underscore are
 reserved for special purposes like internal use for debugging. The
 identifier length is limited (<=63 characters). Module names on a SEC Node
-and paramter names within a module must not differ when uppercase letters
+and parameter names within a module must not differ when uppercase letters
 are replaced by their lowercase counterparts.
 
 A SEC node might implement custom messages for debugging purposes, which are not
@@ -717,7 +717,9 @@ Module Properties
    ["Temperature", "DrivableWithRamp", "Drivable", "Readable"]),
    mandatory
 
--  **group** (optional, identifier, may contain ':' which may be interpreted as path separator)
+-  **group** (optional identifier, may contain ':' which may be interpreted as path separator)
+   The ECS may group the modules according to this property. 
+   The lowercase version of a group must not match any lowercase version of a module name.
    (*see SECoP issue 8*)
    
 -  **meaning** is a module property with a tuple as its value, with the following two elements:
@@ -754,7 +756,10 @@ Parameter Properties
    does not imply that the access is controlled. It may just be a
    hint to the UI for the amount of exposed parameters. (optional)
 
--  **group** (optional, identifier, may contain ':' which may be interpreted as path separator)
+-  **group** (optional) identifier, may contain ':' which may be interpreted as path separator.
+   The ECS may group the parameters according to this property. 
+   The lowercase version of a group must not match any lowercase version of a parameter name
+   of the same module.
    (*see SECoP issue 8*)
 
 Data Types
