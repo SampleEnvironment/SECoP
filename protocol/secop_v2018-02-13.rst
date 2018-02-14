@@ -719,8 +719,8 @@ Module Properties
 
 -  **group** (optional identifier, may contain ':' which may be interpreted as path separator)
    The ECS may group the modules according to this property. 
-   The lowercase version of a group must not match any lowercase version of a module name.
-   (*see SECoP issue 8*)
+   The lowercase version of a group must not match any lowercase version of a module name on
+   the same SEC node. (*see SECoP issue 8*)
    
 -  **meaning** is a module property with a tuple as its value, with the following two elements:
 
