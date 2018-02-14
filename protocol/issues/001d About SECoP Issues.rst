@@ -33,5 +33,6 @@ arguments arise.
 
 (e) extensible
 --------------
- The issue is agreed, but it contains a list of confirmed and proposed
- items, because it is extensible.
+
+The main content of the issue is agreed, but it is containing a list
+of confirmed and proposed items.
