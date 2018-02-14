@@ -9,7 +9,7 @@ If the client has the possibility to group modules and/or
 parameters, it should use this information for grouping.
 
 The lowercase version of module group names must not clash
-with the lowercase version of a module name,
+with the lowercase version of a module name.
 The lowercase version of parameter group names must not clash
 with the lowercase version of a parameter names on the same module.
 
