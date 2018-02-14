@@ -33,4 +33,4 @@ The ECS can easily detect if the clock is accurate enough by sending a ping
 command. If the timestamp delivered by the pong message lies between the
 time the ping message was sent and the pong message was received, then the
 timestamp can be trusted, else the ECS might record the time shift and decide to
-use relative times.
+use relative times. (decision taken at the meeting 2018-02-13 in Grenoble)
