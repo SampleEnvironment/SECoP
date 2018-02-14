@@ -30,3 +30,8 @@ even if the decision was to not follow further the proposal.
 This is helpful if somebody later rises a similar issue.
 However, it should be possible to reopen an issue, if new
 arguments arise.
+
+(e) extensible
+--------------
+ The issue is agreed, but it contains a list of confirmed and proposed
+ items, because it is extensible.
