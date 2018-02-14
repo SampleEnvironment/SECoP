@@ -1,6 +1,9 @@
 SECoP Issue 9: Module Meaning (under discussion)
 ================================================
 
+Proposal
+........
+
 meaning
 -------
 
@@ -37,3 +40,39 @@ and the like.
 
 We should allow importance to be a floating point number, in case later a value
 between 1 and 2 has to be used.
+
+Decision
+........
+
+meaning is a module property with a tuple as its value, with the following two elements:
+
+* a string from an extensible list of meanings
+* a value describing the importance, with the following values
+
+  - 10 means the instrument/beamline (Example: room temperature sensor always present)
+  - 20 means the surrounding sample environemnt (Example: VTI temperature)
+  - 30 means an insert (Example: sample stick of dilution insert)
+  - 40 means an addon added to an insert (Example: a device mounted inside a dilution insert)
+  
+Intermediate values might be used. The range for each category starts at the indicated value minus 5
+and ends below the indicated value plus 5.
+
+Decision taken at the meeting 2018-02-13 in Grenoble
+
+Extensible List of Meanings
+...........................
+
+Markus: I prefer to extend the list only for cases really used,
+and start therefore with a short list.
+
+Confirmed
+---------
+
+To be confirmed
+---------------
+
+sample_temperature_sensor
+sample_temperature_regulation
+sample_magnetic_field
+sample_rotation
+
