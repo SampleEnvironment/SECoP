@@ -21,3 +21,8 @@ any message might be sent instead of the ping message.
 
 Decision
 --------
+
+We close this issue, not defining such a mechanism.
+If in an implementation pending dead connections arise to be problem to the SEC node server,
+we might reopen the issue.
+
