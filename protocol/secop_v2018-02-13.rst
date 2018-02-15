@@ -1,7 +1,7 @@
 SECoP: Sample Environment Communication Protocol
 ################################################
 
-V2017-11-29
+V2018-02-13
 
 Goal
 ====
