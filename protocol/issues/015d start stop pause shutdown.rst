@@ -67,12 +67,6 @@ Optional command for shuting down the hardware.
 When this command is sent, and the triggered action is finished (status in idle mode),
 it is safe to switch off the related device.
 
-*Question (Markus): I guess setting the target value or issuing the 'go' command
-will cnacel the shutdown state. This is not visible any more. Do we not need an additional
-status 'shutdown'?*
-
-*Question (Markus): Should 'shutdown' try hard to success in any case, i.e. 'stop' first,
-if status is 'busy'?*
 
 
 
