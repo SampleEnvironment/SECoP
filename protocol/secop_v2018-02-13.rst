@@ -419,7 +419,7 @@ Update
 
 When activated, update messages are delivered without explicit request
 from the client. The value is a JSON array with the value as its first
-element, and an JSON object containing the qualifiers (live properties)
+element, and an JSON object containing the qualifiers 
 as its second element:
 
 "t": the timestamp (recommended when the system has a synchronized
@@ -476,7 +476,7 @@ soon as the set-value is read back from the hardware, a "changed"
 message is sent (in case updates are activated). If the value is not
 stored in hardware, the "changed" message can be sent immediately.
 
-Example on a connection with activated updates. Live properties are replaced by {...} for brevity here.
+Example on a connection with activated updates. Qualifiers are replaced by {...} for brevity here.
 
 .. code::
 
