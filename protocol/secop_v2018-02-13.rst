@@ -709,9 +709,11 @@ Module Properties
 
 -  **description** (mandatory, a text describing the parameter)
 
--  **visibility** (1=expert, 2=advanced, 3=user (default)), Note: this
+-  **visibility** (optional: 3=expert, 2=advanced, 1=user (default)), Note: this
    does not imply that the access is controlled. It may just be a
-   hint to the UI for the amount of exposed modules. (optional)
+   hint to the UI for the amount of exposed modules. A visibility of 2 means
+   that the UI should hide the module for users, but show it for experts and
+   advanced users.
 
 -  **interface\_class** (a list of classes for the module, for example
    ["Temperature", "DrivableWithRamp", "Drivable", "Readable"]),
@@ -752,9 +754,11 @@ Parameter Properties
 
 -  **unit** (default: unitless, should be given, if meaningfull, empty string: unit is one)
 
--  **visibility** (3=expert, 2=advanced, 1=user (default)), Note: this
+-  **visibility** (optional: 3=expert, 2=advanced, 1=user (default)), Note: this
    does not imply that the access is controlled. It may just be a
-   hint to the UI for the amount of exposed parameters. (optional)
+   hint to the UI for the amount of exposed parameters. A visibility of 2 means
+   that the UI should hide the parameter for users, but show it for experts and
+   advanced users.
 
 -  **group** (optional) identifier, may contain ':' which may be interpreted as path separator.
    The ECS may group the parameters according to this property. 
