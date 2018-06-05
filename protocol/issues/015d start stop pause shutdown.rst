@@ -68,7 +68,7 @@ When this command is sent, and the triggered action is finished (status in idle 
 it is safe to switch off the related device.
 
 *Proposal: In general, several modules have a common shutdown command. We should use
-a shutdown module instead and introduce a Shutdown interface class*
+a enable module instead and introduce a Enable interface class. See Issue 22: Enable Module instead of Shutdown Command*
 
 
 
