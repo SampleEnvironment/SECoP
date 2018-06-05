@@ -1,4 +1,4 @@
-SECoP Issue 21: Enable Module instead of Shutdown Command
+SECoP Issue 22: Enable Module instead of Shutdown Command
 =========================================================
 
 Ideas
