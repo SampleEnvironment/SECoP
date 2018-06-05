@@ -67,6 +67,9 @@ Optional command for shuting down the hardware.
 When this command is sent, and the triggered action is finished (status in idle mode),
 it is safe to switch off the related device.
 
+*Proposal: In general, several modules have a common shutdown command. We should use
+a shutdown module instead and introduce a Shutdown interface class*
+
 
 
 
