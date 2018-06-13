@@ -31,8 +31,10 @@ This is helpful if somebody later rises a similar issue.
 However, it should be possible to reopen an issue, if new
 arguments arise.
 
-(e) extensible
---------------
+Remark:
+-------
 
-The main content of the issue is agreed, but it is containing a list
-of confirmed and proposed items. 
+At the meeting in Lund (13th June 2018), it was agreed not to follow the proposal
+of creating a new state "extensible" for an issue containing an extensible
+list. Instead, an new issue should be created.
+
