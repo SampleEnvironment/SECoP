@@ -18,13 +18,13 @@ single entry "accessibles", containing the parameters and the commands.
 module description
 ^^^^^^^^^^^^^^^^^^
 
-.. image:: images/module_description.png
+.. image:: ../images/module_description.png
    :alt: module_description ::= '{' (module_property ( ',' module_property)* )? '}'
 
 module property
 ^^^^^^^^^^^^^^^
 
-.. image:: images/module_property_v2.png
+.. image:: ../images/module_property_v2.png
    :alt: module_property ::= property |  ( '"parameters":' '[' (name ',' properties (',' name ',' properties)*)? ']') |  ( '"commands":' '[' (name ',' properties (',' name ',' properties)*)? ']')
 
 A command is an accessible with the datatype "command":
