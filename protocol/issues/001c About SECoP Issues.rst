@@ -36,5 +36,6 @@ Remark:
 
 At the meeting in Lund (13th June 2018), it was agreed not to follow the proposal
 of creating a new state "extensible" for an issue containing an extensible
-list. Instead, an new issue should be created.
+list. Instead, an new issue should be created, containing the add elements.
+A full actual list should be added each time.
 
