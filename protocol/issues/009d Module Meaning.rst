@@ -68,11 +68,15 @@ and start therefore with a short list.
 Confirmed
 ---------
 
-To be confirmed
----------------
+temperature
+temperature_regulation (to be specified only if different from temperature)
+magneticfield
+electricfield
+pressure
+humidity
+viscosity
+flowrate
+concentration
+rotation_z (vertical axis, counter-clockwise from top)
 
-* sample_temperature
-* sample_temperature_regulation (to be specified only if different from sample_temperature)
-* sample_magnetic_field
-* sample_rotation
 
