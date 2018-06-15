@@ -13,6 +13,8 @@ in the pong command there are two spaces after **pong**.
 A client SHOULD always send an id. However, the client parser MUST treat two
 consecutive spaces as two separators with an empty string in between.
 
-With no timestamp, the pong message will contain en empty json object for the qualifiers:
+With no timestamp, the pong message will contain an empty json object for the qualifiers:
 
 **pong** *[id]* **[null,** \ **{}**\ **]**
+
+Decided 2018-06-13 in Lund
