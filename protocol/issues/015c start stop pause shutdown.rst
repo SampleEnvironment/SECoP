@@ -49,6 +49,8 @@ Stops the running module in a safe way (for example switches the heater off).
 
 *Question: May or should the 'target' parameter be changed?*
 
+*Answer, discussed 2018-06-13 in Lund: the answer depends on the implmentation*
+
 stop
 ....
 
@@ -67,8 +69,8 @@ Optional command for shuting down the hardware.
 When this command is sent, and the triggered action is finished (status in idle mode),
 it is safe to switch off the related device.
 
-*Proposal: In general, several modules have a common shutdown command. We should use
-a enable module instead and introduce a Enable interface class. See Issue 22: Enable Module instead of Shutdown Command*
+*remark: this issue is closed officially. However, there is an alternative proposal for
+implementing the shutdown function, see issue 22: Enable Module instead of Shutdown Command*
 
 
 
