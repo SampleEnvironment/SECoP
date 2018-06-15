@@ -43,6 +43,8 @@ A command is an accessible with the datatype "command":
         |
         | if <argumenttype> is not given or null, the command has no argument
         | if <resulttype> is null or not given, the command returns no result
+        | Only one argument is allowed, several arguments SHOULD may be simulated by a struct (and not a tuple)
+        | The meaning of Result and Arguments SHOULD be written down in the description of the command.
 
     * - Message examples
       - | do module:stop
@@ -50,9 +52,6 @@ A command is an accessible with the datatype "command":
         |
         | do module:communicate "Hello"
         | done module:communicate ["World!",{t:123456789}]
-
-
-
 
 
 
