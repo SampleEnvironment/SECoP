@@ -59,24 +59,19 @@ and ends below the indicated value plus 5.
 
 Decision taken at the meeting 2018-02-13 in Grenoble
 
-Extensible List of Meanings
-...........................
+Decision (2019-06-13 Lund) on the first items of the list:
+----------------------------------------------------------
 
-Markus: I prefer to extend the list only for cases really used,
-and start therefore with a short list.
+  * temperature (temperature of sample)
+  * temperature_regulation (regulation of sample temperature, if different from above).
+  * magneticfield
+  * electricfield
+  * pressure
+  * rotation_z (counter clockwise when looked at 'from sky to earth')
+  * humidity
+  * viscosity
+  * flowrate
+  * concentration
 
-Confirmed
----------
-
-temperature
-temperature_regulation (to be specified only if different from temperature)
-magneticfield
-electricfield
-pressure
-humidity
-viscosity
-flowrate
-concentration
-rotation_z (vertical axis, counter-clockwise from top)
 
 
