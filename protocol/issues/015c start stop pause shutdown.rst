@@ -49,7 +49,7 @@ Stops the running module in a safe way (for example switches the heater off).
 
 *Question: May or should the 'target' parameter be changed?*
 
-*Answer, discussed 2018-06-13 in Lund: the answer depends on the implmentation*
+*Answer, discussed 2018-06-13 in Lund: the answer depends on the implementation*
 
 stop
 ....
