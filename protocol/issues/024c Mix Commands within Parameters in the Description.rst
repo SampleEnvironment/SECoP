@@ -25,7 +25,7 @@ module property
 ^^^^^^^^^^^^^^^
 
 .. image:: ../images/module_property_v2.png
-   :alt: module_property ::= property |  ( '"parameters":' '[' (name ',' properties (',' name ',' properties)*)? ']') |  ( '"commands":' '[' (name ',' properties (',' name ',' properties)*)? ']')
+   :alt: module_property ::= property |  ( '"accessibles":' '[' (name ',' properties (',' name ',' properties)*)? ']') ']')
 
 A command is an accessible with the datatype "command":
 
