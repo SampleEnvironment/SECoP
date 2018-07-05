@@ -612,7 +612,7 @@ Example:
 .. code::
 
   > ping 123
-  < pong 123 {"t": 1505396348.543}
+  < pong 123 [null, {"t": 1505396348.543}]
 
 The "pong" message has an additional function: it sends back the time
 on the server, if it supports timestamps. This can be used to
