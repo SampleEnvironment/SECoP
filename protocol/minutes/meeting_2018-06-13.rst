@@ -1,5 +1,5 @@
 SECoP Meeting 2018-06-13/14 at ESS Lund
----------------------------------------
+#######################################
 
 participants
 ============
@@ -101,7 +101,7 @@ second day
 ==========
 
 discussion about Feature HAS_PID
---------------------------------
+++++++++++++++++++++++++++++++++
 
 discussion about handling of features, interface classes, interoperability between versions.
 
@@ -121,40 +121,43 @@ discussion about handling of features, interface classes, interoperability betwe
 done.
 
 discussion about Has_Persistent feature.
-----------------------------------------
+++++++++++++++++++++++++++++++++++++++++
 
-class HAS_Persistent(Feature):
-    Parameters = {
-        'persistent_mode' : Param('Use persistent mode', datatype=EnumType(off=0,on=1), default=0, readonly=False),
-        'is_persistent' : Param('current state of persistence', datatype=Booltype(), optional=True),
-        'stored_value' : Param('current persistence value, often used as the modules value', datatype='main', unit='$', optional=True),
-        'driven_value' : Param('driven value (outside value, syncs with stored_value if non-persistent)', datatype='main', unit='$' ),
-    }
+to allow a compact definition, a possible python declaration example is used here::
+
+ class HAS_Persistent(Feature):
+     Parameters = {
+         'persistent_mode' : Param('Use persistent mode', datatype=EnumType(off=0,on=1), default=0, readonly=False),
+         'is_persistent' : Param('current state of persistence', datatype=Booltype(), optional=True),
+         'stored_value' : Param('current persistence value, often used as the modules value', datatype='main', unit='$', optional=True),
+         'driven_value' : Param('driven value (outside value, syncs with stored_value if non-persistent)', datatype='main', unit='$' ),
+     }
 
 done.
 
 discussion about stability feature
-----------------------------------
+++++++++++++++++++++++++++++++++++++++++
 
-class HAS_Tolerance(Feature):
-    # detects IDLE status by checking if the value lies in a given window:
-    # tolerance is the maximum allowed deviation from target, value must lie in this interval
-    # for at least ´timewindow´ seconds.
-    Parameters = {
-        'tolerance' : Parameter('Half height of the Window', datatype=FloatRange(0), default=1, unit='$'),
-        'timewindow' : Parameter('Length of the timewindow to check', datatype=FloatRange(0), default=30, unit='s', optional=True),
-    }
+python declaration example::
 
+ class HAS_Tolerance(Feature):
+     # detects IDLE status by checking if the value lies in a given window:
+     # tolerance is the maximum allowed deviation from target, value must lie in this interval
+     # for at least ´timewindow´ seconds.
+     Parameters = {
+         'tolerance' : Parameter('Half height of the Window', datatype=FloatRange(0), default=1, unit='$'),
+         'timewindow' : Parameter('Length of the timewindow to check', datatype=FloatRange(0), default=30, unit='s', optional=True),
+     }
 
-class HAS_Timeout(Feature):
-    Parameters = {
-        'timeout' : Param('timeout for movement', datatype=FloatRange(0), default=0, unit='s'),
-    }
+ class HAS_Timeout(Feature):
+     Parameters = {
+         'timeout' : Param('timeout for movement', datatype=FloatRange(0), default=0, unit='s'),
+     }
 
 meh!
 
 more discussion about the way to go.
-------------------------------------
+++++++++++++++++++++++++++++++++++++
 
   * features should be seperate functional subgroups, but may have optional parameters
   * go for a small amount of features and for small implementation effort on SEC-node
@@ -175,9 +178,12 @@ discussion about mandatory/optional, derivation, features, and so on.
   * if two or more accessibles work together on a common functionality, they should belong to a feature
 
 agreement of the features:
---------------------------
+++++++++++++++++++++++++++
 
-class HAS_PID(Feature):
+
+python declaration example::
+
+ class HAS_PID(Feature):
     # note: implementors should either use p,i,d or pid, but ECS must be handle both cases
     # note: if both p,i,d and pid are implemented, it MUST NOT matter which one gets a change, the final result should be the same
     # note: if there are additional custom parameters with the same name as an element of the struct, the above applies
@@ -198,10 +204,11 @@ class HAS_PID(Feature):
     }
 
 
-class Has_PIDTable(HAS_PID):
+ class Has_PIDTable(HAS_PID):
     Parameters = {
         'use_pidtable' : Parameter('use the zoning mode', datatype=EnumType(fixed_pid=0, zone_mode=1),
-        'pidtable' : Parameter('Table of pid-values vs. target temperature', datatype=ArrayOf(TupleOf(FloatRange(0), 
+        'pidtable' : Parameter('Table of pid-values vs. target temperature',  
+                               datatype=ArrayOf(TupleOf(FloatRange(0), 
                                    StructOf(p=datatype=FloatRange(0),
                                             i=datatype=FloatRange(0),
                                             d=datatype=FloatRange(0),
@@ -209,7 +216,7 @@ class Has_PIDTable(HAS_PID):
     }
 
 
-class HAS_Persistent(Feature):
+ class HAS_Persistent(Feature):
     extra_Status {
         'decoupled' : Status.OK+1,  # to be discussed.
         'coupling' : Status.BUSY+1,  # to be discussed.
@@ -224,7 +231,7 @@ class HAS_Persistent(Feature):
     }
 
 
-class HAS_Tolerance(Feature):
+ class HAS_Tolerance(Feature):
     # detects IDLE status by checking if the value lies in a given window:
     # tolerance is the maximum allowed deviation from target, value must lie in this interval
     # for at least ´timewindow´ seconds.
@@ -234,13 +241,13 @@ class HAS_Tolerance(Feature):
     }
 
 
-class HAS_Timeout(Feature):
+ class HAS_Timeout(Feature):
     Parameters = {
         'timeout' : Parameter('timeout for movement', datatype=FloatRange(0), default=0, unit='s'),
     }
 
 
-class HAS_Pause(Feature):
+ class HAS_Pause(Feature):
     # just a proposal, can't agree on it....
     Commands = {
         'pause' : Command('pauses movement', arguments=[], resulttype=None),
@@ -248,7 +255,7 @@ class HAS_Pause(Feature):
     }
 
 
-class HAS_Ramp(Feature):
+ class HAS_Ramp(Feature):
     Parameters = {
         'ramp' : Parameter('speed of movement', unit='$/min', datatype=FloatRange(0)),
         'use_ramp' : Parameter('use the ramping of the setpoint, or jump', datatype=EnumType(disable_ramp=0, use_ramp=1), optional=True),
@@ -256,20 +263,20 @@ class HAS_Ramp(Feature):
     }
 
 
-class HAS_Speed(Feature):
+ class HAS_Speed(Feature):
     Parameters = {
         'speed' : Parameter('(maximum) speed of movement (of the main value)', unit='$/s', datatype=FloatRange(0)),
     }
 
 
-class HAS_Accel(HAS_Speed):
+ class HAS_Accel(HAS_Speed):
     Parameters = {
         'accel' : Parameter('acceleration of movement', unit='$/s^2', datatype=FloatRange(0)),
         'decel' : Parameter('deceleration of movement', unit='$/s^2', datatype=FloatRange(0), optional=True),
     }
 
 
-class HAS_MotorCurrents(Feature):
+ class HAS_MotorCurrents(Feature):
     Parameters = {
         'movecurrent' : Parameter('Current while moving', datatype=FloatRange(0)),
         'idlecurrent' : Parameter('Current while idle', datatype=FloatRange(0), optional=True),
