@@ -81,10 +81,10 @@ discussion non-persistent vs. persistent magnet is very fruitful...
 Idea: flag dependencies by using group property. 
 
   * class Magnet(Drivable, Has_Ramp):
-    unit='T'
-    may have Has_Persistence, Has_window, Has_Timeout Features
-    may have extra parameters: 'current_in_leads', 'switch_status'
-    with predefined meanings of optional things 'current_in_leads', 'switch_status', ???'ratio'???
+     - unit='T'
+     - may have Has_Persistence, Has_window, Has_Timeout Features
+     - may have extra parameters: 'current_in_leads', 'switch_status'
+     - with predefined meanings of optional things 'current_in_leads', 'switch_status', ???'ratio'???
 
 Discussion about temperaturecontroller:
   * pid/pi/p /pid with base_output
