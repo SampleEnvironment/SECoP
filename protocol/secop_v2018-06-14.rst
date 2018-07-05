@@ -357,7 +357,7 @@ Message Summary
 
       * -
         - reply
-        - **pong** *[id]* [\ **{"t":** *localtime* **}**\ ]
+        - **pong** *[id]* **[null, {** *[* **"t":** *localtime ]* **}]**
 
 Identification
 ~~~~~~~~~~~~~~
