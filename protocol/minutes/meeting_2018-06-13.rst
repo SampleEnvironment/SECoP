@@ -123,7 +123,7 @@ done.
 discussion about Has_Persistent feature.
 ++++++++++++++++++++++++++++++++++++++++
 
-to allow a compact definition, a possible python declaration example is used here::
+to allow a compact definition, a possible python declaration syntax is used here::
 
  class HAS_Persistent(Feature):
      Parameters = {
@@ -138,7 +138,7 @@ done.
 discussion about stability feature
 ++++++++++++++++++++++++++++++++++++++++
 
-python declaration example::
+::
 
  class HAS_Tolerance(Feature):
      # detects IDLE status by checking if the value lies in a given window:
@@ -180,8 +180,7 @@ discussion about mandatory/optional, derivation, features, and so on.
 agreement of the features:
 ++++++++++++++++++++++++++
 
-
-python declaration example::
+::
 
  class HAS_PID(Feature):
     # note: implementors should either use p,i,d or pid, but ECS must be handle both cases
