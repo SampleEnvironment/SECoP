@@ -728,11 +728,22 @@ Module Properties
 
      * a string from an extensible list of predefined meanings (*not yet confirmed*):
      
-       * 'sample_temperature'
-       * 'sample_temperature_regulation' (top be specified only, if different from sample_temperature)
-       * 'sample_magnetic_field'
-       * 'sample_rotation'
-       
+       * 'temperature'   (the sample temperature)
+       * 'temperature_regulation' (to be specified only if different from 'temperature')
+       * 'magneticfield'
+       * 'electricfield'
+       * 'pressure'
+       * 'rotation_z' (counter clockwise when looked at 'from sky to earth')
+       * 'humidity'
+       * 'viscosity'
+       * 'flowrate'
+       * 'concentration'
+     
+          This list can be extended later. (*see SECoP issue 26*). 
+     
+          '_regulation' can be postfixed, if the quantity generating module is different from the
+          (closer to the sample) relevant measuring device.
+
      * a value describing the importance, with the following values:
 
        - 10 means the instrument/beamline (Example: room temperature sensor always present)
@@ -746,7 +757,7 @@ Module Properties
 Parameter Properties
 ~~~~~~~~~~~~~~~~~~~~
 
--  **description** (mandatory, a text describing the parameter, mandatory)
+-  **description** (mandatory, a text describing the parameter)
 
 -  **readonly** (mandatory)
 
