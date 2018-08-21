@@ -606,22 +606,23 @@ Error Classes
       - Something that should never happen just happened.
 
 
-Timeout Issues / Heartbeat
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Timeout Issues / Heartbeat (Ping and Pong Messages)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In order to detect that the other end of the communication is not dead,
 a heartbeat may be sent. The second part of the message (the id) must
 not contain a space and should be short. It may be omitted. The reply
 will contain exactly the same id.
 
-Generally speaking: both ECS and SEC side needs to be aware that the other
-side may close the connection at any time! On reconnect, it is recommended,
-that the ECS does send a *IDN? and a describe message. If the reponses match
-the responses from the previous connection, the ECS should continue
-as if no interruption happend. If the response of the description does not
-match, it is up to the ECS how to handle this.
-Naturally, if the previous connection was in asynchronous mode, an activate
-message has to be sent before it can continue as before.
+For debugging purposes, when *id* in the ping command is omitted,
+in the pong command there are two spaces after **pong**.
+A client SHOULD always send an id. However, the client parser MUST treat two
+consecutive spaces as two separators with an empty string in between.
+
+With no timestamp, the pong message will contain an empty json object for the qualifiers:
+
+**pong** *[id]* **[null,** \ **{}**\ **]**
+
 
 Example:
 
@@ -634,7 +635,25 @@ The "pong" message has an additional function: it sends back the time
 on the server, if it supports timestamps. This can be used to
 synchronize the time.
 
-*Related SECoP Issues: 3 (Timestamps), 4 (Timeout), 6 (Keep Alive), 7 (Time Synchronization)*
+*Related SECoP Issues: 3 (Timestamps), 7 (Time Synchronization)*
+
+
+Timeout Issues
+~~~~~~~~~~~~~~
+
+If a timeout happens, it is not easy for the ECS to decide on the
+best strategy.
+Generally speaking: both ECS and SEC side needs to be aware that the other
+side may close the connection at any time! On reconnect, it is recommended,
+that the ECS does send a *IDN? and a describe message. If the reponses match
+the responses from the previous connection, the ECS should continue
+as if no interruption happend. If the response of the description does not
+match, it is up to the ECS how to handle this.
+Naturally, if the previous connection was in asynchronous mode, an activate
+message has to be sent before it can continue as before.
+
+*Related SECoP Issues: 4 (Timeout), 6 (Keep Alive)*
+
 
 Multiple Connections
 --------------------
