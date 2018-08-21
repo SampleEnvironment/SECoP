@@ -166,13 +166,29 @@ devices (heater off vs. ‘stay at current temp’).
 
 The following commands are predefined (extensible):
 
--  stop (stop a running action)
+-  **go** optional on a drivable. If present, the 'go' command is used to start the
+   module. If not present the module is started upon a change on the target
+   parameter.
 
-proposed further commands:
+-  **hold** optional command on a drivable. Stay more or less where you are, cease
+   movement, be ready to continue soon, target value is kept. Continuation can be
+   trigger with 'go', or if not present, by putting the target parameter to its
+   present value.
 
--  start, pause (proposed from ILL)
+-  **abort** optional command. Stops the running module in a safe way (for example
+   switches the heater off).
 
--  shutdown (go to safe state)
+-  **stop** mandatory command on a drivable. Cease movement, set the target parameter
+   to a value close to the present one. Act as if this value would have been the initial target.
+
+-  **reset** optional command for putting the module to a state predefined by the implementation.
+
+-  **shutdown** optional command for shuting down the hardware.
+   When this command is sent, and the triggered action is finished (status in idle mode),
+   it is safe to switch off the related device.
+
+   *remark: there is an alternative proposal for
+   implementing the shutdown function, see SECoP issue 22: Enable Module instead of Shutdown Command*
 
 
 Properties
