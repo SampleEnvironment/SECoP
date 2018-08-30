@@ -234,12 +234,7 @@ Base classes (recommended):
 -  Drivable (a Writable, must have a stop command, the status parameter will indicate
    busy for a longer-lasting operation)
 
-Examples of interface classes:
-
--  CryomagnetSupply (a Drivable, with ramp and optional a persistent
-   switch)
-
--  TemperatureLoop (a Drivable, with PIDs, optional with ramp)
+For examples of interface classes see the separate document "Interface Classes and Features".
 
 The standard contains a list of classes, and a specification of the
 functionality for each of them. The list might be extended over time.
@@ -249,7 +244,16 @@ removals or redefinitions will occur.
 
 The module class is in fact a list of classes (highest level class
 first). The ECS chooses the first class from the list which is known to
-it.
+it. The last one in the list must be one of the base classes listed above.
+
+Features
+--------
+
+As the list of interface classes would risk to increase a lot with possible
+combinations, *features* come into place. A feature is a functionality,
+with some predefined parameters and commands.
+
+For examples of features see the sepaerate document "Interface Classes and Features".
 
 Protocol
 ========
@@ -751,8 +755,12 @@ Module Properties
    advanced users.
 
 -  **interface\_class** (a list of classes for the module, for example
-   ["Temperature", "DrivableWithRamp", "Drivable", "Readable"]),
+   ["Magnet", "Drivable"]),
    mandatory
+
+-  **features** (a list of features for the module, 
+   ["HasRamp", "HasTolerance"]),
+   optional or mandatory?
 
 -  **group** (optional identifier, may contain ':' which may be interpreted as path separator)
    The ECS may group the modules according to this property. 
