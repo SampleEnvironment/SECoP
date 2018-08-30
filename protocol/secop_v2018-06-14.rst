@@ -249,11 +249,13 @@ it. The last one in the list must be one of the base classes listed above.
 Features
 --------
 
+*Note: this is not yet part of the standard*
+
 As the list of interface classes would risk to increase a lot with possible
 combinations, *features* come into place. A feature is a functionality,
 with some predefined parameters and commands.
 
-For examples of features see the sepaerate document "Interface Classes and Features".
+For examples of features see the separate document "Interface Classes and Features".
 
 Protocol
 ========
@@ -758,9 +760,9 @@ Module Properties
    ["Magnet", "Drivable"]),
    mandatory
 
--  **features** (a list of features for the module, 
+-  **features** (a list of features for the module, for example 
    ["HasRamp", "HasTolerance"]),
-   optional or mandatory?
+   *this is not yet part of the standard*)
 
 -  **group** (optional identifier, may contain ':' which may be interpreted as path separator)
    The ECS may group the modules according to this property. 
