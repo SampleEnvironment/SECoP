@@ -235,6 +235,7 @@ Base classes (recommended):
    busy for a longer-lasting operation)
 
 For examples of interface classes see the separate document "Interface Classes and Features".
+*Note: these examples are not yet part of the standard*
 
 The standard contains a list of classes, and a specification of the
 functionality for each of them. The list might be extended over time.
