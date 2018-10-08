@@ -241,7 +241,7 @@ as its second element. The third element is a JSON-Object, containing possibly
 implementation specific information about the error (stack dump etc.).
 
 *note: errors can only be report 'for' a request. They contain a copy of the request,
-so that a client may sort out, whcih of the requests it sent got an error.*
+so that a client may sort out, which of the requests it sent got an error.*
 
 *remark: There is no way for a SEC-node the report some general error information without
 a client sending a request.*
@@ -260,7 +260,7 @@ Qualifiers optionally augment the value in a reply from the SEC-Node,
 and present variable information about that parameter.
 They are collected as named values in a JSON-object.
 
-Currently 3 qualifiers are defined:
+Currently 2 qualifiers are defined:
 
 - "t": (short for timestamp)
    The time when the parameter has changed or was verified/measured (when no timestamp
@@ -337,21 +337,43 @@ The basic element of the protocol are messages.
 
 Message Syntax
 --------------
+The byte stream which is exchanged via a connection is split into messages:
 
-A message is one line of text, coded in ASCII (may be extended to UTF-8
-later if needed).
+.. image:: images/messages.png
+   :alt: messages ::= (message CR? LF) +
 
-A message ends with a line feed character (ASCII 10), which may be preceded
-by a carriage return character (ASCII 13), which must be ignored. A
-message starts with a keyword, followed optionally by one space and a qualified name
-or another item not containing spaces, followed optionally by one space and a JSON-text
-formatted value (see :RFC:`8259`). Note: numerical values and strings appear 'naturally' formatted
-in JSON-text, i.e. 5.0 or "a string".
+A message is essentially one line of text, coded in ASCII (may be extended to UTF-8
+later if needed). A message ends with a line feed character (ASCII 10), which may be preceded
+by a carriage return character (ASCII 13), which must be ignored.
 
-A qualified name consists of a module identifier, a colon as separator
-and a parameter or command identifier. The identifiers are composed by
+.. note:: `␣` is used instead of the SPACE character (%x20) for better visibility in the following diagrams.*
+
+
+All messages share the same basic structure:
+
+.. image:: images/message_structure.png
+   :alt: message_structure ::= action ( SPACE specifier ( SPACE data )? )?
+
+i.e. message starts with an action keyword, followed optionally by one space and a specifier
+(not containing spaces), followed optionally by one space and a JSON-text
+formatted value (see :RFC:`8259`) called data.
+
+.. Note:: numerical values and strings appear 'naturally' formatted in JSON-text, i.e. 5.0 or "a string".
+
+The specifier consists of a module identifier and for most actions followed by a colon as separator
+and a parameter or command identifier:
+
+.. image:: images/specifier.png
+   :alt: specifier ::= module | module ":" (parameter|command)
+
+The identifiers are composed by
 ascii letters, digits and underscore, where a digit may not
-appear as the first character. Identifiers starting with underscore are
+appear as the first character.
+
+.. image:: images/name.png
+   :alt: name ::= [a-zA-Z_] [a-zA-Z0-9_]*
+
+Identifiers starting with underscore are
 reserved for special purposes like internal use for debugging. The
 identifier length is limited (<=63 characters). Module names on a SEC Node
 and parameter names within a module must not differ when uppercase letters
@@ -366,7 +388,7 @@ an underscore and not defined in the following list are reserved for future exte
 
 When implementing SEC-nodes or ECS-clients, a 'MUST-ignore' policy should be applied to unknown or additional
 datafields. Unknown messages are to be replied with an appropriate ProtocolError by a SEC-Node.
-An ECS-client must ignore such messages.
+An ECS-client must ignore such messages. See also section `Future Compatibility`_.
 
 .. table::
 
@@ -644,12 +666,13 @@ Error Classes
       - The requested action can not be performed at the moment. (Interlocks?)
 
     * - SyntaxError
-      - A malformed Request or on unspecified message was send
+      - A malformed Request or on unspecified message was sent
 
     * - InternalError
       - Something that should never happen just happened.
 
 *remark: This list may be extended, if needed. clients should treat unknown error classes as generic as possible.*
+
 
 Heartbeat
 ~~~~~~~~~
@@ -961,7 +984,6 @@ bool
     * - Datatype in C/C++
       - | int64_t
 
-
 enum
 ----
 
@@ -978,7 +1000,6 @@ enum
 
     * - Datatype in C/C++
       - | int64_t
-
 
 string
 ------
@@ -1083,7 +1104,6 @@ struct
 
 *remark: see also* `SECoP Issue 35: Partial structs`_
 
-
 command
 -------
 
@@ -1114,6 +1134,94 @@ command
         | do module:uploadcurve {"curve":57, "sensor":"X1234A", "points":[[1, 3.4,....
 
 *remark: see also* `SECoP Issue 35: Partial structs`_
+
+
+Future Compatibility
+====================
+This specification defines a set of requests and replies above.
+Only those messages are ALLOWED to be generated by any software complying to this specification:
+
+.. compound::
+    Requests:
+
+    .. image:: images/defined_requests.png
+       :alt: defined_requests
+
+.. compound::
+    Replies:
+
+    .. image:: images/defined_replies.png
+       :alt: defined_replies
+
+The specification is intended to grow and adopt to new needs.
+To future proof the the communication the following messages MUST be parsed and treated correctly
+(i.e. the ignored_value part is to be ignored).
+
+.. compound::
+    Requests:
+
+    .. image:: images/must_accept_requests.png
+       :alt: must_accept_requests
+
+.. compound::
+    Replies:
+
+    .. image:: images/must_accept_replies.png
+       :alt: must_accept_replies
+
+As a special case, an argumentless command may also by called without specifying the data part.
+In this case an argument of null is to be assumed.
+Also an argumentless ping is to be handled as a ping request with an empty token string.
+The corresponding reply then contains a double space. This MUST also be parsed correctly.
+
+Similiarly, the reports need to be handled like this:
+
+.. compound::
+    Data report:
+
+    .. image:: images/data_report.png
+       :alt: data_report ::= "[" json-value "," qualifiers ("," ignored_value)* "]"
+
+.. compound::
+    Error report:
+
+    .. image:: images/error_report.png
+       :alt: error_report ::= '["' copy_of_request '","' error_msg '",' error_info ("," ignored_value)* "]"
+
+Complying to these rules maximise to possibility of future + backwards compatibility.
+
+
+Licences
+========
+
+The above diagrams were generated using http://bottlecaps.de/rr/ui by Gunther Rademacher.
+The author approved using these images here. The licence reads as follows::
+
+    Railroad Diagram Generator is subject to
+
+        Copyright 2010-2018 Gunther Rademacher <grd@gmx.net>
+        All rights reserved.
+
+    Portions of source code, that are exposed in generated files, are
+    released under the Apache 2.0 License:
+
+        Copyright 2010-2018 Gunther Rademacher <grd@gmx.net>
+
+        Licensed under the Apache License, Version 2.0 (the "License");
+        you may not use this file except in compliance with the License.
+        You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+        Unless required by applicable law or agreed to in writing, software
+        distributed under the License is distributed on an "AS IS" BASIS,
+        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+        implied. See the License for the specific language governing
+        permissions and limitations under the License.
+
+    Thank you for choosing Railroad Diagram Generator.
+
+
 
 .. _`SECoP Issue 3:Timestamp Format`: issues/003c%20Timestamp%20Format.rst
 .. _`SECoP Issue 4: The Timeout SEC Node Property`: issues/004c%20The%20Timeout%20SEC%20Node%20Property.rst
