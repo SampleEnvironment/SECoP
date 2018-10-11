@@ -1188,7 +1188,20 @@ Similiarly, the reports need to be handled like this:
     .. image:: images/error_report.png
        :alt: error_report ::= '["' copy_of_request '","' error_msg '",' error_info ("," ignored_value)* "]"
 
+Essentially this boils down to:
+  1) ignore additional entries in the list-part of reports
+  #) ignore extra keys in the qualifiers, structure report and error report mappings
+  #) ignore message fields which are not used in the definition of the messages (i.e. for `describe`)
+  #) treat needed, but missing data as null (or an empty string, depending on context)
+  #) if a specifier contains more ":" than you can handle, use the part you understand, ignore the rest.
+     (i.e. treat `activate module:parameter` as `activate module`, ignoring the `:parameter` part)
+  #) upon parsing a value, when you know it should be one element from an Enum (which SHOULD be transported as integer),
+     if you find a string instead and that string is one of the names from the Enum, use that entry.
+  #) check newer versions of the specification and check the issues as well, as the above may change.
+
 Complying to these rules maximise to possibility of future + backwards compatibility.
+
+*note: also check* `SECoP Issue 36: Dynamic units`_ *as it may have implications for a certain implementation.*
 
 
 Licences
@@ -1235,3 +1248,4 @@ The author approved using these images here. The licence reads as follows::
 .. _`SECoP Issue 28: Clarify buffering mechanism`: issues/028p%20Clarify%20buffering%20mechanism.rst
 .. _`SECoP Issue 29: New messages for buffering`: issues/029p%20New%20messages%20for%20buffering.rst
 .. _`SECoP Issue 35: Partial structs`: issues/035p%20Partial%20structs.rst
+.. _`SECoP Issue 36: Dynamic units`: issues/036p%20Dynamic%20units.rst
