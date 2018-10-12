@@ -37,10 +37,7 @@ have implemented a SECoP client within its ECS, and on the apparatus a
 SECoP server is implemented as the SEC node, using the apparatus for an
 experiment should be straightforward. An ECS can be built in a way, that
 the configuration of a SEC node may be as short as entering a network
-address, as the description can be loaded over the protocol (in
-addition, the electronic communication link, electricity and may be
-cooling water or pressurized air etc. have to be connected, but that is
-out of scope …)
+address, as the description can be loaded over the protocol.
 
   Definition: Sample Environment Control Node (SEC node)
     Computing unit or process or task, connected to all control units (temperature controller, flow controller, pressure sensor ...) of a sample environment, bridge to the ECS. SECoP specifies how ECS speaks with the SEC node.
