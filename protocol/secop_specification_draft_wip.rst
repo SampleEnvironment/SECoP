@@ -143,6 +143,30 @@ The following parameters are predefined (this list will be extended):
      makes sense. Generally we want to keep the number of states as
      small as possible here.*
 
+     *Note: The amount of predefined status codes, their value and meaning is still under discussion.*
+
+     .. table:: preliminary status codes
+
+         ============= =========== ===========
+          status code   Enum name   Meaning
+         ============= =========== ===========
+            100         IDLE        module is ready for new requests, is not moving, no abnormal condition
+            200         WARN        like IDLE, but an abnormal condition is to be signaled, may be changed back to IDLE
+            300         BUSY        module is Busy due to a target change or other command
+            400         ERROR       module is not ready for new requests, the ``reset`` command must be called
+            \           DISABLED    the module is disabled
+            \           UNSTABLE    after the module reached it's target, it is now no longer 'there'
+         ============= =========== ===========
+
+     *note: the behaviour of a module in each of the predefined states is not yet 100% defined.*
+
+     *note: the numerical value of the statuscodes are intentionally spaced apart.
+     If an implemenmtation wants to differentiate similiar states,
+     values* ``?01`` ... ``?99`` *are free for custom implementations essentially meaning the same
+     as the basic value* ``?00``\ *.
+     An ECS unaware of custom usage MUST treat them the same as* ``?00``\ *, i.e. 137 is IDLE, 373 is BUSY, etc.
+     In any case, all used values are the be declared in the descriptive data!*
+
 -  **target**
      present, if the modules main value is to be changeable remotely, i.e. it is at least a Writable
 
@@ -154,15 +178,16 @@ The following parameters were discussed at a meeting.
 -  **ramp**
      (writable parameter, desired ramp. Units: main units/min)
 
--  **use\_ramp**
+-  **use_ramp**
      (writable, 1 means: use given ramp, 0 means: go as fast as possible)
 
 -  **setpoint**
      (ramping setpoint, read only)
 
--  **time\_to\_target**
-     (read only, expected time to reach target)
+-  **time_to_target**
+     (read only double, expected time to reach target in seconds)
 
+*note: ``use_ramp`` is under discussion.*
 
 Command:
     Commands are provided to initiate specified actions of the module.
@@ -217,7 +242,7 @@ The following commands are foreseen, but are still under discussion (i.e. not 10
 *remark: there is an alternative proposal for
 implementing the shutdown function, see* `SECoP Issue 22: Enable Module instead of Shutdown Command`_
 
-*remark: The mechanics for buffering values and the semantics for the above commands except ``stop``
+*remark: The mechanics for buffering values and the semantics for the above commands except ``stop`` and ``reset``
 are not yet finalised. see also discussion in* `SECoP Issue 28: Clarify buffering mechanism`_
 
 
@@ -304,13 +329,13 @@ Base classes:
 
 -  Readable (has at least a value and a status parameter)
 
--  Writable (must have a target parameter)
+-  Writable (must have a target parameter to a Readable)
 
 -  Drivable (a Writable, must have a stop command, the status parameter will indicate
-   busy for a longer-lasting operation)
+   Busy for a longer-lasting operation)
 
-For examples of interface classes see the separate document "Interface Classes and Features".
-*Note: these examples are not yet part of the standard*
+For examples of interface classes see the separate document `Interface Classes and Features`_.
+*Note: these examples are not yet part of the standard!*
 
 The standard contains a list of classes, and a specification of the
 functionality for each of them. The list might be extended over time.
@@ -324,6 +349,8 @@ The ECS chooses the first class from the list which is known to it.
 The last one in the list must be one of the base classes listed above.
 
 *remark: The list may also be empty, indicating that the module in question does not even conform to the Readable class!*
+
+.. _`Interface Classes and Features`: Interface%20Classes%20and%20Features.rst
 
 Features
 --------
@@ -359,7 +386,7 @@ A message is essentially one line of text, coded in ASCII (may be extended to UT
 later if needed). A message ends with a line feed character (ASCII 10), which may be preceded
 by a carriage return character (ASCII 13), which must be ignored.
 
-.. note:: `SPACE` is used instead of the SPACE character (ASCII 20) for better visibility in the following diagrams.
+.. note:: `␣` is used instead of the SPACE character (ASCII 20) for better visibility in the following diagrams.
 
 All messages share the same basic structure:
 
@@ -762,7 +789,8 @@ Error Classes
 *remark: This list may be extended, if needed. clients should treat unknown error classes as generic as possible.*
 
 *note: CommandRunning may not be needed, as IsBusy essentially covers that case.*
-*note: BadValue may need sub-categories to differntiate between: wrong_type, illegal_value or partial_struct_not_allowed_here.
+
+*note: BadValue may need sub-categories to differentiate between: wrong_type, illegal_value or partial_struct_not_allowed_here.
 A natural way would be to specify those like e.g. BadValue:WrongType, but this is not yet discussed yet.*
 
 
@@ -844,6 +872,7 @@ The format of the descriptive data is JSON, as all other data in SECoP.
 .. SEC_node_property ::= property |  ( '"modules":' '[' (name ',' module_description (',' name ',' module_description)*)? ']')
 .. module_description ::= '{' (module_property ( ',' module_property)* )? '}'
 .. module_property ::= property |  ( '"parameters":' '[' (name ',' properties (',' name ',' properties)*)? ']') |  ( '"commands":' '[' (name ',' properties (',' name ',' properties)*)? ']')
+.. module_property_v2 ::= property |  ( '"accessibles":' '[' (name ',' properties (',' name ',' properties)*)? ']')
 .. properties ::=  '{' (property ( ',' property)* )? '}'
 .. property ::= (name ":" property_value)
 
@@ -1202,7 +1231,7 @@ tuple
 
     * - Transport example
       - | as JSON-array:
-        | ``[100,"idle"]``
+        | ``[300,"accelerating"]``
 
 
 struct
