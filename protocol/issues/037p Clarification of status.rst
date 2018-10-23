@@ -15,8 +15,7 @@ whereas the string is intended to displayed to users, so it may contain arbitrar
 
 In its simplest form, 3 status codes seem sufficient:
 
-.. figure::
-    .. image:: ../images/status_simple.svg
+.. figure:: ../images/status_simple.svg
 
     Simplest interaction diagram, using only ERROR, BUSY and Ready status.
     The blue line indicate status changes performed by the SEC-node, while black lines
@@ -45,8 +44,7 @@ Also, we needed to introduce a ``DISABLED`` state, by public request. This state
 
 This leads to the following, still simple, diagram.
 
-.. figure::
-    .. image:: ../images/status_normal.svg
+.. figure:: ../images/status_normal.svg
 
     The added actions have these meanings:
 
@@ -71,8 +69,7 @@ This leads to the following, still simple, diagram.
 
 Or, if including 'trampoline states':
 
-.. figure::
-    .. image:: ../images/status_complicated.svg
+.. figure:: ../images/status_complicated.svg
 
 where ``Stopping``, ``Preparing`` and ``Working`` are all statuscodes of the BUSY status group.
 (As before ``Ready`` contains both ``IDLE`` and ``WARN``.)
