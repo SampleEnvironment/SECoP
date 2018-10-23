@@ -1,12 +1,1 @@
 [`accessible-description`,["{",[<!,['accessible-property']*",">], "}"]#`a json-object, keys MUST be unique!`]
-
-[`accessible-property`,<
- ["description",":",'descriptive text']
-,["visibility",":",<"expert","advanced","user">]
-,["group",":", 'groupname']
-,["readonly", ":", <"true","false">]
-,["unit",":",'unit of parameter']
-,["datatype", ":", 'datatype']
->]
-
-[`datatype`, ["[", 'name of datatype', [",", 'parameter of datatype']*!, "]"]#`json-array of length >= 1`]

@@ -1,9 +1,8 @@
-[`SEC-node-description`,["{",[<!,['SEC-node-property']*",">], "}"]#`a json-object, keys MUST be unique!`]
-
 [`SEC-node-property`,<
  [["modules",":","[",<!,['name', ",", 'module-description']*",">],"]"]
 ,["description",":",'descriptive text']
 ,["equipment_id",":",'equipment_id']
 ,["firmware",":",'firmware version']
 ,["timeout",":",'timeout in seconds'#`a positive json-number`]
+,['properties']
 >]

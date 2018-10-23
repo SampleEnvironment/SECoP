@@ -380,18 +380,16 @@ Message Syntax
 --------------
 The received byte stream which is exchanged via a connection is split into messages:
 
-.. image:: images/messages.png
+.. image:: images/messages.svg
    :alt: messages ::= (message CR? LF) +
 
 A message is essentially one line of text, coded in ASCII (may be extended to UTF-8
 later if needed). A message ends with a line feed character (ASCII 10), which may be preceded
 by a carriage return character (ASCII 13), which must be ignored.
 
-.. note:: `␣` is used instead of the SPACE character (ASCII 20) for better visibility in the following diagrams.
-
 All messages share the same basic structure:
 
-.. image:: images/message_structure.png
+.. image:: images/message-structure.svg
    :alt: message_structure ::= action ( SPACE specifier ( SPACE data )? )?
 
 i.e. message starts with an action keyword, followed optionally by one space and a specifier
@@ -404,14 +402,14 @@ final LF.
 The specifier consists of a module identifier and for most actions followed by a colon as separator
 and a parameter or command identifier:
 
-.. image:: images/specifier.png
+.. image:: images/specifier.svg
    :alt: specifier ::= module | module ":" (parameter|command)
 
 All identifiers (for properties, accessibles and modules) are composed by
 ascii letters, digits and underscore, where a digit may not
 appear as the first character.
 
-.. image:: images/name.png
+.. image:: images/name.svg
    :alt: name ::= [a-zA-Z_] [a-zA-Z0-9_]*
 
 Identifiers starting with underscore are
@@ -448,7 +446,7 @@ either indicating success of the request or flag an error.
 *note: to clarify optionality of some messages, the following table is split into two:
 basic messages (which MUST be implemented like specified) and extended messages which SHOULD be implemented.*
 
-*note: for clarification, the symbol ``␣`` is used here instead of a space character*
+*note: for clarification, the symbol ``␣`` is used here instead of a space character. <elem> refers to the element elem which is defined in another section.*
 
 .. table:: basic messages
 
@@ -467,7 +465,7 @@ basic messages (which MUST be implemented like specified) and extended messages 
           \                  reply          ``pong␣<identifier>␣``\ <`Data Report`_>
      `change value`_         request        ``change␣module:parameter␣value``
           \                  reply          ``changed␣module:parameter␣``\ <`Data Report`_>
-     `execute command`_      request        ``do␣module:command``
+     `execute command`_      request        ``do␣module:command`` *note: only for argumentless commands!*
           \                  reply          ``done␣module:command␣``\ <`Data Report`_>
      `read request`_         request        ``read␣module:parameter`` *note: triggers an update*
      value update_  event    update         ``update␣module:parameter␣``\ <`Data Report`_>
@@ -880,38 +878,45 @@ The format of the descriptive data is JSON, as all other data in SECoP.
 SEC node description
 ~~~~~~~~~~~~~~~~~~~~
 
-.. image:: images/sec_node_description.png
+.. image:: images/sec-node-description.svg
    :alt: SEC_node_description ::= '{' (SEC_node_property ( ',' SEC_node_property)* )? '}'
 
 SEC node property
 ~~~~~~~~~~~~~~~~~
 
-.. image:: images/sec_node_property.png
+.. image:: images/sec-node-property.svg
    :alt: SEC_node_property ::= property |  ( '"modules":' '[' (name ',' module_description (',' name ',' module_description)*)? ']')
 
 module description
 ~~~~~~~~~~~~~~~~~~
 
-.. image:: images/module_description.png
+.. image:: images/module-description.svg
    :alt: module_description ::= '{' (module_property ( ',' module_property)* )? '}'
 
 module property
 ~~~~~~~~~~~~~~~
 
-.. image:: images/module_property_v2.png
+.. image:: images/module-property.svg
    :alt: module_property ::= property |  ( '"accessibles":' '[' (name ',' properties (',' name ',' properties)*)? ']') ']')
 
-properties
-~~~~~~~~~~
+accessible description
+~~~~~~~~~~~~~~~~~~~~~~
 
-.. image:: images/properties.png
+.. image:: images/accessible-description.svg
    :alt: properties ::=  '{' (property ( ',' property)* )? '}'
+
+accessible property
+~~~~~~~~~~~~~~~~~~~
+
+.. image:: images/accessible-property.svg
+   :alt: property ::= (name ":" property_value)
 
 property
 ~~~~~~~~
 
-.. image:: images/property.png
+.. image:: images/property.svg
    :alt: property ::= (name ":" property_value)
+
 
 
 SEC Node Properties
@@ -1057,6 +1062,12 @@ Furthermore, SECoP not only defines basic data types but also structured datatyp
 Tuples allow to combine a fixed amount of values with different datatypes in an ordered way to be used as one.
 Arrays store a given number of dataelements having the same datatype.
 Structs are comparable to tuples, with the difference of using named entries whose order is irrelevant during transport.
+
+All datatypes are specified in the descriptive data in the following generic form:
+
+.. image:: images/datatype.svg
+
+
 
 .. contents::
     :depth: 1
@@ -1293,13 +1304,13 @@ Only those messages are ALLOWED to be generated by any software complying to thi
 .. compound::
     Requests:
 
-    .. image:: images/defined_requests.png
+    .. image:: images/defined-requests.svg
        :alt: defined_requests
 
 .. compound::
     Replies:
 
-    .. image:: images/defined_replies.png
+    .. image:: images/defined-replies.svg
        :alt: defined_replies
 
 The specification is intended to grow and adopt to new needs.
@@ -1309,13 +1320,13 @@ To future proof the the communication the following messages MUST be parsed and 
 .. compound::
     Requests:
 
-    .. image:: images/must_accept_requests.png
+    .. image:: images/must-accept-requests.svg
        :alt: must_accept_requests
 
 .. compound::
     Replies:
 
-    .. image:: images/must_accept_replies.png
+    .. image:: images/must-accept-replies.svg
        :alt: must_accept_replies
 
 As a special case, an argumentless command may also by called without specifying the data part.
@@ -1328,13 +1339,13 @@ Similiarly, the reports need to be handled like this:
 .. compound::
     Data report:
 
-    .. image:: images/data_report.png
+    .. image:: images/data-report.svg
        :alt: data_report ::= "[" json-value "," qualifiers ("," ignored_value)* "]"
 
 .. compound::
     Error report:
 
-    .. image:: images/error_report.png
+    .. image:: images/error-report.svg
        :alt: error_report ::= '["' copy_of_request '","' error_msg '",' error_info ("," ignored_value)* "]"
 
 Essentially this boils down to:
@@ -1357,32 +1368,7 @@ Complying to these rules maximise to possibility of future + backwards compatibi
 Licences
 ========
 
-The above diagrams were generated using http://bottlecaps.de/rr/ui by Gunther Rademacher.
-The author approved using these images here. The licence reads as follows::
-
-    Railroad Diagram Generator is subject to
-
-        Copyright 2010-2018 Gunther Rademacher <grd@gmx.net>
-        All rights reserved.
-
-    Portions of source code, that are exposed in generated files, are
-    released under the Apache 2.0 License:
-
-        Copyright 2010-2018 Gunther Rademacher <grd@gmx.net>
-
-        Licensed under the Apache License, Version 2.0 (the "License");
-        you may not use this file except in compliance with the License.
-        You may obtain a copy of the License at
-
-            http://www.apache.org/licenses/LICENSE-2.0
-
-        Unless required by applicable law or agreed to in writing, software
-        distributed under the License is distributed on an "AS IS" BASIS,
-        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
-        implied. See the License for the specific language governing
-        permissions and limitations under the License.
-
-    Thank you for choosing Railroad Diagram Generator.
+The above diagrams were generated using the library from http://github.com/lukaslueg/railroad_dsl.git.
 
 
 

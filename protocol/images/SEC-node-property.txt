@@ -1,5 +1,0 @@
-[`SEC-node-description`,["{",[<!,['SEC-node-property']*",">], "}"]#`a json-object, keys MUST be unique!`]
-
-[`SEC-node-property`,<'property',
- [["modules",":","["
- ,<!,['name', ",", 'module-description']*",">],"]"]>]
