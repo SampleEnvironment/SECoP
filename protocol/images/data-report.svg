@@ -1,0 +1,163 @@
+<svg class="railroad" viewBox="0 0 759 188" xmlns="http://www.w3.org/2000/svg">
+<style type="text/css">
+
+    svg.railroad {
+        background-color: hsl(30, 20%, 95%);
+        background-size: 15px 15px;
+        background-image: linear-gradient(to right, rgba(30, 30, 30, .05) 1px, transparent 1px),
+                          linear-gradient(to bottom, rgba(30, 30, 30, .05) 1px, transparent 1px);
+    }
+
+    svg.railroad path {
+        stroke-width: 3px;
+        stroke: black;
+        fill: transparent;
+    }
+
+    svg.railroad .debug {
+        stroke-width: 1px;
+        stroke: red;
+    }
+
+    svg.railroad text {
+        font: 14px monospace;
+        text-anchor: middle;
+    }
+
+    svg.railroad .nonterminal text {
+        font-weight: bold;
+    }
+
+    svg.railroad text.comment {
+        font: italic 12px monospace;
+    }
+
+    svg.railroad rect {
+        stroke-width: 3px;
+        stroke: black;
+        fill:hsl(-290, 70%, 90%);
+    }
+
+    svg.railroad g.labeledbox > rect {
+        stroke-width: 1px;
+        stroke: grey;
+        stroke-dasharray: 5px;
+        fill:rgba(90, 90, 150, .1);
+    }</style>
+<g class="verticalgrid">
+<g class="sequence">
+<path d=" M 10 57 a 5 5 0 0 1 5 -5 a 5 5 0 0 1 5 5 a 5 5 0 0 1 -5 5 a 5 5 0 0 1 -5 -5 m 10 0 h 5"/>
+<g class="sequence">
+<text class="comment" x="117" y="62">
+data-report: generate</text>
+<g class="labeledbox">
+<rect height="66" width="340" x="209" y="10"/>
+<path d=" M 209 57 h 8 m 324 0 h 8"/>
+<text class="comment" x="323" y="33">
+a json-array with 2 elements</text>
+<g class="sequence">
+<g class="terminal">
+<rect height="22" rx="10" ry="10" width="28" x="217" y="46"/>
+<text x="231" y="62">
+[</text>
+</g>
+<g class="nonterminal">
+<rect height="22" width="100" x="255" y="46"/>
+<text x="305" y="62">
+json-value</text>
+</g>
+<g class="terminal">
+<rect height="22" rx="10" ry="10" width="28" x="365" y="46"/>
+<text x="379" y="62">
+,</text>
+</g>
+<g class="nonterminal">
+<rect height="22" width="100" x="403" y="46"/>
+<text x="453" y="62">
+qualifiers</text>
+</g>
+<g class="terminal">
+<rect height="22" rx="10" ry="10" width="28" x="513" y="46"/>
+<text x="527" y="62">
+]</text>
+</g>
+<path d=" M 245 57 h 10"/>
+<path d=" M 355 57 h 10"/>
+<path d=" M 393 57 h 10"/>
+<path d=" M 503 57 h 10"/>
+</g>
+</g>
+<path d=" M 199 57 h 10"/>
+</g>
+<path d=" M 559 57 h 5 a 5 5 0 0 1 5 -5 a 5 5 0 0 1 5 5 a 5 5 0 0 1 -5 5 a 5 5 0 0 1 -5 -5"/>
+<path d=" M 25 57 h 10"/>
+<path d=" M 549 57 h 10"/>
+</g>
+<g class="sequence">
+<path d=" M 10 135 a 5 5 0 0 1 5 -5 a 5 5 0 0 1 5 5 a 5 5 0 0 1 -5 5 a 5 5 0 0 1 -5 -5 m 10 0 h 5"/>
+<g class="sequence">
+<text class="comment" x="106" y="140">
+data-report: accept</text>
+<g class="labeledbox">
+<rect height="90" width="536" x="188" y="88"/>
+<path d=" M 188 135 h 8 m 520 0 h 8"/>
+<text class="comment" x="313" y="111">
+a json-array with &gt;= 2 elements</text>
+<g class="sequence">
+<g class="terminal">
+<rect height="22" rx="10" ry="10" width="28" x="196" y="124"/>
+<text x="210" y="140">
+[</text>
+</g>
+<g class="nonterminal">
+<rect height="22" width="100" x="234" y="124"/>
+<text x="284" y="140">
+json-value</text>
+</g>
+<g class="terminal">
+<rect height="22" rx="10" ry="10" width="28" x="344" y="124"/>
+<text x="358" y="140">
+,</text>
+</g>
+<g class="nonterminal">
+<rect height="22" width="100" x="382" y="124"/>
+<text x="432" y="140">
+qualifiers</text>
+</g>
+<g class="repeat">
+<path d=" M 492 135 h 12 m 0 0 h 174 m -84 0 l -5 -5 m 0 10 l 5 -5 m 84 0 m -12 0 a 12 12 0 0 1 12 12 v 0 a 12 12 0 0 1 -12 12 m -162 0 h 0 a 12 12 0 0 1 -12 -12 v 0 a 12 12 0 0 1 12 -12"/>
+<g class="sequence">
+<g class="nonterminal">
+<rect height="22" width="124" x="504" y="148"/>
+<text x="566" y="164">
+ignored-value</text>
+</g>
+<g class="terminal">
+<rect height="22" rx="10" ry="10" width="28" x="638" y="148"/>
+<text x="652" y="164">
+,</text>
+</g>
+<path d=" M 628 159 h 10"/>
+</g>
+<g/>
+</g>
+<g class="terminal">
+<rect height="22" rx="10" ry="10" width="28" x="688" y="124"/>
+<text x="702" y="140">
+]</text>
+</g>
+<path d=" M 224 135 h 10"/>
+<path d=" M 334 135 h 10"/>
+<path d=" M 372 135 h 10"/>
+<path d=" M 482 135 h 10"/>
+<path d=" M 678 135 h 10"/>
+</g>
+</g>
+<path d=" M 178 135 h 10"/>
+</g>
+<path d=" M 734 135 h 5 a 5 5 0 0 1 5 -5 a 5 5 0 0 1 5 5 a 5 5 0 0 1 -5 5 a 5 5 0 0 1 -5 -5"/>
+<path d=" M 25 135 h 10"/>
+<path d=" M 724 135 h 10"/>
+</g>
+</g>
+</svg>

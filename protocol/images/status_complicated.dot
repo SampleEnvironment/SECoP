@@ -1,0 +1,29 @@
+digraph simple {
+  layout="neato"
+
+  _box [label=" \n \n \n \n \nBusy                       \nstates                       ",
+        pos="-0.2,1!", height=3,shape=box, fillcolor=gray90,style="filled,dotted"]
+
+  subgraph "cluster_Busy" {label="Busy-states";Busy;Preparing;Stopping;}
+  Ready [pos="2,1!"];
+  Error [pos="2,0!", color=red, fontcolor="red"];
+  Disabled [pos="2,2!", fillcolor="gray90", style=filled];
+  Busy [pos="0,1!", label="Working", style=filled, fillcolor=white];
+  Preparing [pos="0,0!", style=filled, fillcolor=white];
+  Stopping [pos="0,2!", style=filled, fillcolor=white];
+
+  Ready -> Preparing [labelangle=-20, labeldistance=3,taillabel="start"];
+  Preparing -> Busy [color=blue];
+  Busy -> Stopping [label="stop"];
+  Stopping -> Ready [color=blue];
+  Busy -> Ready [label="finish", color=blue,fontcolor=blue];
+  Busy -> Error [color=blue];
+  Error -> Ready [label="reset"];
+  Ready -> Disabled [label="disable"];
+  Disabled -> Ready [label="enable"];
+/*
+  Busy -> Busy [label="start"];
+  Ready -> Ready [label="stop"];
+  Ready -> Ready [label="reset"];
+*/
+}

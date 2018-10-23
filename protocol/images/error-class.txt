@@ -1,0 +1,9 @@
+[`error-class`, <["NoSuch", <"Module","Parameter","Command">],
+                 ["Command",<"Failed", "Running">],
+                 ["Is",<"Busy","Error","Disabled">],
+                 [<"Protocol","Internal">,"Error"],
+                 "ReadOnly",
+                 ["BadValue",!, [":", 'subclass']?#`not yet pecified`],
+                 "CommunicationFailed",
+                 ["_",'custom error class', !*['custom subclass',":"]]
+>]

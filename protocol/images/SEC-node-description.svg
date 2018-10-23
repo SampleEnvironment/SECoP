@@ -1,0 +1,268 @@
+<svg class="railroad" viewBox="0 0 793 407" xmlns="http://www.w3.org/2000/svg">
+<style type="text/css">
+
+    svg.railroad {
+        background-color: hsl(30, 20%, 95%);
+        background-size: 15px 15px;
+        background-image: linear-gradient(to right, rgba(30, 30, 30, .05) 1px, transparent 1px),
+                          linear-gradient(to bottom, rgba(30, 30, 30, .05) 1px, transparent 1px);
+    }
+
+    svg.railroad path {
+        stroke-width: 3px;
+        stroke: black;
+        fill: transparent;
+    }
+
+    svg.railroad .debug {
+        stroke-width: 1px;
+        stroke: red;
+    }
+
+    svg.railroad text {
+        font: 14px monospace;
+        text-anchor: middle;
+    }
+
+    svg.railroad .nonterminal text {
+        font-weight: bold;
+    }
+
+    svg.railroad text.comment {
+        font: italic 12px monospace;
+    }
+
+    svg.railroad rect {
+        stroke-width: 3px;
+        stroke: black;
+        fill:hsl(-290, 70%, 90%);
+    }
+
+    svg.railroad g.labeledbox > rect {
+        stroke-width: 1px;
+        stroke: grey;
+        stroke-dasharray: 5px;
+        fill:rgba(90, 90, 150, .1);
+    }</style>
+<g class="verticalgrid">
+<g class="sequence">
+<path d=" M 10 57 a 5 5 0 0 1 5 -5 a 5 5 0 0 1 5 5 a 5 5 0 0 1 -5 5 a 5 5 0 0 1 -5 -5 m 10 0 h 5"/>
+<g class="sequence">
+<text class="comment" x="113" y="62">
+SEC-node-description</text>
+<g class="labeledbox">
+<rect height="122" width="320" x="202" y="10"/>
+<path d=" M 202 57 h 8 m 304 0 h 8"/>
+<text class="comment" x="341" y="33">
+a json-object, keys MUST be unique!</text>
+<g class="sequence">
+<g class="terminal">
+<rect height="22" rx="10" ry="10" width="28" x="210" y="46"/>
+<text x="224" y="62">
+{</text>
+</g>
+<g class="sequence">
+<g class="choice">
+<path d=" M 248 57 h 24 m 0 0 h 204 m -99 0 l -5 -5 m 0 10 l 5 -5 m 99 0"/>
+<g/>
+<path d=" M 248 57 a 12 12 0 0 1 12 12 v 0 m 204 0 v 0 a 12 12 0 0 1 12 -12"/>
+<path d=" M 260 69 v 0 a 12 12 0 0 0 12 12 m 180 0 h 0 a 12 12 0 0 0 12 -12 v 0"/>
+<g class="repeat">
+<path d=" M 272 81 h 12 m 156 0 h 12 m -12 0 a 12 12 0 0 1 12 12 v 8 a 12 12 0 0 1 -12 12 m -28 0 h -128 m 67 0 l 5 -5 m 0 10 l -5 -5 m -67 0 a 12 12 0 0 1 -12 -12 v -8 a 12 12 0 0 1 12 -12"/>
+<g class="terminal">
+<rect height="22" rx="10" ry="10" width="28" x="412" y="102"/>
+<text x="426" y="118">
+,</text>
+</g>
+<g class="sequence">
+<g class="nonterminal">
+<rect height="22" width="156" x="284" y="70"/>
+<text x="362" y="86">
+SEC-node-property</text>
+</g>
+</g>
+</g>
+</g>
+</g>
+<g class="terminal">
+<rect height="22" rx="10" ry="10" width="28" x="486" y="46"/>
+<text x="500" y="62">
+}</text>
+</g>
+<path d=" M 238 57 h 10"/>
+<path d=" M 476 57 h 10"/>
+</g>
+</g>
+<path d=" M 192 57 h 10"/>
+</g>
+<path d=" M 532 57 h 5 a 5 5 0 0 1 5 -5 a 5 5 0 0 1 5 5 a 5 5 0 0 1 -5 5 a 5 5 0 0 1 -5 -5"/>
+<path d=" M 25 57 h 10"/>
+<path d=" M 522 57 h 10"/>
+</g>
+<g class="sequence">
+<path d=" M 10 155 a 5 5 0 0 1 5 -5 a 5 5 0 0 1 5 5 a 5 5 0 0 1 -5 5 a 5 5 0 0 1 -5 -5 m 10 0 h 5"/>
+<g class="sequence">
+<text class="comment" x="99" y="160">
+SEC-node-property</text>
+<g class="choice">
+<path d=" M 174 155 h 24 m 536 0 h 24"/>
+<g class="sequence">
+<g class="sequence">
+<g class="terminal">
+<rect height="22" rx="10" ry="10" width="76" x="198" y="144"/>
+<text x="236" y="160">
+modules</text>
+</g>
+<g class="terminal">
+<rect height="22" rx="10" ry="10" width="28" x="284" y="144"/>
+<text x="298" y="160">
+:</text>
+</g>
+<g class="terminal">
+<rect height="22" rx="10" ry="10" width="28" x="322" y="144"/>
+<text x="336" y="160">
+[</text>
+</g>
+<g class="choice">
+<path d=" M 360 155 h 24 m 0 0 h 312 m -153 0 l -5 -5 m 0 10 l 5 -5 m 153 0"/>
+<g/>
+<path d=" M 360 155 a 12 12 0 0 1 12 12 v 0 m 312 0 v 0 a 12 12 0 0 1 12 -12"/>
+<path d=" M 372 167 v 0 a 12 12 0 0 0 12 12 m 288 0 h 0 a 12 12 0 0 0 12 -12 v 0"/>
+<g class="repeat">
+<path d=" M 384 179 h 12 m 264 0 h 12 m -12 0 a 12 12 0 0 1 12 12 v 8 a 12 12 0 0 1 -12 12 m -28 0 h -236 m 121 0 l 5 -5 m 0 10 l -5 -5 m -121 0 a 12 12 0 0 1 -12 -12 v -8 a 12 12 0 0 1 12 -12"/>
+<g class="terminal">
+<rect height="22" rx="10" ry="10" width="28" x="632" y="200"/>
+<text x="646" y="216">
+,</text>
+</g>
+<g class="sequence">
+<g class="nonterminal">
+<rect height="22" width="52" x="396" y="168"/>
+<text x="422" y="184">
+name</text>
+</g>
+<g class="terminal">
+<rect height="22" rx="10" ry="10" width="28" x="458" y="168"/>
+<text x="472" y="184">
+,</text>
+</g>
+<g class="nonterminal">
+<rect height="22" width="164" x="496" y="168"/>
+<text x="578" y="184">
+module-description</text>
+</g>
+<path d=" M 448 179 h 10"/>
+<path d=" M 486 179 h 10"/>
+</g>
+</g>
+</g>
+<path d=" M 274 155 h 10"/>
+<path d=" M 312 155 h 10"/>
+<path d=" M 350 155 h 10"/>
+</g>
+<g class="terminal">
+<rect height="22" rx="10" ry="10" width="28" x="706" y="144"/>
+<text x="720" y="160">
+]</text>
+</g>
+<path d=" M 696 155 h 10"/>
+</g>
+<path d=" M 174 155 a 12 12 0 0 1 12 12 v 65 m 0 -29 l -5 -5 m 10 0 l -5 5 m 0 29 m 560 0 v -65 m 0 35 l -5 5 m 10 0 l -5 -5 m 0 -35 a 12 12 0 0 1 12 -12"/>
+<path d=" M 186 232 v 33 m 560 0 v -33"/>
+<path d=" M 186 265 v 33 m 560 0 v -33"/>
+<path d=" M 186 298 v 33 m 560 0 v -33"/>
+<path d=" M 186 232 v 0 a 12 12 0 0 0 12 12 m 304 0 h 232 m -113 0 l -5 -5 m 0 10 l 5 -5 m 113 0 a 12 12 0 0 0 12 -12 v 0"/>
+<g class="sequence">
+<g class="terminal">
+<rect height="22" rx="10" ry="10" width="108" x="198" y="233"/>
+<text x="252" y="249">
+description</text>
+</g>
+<g class="terminal">
+<rect height="22" rx="10" ry="10" width="28" x="316" y="233"/>
+<text x="330" y="249">
+:</text>
+</g>
+<g class="nonterminal">
+<rect height="22" width="148" x="354" y="233"/>
+<text x="428" y="249">
+descriptive text</text>
+</g>
+<path d=" M 306 244 h 10"/>
+<path d=" M 344 244 h 10"/>
+</g>
+<path d=" M 186 265 v 0 a 12 12 0 0 0 12 12 m 280 0 h 256 m -125 0 l -5 -5 m 0 10 l 5 -5 m 125 0 a 12 12 0 0 0 12 -12 v 0"/>
+<g class="sequence">
+<g class="terminal">
+<rect height="22" rx="10" ry="10" width="116" x="198" y="266"/>
+<text x="256" y="282">
+equipment_id</text>
+</g>
+<g class="terminal">
+<rect height="22" rx="10" ry="10" width="28" x="324" y="266"/>
+<text x="338" y="282">
+:</text>
+</g>
+<g class="nonterminal">
+<rect height="22" width="116" x="362" y="266"/>
+<text x="420" y="282">
+equipment_id</text>
+</g>
+<path d=" M 314 277 h 10"/>
+<path d=" M 352 277 h 10"/>
+</g>
+<path d=" M 186 298 v 0 a 12 12 0 0 0 12 12 m 280 0 h 256 m -125 0 l -5 -5 m 0 10 l 5 -5 m 125 0 a 12 12 0 0 0 12 -12 v 0"/>
+<g class="sequence">
+<g class="terminal">
+<rect height="22" rx="10" ry="10" width="84" x="198" y="299"/>
+<text x="240" y="315">
+firmware</text>
+</g>
+<g class="terminal">
+<rect height="22" rx="10" ry="10" width="28" x="292" y="299"/>
+<text x="306" y="315">
+:</text>
+</g>
+<g class="nonterminal">
+<rect height="22" width="148" x="330" y="299"/>
+<text x="404" y="315">
+firmware version</text>
+</g>
+<path d=" M 282 310 h 10"/>
+<path d=" M 320 310 h 10"/>
+</g>
+<path d=" M 186 331 v 35 a 12 12 0 0 0 12 12 m 311 0 h 225 m -109 0 l -5 -5 m 0 10 l 5 -5 m 109 0 a 12 12 0 0 0 12 -12 v -35"/>
+<g class="sequence">
+<g class="terminal">
+<rect height="22" rx="10" ry="10" width="76" x="198" y="367"/>
+<text x="236" y="383">
+timeout</text>
+</g>
+<g class="terminal">
+<rect height="22" rx="10" ry="10" width="28" x="284" y="367"/>
+<text x="298" y="383">
+:</text>
+</g>
+<g class="labeledbox">
+<rect height="66" width="187" x="322" y="331"/>
+<path d=" M 322 378 h 8 m 164 0 h 15"/>
+<text class="comment" x="415" y="354">
+a positive json-number</text>
+<g class="nonterminal">
+<rect height="22" width="164" x="330" y="367"/>
+<text x="412" y="383">
+timeout in seconds</text>
+</g>
+</g>
+<path d=" M 274 378 h 10"/>
+<path d=" M 312 378 h 10"/>
+</g>
+</g>
+<path d=" M 164 155 h 10"/>
+</g>
+<path d=" M 768 155 h 5 a 5 5 0 0 1 5 -5 a 5 5 0 0 1 5 5 a 5 5 0 0 1 -5 5 a 5 5 0 0 1 -5 -5"/>
+<path d=" M 25 155 h 10"/>
+<path d=" M 758 155 h 10"/>
+</g>
+</g>
+</svg>

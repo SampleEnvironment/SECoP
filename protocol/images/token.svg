@@ -1,0 +1,98 @@
+<svg class="railroad" viewBox="0 0 375 194" xmlns="http://www.w3.org/2000/svg">
+<style type="text/css">
+
+    svg.railroad {
+        background-color: hsl(30, 20%, 95%);
+        background-size: 15px 15px;
+        background-image: linear-gradient(to right, rgba(30, 30, 30, .05) 1px, transparent 1px),
+                          linear-gradient(to bottom, rgba(30, 30, 30, .05) 1px, transparent 1px);
+    }
+
+    svg.railroad path {
+        stroke-width: 3px;
+        stroke: black;
+        fill: transparent;
+    }
+
+    svg.railroad .debug {
+        stroke-width: 1px;
+        stroke: red;
+    }
+
+    svg.railroad text {
+        font: 14px monospace;
+        text-anchor: middle;
+    }
+
+    svg.railroad .nonterminal text {
+        font-weight: bold;
+    }
+
+    svg.railroad text.comment {
+        font: italic 12px monospace;
+    }
+
+    svg.railroad rect {
+        stroke-width: 3px;
+        stroke: black;
+        fill:hsl(-290, 70%, 90%);
+    }
+
+    svg.railroad g.labeledbox > rect {
+        stroke-width: 1px;
+        stroke: grey;
+        stroke-dasharray: 5px;
+        fill:rgba(90, 90, 150, .1);
+    }</style>
+<g class="verticalgrid">
+<g class="sequence">
+<path d=" M 10 57 a 5 5 0 0 1 5 -5 a 5 5 0 0 1 5 5 a 5 5 0 0 1 -5 5 a 5 5 0 0 1 -5 -5 m 10 0 h 5"/>
+<g class="sequence">
+<text class="comment" x="57" y="62">
+token</text>
+<g class="labeledbox">
+<rect height="96" width="250" x="90" y="10"/>
+<path d=" M 90 57 h 8 m 118 0 h 124 m -59 0 l -5 -5 m 0 10 l 5 -5 m 59 0"/>
+<text class="comment" x="215" y="33">
+SHOULD restrict to chars+digits</text>
+<g class="repeat">
+<path d=" M 98 57 h 12 m 92 0 h 14 m -12 0 a 12 12 0 0 1 12 12 v 7 a 12 12 0 0 1 -12 12 m -94 0 h 0 a 12 12 0 0 1 -12 -12 v -7 a 12 12 0 0 1 12 -12"/>
+<text class="comment" x="157" y="93">
+max 63 times</text>
+<g class="nonterminal">
+<rect height="22" width="92" x="110" y="46"/>
+<text x="156" y="62">
+printable</text>
+</g>
+</g>
+</g>
+<path d=" M 80 57 h 10"/>
+</g>
+<path d=" M 350 57 h 5 a 5 5 0 0 1 5 -5 a 5 5 0 0 1 5 5 a 5 5 0 0 1 -5 5 a 5 5 0 0 1 -5 -5"/>
+<path d=" M 25 57 h 10"/>
+<path d=" M 340 57 h 10"/>
+</g>
+<g class="sequence">
+<path d=" M 10 165 a 5 5 0 0 1 5 -5 a 5 5 0 0 1 5 5 a 5 5 0 0 1 -5 5 a 5 5 0 0 1 -5 -5 m 10 0 h 5"/>
+<g class="sequence">
+<text class="comment" x="71" y="170">
+printable</text>
+<g class="labeledbox">
+<rect height="66" width="222" x="118" y="118"/>
+<path d=" M 118 165 h 8 m 108 0 h 106 m -50 0 l -5 -5 m 0 10 l 5 -5 m 50 0"/>
+<text class="comment" x="229" y="141">
+any char with value 33..127</text>
+<g class="terminal">
+<rect height="22" rx="10" ry="10" width="108" x="126" y="154"/>
+<text x="180" y="170">
+[\x21-\x7f]</text>
+</g>
+</g>
+<path d=" M 108 165 h 10"/>
+</g>
+<path d=" M 350 165 h 5 a 5 5 0 0 1 5 -5 a 5 5 0 0 1 5 5 a 5 5 0 0 1 -5 5 a 5 5 0 0 1 -5 -5"/>
+<path d=" M 25 165 h 10"/>
+<path d=" M 340 165 h 10"/>
+</g>
+</g>
+</svg>

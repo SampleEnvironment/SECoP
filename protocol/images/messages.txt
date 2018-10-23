@@ -1,0 +1,2 @@
+[`messages`,['message', <!,'CR'#`\x0D`>#`MUST accept,SHOULD NOT send`, 'LF'#`\x0A`]*!]
+

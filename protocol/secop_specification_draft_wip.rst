@@ -145,6 +145,7 @@ The following parameters are predefined (this list will be extended):
 
      *Note: The amount of predefined status codes, their value and meaning is still under discussion.*
 
+
      .. table:: preliminary status codes
 
          ============= =========== ===========
