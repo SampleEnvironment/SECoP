@@ -91,8 +91,8 @@ Other numbers are reserved for the time beeing (i.e. 110..199, 210..299, etc.).
             100        IDLE-Group base, Ready-Group base
             200        WARN-Group base, belongs to Ready-Group
             300        BUSY-Group base
-            500        ERROR-Group base
-            900        DISABLE-Group base
+            400        ERROR-Group base
+            500        DISABLE-Group base
         ============= ==================
 
     *note:* Enrico proposed using code 250 for UNSTABLE.
