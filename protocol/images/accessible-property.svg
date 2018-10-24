@@ -1,4 +1,4 @@
-<svg class="railroad" viewBox="0 0 591 339" xmlns="http://www.w3.org/2000/svg">
+<svg class="railroad" viewBox="0 0 591 339" width="591pt" xmlns="http://www.w3.org/2000/svg">
 <style type="text/css">
 
     svg.railroad {
@@ -38,7 +38,7 @@
         fill:hsl(-290, 70%, 90%);
     }
 
-    svg.railroad g.labeledbox > rect {
+    svg.railroad g.labeledbox &gt; rect {
         stroke-width: 1px;
         stroke: grey;
         stroke-dasharray: 5px;

@@ -77,6 +77,8 @@ This leads to the following, still simple, diagram.
 
         *note:* ``disable`` is only allowed in a state from the ``Idle`` group!
 
+    *note:* see also `SECoP Issue 22: Enable Module instead of Shutdown Command`_.
+
 *note:* a module is not required to implement all states. Only the actually used
 states MUST be declared in the descriptive data. Also, the unused initiating actions
 (connecting to or from unused states) MUST NOT be implemented, as ECS-clients may derive to support
@@ -188,3 +190,5 @@ Discussion
 ----------
 No discussion of this issue in its current form yet.
 Further clarifications + definitions may be needed to find a consensus.
+
+.. _`SECoP Issue 22: Enable Module instead of Shutdown Command`: issues/022u%20Enable%20Module%20instead%20of%20Shutdown%20Command.rst
