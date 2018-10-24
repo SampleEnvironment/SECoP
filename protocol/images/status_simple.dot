@@ -1,11 +1,12 @@
 digraph supersimple {
   layout="neato"
-  Ready [pos="2,1!"];
-  Busy [pos="0,1!"];
-  Error [pos="1,0!"];
+  Ready [pos="2,1!", label="Idle"];
+  Busy [pos="0,1!", label="Busy"];
+  Error [pos="1,0!", label="Error"];
   Ready -> Busy [label="start"];
   Busy -> Ready [label="stop"];
   Busy -> Ready [label="finish", color=blue];
   Busy -> Error [color=blue];
   Error -> Ready [label="reset"];
+  Ready -> Error [color=blue];
 }

@@ -1,9 +1,9 @@
 digraph simple {
   layout="neato"
-  Ready [pos="2,1!"];
-  Busy [pos="0,1!"];
-  Error [pos="1,0!"];
-  Disabled [pos="2,2!"];
+  Ready [pos="2,1!", label="Idle"];
+  Busy [pos="0,1!", label="Busy"];
+  Error [pos="1,0!", label="Error"];
+  Disabled [pos="2,2!", label="DISABLED"];
   Ready -> Busy [label="start"];
   Busy -> Ready [label="stop"];
   Busy -> Ready [label="finish", color=blue];
@@ -11,4 +11,5 @@ digraph simple {
   Error -> Ready [label="reset"];
   Ready -> Disabled [label="disable"];
   Disabled -> Ready [label="enable"];
+  Ready -> Error [color=blue];
 }
