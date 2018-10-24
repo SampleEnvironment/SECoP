@@ -1,11 +1,11 @@
 [`module-property`,<
- ["accessibles",":","[",<!,['name', ",", 'accessible-description']*",">,"]"]
- ,["description",":",'descriptive text']
- ,["visibility",":",<"expert","advanced","user">]
- ,["interface_class",":",'list of interfaces']
- ,["features",":", 'list of features']
- ,["group",":", 'groupname']
- ,["meaning",":","[",<"temperature","magneticfield","electricfield","pressure",
-                      "rotation_z","humidity","viscosity","flowrate","concentration">#`extensible`,"_regulation"?,",",'integer number 5..45',"]"]
- ,['property'] 
+ ["\"accessibles\"",":","[",<!,['name', ",", 'accessible-description']*",">,"]"]
+,["\"description\"",":",'descriptive text']
+,["\"visibility\"",":",<"\"expert\"","\"advanced\"","\"user\"">]
+,["\"interface_class\"",":","[" <!,'interface'*","> "]"]
+,["\"features\"",":", "[" <!,'feature'*","> "]" ]
+,["\"group\"",":", 'groupname']
+,["\"meaning\"",":","[" "\"",<"temperature","magneticfield","electricfield","pressure",
+                     "rotation_z","humidity","viscosity","flowrate","concentration">#`extensible`,"_regulation"?,"\"" ",",'integer number 5..45',"]"]
+,['custom-property'] 
 >]

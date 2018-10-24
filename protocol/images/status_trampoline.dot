@@ -1,8 +1,8 @@
 digraph simple {
   layout="neato"
 
-  _box [label=" \n \n \n \n \nBusy                       \nstates                       ",
-        pos="-0.2,1!", height=3,shape=box, fillcolor=gray90,style="filled,dotted"]
+  _box [label=" \n \n \n \n \nBusy                          \nstates                          ",
+        pos="0,1!", height=3,shape=box, fillcolor=gray90,style="filled,dotted"]
 
   subgraph "cluster_Busy" {label="Busy-states";Busy;Preparing;Stopping;}
   Ready [pos="2,1!", label="Idle"];
@@ -18,9 +18,9 @@ digraph simple {
   Stopping -> Ready [color=blue];
   Busy -> Ready [label="finish", color=blue,fontcolor=blue];
   Busy -> Error [color=blue];
-  Error -> Ready [label="reset"];
-  Ready -> Disabled [label="disable"];
-  Disabled -> Ready [label="enable"];
+  Error -> Ready [label="reset "];
+  Ready -> Disabled [label="disable "];
+  Disabled -> Ready [label=" enable"];
   Ready -> Error [color=blue];
 /*
   Busy -> Busy [label="start"];

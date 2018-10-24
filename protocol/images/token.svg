@@ -79,13 +79,13 @@ printable</text>
 printable</text>
 <g class="labeledbox">
 <rect height="66" width="222" x="118" y="118"/>
-<path d=" M 118 165 h 8 m 108 0 h 106 m -50 0 l -5 -5 m 0 10 l 5 -5 m 50 0"/>
+<path d=" M 118 165 h 8 m 92 0 h 122 m -58 0 l -5 -5 m 0 10 l 5 -5 m 58 0"/>
 <text class="comment" x="229" y="141">
 any char with value 33..127</text>
 <g class="terminal">
-<rect height="22" rx="10" ry="10" width="108" x="126" y="154"/>
-<text x="180" y="170">
-[\x21-\x7f]</text>
+<rect height="22" rx="10" ry="10" width="92" x="126" y="154"/>
+<text x="172" y="170">
+[x21-x7f]</text>
 </g>
 </g>
 <path d=" M 108 165 h 10"/>

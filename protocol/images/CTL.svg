@@ -51,13 +51,13 @@
 CTL</text>
 <g class="labeledbox">
 <rect height="66" width="180" x="76" y="10"/>
-<path d=" M 76 57 h 8 m 108 0 h 64 m -29 0 l -5 -5 m 0 10 l 5 -5 m 29 0"/>
+<path d=" M 76 57 h 8 m 92 0 h 80 m -37 0 l -5 -5 m 0 10 l 5 -5 m 37 0"/>
 <text class="comment" x="166" y="33">
 any byte less than 32</text>
 <g class="terminal">
-<rect height="22" rx="10" ry="10" width="108" x="84" y="46"/>
-<text x="138" y="62">
-[\x00-\x1F]</text>
+<rect height="22" rx="10" ry="10" width="92" x="84" y="46"/>
+<text x="130" y="62">
+[x00-x1F]</text>
 </g>
 </g>
 <path d=" M 66 57 h 10"/>

@@ -912,11 +912,11 @@ accessible property
 .. image:: images/accessible-property.svg
    :alt: property ::= (name ":" property_value)
 
-property
-~~~~~~~~
+custom-property
+~~~~~~~~~~~~~~~
 
-.. image:: images/property.svg
-   :alt: property ::= (name ":" property_value)
+.. image:: images/custom-property.svg
+   :alt: property ::= ("_" name ":" property_value)
 
 
 
@@ -1032,7 +1032,7 @@ Accessible Properties
      Only SI-units (including prefix) SHOULD be used for SECoP units preferrably.
 
 -  visibility
-     the visibility of the accessible. values and meaning as for module-visibility above.
+     optional, the visibility of the accessible. values and meaning as for module-visibility above.
      *remark: this 'inherits' from the module property. i.e. if it is not specified, the
      value of the module-property (if given) should be used instead*
 
@@ -1066,9 +1066,11 @@ Structs are comparable to tuples, with the difference of using named entries who
 
 All datatypes are specified in the descriptive data in the following generic form:
 
+.. image:: images/datatype-generic.svg
+
+Here is an overview of all defined datatypes:
+
 .. image:: images/datatype.svg
-
-
 
 .. contents::
     :depth: 1
@@ -1369,7 +1371,7 @@ Complying to these rules maximise to possibility of future + backwards compatibi
 Licences
 ========
 
-The above diagrams were generated using the library from http://github.com/lukaslueg/railroad_dsl.git.
+The above diagrams were generated using the library from http://github.com/birkenfeld/railroad_dsl.git.
 
 
 
