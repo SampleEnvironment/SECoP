@@ -1,0 +1,32 @@
+digraph supersimple {
+  //layout="neato"
+  // main group
+  State [shape=hexagon];
+  // subgroups
+  Idle [shape=box];
+  Warn [shape=box];
+  Busy [shape=box];
+  Error [shape=box];
+
+  // subsubgroup
+  Idle -> Warn;
+
+  // final states
+  DISABLED;
+  IDLE;
+  WARN;
+  BUSY;
+  ERROR;
+  UNKNOWN;
+  CUSTOM_IDLE;
+  CUSTOM_WARN;
+  CUSTOM_BUSY;
+  CUSTOM_ERROR;
+
+  // relationships
+  State -> {Idle, Warn, Busy, Error, UNKNOWN, DISABLED};
+  Idle -> {IDLE, CUSTOM_IDLE};
+  Warn -> {WARN, CUSTOM_WARN};
+  Busy -> {BUSY, CUSTOM_BUSY};
+  Error -> {ERROR, CUSTOM_ERROR};
+}

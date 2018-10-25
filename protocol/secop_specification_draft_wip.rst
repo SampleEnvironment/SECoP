@@ -1371,7 +1371,7 @@ Complying to these rules maximise to possibility of future + backwards compatibi
 Licences
 ========
 
-The above diagrams were generated using the library from http://github.com/birkenfeld/railroad_dsl.git.
+The above diagrams were generated using the library from http://github.com/lukaslueg/railroad_dsl.git.
 
 
 
