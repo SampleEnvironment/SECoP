@@ -1,11 +1,11 @@
-[`action`, <"*IDN?", ["ISSE&SINE2020,SECoP,", 'version', ",", 'add.info'],
-            "describe", "describing",
-            "activate", "active",
-            "deactivate", "inactive",
-            "ping", "pong",
-            "change", "changed",
-            "do", "done",
-            "read", "update", "error", ["_", 'custom action'],
-            <"buffer", "buffered">#`not yet specified, see Issue 29`
+[`action` <"*IDN?" ["ISSE&SINE2020,SECoP," 'version' "," 'add.info']
+ "describe" "describing"
+ "activate" "active"
+ "deactivate" "inactive"
+ "ping" "pong"
+ "change" "changed"
+ "do" "done"
+ "read" "update" "error" ["_" 'custom action']
+ <"buffer" "buffered">#`not yet specified, see Issue 29`
 >]
 

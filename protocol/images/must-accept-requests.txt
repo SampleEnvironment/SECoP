@@ -1,11 +1,11 @@
-[`must-accept-requests`,<
-	"*IDN?",
-	["describe", ["\x20"#`SPACE`,'ignored-value', ["\x20"#`SPACE`, 'ignored-value']?]?],
-	["ping", ["\x20"#`SPACE`,'token', ["\x20"#`SPACE`, 'ignored-value']?]?],
-        [<"activate", "deactivate">,["\x20"#`SPACE`, 'module', [":", 'parameter']?,["\x20"#`SPACE`, 'ignored-value']?]?],
-        ["do", "\x20"#`SPACE`, 'module', ":", 'command', ["\x20"#`SPACE`, 'argument']?],
-        ["read", "\x20"#`SPACE`, 'module', ":", 'parameter', ["\x20"#`SPACE`, 'ignored-value']?],
-        [<"change","buffer"#`not yet defined, see Issue 29`>, "\x20"#`SPACE`,
-         'module', ":", 'parameter', "\x20"#`SPACE`, 'new value']
+[`must-accept-requests` <
+ "*IDN?"
+ ["describe" ["\\x20"#`SPACE` 'ignored-value' ["\\x20"#`SPACE` 'ignored-value']?]?]
+ ["ping" ["\\x20"#`SPACE` 'token' ["\\x20"#`SPACE` 'ignored-value']?]?]
+ [<"activate" "deactivate"> ["\\x20"#`SPACE` 'module' [":" 'parameter']? ["\\x20"#`SPACE` 'ignored-value']?]?]
+ ["do" "\\x20"#`SPACE` 'module' ":" 'command' ["\\x20"#`SPACE` 'argument']?]
+ ["read" "\\x20"#`SPACE` 'module' ":" 'parameter' ["\\x20"#`SPACE` 'ignored-value']?]
+ [<"change" "buffer"#`not yet defined, see Issue 29`> "\\x20"#`SPACE`
+ 'module' ":" 'parameter' "\\x20"#`SPACE` 'new value']
 >]
 

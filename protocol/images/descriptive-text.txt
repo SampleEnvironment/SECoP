@@ -1,1 +1,1 @@
-[`descriptive-text`, 'first line'#`max 72 chars`, "\n\n", 'another line of text'*"\n"]
+[`descriptive-text` 'first line'#`max 72 chars` ["\n\n" 'another line of text'*"\n"]?]

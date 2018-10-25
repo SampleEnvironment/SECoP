@@ -1,13 +1,13 @@
-[`must-accept-replies`,<
-  ["ISSE&SINE2020,SECoP,", 'secop-version', ",", 'secop-revision'],
-  ["describing", "\x20.\x20"#`SPACE dot SPACE`, 'structure-report'],
-  [<"active","inactive">, <!#`global (de-)activation`,
-                           ["\x20"#`SPACE`, 'module', <!#`module-wise (de-)activation`,
-                             [":", 'parameter']#`parameter-wise (de-)activation`>,
-                               ["\x20"#`SPACE`, 'ignored-value']?]>],
-  ["error", "\x20"#`SPACE`, 'error-class'*[":", 'ignored-value']#`error-subclass to be defined`, "\x20"#`SPACE`, 'error-report'],
-  [<["pong", "\x20"#`SPACE`, 'token'?],
-    ["done", "\x20"#`SPACE`, 'module', ":", 'command'],
-    [<"update","changed","buffered"#`see Issue 29`>, "\x20"#`SPACE`, 'module', ":", 'parameter']>,
-      "\x20"#`SPACE`, 'data-report']
+[`must-accept-replies` <
+ ["ISSE&SINE2020,SECoP," 'secop-version' "," 'secop-revision']
+ ["describing" "\\x20.\\x20"#`SPACE dot SPACE` 'structure-report']
+ [<"active" "inactive"> <!#`global (de-)activation`
+ ["\\x20"#`SPACE` 'module' <!#`module-wise (de-)activation`
+ [":" 'parameter']#`parameter-wise (de-)activation`>
+ ["\\x20"#`SPACE` 'ignored-value']?]>]
+ ["error" "\\x20"#`SPACE` 'error-class'*[":" 'ignored-value']#`error-subclass to be defined` "\\x20"#`SPACE` 'error-report']
+ [<["pong" "\\x20"#`SPACE` 'token'?]
+ ["done" "\\x20"#`SPACE` 'module' ":" 'command']
+ [<"update" "changed" "buffered"#`see Issue 29`> "\\x20"#`SPACE` 'module' ":" 'parameter']>
+ "\\x20"#`SPACE` 'data-report']
 >]

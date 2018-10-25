@@ -1,1 +1,1 @@
-[`structure-report`, ["[",['SEC-node-description'#`current definition`]*",","]"]#`proposed change`]
+[`structure-report` ["[" ['SEC-node-description'#`current definition`]*"," "]"]#`proposed change`]

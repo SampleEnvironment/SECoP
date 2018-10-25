@@ -146,28 +146,7 @@ The following parameters are predefined (this list will be extended):
      *Note: The amount of predefined status codes, their value and meaning is still under discussion.*
      *See also:* `SECoP Issue 37: Clarification of status`_
 
-
-     .. table:: preliminary status codes
-
-         ============= =========== ===========
-          status code   Enum name   Meaning
-         ============= =========== ===========
-            tbd.         IDLE        module is ready for new requests, is not moving, no abnormal condition
-            tbd.         WARN        like IDLE, but an abnormal condition is to be signaled, may be changed back to IDLE
-            tbd.         BUSY        module is Busy due to a target change or other command
-            tbd.         ERROR       module is not ready for new requests, the ``reset`` command must be called
-            \           DISABLED    the module is disabled
-            \           UNSTABLE    after the module reached it's target, it is now no longer 'there'
-         ============= =========== ===========
-
-     *note: the behaviour of a module in each of the predefined states is not yet 100% defined.*
-
-     *note: the numerical value of the statuscodes are intentionally spaced apart.
-     If an implemenmtation wants to differentiate similiar states,
-     values* ``?01`` ... ``?99`` *are free for custom implementations essentially meaning the same
-     as the basic value* ``?00``\ *.
-     An ECS unaware of custom usage MUST treat them the same as* ``?00``\ *, i.e. 137 is IDLE, 373 is BUSY, etc.
-     In any case, all used values are the be declared in the descriptive data!*
+     *Note: the behaviour of a module in each of the predefined states is not yet 100% defined.*
 
 -  **target**
      present, if the modules main value is to be changeable remotely, i.e. it is at least a Writable
@@ -1093,6 +1072,9 @@ double
         | if ``<min>`` is not given or ``null``, there is no lower limit
         | ``<max>`` and ``<min>`` are numbers with ``<min>`` <= ``<max>``
 
+    * - Expected value range and resolution
+      - congruent to an IEE754 'double' type (64bits)
+
     * - Example
       - ``["double", 0, 100]``
 
@@ -1117,8 +1099,12 @@ int
         | if ``<min>`` is not given or ``null``, there is no lower limit
         | ``<max>`` and ``<min>`` are integers with ``<min>`` <= ``<max>``
 
+    * - Expected value range and resolution
+      - congruent to an 64 bit signed integer type
+
     * - Example
-      - ``["int", 0, 100]``
+      - ``["int", -100, 100]``
+
     * - Transport example
       - | as JSON-number:
         | ``-55``
@@ -1150,12 +1136,15 @@ enum
       - | ``["enum", {<name> : <value>, ....}]``
         | ``name``\ s are strings, ``value``\ s are (small) integers, both ``name``\ s and ``value``\ s MUST be unique
 
+    * - Expected value range and resolution
+      - same as for the integer datatype (i.e. signed 64 bit integer)
+
     * - Example
       - ``["enum", {"IDLE":100,"WARN":200,"BUSY":300,"ERROR":400}]``
 
     * - Transport example
       - | as JSON-number, the client performs the mapping back to the name:
-        | ``2``
+        | ``200``
 
 
 string

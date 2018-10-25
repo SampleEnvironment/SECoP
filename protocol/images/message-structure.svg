@@ -1,4 +1,4 @@
-<svg class="railroad" viewBox="0 0 683 204" width="683pt" xmlns="http://www.w3.org/2000/svg">
+<svg class="railroad" viewBox="0 0 697 204" width="697" xmlns="http://www.w3.org/2000/svg">
 <style type="text/css">
 
     svg.railroad {
@@ -61,73 +61,73 @@ action</text>
 </g>
 </g>
 <g class="choice">
-<path d=" M 203 57 h 24 m 0 0 h 421 m -207 0 l -5 -5 m 0 10 l 5 -5 m 207 0"/>
+<path d=" M 203 57 h 24 m 0 0 h 435 m -214 0 l -5 -5 m 0 10 l 5 -5 m 214 0"/>
 <g/>
-<path d=" M 203 57 a 12 12 0 0 1 12 12 v 0 m 421 0 v 0 a 12 12 0 0 1 12 -12"/>
-<path d=" M 215 69 v 35 a 12 12 0 0 0 12 12 m 397 0 h 0 a 12 12 0 0 0 12 -12 v -35"/>
+<path d=" M 203 57 a 12 12 0 0 1 12 12 v 0 m 435 0 v 0 a 12 12 0 0 1 12 -12"/>
+<path d=" M 215 69 v 35 a 12 12 0 0 0 12 12 m 411 0 h 0 a 12 12 0 0 0 12 -12 v -35"/>
 <g class="sequence">
 <g class="labeledbox">
-<rect height="66" width="61" x="227" y="69"/>
-<path d=" M 227 116 h 8 m 44 0 h 9"/>
+<rect height="66" width="68" x="227" y="69"/>
+<path d=" M 227 116 h 8 m 52 0 h 8"/>
 <text class="comment" x="257" y="92">
 SPACE</text>
 <g class="terminal">
-<rect height="22" rx="10" ry="10" width="44" x="235" y="105"/>
-<text x="257" y="121">
-x20</text>
+<rect height="22" rx="10" ry="10" width="52" x="235" y="105"/>
+<text x="261" y="121">
+\x20</text>
 </g>
 </g>
 <g class="labeledbox">
-<rect height="66" width="108" x="298" y="69"/>
-<path d=" M 298 116 h 8 m 92 0 h 8"/>
-<text class="comment" x="342" y="92">
+<rect height="66" width="108" x="305" y="69"/>
+<path d=" M 305 116 h 8 m 92 0 h 8"/>
+<text class="comment" x="349" y="92">
 No Space!</text>
 <g class="nonterminal">
-<rect height="22" width="92" x="306" y="105"/>
-<text x="352" y="121">
+<rect height="22" width="92" x="313" y="105"/>
+<text x="359" y="121">
 specifier</text>
 </g>
 </g>
 <g class="choice">
-<path d=" M 416 116 h 24 m 0 0 h 184 m -89 0 l -5 -5 m 0 10 l 5 -5 m 89 0"/>
+<path d=" M 423 116 h 24 m 0 0 h 191 m -92 0 l -5 -5 m 0 10 l 5 -5 m 92 0"/>
 <g/>
-<path d=" M 416 116 a 12 12 0 0 1 12 12 v 0 m 184 0 v 0 a 12 12 0 0 1 12 -12"/>
-<path d=" M 428 128 v 35 a 12 12 0 0 0 12 12 m 160 0 h 0 a 12 12 0 0 0 12 -12 v -35"/>
+<path d=" M 423 116 a 12 12 0 0 1 12 12 v 0 m 191 0 v 0 a 12 12 0 0 1 12 -12"/>
+<path d=" M 435 128 v 35 a 12 12 0 0 0 12 12 m 167 0 h 0 a 12 12 0 0 0 12 -12 v -35"/>
 <g class="sequence">
 <g class="labeledbox">
-<rect height="66" width="61" x="440" y="128"/>
-<path d=" M 440 175 h 8 m 44 0 h 9"/>
-<text class="comment" x="470" y="151">
+<rect height="66" width="68" x="447" y="128"/>
+<path d=" M 447 175 h 8 m 52 0 h 8"/>
+<text class="comment" x="477" y="151">
 SPACE</text>
 <g class="terminal">
-<rect height="22" rx="10" ry="10" width="44" x="448" y="164"/>
-<text x="470" y="180">
-x20</text>
+<rect height="22" rx="10" ry="10" width="52" x="455" y="164"/>
+<text x="481" y="180">
+\x20</text>
 </g>
 </g>
 <g class="labeledbox">
-<rect height="66" width="89" x="511" y="128"/>
-<path d=" M 511 175 h 8 m 52 0 h 29"/>
-<text class="comment" x="555" y="151">
+<rect height="66" width="89" x="525" y="128"/>
+<path d=" M 525 175 h 8 m 52 0 h 29"/>
+<text class="comment" x="569" y="151">
 JSON-text</text>
 <g class="nonterminal">
-<rect height="22" width="52" x="519" y="164"/>
-<text x="545" y="180">
+<rect height="22" width="52" x="533" y="164"/>
+<text x="559" y="180">
 data</text>
 </g>
 </g>
-<path d=" M 501 175 h 10"/>
+<path d=" M 515 175 h 10"/>
 </g>
 </g>
-<path d=" M 288 116 h 10"/>
-<path d=" M 406 116 h 10"/>
+<path d=" M 295 116 h 10"/>
+<path d=" M 413 116 h 10"/>
 </g>
 </g>
 <path d=" M 94 57 h 10"/>
 <path d=" M 193 57 h 10"/>
 </g>
-<path d=" M 658 57 h 5 a 5 5 0 0 1 5 -5 a 5 5 0 0 1 5 5 a 5 5 0 0 1 -5 5 a 5 5 0 0 1 -5 -5"/>
+<path d=" M 672 57 h 5 a 5 5 0 0 1 5 -5 a 5 5 0 0 1 5 5 a 5 5 0 0 1 -5 5 a 5 5 0 0 1 -5 -5"/>
 <path d=" M 25 57 h 10"/>
-<path d=" M 648 57 h 10"/>
+<path d=" M 662 57 h 10"/>
 </g>
 </svg>

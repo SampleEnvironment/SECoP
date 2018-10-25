@@ -1,15 +1,15 @@
-[`defined-requests`,<
-        "*IDN?",
-        "describe",
-        [<"activate","deactivate">,
-		<!#`global (de-)activation`,
-		 ["\x20"#`SPACE`, 'module',
-			<!#`module-wise (de-)activation`,
-                	 ["\x20"#`SPACE`, 'parameter']#`parameter-wise (de-)activation`
-        >]>],
-        ["ping",<!#`for manual debuging only`,["\x20"#`SPACE`, 'token']>],
-        [<"change","buffer"#`not yet specified, see Issue 29`>, "\x20"#`SPACE`, ['module', ":", 'parameter']#`specifier`,"\x20"#`SPACE`, 'data'],
-        ["do", "\x20"#`SPACE`, ['module', ":", 'command']#`specifier`,["\x20"#`SPACE`, 'argument'#`data`]?#[`SHOULD be used, even if `,"null"]],
-        ["read", "\x20"#`SPACE`, 'module', ":",'parameter']
+[`defined-requests`<
+ "*IDN?"
+ "describe"
+ [<"activate" "deactivate">
+ <!#`global (de-)activation`
+ ["\\x20"#`SPACE` 'module'
+ <!#`module-wise (de-)activation`
+ ["\\x20"#`SPACE` 'parameter']#`parameter-wise (de-)activation`
+ >]>]
+ ["ping" <!#`for manual debuging only` ["\\x20"#`SPACE` 'token']>]
+ [<"change" "buffer"#`not yet specified, see Issue 29`> "\\x20"#`SPACE` ['module' ":" 'parameter']#`specifier` "\\x20"#`SPACE` 'data']
+ ["do" "\\x20"#`SPACE` ['module' ":" 'command']#`specifier` ["\\x20"#`SPACE` 'argument'#`data`]?#[`SHOULD be used, even if ` "null"]]
+ ["read" "\\x20"#`SPACE` 'module' ":" 'parameter']
 >]
 

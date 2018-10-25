@@ -1,1 +1,1 @@
-[`accessible`, <'parameter','command'>]
+[`accessible` <'parameter' 'command'>]

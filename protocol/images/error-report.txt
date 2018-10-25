@@ -1,2 +1,2 @@
-[`error-report: generate`,["[",'copy of request',",",'error-message',",",'error-info',"]"]#`a json-array with 3 elements`]
-{`error-report: accept`,["[",'copy of request',",",'error-message',",",'error-info',!*['ignored-value',","],"]"]#`a json-array with >= 3 elements`}
+[`error-report: generate` ["[" 'copy of request' "," 'error-message' "," 'error-info' "]"]#`a json-array with 3 elements`]
+[`error-report: accept` ["[" ['copy of request' "," 'error-message' "," 'error-info' ]  ['ignored-value'*","]? "]"]#`a json-array with >= 3 elements`]
