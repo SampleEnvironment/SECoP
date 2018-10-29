@@ -1043,6 +1043,8 @@ Tuples allow to combine a fixed amount of values with different datatypes in an 
 Arrays store a given number of dataelements having the same datatype.
 Structs are comparable to tuples, with the difference of using named entries whose order is irrelevant during transport.
 
+For ranges and precisions see `SECoP Issue 42: Requirements of datatypes`_.
+
 All datatypes are specified in the descriptive data in the following generic form:
 
 .. image:: images/datatype-generic.svg
@@ -1072,15 +1074,15 @@ double
         | if ``<min>`` is not given or ``null``, there is no lower limit
         | ``<max>`` and ``<min>`` are numbers with ``<min>`` <= ``<max>``
 
-    * - Expected value range and resolution
-      - congruent to an IEE754 'double' type (64bits)
-
     * - Example
       - ``["double", 0, 100]``
 
     * - Transport example
       - | as JSON-number:
         | ``3.14159265``
+
+    * - Datatype in C/C++
+      - | double
 
 
 int
@@ -1099,15 +1101,15 @@ int
         | if ``<min>`` is not given or ``null``, there is no lower limit
         | ``<max>`` and ``<min>`` are integers with ``<min>`` <= ``<max>``
 
-    * - Expected value range and resolution
-      - congruent to an 64 bit signed integer type
-
     * - Example
       - ``["int", -100, 100]``
 
     * - Transport example
       - | as JSON-number:
         | ``-55``
+
+    * - Datatype in C/C++
+      - | int64_t
 
 
 bool
@@ -1124,6 +1126,9 @@ bool
       - | as JSON-boolean: true or false
         | ``true``
 
+    * - Datatype in C/C++
+      - | int64_t
+
 
 enum
 ----
@@ -1136,15 +1141,15 @@ enum
       - | ``["enum", {<name> : <value>, ....}]``
         | ``name``\ s are strings, ``value``\ s are (small) integers, both ``name``\ s and ``value``\ s MUST be unique
 
-    * - Expected value range and resolution
-      - same as for the integer datatype (i.e. signed 64 bit integer)
-
     * - Example
       - ``["enum", {"IDLE":100,"WARN":200,"BUSY":300,"ERROR":400}]``
 
     * - Transport example
       - | as JSON-number, the client performs the mapping back to the name:
         | ``200``
+
+    * - Datatype in C/C++
+      - | int64_t
 
 
 string
@@ -1171,6 +1176,9 @@ string
       - | as JSON-string:
         | ``"Hello\n\u2343World!"``
 
+    * - Datatype in C/C++ API
+      - | char \*
+
 
 blob
 ----
@@ -1192,6 +1200,9 @@ blob
     * - Transport example
       - | as single-line base64 (see :RFC:`4648`) encoded JSON-string:
         | ``"AA=="``
+
+    * - Datatype in C/C++ API
+      - | struct {int64_t len, char \*data}
 
 
 array
@@ -1217,6 +1228,9 @@ array
       - | as JSON-array:
         | ``[3,4,7,2,1]``
 
+    * - Datatype in C/C++ API
+      - | <basic_datatype>[]
+
 
 tuple
 -----
@@ -1237,6 +1251,9 @@ tuple
       - | as JSON-array:
         | ``[300,"accelerating"]``
 
+    * - Datatype in C/C++ API
+      - | struct
+
 
 struct
 ------
@@ -1254,6 +1271,11 @@ struct
     * - Transport example
       - | as JSON-object:
         | ``{"x": 0, "y": 1}``
+
+    * - Datatype in C/C++ API
+      - | struct
+        |
+        | might be null
 
 *remark: see also* `SECoP Issue 35: Partial structs`_
 
@@ -1379,3 +1401,4 @@ The above diagrams were generated using the library from http://github.com/lukas
 .. _`SECoP Issue 36: Dynamic units`: issues/036p%20Dynamic%20units.rst
 .. _`SECoP Issue 37: Clarification of status`: issues/037p%20Clarification%20of%20status.rst
 .. _`SECoP Issue 38: Extension mechanisms`: issues/038p%20Extension%20mechanisms.rst
+.. _`SECoP Issue 42: Requirements of datatypes`: issues/042p%20Requirements%20of%20datatypes.rst

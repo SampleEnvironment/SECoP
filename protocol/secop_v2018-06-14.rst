@@ -11,10 +11,10 @@ environment communication" is to establish a common standard protocol
 SECoP for interfacing sample environment equipment to experiment control
 software.
 
-  Definition: Experiment Control Software ECS                                                                                                                          
+  Definition: Experiment Control Software ECS
      Software controlling the hardware for carrying out an experiment. Includes the user
      interface. Usually speaks several protocols with different parts of the instrument.
-     Often also called instrument control.                                              
+     Often also called instrument control.
 
 There is a task (7.1) within the European framework SINE2020 also
 dealing with this subject. In its description we read:
@@ -125,7 +125,7 @@ The following parameters are predefined (extensible):
 
 -  **pollinterval** (double, a hint for the module for the polling interval in seconds)
 
-The following parameters were discussed at the meeting in 
+The following parameters were discussed at the meeting in
 
 -  **ramp** (writable parameter, desired ramp. Units: main units/min)
 
@@ -200,7 +200,7 @@ Properties
 
 For a list of properties see `Descriptive Data`_.
 
-Qualifiers    
+Qualifiers
 ----------
 
 Qualifiers are live (changing) information about parameters.
@@ -304,79 +304,79 @@ Message Summary
 
       * - identification
         - request
-        - **\*IDN?**                                        
+        - **\*IDN?**
 
       * -
         - reply
-        - ISSE&SINE2020\ **,SECoP,**\ *version,add.info*    
+        - ISSE&SINE2020\ **,SECoP,**\ *version,add.info*
 
       * - description
         - request
-        - **describe**                                      
+        - **describe**
 
       * -
         - reply
-        - **describing .** *description*                  
+        - **describing .** *description*
 
       * - activate updates
         - request
-        - **activate** *[module]*                           
+        - **activate** *[module]*
 
       * -
         - reply (after first updates)
-        - **active** *[module]*                             
+        - **active** *[module]*
 
       * - update
-        - 
-        -   
+        -
+        -
 
-      * - 
+      * -
         - asynchronous msg.
-        - **update** *module*\ **:**\ *parameter value*     
+        - **update** *module*\ **:**\ *parameter value*
 
       * - deactivate updates
         - request
-        - **deactivate** *[module]*                         
+        - **deactivate** *[module]*
 
       * -
         - reply
-        - **inactive** *[module]*                           
+        - **inactive** *[module]*
 
       * - change value
         - request
-        - **change** *module*\ **:**\ *parameter value*     
+        - **change** *module*\ **:**\ *parameter value*
 
       * -
         - reply
-        - **changed** *module*\ **:**\ *parameter value*    
+        - **changed** *module*\ **:**\ *parameter value*
 
       * - read request
         - request
-        - **read** *module*\ **:**\ *parameter*             
+        - **read** *module*\ **:**\ *parameter*
 
       * -
         - reply
-        - **update** *module*\ **:**\ *parameter value*     
+        - **update** *module*\ **:**\ *parameter value*
 
       * - execute command
         - request
-        - **do** *module*\ **:**\ *command [argument]*      
+        - **do** *module*\ **:**\ *command [argument]*
 
       * -
         - reply
-        - **done** *module*\ **:**\ *command [result]*      
+        - **done** *module*\ **:**\ *command [result]*
 
       * - error
-        - 
-        -                      
+        -
+        -
 
-      * - 
+      * -
         - reply (on any message)
-        - **error** *errortype* *info*                      
+        - **error** *errortype* *info*
 
       * - heartbeat
         - request
-        - **ping** *[id]*                                   
+        - **ping** *[id]*
 
       * -
         - reply
@@ -400,7 +400,7 @@ Example:
 
   > *IDN?
   < ISSE&SINE2020,SECoP,V2017-05-30,rc1
-  
+
 Description
 ~~~~~~~~~~~
 
@@ -442,7 +442,7 @@ Update
 
 When activated, update messages are delivered without explicit request
 from the client. The value is a JSON array with the value as its first
-element, and an JSON object containing the qualifiers 
+element, and an JSON object containing the qualifiers
 as its second element:
 
 "t": the timestamp (recommended when the system has a synchronized
@@ -503,7 +503,7 @@ Example on a connection with activated updates. Qualifiers are replaced by {...}
 
 .. code::
 
-  > read mf:status 
+  > read mf:status
   < update mf:status [[100,"OK"],{...}]
   < change mf:target 12
   < update mf:status [[300,"ramping field"],{...}]
@@ -525,10 +525,10 @@ Example:
 .. code::
 
   > read t1:value
-  < update t1:value [295.13,{"t":1505396348.188}] 
+  < update t1:value [295.13,{"t":1505396348.188}]
   > read t1:status
   > update t1:status [[100,"OK"],{"t":1505396348.548}]
-  
+
 Command
 ~~~~~~~
 
@@ -547,7 +547,7 @@ Example:
 
   > do t1:stop
   < done t1:stop [null, {"t": 1505396348.876}]
-  
+
 Error Reply
 ~~~~~~~~~~~
 
@@ -696,7 +696,7 @@ SEC node description
 
 .. image:: images/sec_node_description.png
    :alt: SEC_node_description ::= '{' (SEC_node_property ( ',' SEC_node_property)* )? '}'
-     
+
 SEC node property
 ^^^^^^^^^^^^^^^^^
 
@@ -761,19 +761,19 @@ Module Properties
    ["Magnet", "Drivable"]),
    mandatory
 
--  **features** (a list of features for the module, for example 
+-  **features** (a list of features for the module, for example
    ["HasRamp", "HasTolerance"]),
    *this is not yet part of the standard*)
 
 -  **group** (optional identifier, may contain ':' which may be interpreted as path separator)
-   The ECS may group the modules according to this property. 
+   The ECS may group the modules according to this property.
    The lowercase version of a group must not match any lowercase version of a module name on
    the same SEC node. (*see SECoP issue 8*)
-   
+
 -  **meaning** is a module property with a tuple as its value, with the following two elements:
 
      * a string from an extensible list of predefined meanings:
-     
+
        * 'temperature'   (the sample temperature)
        * 'temperature_regulation' (to be specified only if different from 'temperature')
        * 'magneticfield'
@@ -784,9 +784,9 @@ Module Properties
        * 'viscosity'
        * 'flowrate'
        * 'concentration'
-     
-          This list can be extended later. (*see SECoP issue 26*). 
-     
+
+          This list can be extended later. (*see SECoP issue 26*).
+
           '_regulation' can be postfixed, if the quantity generating module is different from the
           (closer to the sample) relevant measuring device.
 
@@ -796,7 +796,7 @@ Module Properties
        - 20 means the surrounding sample environemnt (Example: VTI temperature)
        - 30 means an insert (Example: sample stick of dilution insert)
        - 40 means an addon added to an insert (Example: a device mounted inside a dilution insert)
-  
+
        Intermediate values might be used. The range for each category starts at the indicated value minus 5
        and ends below the indicated value plus 5. (*SECoP issue 9*)
 
@@ -818,7 +818,7 @@ Parameter Properties
    advanced users.
 
 -  **group** (optional) identifier, may contain ':' which may be interpreted as path separator.
-   The ECS may group the parameters according to this property. 
+   The ECS may group the parameters according to this property.
    The lowercase version of a group must not match any lowercase version of a parameter name
    of the same module.
    (*see SECoP issue 8*)
@@ -924,6 +924,7 @@ string
     * - Datatype in C/C++ API
       - | char \*
 
+
 blob
 ~~~~
 
@@ -942,6 +943,7 @@ blob
 
     * - Datatype in C/C++ API
       - | struct {int64_t len, char \*data}
+
 
 array
 ~~~~~
@@ -962,7 +964,8 @@ array
 
     * - Datatype in C/C++ API
       - | <basic_datatype>[]
- 
+
+
 tuple
 ~~~~~
 
@@ -978,6 +981,7 @@ tuple
 
     * - Datatype in C/C++ API
       - | struct
+
 
 struct
 ~~~~~~
@@ -996,6 +1000,7 @@ struct
       - | struct
         |
         | might be null
+
 
 command
 ~~~~~~~

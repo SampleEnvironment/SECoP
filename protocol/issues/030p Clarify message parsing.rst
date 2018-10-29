@@ -59,6 +59,7 @@ This could be writte as a regular expression like::
     \x0D?$            ; matches 0 or 1 trailing CR characters and the end of the line (i.e. the LF character)
 
 :note: The regexp is written down line-by-line with added comments.
+
 For actual use you should use it like::
 
        "^\x0D?([\x21-\xFF]+)(?:\x20([\x21-\xFF]*)(?:\x20([\x20-\xFF]*))?)?\x0D?$"
