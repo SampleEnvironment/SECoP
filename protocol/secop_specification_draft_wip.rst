@@ -168,7 +168,7 @@ The following parameters were discussed at a meeting.
 -  **time_to_target**
      (read only double, expected time to reach target in seconds)
 
-*note: ``use_ramp`` is under discussion.*
+*note: ``use_ramp`` is under discussion. A ``mode`` enum is proposed instead.*
 
 Command:
     Commands are provided to initiate specified actions of the module.
@@ -846,64 +846,26 @@ The format of the descriptive data is JSON, as all other data in SECoP.
 
 
 .. for creating the railroad diagrams see: http://bottlecaps.de/rr/ui
-.. source EBNF:
-.. SEC_node_description ::= '{' (SEC_node_property ( ',' SEC_node_property)* )? '}'
-.. SEC_node_property ::= property |  ( '"modules":' '[' (name ',' module_description (',' name ',' module_description)*)? ']')
-.. module_description ::= '{' (module_property ( ',' module_property)* )? '}'
-.. module_property ::= property |  ( '"parameters":' '[' (name ',' properties (',' name ',' properties)*)? ']') |  ( '"commands":' '[' (name ',' properties (',' name ',' properties)*)? ']')
-.. module_property_v2 ::= property |  ( '"accessibles":' '[' (name ',' properties (',' name ',' properties)*)? ']')
-.. properties ::=  '{' (property ( ',' property)* )? '}'
-.. property ::= (name ":" property_value)
-
-SEC node description
-~~~~~~~~~~~~~~~~~~~~
-
-.. image:: images/sec-node-description.svg
-   :alt: SEC_node_description ::= '{' (SEC_node_property ( ',' SEC_node_property)* )? '}'
-
-SEC node property
-~~~~~~~~~~~~~~~~~
-
-.. image:: images/sec-node-property.svg
-   :alt: SEC_node_property ::= property |  ( '"modules":' '[' (name ',' module_description (',' name ',' module_description)*)? ']')
-
-module description
-~~~~~~~~~~~~~~~~~~
-
-.. image:: images/module-description.svg
-   :alt: module_description ::= '{' (module_property ( ',' module_property)* )? '}'
-
-module property
-~~~~~~~~~~~~~~~
-
-.. image:: images/module-property.svg
-   :alt: module_property ::= property |  ( '"accessibles":' '[' (name ',' properties (',' name ',' properties)*)? ']') ']')
-
-accessible description
-~~~~~~~~~~~~~~~~~~~~~~
-
-.. image:: images/accessible-description.svg
-   :alt: properties ::=  '{' (property ( ',' property)* )? '}'
-
-accessible property
-~~~~~~~~~~~~~~~~~~~
-
-.. image:: images/accessible-property.svg
-   :alt: property ::= (name ":" property_value)
-
-custom-property
-~~~~~~~~~~~~~~~
-
-.. image:: images/custom-property.svg
-   :alt: property ::= ("_" name ":" property_value)
-
-
+.. source EBNF is now in images/rules.ebnf
+.. below railroads were generated differently with a different syntax:
+.. each *.svg has a *.txt file which contains the description
+.. there is a (not yet checked in) Makefile which re-generates the svg's from the txt's
 
 SEC Node Properties
 -------------------
 
+.. image:: images/sec-node-description.svg
+   :alt: SEC_node_description ::= '{' (SEC_node_property ( ',' SEC_node_property)* )? '}'
+
+
+.. image:: images/sec-node-property.svg
+   :alt: SEC_node_property ::= property |  ( '"modules":' '[' (name ',' module_description (',' name ',' module_description)*)? ']')
+
 there might be properties such as a timeout which are relevant for the
 communication of a SEC node.
+
+-  modules
+     mandatory, list of modules and their properties, see `Module Properties`_.
 
 -  equipment_id
      mandatory, worldwide unqiue id of an equipment as string. Should contain the name of the
@@ -929,6 +891,16 @@ communication of a SEC node.
 
 Module Properties
 -----------------
+
+.. image:: images/module-description.svg
+   :alt: module_description ::= '{' (module_property ( ',' module_property)* )? '}'
+
+
+.. image:: images/module-property.svg
+   :alt: module_property ::= property |  ( '"accessibles":' '[' (name ',' properties (',' name ',' properties)*)? ']') ']')
+
+-  accessibles
+     mandatory list of accessibles and their properties, see `Accessible Properties`_.
 
 -  description
      mandatory text describing the module, formatted like the node-property description
@@ -991,6 +963,13 @@ Module Properties
 
 Accessible Properties
 ---------------------
+.. image:: images/accessible-description.svg
+   :alt: properties ::=  '{' (property ( ',' property)* )? '}'
+
+
+.. image:: images/accessible-property.svg
+   :alt: property ::= (name ":" property_value)
+
 
 -  description
      mandatory string describing the accessible, formatted as for module-description
@@ -1010,6 +989,8 @@ Accessible Properties
      (default: unitless, SHOULD be given, if meaningfull, empty string: unit is one)
      Only SI-units (including prefix) SHOULD be used for SECoP units preferrably.
 
+     *related:* `SECoP Issue 43: Parameters and units`_
+
 -  visibility
      optional, the visibility of the accessible. values and meaning as for module-visibility above.
      *remark: this 'inherits' from the module property. i.e. if it is not specified, the
@@ -1026,6 +1007,15 @@ Accessible Properties
 the module-property ``group`` is used for grouping of modules within a node.*
 
 *remark: commands do not have ``readonly`` and ``unit`` properties, as they make no sense for commands.*
+
+Custom Properties
+-----------------
+Custom properties may further augment accessibles, modules or the SEC-node description.
+
+.. image:: images/custom-property.svg
+   :alt: property ::= ("_" name ":" property_value)
+
+As for all custom extensions, the names must be prefixed with an underscore.
 
 
 Data Types
@@ -1402,3 +1392,4 @@ The above diagrams were generated using the library from http://github.com/lukas
 .. _`SECoP Issue 37: Clarification of status`: issues/037p%20Clarification%20of%20status.rst
 .. _`SECoP Issue 38: Extension mechanisms`: issues/038p%20Extension%20mechanisms.rst
 .. _`SECoP Issue 42: Requirements of datatypes`: issues/042p%20Requirements%20of%20datatypes.rst
+.. _`SECoP Issue 43: Parameters and units`: issues/043p%20Parameters%20and%20units.rst
