@@ -17,4 +17,4 @@ With no timestamp, the pong message will contain an empty json object for the qu
 
 **pong** *[id]* **[null,** \ **{}**\ **]**
 
-Decided 2018-06-13 in Lund
+Decided 2018-06-13 in Lund.

@@ -10,8 +10,8 @@ This issue is supposed to collect these. They will NOT be part of the specificat
 
 The format resembles that of a FAQ (frequently asked questions).
 
-Use cases: setups
------------------
+Use cases: setups (of ECS + SEC-Node(s))
+----------------------------------------
 
 Single, simple Request-Reply ECS:
   Use a single connection and just stick to the request-reply pattern.
@@ -24,25 +24,26 @@ Adding a Monitoring program:
 
 Event based ECS:
   recommended: use two connections: one for playing request-reply (change, do) and the second for
-  reveiving events.
+  receiving events.
 
   Or use two connections per module: one for request/reply and one for updates (NICOS2 does this btw.).
 
 What if my SEC-node is a PLC via RS232:
   You can have only one connection via RS232. Unless you use a multiplexer.
-  **FRAPPY** will contain a multiplexer for such cases.
+  ``FRAPPY`` will contain a multiplexer for such cases.
 
 What if my setup contains several SECoP enabled 'subnodes', but I want to make one SEC-Node:
    use frappy and set up your node using transparent clients to the other SEC-nodes.
    if needed, put filters inbetween to restrict allowed interactions.
+   This may also work (soon) with the HZB dll.
 
-   Or write an Issue to nest the structure report in a json-array, so that the presenting secnode my just include the descriptive datat of all its sub-SEC-nodes.
-   In that case the presenting SEC-node my be rather simple as it just 'relays' the messages to/from the appropriate sub-SEC-nodes.
-   **FRAPPY** may contain such a message router in the future, but that is not top priority.
+   Or write an Issue to nest the structure report in a json-array, so that the presenting secnode may just include the descriptive data of all its sub-SEC-nodes.
+   In that case the presenting SEC-node may be rather simple as it just 'relays' the messages to/from the appropriate sub-SEC-nodes.
+   ``FRAPPY`` may contain such a message router in the future, but that is not top priority.
 
 
-Use cases: SEC-Nodes
---------------------
+Use cases: Implementing SEC-Nodes
+---------------------------------
 
 simple single threaded SEC-node via RS232 (microcontroller based?):
   difficult to get right. You MUST NOT keep the communication quiet for too long.
@@ -64,8 +65,10 @@ If we have an operating system:
 multiple network connections are easy:
   Yes! So support them wherever possible.
 
-But I can't or am unable to implement multiple network connections:
+But I can't implement multiple network connections:
   use frappy as a multiplexer and make your implementation FAST!
+
+  *note:* you should really deliver something which can handle mutliple network connections!
 
 Discussion
 ----------

@@ -3,12 +3,13 @@ SECoP Issue 40: Finalise Specification
 
 Motivation
 ----------
-The current specification looks a lot like a placeholder with lots of pointers to other documents.
+The current specification looks a lot like a placeholder with lots of pointers to Issues.
 Also many things are only tried to clarify by inserting *note* and *remark* snippets.
 
 Proposal
 --------
 Finalise the specification by replacing all *note* snippets with a definition.
+As long as clarifying *note* and *remark* snippets are needed, its not yet a specification.
 
 Discussion
 ----------

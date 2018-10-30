@@ -7,9 +7,10 @@ In the current specification the unit of the main value of a module is fixed by 
 While this is a well-working approach for most situations, sometimes a 'changeable' unit is needed.
 
 This essential has 2 use cases:
-  1) a SEC-node may which to indicate a different unit
-     (unit was changed directly on the front-panel on a lakeshore,
+  1) a SEC-node may whish to indicate a different unit
+     (unit was changed directly on the front-panel on e.g. a lakeshore,
      or some other measuring device (keithley, leybold, ...))
+
   2) an ECS may want to change the unit of an module
      (i.e. switch between °C and K on an oven or between mK and K on a :sup:`3`\ He
      or :sup:`3`\ He/:sup:`4`\ He dilution cryostat)
@@ -19,6 +20,8 @@ A solution to use case 2) should include the solution to use case 1),
 so that the SEC-Node can reflect the changed unit back towards the ECS.
 This is especially important as a unit change of the main value may need to be reflected on other parameters as well.
 (i.e. a `ramp` may also need to be adjusted, both in value and in unit.)
+
+:related: Issue 43
 
 Proposal
 --------
@@ -34,6 +37,8 @@ units supported by the SEC-node for the main value of that module.
           before the reply to the change request is sent, resulting in at least one update message before the reply (if updates are enabled).
           This is also true, if the unit gets re-set to its current value!
           (in that case, only updates of all parameters must be sent, whose unit would have changed).
+
+          :related: Issue 31
 
 The unit sent in the qualifier, however, MUST always be the unit-string, even though the value
 of the unit parameter gets transferred as a number (as it's an Enum).

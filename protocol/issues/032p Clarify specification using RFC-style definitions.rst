@@ -6,10 +6,10 @@ The problem
 Any successfull specification so far had to cope with different ways of reading them.
 Different opinions and points of view of people trying to implement any given
 specification will often result in incompatible or unexpected behaviour,
-if the specification is not watertight.
+if the specification is not precise enough.
 
-As we want SECoP to interoperate equipment made by a broad range of institutions and companies, 
-we therefore need to make it as clear as apossible, what is allowed and where
+As we want SECoP to interoperate equipment made by a broad range of institutions and companies,
+we therefore need to make it as clear as possible, what is allowed and where
 there is implementation freedom.
 
 Looking at how other institutions managed this (successfully), one stumbles over

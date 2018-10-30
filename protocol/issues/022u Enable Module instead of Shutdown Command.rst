@@ -6,7 +6,7 @@ Ideas
 
 See extract of the following E-mail discussion:
 
-Markus wrote:
+Markus wrote::
 
     I take this for discussing about the shutdown command again. Would it not
     be more sensible, instead of having a shutdown command on a module, to implement
@@ -39,19 +39,19 @@ Markus wrote:
     If we introduce 'shutdown' as a SEC-Node command, it would not allow to have
     several groups of modules with each of them having a separate 'shutdown' command.
 
-Enrico wrote:
+Enrico wrote::
 
     interesting idea, Markus!
-    Initially I though this would be a good thing to put as parameter of the secnode.
+    Initially I thought this would be a good thing to put as parameter of the secnode.
     But if you want to have several enables for different sets/groups of modules this won't
     work directly.
 
     I think we should keep this as an topic, but not define anything so far, as I feel this
     would overcomplicate the current state. Once everyone got used to 'the secop way', it is
     worth thinking about it. Could also be a convention like:
-    
-    secnode-parameter nane = 'enable\_' + name of group
-    
+
+    secnode-parameter name = 'enable_' + name of group
+
     and this then enables/disables all modules from that specific group.
 
     Just my 0.02€.

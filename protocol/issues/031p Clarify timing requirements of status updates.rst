@@ -75,9 +75,9 @@ After thoughts
 --------------
 This problem is an essential problem for all actions influencing more than one parameter.
 As such it should be applied to a broader scope: whenever an request would
-influence another parameter/command than the addressed on, those 'side-effects'
+influence another parameter/command than the addressed one, those 'side-effects'
 MUST to be broadcast (+ internally reflected for polling clients)
-``before`` the reply is sent by the SEC-node.
+**before** the reply is sent by the SEC-node.
 
 
 Discussion

@@ -207,6 +207,37 @@ However, ``UNKNOWN`` and ``DISABLED`` are not members of any state group and hav
 
 **clarify, if ``UNKNOWN`` is really needed, or if it could be a substate of ``Error``**
 
+Alternative Encoding of state/group information
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Another way to map the state groups/codes to numerical values is digit-by-digit.
+The Main state groups get assigned digits (1/2/3/4 for ``Idle``/``Warn``/``Busy``/``Error``).
+Whenever a subgroup of that is needed, another digit is appended (which is specific to the state group).
+To enumerate the final stete, another digit is appended (where 0 means the (sub)group and 1..9 are free to use).
+
+This could result in codes like:
+.. table:: examples for alternate state mapping
+    ============= =====================
+      code         Meaning
+    ============= =====================
+     1             ``Idle`` group (Should not be used)
+     10            ``IDLE`` state
+     11..19        custom ``Idle`` states
+     2             ``Warn`` group (should not be used)
+     20            ``WARN`` state
+     21..29        custom ``warn`` states
+     210           first subgroup of the ``Idle`` group
+     211..219      custom states of the first subgroup of the ``Idle`` group
+     3             ``Busy`` group
+     30            ``BUSY`` state
+     31..39        custom states of the `` Busy`` group
+     40            ``Error`` state
+     423           third substate of the second subgroup of ``Error``
+    ============= =====================
+
+In any case, an ECS not beeing able to handle all that complexits just needs to investigate the leftmost digit.
+
+:note: an ECS MUST correctly drive an SEC-node which only handles the basic states!
+
 Discussion
 ----------
 No discussion of this issue in its current form yet.

@@ -10,11 +10,11 @@ commands:
 
   * start
   * pause
-  
+
 In addition the following command was proposed
 
   * shutdown (meaning: go to safe state after finishing the experiment)
- 
+
 Discussion
 ----------
 
@@ -61,6 +61,7 @@ reset
 .....
 
 Optional command for putting the module to a state predefined by the implementation.
+Also the way to clear an Error status.
 
 shutdown
 ........

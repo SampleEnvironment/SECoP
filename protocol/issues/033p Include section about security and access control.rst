@@ -5,15 +5,16 @@ The problem
 -----------
 SECoP handles intentionlly no security or access control concerns.
 
-While this is no problem, it is advisable to have at least a section explaining it and
+While this is no problem per se, it is advisable to have at least a section explaining it and
 to list a few examples on how this can be achieved outside SECoP.
-note: completeness is not needed here.
+
+.. note:: completeness is not needed here.
 
 
 Proposal
 --------
 Enrico proposes to include a section called "security and access control"
-stating the committees decision and list a few examples of both can be achieved
+stating the committees decision and list a few examples how both can be achieved
 by other means.
 
 One example could be to use SECoP over openTLS (see :RFC:`8446') to encrypt
@@ -28,9 +29,9 @@ Other solutions exist, but can not exhaustively listed here.
 
 While these solutions normally only work on the whole node
 (by granting or denying possibly encrypted access),
-a SEC-Node may also multiple contact points, allowing different access levels.
-i.e. there could be 'master' view with restricted acces and a limited view
-with relaxed access restrictions.
+a SEC-Node may also provide multiple contact points, allowing different access levels.
+i.e. there could be 'master' view with unrestricted access and a limited view
+with access restrictions.
 As these are largely implementation specific and not different
 on the protocol level, these cases are not covered in the SECoP protocol.
 
@@ -40,6 +41,6 @@ Discussion
 Discussion usually settled quickly on 'It's not SECoP's task to provide
 encryption or access control'.
 
-so far none.
+Still it was not yet decided to put this into the specification.
 
 

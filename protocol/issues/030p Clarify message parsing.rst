@@ -3,7 +3,7 @@ SECoP Issue 30: Clarify Message parsing
 
 The problem
 -----------
-So far the specifiaction follows an *ignore-what-you-don't know* policy.
+So far the specification follows an *ignore-what-you-don't know* policy.
 Implementing the protocol still requires to handle those cases.
 After implementing several instance of clients and nodes, a pattern appears
 in the parsing code.
@@ -32,7 +32,7 @@ message part can be treated the same as an empty part or a json-null.
 
 The message format could then be written down in a human readable way (see :RFC:`5234`) as::
 
-    serialized-message  = CR? action [ SPACE specifier [ SPACE data ]] CR? LF
+    serialized-message  = action [ SPACE specifier [ SPACE data ]] CR? LF
     LF                  = %x0a                                 ; line feed character
     CR                  = %x0d                                 ; carriage return character
     SPACE               = %x20                                 ; SPACE character
@@ -48,7 +48,7 @@ The message format could then be written down in a human readable way (see :RFC:
 
 This could be writte as a regular expression like::
 
-    ^\x0D?            ; matches 0 or 1 leading CR characters
+    ^                 ; matches beginnign of message
     ([\x21-\xFF]+)    ; captures longest string of non-space (captures the action of the message, min 1 char)
     (?:\x20           ; open an non capturing group in the first SPACE character found
      ([\x21-\xFF]*)   ; captures longest string of non-space (captures the possibly empty specifier of the message)
@@ -62,9 +62,9 @@ This could be writte as a regular expression like::
 
 For actual use you should use it like::
 
-       "^\x0D?([\x21-\xFF]+)(?:\x20([\x21-\xFF]*)(?:\x20([\x20-\xFF]*))?)?\x0D?$"
+       "^([\x21-\xFF]+)(?:\x20([\x21-\xFF]*)(?:\x20([\x20-\xFF]*))?)?\x0D?$"
        For python you may also use named matches:
-       "^\x0D?(?P<action>[\x21-\xFF]+)(?: (?P<specifier>[\x21-\xFF]*)(?: (?P<data>[\x20-\xFF]*))?)?\x0D?$"
+       "^(?P<action>[\x21-\xFF]+)(?: (?P<specifier>[\x21-\xFF]*)(?: (?P<data>[\x20-\xFF]*))?)?\x0D?$"
 
 Further deserialisation would then de-JSON-ify the data-part, if existing,
 and map any '', null or not-matched groups to the same value for easier processing.

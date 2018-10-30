@@ -13,8 +13,8 @@ Proposal
 --------
 Add following interface classes:
 
-:note: these are modelled after the entangle classes. Just saying so, before somebody complains.
-       So far nobody else has made a proposal, so these are now proposed. *sniff*
+:note: these are proposed by MLZ. Just saying so, before somebody complains.
+       So far nobody else has made a proposal for over a year, so these are now proposed.
 
 Sensor
 ~~~~~~
