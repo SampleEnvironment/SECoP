@@ -84,4 +84,3 @@ Discussion
 ----------
 Briefly discussed in video conference at 2018-10-04.
 General agreeement, but not (yet) finally decided as accepted.
-
