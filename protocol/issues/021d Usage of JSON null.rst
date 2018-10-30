@@ -59,3 +59,4 @@ Opinions:
 
 Markus: do not allow *null* in *change* messages, or introduce a property *change_may_contain_null_elements=true* (or something shorter) on the parameters which accept this behaviour.
 
+note: partly related to Issue 35: Partial structs

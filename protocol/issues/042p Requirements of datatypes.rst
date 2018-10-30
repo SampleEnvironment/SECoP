@@ -8,7 +8,7 @@ Especially, the JSON-number format is both used for floating point values and fo
 Also the JSON-number is agnostic to the datytype used in applications.
 
 So far it is unspecified if there are expectations towards the precision/resolution and range of the
-numeric data whcih is supposed to be transported via SECoP.
+numeric data which is supposed to be transported via SECoP.
 This was circumvented by specifiying a C-api datatype. Since there ar emore programming languages around than we can specify a valid datatype for those it makes
 sense to move the documentation of a specific C-api elsewhere.
 
