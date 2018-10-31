@@ -84,3 +84,21 @@ Discussion
 ----------
 Briefly discussed in video conference at 2018-10-04.
 General agreeement, but not (yet) finally decided as accepted.
+
+Comment by Markus:
+  I agree fully on the subject, I just wonder if we can not describe the essential thing
+  a little shorter:
+
+    The SEC-Node MUST NOT send an update message indicating a <module>:status not BUSY
+    after the reply to an action (change <module>:target or do <module>:go), but before
+    the initated action is finished.
+
+  After that we might still add the sequence proposed by Enno. Point (1) of the sequence might make sense,
+  but is not really required. In case the status is BUSY or ERROR, the reply will be an error message.
+  By the way - did we specifiy that the target can not be changed while BUSY? Unless there are good
+  reason aginst I would allow it. The implementation might report an error, if it does not support it.
+
+  There is an other possible problem in synchronous mode: when polling is slow, an IDLE status
+  may be missed if the next action is issued by an other client. In order to avoid this, the
+  first client might want to poll the target value too and check if it was changed.
+
