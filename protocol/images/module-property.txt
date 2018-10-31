@@ -5,7 +5,7 @@
  ["\"interface_class\"" ":" "[" ['interface'*","]? "]"]
  ["\"features\"" ":" "[" ['feature'*","]? "]" ]
  ["\"group\"" ":" 'groupname']
- ["\"meaning\"" ":" "[" "\"" <"temperature" "magneticfield" "electricfield" "pressure"
- "rotation_z" "humidity" "viscosity" "flowrate" "concentration">#`extensible` "_regulation"? "\"" "," 'importance'#`integer number 5..45` "]"]
+ ["\"meaning\"" ":[\"" <"temperature" "magneticfield" "electricfield" "pressure"
+ "rotation_z" "humidity" "viscosity" "flowrate" "concentration">#`extensible` "_regulation"? "\"," 'importance'#`integer number 5..45` "]"]
  ['custom-property']
 >]

@@ -6,7 +6,7 @@
  <!#`module-wise (de-)activation`
  [":"#`colon` 'parameter']#`parameter-wise (de-)activation`
  >]>]
- [<["pong" <!#`empty token` ["\\x20"#`SPACE` 'token']>]
+ [<["pong" "\\x20"#`SPACE` <!#`empty token` 'token'>]
  ["done" "\\x20"#`SPACE` 'module' ":" 'command']
  [<"update" "changed" "buffered"#`see Issue 29`> "\\x20"#`SPACE` 'module' ":" 'parameter']>
  "\\x20"#`SPACE` 'data-report']

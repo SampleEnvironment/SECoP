@@ -1,4 +1,4 @@
-<svg class="railroad" viewBox="0 0 586 712" width="586" xmlns="http://www.w3.org/2000/svg">
+<svg class="railroad" viewBox="0 0 394 780" width="394" xmlns="http://www.w3.org/2000/svg">
 <style type="text/css">
 
     svg.railroad {
@@ -45,192 +45,200 @@
         fill:rgba(90, 90, 150, .1);
     }</style>
 <g class="sequence">
-<path d=" M 10 21 a 5 5 0 0 1 5 -5 a 5 5 0 0 1 5 5 a 5 5 0 0 1 -5 5 a 5 5 0 0 1 -5 -5 m 10 0 h 5"/>
 <g class="sequence">
-<text class="comment" x="61" y="26">
+<g>
+<text class="comment" x="36" y="26">
 action</text>
+</g>
 <g class="choice">
-<path d=" M 97 21 h 24 m 60 0 h 370 m -182 0 l -5 -5 m 0 10 l 5 -5 m 182 0"/>
+<path d=" M 72 21 h 24 m 60 0 h 208 m -101 0 l -5 -5 m 0 10 l 5 -5 m 101 0"/>
 <g class="terminal">
-<rect height="22" rx="10" ry="10" width="60" x="121" y="10"/>
-<text x="151" y="26">
+<rect height="22" rx="10" ry="10" width="60" x="96" y="10"/>
+<text x="126" y="26">
 *IDN?</text>
 </g>
-<path d=" M 97 21 a 12 12 0 0 1 12 12 v 9 m 430 0 v -9 a 12 12 0 0 1 12 -12"/>
-<path d=" M 109 42 v 33 m 430 0 v -33"/>
-<path d=" M 109 75 v 33 m 430 0 v -33"/>
-<path d=" M 109 108 v 33 m 430 0 v -33"/>
-<path d=" M 109 141 v 33 m 430 0 v -33"/>
-<path d=" M 109 174 v 33 m 430 0 v -33"/>
-<path d=" M 109 207 v 33 m 430 0 v -33"/>
-<path d=" M 109 240 v 33 m 430 0 v -33"/>
-<path d=" M 109 273 v 33 m 430 0 v -33"/>
-<path d=" M 109 306 v 33 m 430 0 v -33"/>
-<path d=" M 109 339 v 33 m 430 0 v -33"/>
-<path d=" M 109 372 v 33 m 430 0 v -33"/>
-<path d=" M 109 405 v 33 m 430 0 v -33"/>
-<path d=" M 109 438 v 33 m 430 0 v -33"/>
-<path d=" M 109 471 v 33 m 430 0 v -33"/>
-<path d=" M 109 504 v 33 m 430 0 v -33"/>
-<path d=" M 109 537 v 33 m 430 0 v -33"/>
-<path d=" M 109 570 v 33 m 430 0 v -33"/>
-<path d=" M 109 42 v 0 a 12 12 0 0 0 12 12 m 406 0 h 0 a 12 12 0 0 0 12 -12 v 0"/>
-<g class="sequence">
+<path d=" M 72 21 a 12 12 0 0 1 12 12 v 9 m 268 0 v -9 a 12 12 0 0 1 12 -12"/>
+<path d=" M 84 42 v 81 m 0 -37 l -5 -5 m 10 0 l -5 5 m 0 37 m 268 0 v -81 m 0 43 l -5 5 m 10 0 l -5 -5 m 0 -43"/>
+<path d=" M 84 123 v 33 m 268 0 v -33"/>
+<path d=" M 84 156 v 33 m 268 0 v -33"/>
+<path d=" M 84 189 v 33 m 268 0 v -33"/>
+<path d=" M 84 222 v 33 m 268 0 v -33"/>
+<path d=" M 84 255 v 33 m 268 0 v -33"/>
+<path d=" M 84 288 v 33 m 268 0 v -33"/>
+<path d=" M 84 321 v 33 m 268 0 v -33"/>
+<path d=" M 84 354 v 33 m 268 0 v -33"/>
+<path d=" M 84 387 v 33 m 268 0 v -33"/>
+<path d=" M 84 420 v 33 m 268 0 v -33"/>
+<path d=" M 84 453 v 33 m 268 0 v -33"/>
+<path d=" M 84 486 v 33 m 268 0 v -33"/>
+<path d=" M 84 519 v 33 m 268 0 v -33"/>
+<path d=" M 84 552 v 33 m 268 0 v -33"/>
+<path d=" M 84 585 v 33 m 268 0 v -33"/>
+<path d=" M 84 618 v 33 m 268 0 v -33"/>
+<path d=" M 84 42 v 0 a 12 12 0 0 0 12 12 m 244 0 h 0 a 12 12 0 0 0 12 -12 v 0"/>
+<g class="stack">
+<path d=" M 96 54 h 12"/>
+<path d=" M 296 54 a 12 12 0 0 1 12 12 v 0 a 12 12 0 0 1 -12 12 h -188 m 97 0 l 5 -5 m 0 10 l -5 -5 m -97 0 a 12 12 0 0 0 -12 12 v 0 v 0 a 12 12 0 0 0 12 12 h 0"/>
 <g class="terminal">
-<rect height="22" rx="10" ry="10" width="188" x="121" y="43"/>
-<text x="215" y="59">
+<rect height="22" rx="10" ry="10" width="188" x="108" y="43"/>
+<text x="202" y="59">
 ISSE&amp;SINE2020,SECoP,</text>
 </g>
+<path d=" M 316 102 h 0 a 12 12 0 0 0 12 -12 v -24 a 12 12 0 0 1 12 -12"/>
+<g class="sequence">
 <g class="nonterminal">
-<rect height="22" width="76" x="319" y="43"/>
-<text x="357" y="59">
+<rect height="22" width="76" x="108" y="91"/>
+<text x="146" y="107">
 version</text>
 </g>
 <g class="terminal">
-<rect height="22" rx="10" ry="10" width="28" x="405" y="43"/>
-<text x="419" y="59">
+<rect height="22" rx="10" ry="10" width="28" x="194" y="91"/>
+<text x="208" y="107">
 ,</text>
 </g>
 <g class="nonterminal">
-<rect height="22" width="84" x="443" y="43"/>
-<text x="485" y="59">
+<rect height="22" width="84" x="232" y="91"/>
+<text x="274" y="107">
 add.info</text>
 </g>
-<path d=" M 309 54 h 10"/>
-<path d=" M 395 54 h 10"/>
-<path d=" M 433 54 h 10"/>
+<path d=" M 184 102 h 10"/>
+<path d=" M 222 102 h 10"/>
 </g>
-<path d=" M 109 75 v 0 a 12 12 0 0 0 12 12 m 84 0 h 322 m -158 0 l -5 -5 m 0 10 l 5 -5 m 158 0 a 12 12 0 0 0 12 -12 v 0"/>
+</g>
+<path d=" M 84 123 v 0 a 12 12 0 0 0 12 12 m 84 0 h 160 m -77 0 l -5 -5 m 0 10 l 5 -5 m 77 0 a 12 12 0 0 0 12 -12 v 0"/>
 <g class="terminal">
-<rect height="22" rx="10" ry="10" width="84" x="121" y="76"/>
-<text x="163" y="92">
+<rect height="22" rx="10" ry="10" width="84" x="96" y="124"/>
+<text x="138" y="140">
 describe</text>
 </g>
-<path d=" M 109 108 v 0 a 12 12 0 0 0 12 12 m 100 0 h 306 m -150 0 l -5 -5 m 0 10 l 5 -5 m 150 0 a 12 12 0 0 0 12 -12 v 0"/>
+<path d=" M 84 156 v 0 a 12 12 0 0 0 12 12 m 100 0 h 144 m -69 0 l -5 -5 m 0 10 l 5 -5 m 69 0 a 12 12 0 0 0 12 -12 v 0"/>
 <g class="terminal">
-<rect height="22" rx="10" ry="10" width="100" x="121" y="109"/>
-<text x="171" y="125">
+<rect height="22" rx="10" ry="10" width="100" x="96" y="157"/>
+<text x="146" y="173">
 describing</text>
 </g>
-<path d=" M 109 141 v 0 a 12 12 0 0 0 12 12 m 84 0 h 322 m -158 0 l -5 -5 m 0 10 l 5 -5 m 158 0 a 12 12 0 0 0 12 -12 v 0"/>
+<path d=" M 84 189 v 0 a 12 12 0 0 0 12 12 m 84 0 h 160 m -77 0 l -5 -5 m 0 10 l 5 -5 m 77 0 a 12 12 0 0 0 12 -12 v 0"/>
 <g class="terminal">
-<rect height="22" rx="10" ry="10" width="84" x="121" y="142"/>
-<text x="163" y="158">
+<rect height="22" rx="10" ry="10" width="84" x="96" y="190"/>
+<text x="138" y="206">
 activate</text>
 </g>
-<path d=" M 109 174 v 0 a 12 12 0 0 0 12 12 m 68 0 h 338 m -166 0 l -5 -5 m 0 10 l 5 -5 m 166 0 a 12 12 0 0 0 12 -12 v 0"/>
+<path d=" M 84 222 v 0 a 12 12 0 0 0 12 12 m 68 0 h 176 m -85 0 l -5 -5 m 0 10 l 5 -5 m 85 0 a 12 12 0 0 0 12 -12 v 0"/>
 <g class="terminal">
-<rect height="22" rx="10" ry="10" width="68" x="121" y="175"/>
-<text x="155" y="191">
+<rect height="22" rx="10" ry="10" width="68" x="96" y="223"/>
+<text x="130" y="239">
 active</text>
 </g>
-<path d=" M 109 207 v 0 a 12 12 0 0 0 12 12 m 100 0 h 306 m -150 0 l -5 -5 m 0 10 l 5 -5 m 150 0 a 12 12 0 0 0 12 -12 v 0"/>
+<path d=" M 84 255 v 0 a 12 12 0 0 0 12 12 m 100 0 h 144 m -69 0 l -5 -5 m 0 10 l 5 -5 m 69 0 a 12 12 0 0 0 12 -12 v 0"/>
 <g class="terminal">
-<rect height="22" rx="10" ry="10" width="100" x="121" y="208"/>
-<text x="171" y="224">
+<rect height="22" rx="10" ry="10" width="100" x="96" y="256"/>
+<text x="146" y="272">
 deactivate</text>
 </g>
-<path d=" M 109 240 v 0 a 12 12 0 0 0 12 12 m 84 0 h 322 m -158 0 l -5 -5 m 0 10 l 5 -5 m 158 0 a 12 12 0 0 0 12 -12 v 0"/>
+<path d=" M 84 288 v 0 a 12 12 0 0 0 12 12 m 84 0 h 160 m -77 0 l -5 -5 m 0 10 l 5 -5 m 77 0 a 12 12 0 0 0 12 -12 v 0"/>
 <g class="terminal">
-<rect height="22" rx="10" ry="10" width="84" x="121" y="241"/>
-<text x="163" y="257">
+<rect height="22" rx="10" ry="10" width="84" x="96" y="289"/>
+<text x="138" y="305">
 inactive</text>
 </g>
-<path d=" M 109 273 v 0 a 12 12 0 0 0 12 12 m 52 0 h 354 m -174 0 l -5 -5 m 0 10 l 5 -5 m 174 0 a 12 12 0 0 0 12 -12 v 0"/>
+<path d=" M 84 321 v 0 a 12 12 0 0 0 12 12 m 52 0 h 192 m -93 0 l -5 -5 m 0 10 l 5 -5 m 93 0 a 12 12 0 0 0 12 -12 v 0"/>
 <g class="terminal">
-<rect height="22" rx="10" ry="10" width="52" x="121" y="274"/>
-<text x="147" y="290">
+<rect height="22" rx="10" ry="10" width="52" x="96" y="322"/>
+<text x="122" y="338">
 ping</text>
 </g>
-<path d=" M 109 306 v 0 a 12 12 0 0 0 12 12 m 52 0 h 354 m -174 0 l -5 -5 m 0 10 l 5 -5 m 174 0 a 12 12 0 0 0 12 -12 v 0"/>
+<path d=" M 84 354 v 0 a 12 12 0 0 0 12 12 m 52 0 h 192 m -93 0 l -5 -5 m 0 10 l 5 -5 m 93 0 a 12 12 0 0 0 12 -12 v 0"/>
 <g class="terminal">
-<rect height="22" rx="10" ry="10" width="52" x="121" y="307"/>
-<text x="147" y="323">
+<rect height="22" rx="10" ry="10" width="52" x="96" y="355"/>
+<text x="122" y="371">
 pong</text>
 </g>
-<path d=" M 109 339 v 0 a 12 12 0 0 0 12 12 m 68 0 h 338 m -166 0 l -5 -5 m 0 10 l 5 -5 m 166 0 a 12 12 0 0 0 12 -12 v 0"/>
+<path d=" M 84 387 v 0 a 12 12 0 0 0 12 12 m 68 0 h 176 m -85 0 l -5 -5 m 0 10 l 5 -5 m 85 0 a 12 12 0 0 0 12 -12 v 0"/>
 <g class="terminal">
-<rect height="22" rx="10" ry="10" width="68" x="121" y="340"/>
-<text x="155" y="356">
+<rect height="22" rx="10" ry="10" width="68" x="96" y="388"/>
+<text x="130" y="404">
 change</text>
 </g>
-<path d=" M 109 372 v 0 a 12 12 0 0 0 12 12 m 76 0 h 330 m -162 0 l -5 -5 m 0 10 l 5 -5 m 162 0 a 12 12 0 0 0 12 -12 v 0"/>
+<path d=" M 84 420 v 0 a 12 12 0 0 0 12 12 m 76 0 h 168 m -81 0 l -5 -5 m 0 10 l 5 -5 m 81 0 a 12 12 0 0 0 12 -12 v 0"/>
 <g class="terminal">
-<rect height="22" rx="10" ry="10" width="76" x="121" y="373"/>
-<text x="159" y="389">
+<rect height="22" rx="10" ry="10" width="76" x="96" y="421"/>
+<text x="134" y="437">
 changed</text>
 </g>
-<path d=" M 109 405 v 0 a 12 12 0 0 0 12 12 m 36 0 h 370 m -182 0 l -5 -5 m 0 10 l 5 -5 m 182 0 a 12 12 0 0 0 12 -12 v 0"/>
+<path d=" M 84 453 v 0 a 12 12 0 0 0 12 12 m 36 0 h 208 m -101 0 l -5 -5 m 0 10 l 5 -5 m 101 0 a 12 12 0 0 0 12 -12 v 0"/>
 <g class="terminal">
-<rect height="22" rx="10" ry="10" width="36" x="121" y="406"/>
-<text x="139" y="422">
+<rect height="22" rx="10" ry="10" width="36" x="96" y="454"/>
+<text x="114" y="470">
 do</text>
 </g>
-<path d=" M 109 438 v 0 a 12 12 0 0 0 12 12 m 52 0 h 354 m -174 0 l -5 -5 m 0 10 l 5 -5 m 174 0 a 12 12 0 0 0 12 -12 v 0"/>
+<path d=" M 84 486 v 0 a 12 12 0 0 0 12 12 m 52 0 h 192 m -93 0 l -5 -5 m 0 10 l 5 -5 m 93 0 a 12 12 0 0 0 12 -12 v 0"/>
 <g class="terminal">
-<rect height="22" rx="10" ry="10" width="52" x="121" y="439"/>
-<text x="147" y="455">
+<rect height="22" rx="10" ry="10" width="52" x="96" y="487"/>
+<text x="122" y="503">
 done</text>
 </g>
-<path d=" M 109 471 v 0 a 12 12 0 0 0 12 12 m 52 0 h 354 m -174 0 l -5 -5 m 0 10 l 5 -5 m 174 0 a 12 12 0 0 0 12 -12 v 0"/>
+<path d=" M 84 519 v 0 a 12 12 0 0 0 12 12 m 52 0 h 192 m -93 0 l -5 -5 m 0 10 l 5 -5 m 93 0 a 12 12 0 0 0 12 -12 v 0"/>
 <g class="terminal">
-<rect height="22" rx="10" ry="10" width="52" x="121" y="472"/>
-<text x="147" y="488">
+<rect height="22" rx="10" ry="10" width="52" x="96" y="520"/>
+<text x="122" y="536">
 read</text>
 </g>
-<path d=" M 109 504 v 0 a 12 12 0 0 0 12 12 m 68 0 h 338 m -166 0 l -5 -5 m 0 10 l 5 -5 m 166 0 a 12 12 0 0 0 12 -12 v 0"/>
+<path d=" M 84 552 v 0 a 12 12 0 0 0 12 12 m 68 0 h 176 m -85 0 l -5 -5 m 0 10 l 5 -5 m 85 0 a 12 12 0 0 0 12 -12 v 0"/>
 <g class="terminal">
-<rect height="22" rx="10" ry="10" width="68" x="121" y="505"/>
-<text x="155" y="521">
+<rect height="22" rx="10" ry="10" width="68" x="96" y="553"/>
+<text x="130" y="569">
 update</text>
 </g>
-<path d=" M 109 537 v 0 a 12 12 0 0 0 12 12 m 60 0 h 346 m -170 0 l -5 -5 m 0 10 l 5 -5 m 170 0 a 12 12 0 0 0 12 -12 v 0"/>
+<path d=" M 84 585 v 0 a 12 12 0 0 0 12 12 m 60 0 h 184 m -89 0 l -5 -5 m 0 10 l 5 -5 m 89 0 a 12 12 0 0 0 12 -12 v 0"/>
 <g class="terminal">
-<rect height="22" rx="10" ry="10" width="60" x="121" y="538"/>
-<text x="151" y="554">
+<rect height="22" rx="10" ry="10" width="60" x="96" y="586"/>
+<text x="126" y="602">
 error</text>
 </g>
-<path d=" M 109 570 v 0 a 12 12 0 0 0 12 12 m 162 0 h 244 m -119 0 l -5 -5 m 0 10 l 5 -5 m 119 0 a 12 12 0 0 0 12 -12 v 0"/>
+<path d=" M 84 618 v 0 a 12 12 0 0 0 12 12 m 162 0 h 82 m -38 0 l -5 -5 m 0 10 l 5 -5 m 38 0 a 12 12 0 0 0 12 -12 v 0"/>
 <g class="sequence">
 <g class="terminal">
-<rect height="22" rx="10" ry="10" width="28" x="121" y="571"/>
-<text x="135" y="587">
+<rect height="22" rx="10" ry="10" width="28" x="96" y="619"/>
+<text x="110" y="635">
 _</text>
 </g>
 <g class="nonterminal">
-<rect height="22" width="124" x="159" y="571"/>
-<text x="221" y="587">
+<rect height="22" width="124" x="134" y="619"/>
+<text x="196" y="635">
 custom action</text>
 </g>
-<path d=" M 149 582 h 10"/>
+<path d=" M 124 630 h 10"/>
 </g>
-<path d=" M 109 603 v 35 a 12 12 0 0 0 12 12 m 250 0 h 156 m -75 0 l -5 -5 m 0 10 l 5 -5 m 75 0 a 12 12 0 0 0 12 -12 v -35"/>
+<path d=" M 84 651 v 55 m 0 -24 l -5 -5 m 10 0 l -5 5 m 0 24 a 12 12 0 0 0 12 12 m 152 0 h 92 m -43 0 l -5 -5 m 0 10 l 5 -5 m 43 0 a 12 12 0 0 0 12 -12 v -55 m 0 30 l -5 5 m 10 0 l -5 -5 m 0 -30"/>
 <g class="labeledbox">
-<rect height="99" width="250" x="121" y="603"/>
-<path d=" M 121 650 h 8 m 132 0 h 110 m -52 0 l -5 -5 m 0 10 l 5 -5 m 52 0"/>
-<text class="comment" x="246" y="626">
-not yet specified, see Issue 29</text>
+<rect height="119" width="152" x="96" y="651"/>
+<path d=" M 96 718 h 8 m 132 0 h 12"/>
+<g>
+<text class="comment" x="172" y="674">
+not yet specified,</text>
+<text class="comment" x="172" y="694">
+see Issue 29</text>
+</g>
 <g class="choice">
-<path d=" M 129 650 h 24 m 68 0 h 40"/>
+<path d=" M 104 718 h 24 m 68 0 h 40"/>
 <g class="terminal">
-<rect height="22" rx="10" ry="10" width="68" x="153" y="639"/>
-<text x="187" y="655">
+<rect height="22" rx="10" ry="10" width="68" x="128" y="707"/>
+<text x="162" y="723">
 buffer</text>
 </g>
-<path d=" M 129 650 a 12 12 0 0 1 12 12 v 9 m 108 0 v -9 a 12 12 0 0 1 12 -12"/>
-<path d=" M 141 671 v 0 a 12 12 0 0 0 12 12 m 84 0 h 0 a 12 12 0 0 0 12 -12 v 0"/>
+<path d=" M 104 718 a 12 12 0 0 1 12 12 v 9 m 108 0 v -9 a 12 12 0 0 1 12 -12"/>
+<path d=" M 116 739 v 0 a 12 12 0 0 0 12 12 m 84 0 h 0 a 12 12 0 0 0 12 -12 v 0"/>
 <g class="terminal">
-<rect height="22" rx="10" ry="10" width="84" x="153" y="672"/>
-<text x="195" y="688">
+<rect height="22" rx="10" ry="10" width="84" x="128" y="740"/>
+<text x="170" y="756">
 buffered</text>
 </g>
 </g>
 </g>
 </g>
-<path d=" M 87 21 h 10"/>
+<path d=" M 62 21 h 10"/>
 </g>
-<path d=" M 561 21 h 5 a 5 5 0 0 1 5 -5 a 5 5 0 0 1 5 5 a 5 5 0 0 1 -5 5 a 5 5 0 0 1 -5 -5"/>
-<path d=" M 25 21 h 10"/>
-<path d=" M 551 21 h 10"/>
+<path d=" M 374 21 h 5 m -5 5 l 5 -5 l -5 -5 m 5 5"/>
+<path d=" M 364 21 h 10"/>
 </g>
 </svg>

@@ -5,7 +5,8 @@
  ["\"command\"" < ! ["," <'datatype'#`argument` "null"> ["," <'datatype'#`result` "null">]? ] > ]
  ["\"blob\"" ["," 'max_bytes'#`integer` ["," <'min_bytes'#`integer` "null"#`assume 1`>]? ] ]
  ["\"array\"" "," 'datatype' "," <'max_items'#`integer` "null"#`unrestricted!`> ["," <'min_items'#`integer` "null"#`assume 0`>]? ]
- ["\"tuple\"" "," <["[" 'datatype'*"," "]" ]#`current version` ['datatype'*"," ]#`proposed change`>]
- ["\"enum\"" "," ["{" ['key'#`keys MUST by unique!` ":" 'value'#`integer values, MUST be unique!`]*"," "}"]#`a json-object with at least one entry` ]
+ ["\"tuple\"" "," "[" 'datatype'*"," "]" ]
+ ["\"enum\"" "," ["{" ['key'#`keys MUST be unique!` ":" 'value'#`integer values,
+MUST be unique!`]*"," "}"]#`a json-object with at least one entry` ]
  ["\"struct\"" "," ["{" ['name'#`names MUST be unique!` ":" 'datatype']*"," "}"]#`a json-object with at least one entry` ]
 > "]" ]
