@@ -1,0 +1,613 @@
+Videoconference 2018.11.07
+==========================
+
+participants:
+ * Klaus Kiefer
+ * Markus Zolliker
+ * Anders Petterson
+ * Enrico Faulhaber
+
+.. contents:: Contents
+    :local:
+    :depth: 2
+
+
+:note: details formatted like this were communicated in an email beforehand and are copied here verbatim for reference.
+
+
+Issue 31: clarify timing requirements of status updates
++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+:Markus: sequence: point (1) should be skipped.
+
+    There might be SEC-Nodes allowing to change the target while running.
+
+    If the ECS wants to change any parameter (including target) it should just try - and react on the IsBusy error message accordingly, either by waiting for idle, by sending a stop command first, or by raising an error condition, depending on the context.
+
+    I do not think that it is a good idea to let the ECS remember a parameter change to be done later, when the module is no longer busy.
+
+:Klaus: To point 6 in the sequence: shouldn't we demand that the ECS must process all messages from one SEC-node in the right temporal order?
+
+point 1 is not strictly needed, point 6 should be formulated more clear.
+point 6 avoids a rare problem if an ECS uses two connections, one with and one without activation, and the message handling code is written in a simple-minded way.
+
+Should be written in a shorter version.
+
+agreed, closing this.
+
+
+Issue 37: Clarification of status
++++++++++++++++++++++++++++++++++
+
+:Markus: I would force the status value to be 3 digits, as checking the first digit of an integer is ugly.
+
+    UNKNOWN should belong to error (we may define a value in 4xy for it) DISABLE should also belong to error (we may define an other value in 4xy for it)
+
+    Then the following applies:
+
+    - 100 <= (idle/warn state) < 300
+    - 300 <= (busy state) < 400
+    - 400 <= (error state, disabled, unknown) < 500
+
+    Above will be the checks mostly used in the ECS.
+
+:Klaus: 1) I am with Markus here including the disabled/unknown status to error statusgroup. I would stay with the "old" commands "shutdown" and "reset" if you would want to enter or leave a potential "disabled" status.
+
+        2) Leaving the Error status could be as well issued by the SEC node alone. It does not have to be (but of course can be) issued by the ECS. Example: the pressure on an isolation vacuum of an oven could be too high for some transient time. Then the module should go to the Error state. When the pressure is o.k. again, the SEC node could return to the Idle state again.
+
+        Possibly we have to make the reset command mandatory.
+
+
+
+Discussion about the need of the complexity of this issue.
+
+Anders raises the question about the absolut bare minimum requirement.
+
+UNKNOWN is propably not needed at all, should be an ERROR.
+
+Discussion about DISABLED, its meaning and usage.
+
+DISABLED should be 499.
+
+agreed.
+
+Markus proposition is agreed.
+
+Discussion about persistence and acknowledgement of errors and the distinction to warnings.
+
+Maybe we need to distinguish between 'normal' errors and 'sticky' errors.
+
+Agreement about having WARNING and that it self clears.
+
+Klaus essentially suggests to have 'self-clearing' and 'sticky' errors.
+
+Enno wants to know about the difference between a warning and a 'self-clearing' error.
+
+This results in a lengthy discussion.
+
+Markus proposes to have IDLE/WARN/BUSY + self-clearing + sticky ERROR.
+'sticky' Errors need a reset() command.
+
+more precisely: measument scripts in the ECS should stop on error-replies, not necessary on an error-status.
+
+Enrico: But then we don't need a 'self-clearing' error state.
+
+Markus wants a more precise definition of WARN vs. Error.
+
+Enrico points out that self-clearing errors may be missed by polling ECS.
+
+Klaus states, that an error-condition which leaves the module in a different state than before (switching off heaters, quenching of a magnet) this SHOULD DEFINITELY a sticky error.
+WARN is also fine, no discussion about that.
+The open question keeps to be the distinction between 'self-clearing errors' and WARN.
+
+Essentially the 'self-clearing errors' appear to be very similiar to the error messages.
+
+Markus stops the discussion for the moment.
+
+Klaus will provide use case for the distinction of a ``error`` reply and a self-clearing error status.
+
+
+Issue 35: Partial structs
++++++++++++++++++++++++++
+
+:Markus: This should be an extension.
+
+    partial change of structured datatype: agree - as long as we do not force a SEC node to use structs by interface class definitions
+
+:Klaus: do we really, really need this? Isn't it getting all too complicated?
+
+Markus: this should be implementation-optional, if at all.
+
+Anders vote to not have this now. It may be optional later.
+
+Issue is to be kept open for  inclusion in a later version of the specification.
+
+
+Issue 36: Dynamic units
++++++++++++++++++++++++
+
+:Markus: This should be an extension.
+
+    parameters with dynamic units should have a special value for the unit property (say "*").
+    On these parameters, the unit qualifier has to be sent always.
+
+:Klaus: My opinion: keep the unit for a parameter fixed. Keep things easy!!!!!!!
+
+    Use case 1: Why should a SEC node change the unit of a given physical parameter?
+
+    Use case 2: The ECS can (and must) do this internally. It does not have to change this on the SEC node side.
+
+
+Markus votes for optional support.
+
+Agreement: if we want to do it, would do it like proposed, but we want to specify this now.
+
+Issue is to be kept open for possible later implementation.
+Parameter name 'unit' and qualifier 'u' are to be reserved.
+
+
+Issue 42: requirements of datatytpes
+++++++++++++++++++++++++++++++++++++
+
+:Markus:
+    floating point:
+
+    it makes not much sense to force the SEC-Node to give limits on 32 bit floats:
+    it is mainly a matter of precision, not of range.
+
+    alternative proposal: make two floating point datatypes "float" and "double".
+    As a benefit, the ECS may adjust the number of shown digits in the UI.
+
+    integer:
+
+    do we really need big integers?
+
+    numbers corresponding to physical quantities should NOT use integer, even when the the resolution is not better than 1!
+
+    typical use case of integer: count (i.e. filter size)
+
+    is there a use case, where a integer > 32 bits makes sense?
+
+    proposal: restrict integer to 32 bit (this is still a standard integer bitsize), for a higher range use "double"
+
+:Klaus:  As I understood: this issue it is dealing how to inform the ECS about the possible resolution/precision of  datatypes for display and to understand what is the minimal step size. On the ECS side there will not be a problem dealing with 64bit floats. And the SEC node is doing whatever it wants to do.
+
+    Can't we have a property called precision?
+
+Enrico proposes to split out the specification of the C/C++ api.
+There seem to be general agreement about this.
+
+Enrico also proposes to describe the data range and precision of numeric values by other means.
+
+Klaus proposes to have a property ``precision`` indicating the resolution of a value a sec-node can handle (minimum step size).
+
+Markus would like to have the number of significant digits.
+
+Enrico proposes that the optional property ``precision`` on numeric parameters should be a JSON-array of two elements containing
+the number of significant digits, smallest difference between distinct values.
+
+Agreement of Enrico's proposal, case closed.
+
+Enrico proposes to ALWAYS specify upper and lower limits on ALL datatypes.
+And the minimum should be before the maximum (at the moment this is mixed).
+
+Klaus like to be more explicit, no objections against re-ordering.
+
+Markus would like be able to use ``null`` as the limits on ``["double"]``.
+
+Agreement on this as well.
+
+Markus thinks, an integer should not be used to represent physical quantities.
+
+Discussion about this (sensible data ranges, bitsizes, et...).
+
+SECoP should assumes that integers are normally between -2**24..2**24.
+
+Enrico will write an Issue about `scaled integers`.
+
+
+Issue 43: Parameters and units
+++++++++++++++++++++++++++++++
+
+:Markus: This should be an extension.
+
+    first: integer values have no units, as they should not represent physical quantities
+
+    dynamic units: OK
+    proposal: the qualifier 'u' should be mandatory on all parameters with dynamic units, and a special value of the unit property (say '*') must tell that the unit is dynamic.
+
+    '$' is then not needed in the unit property. It still makes sense to use it internally, and for formal definitions of interface classes.
+
+    propablyIMHO defining a scheme for units of structs and tuples is going too far ('This should be an extension.'^2).
+    Is this really an issue?
+    The property 'unit' might just indicate the unit of the most important element, with a remark in the description. More complex units can be specified in the description, and as the ECS will not recognize the units of the subelements, it will treat them as as "unitless", so what?
+    If you have a use case, we may put it into the specification, but anyway no ECS or SEC-Node is required to support it.
+
+:Klaus:
+    ad 1) Let's keep it simple. No dynamic units!!!
+
+    ad 2) I am with Markus there: I would need a use case for the real need for a structured parameter with units.
+
+Markus proposes to postpone this to later.
+
+Klaus has a use case.
+Klaus is against against dynamic units, but likes a way to
+give a meaningful unit to structured datatypes.
+
+Klaus proposes to keep this open for now and not put it in the specification.
+
+We keep having a string-type ``unit`` property for numeric parameters (incl. arrays of numeric datatypes).
+Other parameters have no ``unit`` property.
+
+
+Issue 34: Clarify do message
+++++++++++++++++++++++++++++
+
+:Markus: I agree that the wording may be improved.
+
+    But: I do not opt for the (even weak) requirement that a command without argument SHOULD be sent as null.
+    However, I can live with it, as it is no MUST.
+
+:Klaus: I am with Markus here.
+
+decision after short discussion:
+    ``do module:command`` and ``do module:command null`` MUST be treated by ALL SEC-nodes the same - an ECS is free to choose which form it generates.
+
+closing this issue.
+
+
+Issue 38: Extension mechanism
++++++++++++++++++++++++++++++
+
+:Markus: specifier extension: i think that the specifier may contain anything but not white space/control characters? Do we loose extensibility, if we do not specify this extension mechanism?
+
+    all other: o.k.
+
+:Klaus: additional points:
+
+    - define predefined parameters/commands
+
+    - define additional interface classes/features
+
+Klaus mentions that we may also add parameters/commands and interfaces/classes.
+
+Klaus wants to be more verbose in this issue, as it should give hints to implementors.
++ interplay with 'must-ignore' policy
+
+general agreement.
+
+
+Issue 41: Handling of JSON-numbers
+++++++++++++++++++++++++++++++++++
+
+:Markus: I vote for (1). May be extended to (3) if a use case appears.
+
+:Klaus: (1)
+
+Agreement on 1), close for now, later 3) may be needed.
+
+:note: (1): no non-numeric values are to be generated in the JSON. If they appear, this is a malformed value.
+
+
+Issue 27: Proposals for Interface Classes
++++++++++++++++++++++++++++++++++++++++++
+
+:Markus: I came to the conclusion, that Interface classes can hardly be standardized to be compatible with different ECSs. Each facility may define their own custom classes.
+    When moving from one facility to another, it is still possible:
+
+    1) to run an experiment treating all modules as one of the 3 base classes
+    2) to use a general UI client to change parameters by hand
+    3) if the ECS supports, to change parameters in jobfiles (experiment scripts) by name
+
+    The essential requirement for running an experiment can be done without more complex standardized classes.
+
+:Klaus: I partially disagree here with Markus. More discussions needed.
+
+Issue was proposed by Enrico.
+
+Klaus could agree on Sonsor, Actuator, PIDController, Communicator in the next version.
+Klaus doesn't want to rush now.
+
+General Agreement on starting without this now, though it is a good idea.
+
+Markus would agree to have those classes in the specification.
+
+keep as 'under discussion'
+
+
+Issue 28+29: Buffering
+++++++++++++++++++++++
+
+:Markus: before we discuss that, we need some examples from ILL (somebody has to travel there and discuss)
+
+:Klaus: I agree to Markus' statement
+
+Enrico explains the idea behind the issues. Also new uses cases+requirements had shown up.
+
+Klaus likes to be explicit.
+
+Markus has concerns.
+
+Enrico will improve the Issue 29 with some message examples.
+
+Klaus likes it after improvements.
+Anders accepts the solution, but is worried about possibly overcomplicating things.
+Markus wants to discuss the proposal with the ill people.
+
+keep Issues as to be discussed.
+
+(Issue 29 will probably be implemented as proposed, Issue 28 re-worded after that.)
+
+
+Issue 30: Clarify Message parsing
++++++++++++++++++++++++++++++++++
+
+:Markus: Ok.
+
+:Klaus: What about the example "action  xyz" (two spaces)?
+
+add note: Only the first two spaces are relevant, everything else goes to the json-part.
+
+Otherwise accepted, close Issue.
+
+
+Issue 32: Clarify specification using RFC-style definitions.
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+:Markus: Ok.
+
+:Klaus: very OK, but still we'll need "the book"
+
+General agreement on this, though details need to be sorted out.
+
+Discussion about splitting, rewriting and transforming the current spec.
+
+Anders thinks extensions should be separate.
+
+Klaus votes for transforming the current document, rather than rewrite it.
+Klaus wants to add RFC-references and (slowly) transform it more into a rfc style document.
+
+RFC references are agreed.
+
+Markus and Klaus vote for version 1.0 to stay within one file.
+
+the next version should be rewritten in rfc-style afterwards.
+
+
+Issue 33: security and access control
++++++++++++++++++++++++++++++++++++++
+
+:Markus: Ok.
+
+:Klaus: I agree that we should have a statement about this but I don't know if we really have to give examples. It can be handled in a section about data transfer.
+
+Section should be included. Klaus want a section about datatransfer.
+
+Agreed, closing.
+
+
+Issue 23: Adjust datatypes
+++++++++++++++++++++++++++
+
+:Markus: simplify tuple datatype: OK, this has to be decided NOW
+
+:Klaus: Lutz will be back in December
+
+change of tuple type is agreed.
+
+renaming of struct is rejected.
+
+Enrico additionally proposed a change of the structure of the descriptive data:
+ Our replacement of an orderedDict should use (key, value) pairs, not collecting them alternating in a single JSON-array.
+
+Agreement of this.
+
+closing issue
+
+
+Issue 21: Usage of JSON null
+++++++++++++++++++++++++++++
+
+keeps as under discussion, as no use case showed up.
+``null`` isn't used for data exchange.
+
+close for now.
+
+
+Free discussion
++++++++++++++++
+
+- discussion about splitting the spec:
+
+  :Markus: In my comments above, 'This should be an extension' means that the issue is not/should not be part of the very basic part of the specification.
+
+- The new railroad diagrams are accepted.
+
+- Discussion about parameterwise de-activation: Should be removed.
+
+
+
+Next meeting
+++++++++++++
+
+video conference on dec. 3(rd) at 13:00.
+
+
+undiscussed, but remarked Issues:
++++++++++++++++++++++++++++++++++
+
+Issue 40: Finalise specification
+--------------------------------
+
+:Markus: Ok.
+
+
+Issue 39: Use cases
+-------------------
+
+:Markus: Ok.
+
+
+Issue 26: More Module Meanings
+------------------------------
+
+:Markus: Ok.
+
+:Klaus: Ok.
+
+
+Issue 22: Enable Module instead of Shutdown Command
+---------------------------------------------------
+
+:Markus: Ok.
+
+:Klaus: To be discussed.
+
+
+Issue 18: Interface Classes
+---------------------------
+
+Markus has the same opinion about this as for Issue 27.
+
+
+Afterthoughts (discussed via E-Mail)
+++++++++++++++++++++++++++++++++++++
+
+Thoughts about `Issue 37: Clarification of status`_
+---------------------------------------------------
+
+Markus want to add a few thoughts about Error-stati:
+
+after thinking a little more about the sticky/non-sticky ERROR stati,
+some aspects to consider for the discussion:
+
+1)  does a sticky error need a reset command?
+
+    There are situations, for which the SE implementor wants that, for security
+    reasons, an error condition has to be acknowledged by the user.
+    As long as the condition is not acknowledged, the module will not allow full
+    operation, at least not allow changing the target.
+
+    I think we all agree, that above makes sense.
+
+    a) The implementor might decide to use a button on the rack for the acknowledgment,
+       as a proof of the presence of a person close to the hardware.
+       In this case, do we really need that the error has to be acknowledged in
+       addition by the reset command over SECoP?
+
+    b) The implementor might decide having to different commands: 'reset' and
+       'acknowledge_error'. A 'reset' command resets all parameters to default values,
+       but the 'acknowledge_error' only clear the sticky error condition.
+
+    -> I do not think that we have to require a reset command, when an sticky error
+    might appear. The implementor might choose different ways to acknowledge.
+    The human readable error status should give a hint, what to do, for example
+    "check cooling water and press yellow button to confirm"
+
+
+2)  what is the difference between WARNING and ERROR?
+
+    The ECS might behave differently on the modules states WARNING and ERROR.
+    If the module concerned is crucial for the experiment, the ECS might decide
+    to stop the measurement script. Or, if the module is not crucial,
+    it might decide to continue. The ECS may get error replies on further
+    'change target' commands of this module, but it might log them and otherwise
+    ignore.
+
+
+3)  example for a non-sticky error
+
+    Example:
+        a simple readable. The sensor might be in an "out of range" state,
+        which I think should be treated as an ERROR, not a WARNING.
+        As only valid numbers (no NAN, no "null") might be transferred, in asynchronous
+        mode we will not find out that the value made the transition from valid to invalid,
+        except when looking at the status. With polling it is no problem, we will get
+        an error message on the read message.
+
+    This is a clear case for a non sticky error. If we want to know when a value
+    is invalid, we have to look at the status, or we have to change something else,
+    for example transferring a 'null' value in this case (how to know which error then?).
+
+    Remark:
+        in asynchronous mode, we can not find out, when an other parameter than
+        the main value gets invalid.
+
+
+4)  is there a difference between a sticky and a non-sticky error for the ECS?
+
+    How should the ECS behave when it sees a sticky error instead of a non-sticky error?
+    Actually I do not see a good example for a needed different behavior, only if we find
+    one, we should have both error states.
+    One thing is clear for me: the ECS must never acknowledge a sticky error automatically,
+    as this would fool out the security.
+
+Enrico proposes the following:
+
+- No distinction between sticky and non-sticky errors in the status codes.
+- An error-state indicate that a module can (temporarily) not fulfil it's main
+  function and is 'globally seen' (e.g. from a facility-wide point of view) sticky,
+  i.e. somebody somewhere has to do something to make them go away
+- this does not necessarily happen over the protocol. For the ECS this may then seem
+  like the Error went away 'by itself'. It may be supported to try this over the protocol.
+- using ``reset`` for this over the protocol is bad, as ``reset`` is intended to 'reset'
+  a module in a predefined, implementation specific state. We would overload too many
+  functions onto a single command here.
+- I propose to use an optional ``ack`` command (name is open for discussion) to ONLY
+  **try** to acknowledge an error via the protocol.
+- a module without the ``ack`` can not acknowledge the error via the protocol and
+  essentially relies on 'somebody doing the right thing'. From the ECS-point of view,
+  the error-state is then going away by 'itself'.
+- a module with the ``ack`` may or may not stay in the error-state. Its the implementors
+  who define the behaviour. calling the ``ack`` either makes the error go away or return
+  a error reply.
+- whether ``ack`` exists or not, a target change in the ``error`` state is to be
+  rejected as long as the error-state persists. (if the target change would be Ok, it
+  would be no error state. If it would be no error-state it should have either be
+  ``ack``\ ed before or went to IDLE/WARN 'by itself'.)
+  Other parameter changes may or may not work. Also calling ``go`` fails, whereas
+  buffering of values or calling other commands may work or not.
+- active connections get informed about ALL status changes.
+
+furthermore:
+  a module entering an error state SHOULD automatically perform the **minimum** set of
+  actions to prevent damage. That may mean everything from not doing anything up to a
+  full shutdown (implementor specific decision). An 'overheating' oven *should* switch
+  off its heater, but it may also decided to activate cooling gas. On the other hand,
+  a module operated by pressurized air may only close the air valve or just do nothing.
+
+As always SEC-nodes are free to select what they need (states+support commands), ECS's must support all optional things.
+
+
+
+Thoughts about `Issue 42: requirements of datatytpes`_
+------------------------------------------------------
+Markus:
+    I am not very happy with the decided precision property, especially I do not like that
+    it is a tuple. What should be given for the precision element, if you do not
+    care? We might use 0, but this might lead to a division by zero error in the ECS,
+    if not checked extra. Anyway, the programmer will often be interested in only
+    one of the two elements, and therefore may not care about the other
+    element and choose a bad value.
+
+    I propose to have a C-style 'format' property instead for floating point values.
+    One can the specify '%.5g' for 5 significant digits or '%.1f' for one fixed digit.
+    The format is intended for the user interface, it does not affect the format used
+    for transport. The ECS is free to use it or not, and it can use any sensible value
+    for the default, for example '%.6g', which is roughly what is needed for a 32bit float.
+
+    I know that 'precision' has more flexibility, as it might use numbers which are not
+    a power of 10, but for the purpose of the user interface it is much more easy to
+    use. Even LabView, Delphi and python support C-style format. We might limit the allowed syntax
+    to  % [digits] . [digits] [f|g|e]
+
+    If you insist on 'precision' as a floating point value, I would prefer to have this
+    as a single number in addition to the 'format' property, then we are free to choose
+    one or the other or both or none.
+
+    I do not insist to put these properties into SECoP V1.0, but I would really like to
+    do it like that, in case we would include it.
+
+Enrico:
+    Can we call that ``fmtstr`` ? That would make me happy....
+    If nobody objects, I'd like to adapt Issue 42 accordingly.
