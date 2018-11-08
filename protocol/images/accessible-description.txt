@@ -1,1 +1,2 @@
-[`accessible-description` ["{" ['accessible-property'*","]? "}"]#`a json-object, keys MUST be unique!`]
+('accessible-description')
+[ ["{" ['accessible-property'*","]? "}"]#`a json-object, keys MUST be unique!`]

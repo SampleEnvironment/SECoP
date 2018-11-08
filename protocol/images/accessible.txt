@@ -1,1 +1,2 @@
-[`accessible` <'parameter' 'command'>]
+('accessible' `is:`)
+ <'parameter' 'command'>

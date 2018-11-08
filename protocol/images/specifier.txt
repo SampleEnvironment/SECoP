@@ -1,3 +1,4 @@
-[`specifier` <! 'token'#[`for` <'ping' 'pong'> `only`]
+('specifier')
+[ <! 'token'#[`for` <'ping' 'pong'> `only`]
  ['errorclass' <! [":" 'subclass']>#`likely extension`]#[`for` 'error' `only`]
- ['module' [":" 'parameter' <! [":" 'property']#`reserved for future extension`>]?]>]
+ ['module' [":" 'parameter']?]>]

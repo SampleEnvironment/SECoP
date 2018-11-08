@@ -1,9 +1,12 @@
-[`accessible-property` <
- ["\"description\"" ":" 'descriptive text']
+('accessible-property')
+[ <
+ <["\"description\"" ":" 'descriptive text']
+ ["\"datatype\"" ":" 'datatype']
+ ["\"readonly\"" ":" <"true" "false">]>#`mandatory`
+<
  ["\"visibility\"" ":" <"\"expert" "\"advanced\"" "\"user\"">]
  ["\"group\"" ":" 'groupname']
- ["\"readonly\"" ":" <"true" "false">]
  ["\"unit\"" ":" 'unit of parameter']
- ["\"datatype\"" ":" 'datatype']
+ ["\"precision\"" ":" 'precision']
  ['custom-property']
->]
+>#`optional`>]

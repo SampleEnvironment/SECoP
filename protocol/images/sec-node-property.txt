@@ -1,5 +1,6 @@
-[`SEC-node-property` <
- [["\"modules\":" "[" [ ['name'#`module name` "," 'module-description']*","]? ] "]"]
+('SEC-node-property')
+[ <
+ [["\"modules\":" "[" [ ["[" 'name'#`module name` "," 'module-description' "]"]*","]? ] "]"]
  ["\"description\":" 'descriptive text']
  ["\"equipment_id\":" 'equipment_id']
  ["\"firmware\":" 'firmware version']

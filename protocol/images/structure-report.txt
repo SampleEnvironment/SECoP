@@ -1,1 +1,2 @@
-[`structure-report` 'SEC-node-description']
+('structure-report')
+'SEC-node-description'

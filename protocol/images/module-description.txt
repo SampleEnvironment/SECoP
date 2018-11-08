@@ -1,1 +1,2 @@
-[`module-description` ["{" ['module-property'*","]? "}"]#`a json-object, keys MUST be unique!`]
+('module-description')
+[ ["{" ['module-property'*","]? "}"]#`a json-object, keys MUST be unique!`]

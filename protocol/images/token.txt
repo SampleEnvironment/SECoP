@@ -1,3 +1,2 @@
-[`token` 'printable'*`max 63 times`#`SHOULD restrict to chars+digits`]
-
-[`printable` "[\x21-\x7f]"#`any char with value 33..127`]
+('token')
+['char'*`max 63 times`#`SHOULD restrict to chars+digits`]

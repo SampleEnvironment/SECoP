@@ -1,1 +1,2 @@
-[`CTL` "[\x00-\x1F]"#`any byte less than 32`]
+('CTL')
+[ "[\x00-\x1F]"#`any byte less than 32`]

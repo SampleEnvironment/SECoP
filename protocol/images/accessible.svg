@@ -1,4 +1,4 @@
-<svg class="railroad" viewBox="0 0 270 75" width="270" xmlns="http://www.w3.org/2000/svg">
+<svg class="railroad" viewBox="0 0 200 109" width="160pt" xmlns="http://www.w3.org/2000/svg">
 <style type="text/css">
 
     svg.railroad {
@@ -38,36 +38,44 @@
         fill:hsl(-290, 70%, 90%);
     }
 
-    svg.railroad g.labeledbox &gt; rect {
+    svg.railroad g.labeledbox > rect {
         stroke-width: 1px;
         stroke: grey;
         stroke-dasharray: 5px;
         fill:rgba(90, 90, 150, .1);
     }</style>
-<g class="sequence">
-<g class="sequence">
-<g>
-<text class="comment" x="50" y="26">
+<g class="verticalgrid">
+<g class="horizontalgrid">
+<g class="nonterminal">
+<rect height="22" width="100" x="10" y="10"/>
+<text x="60" y="26">
 accessible</text>
 </g>
+<g>
+<text class="comment" x="137" y="25">
+is:</text>
+</g>
+</g>
+<g class="sequence">
+<path d=" M 10 50 l 5 5 l -5 5 m 5 -5 h 5"/>
 <g class="choice">
-<path d=" M 100 21 h 24 m 92 0 h 24"/>
+<path d=" M 30 55 h 24 m 92 0 h 24"/>
 <g class="nonterminal">
-<rect height="22" width="92" x="124" y="10"/>
-<text x="170" y="26">
+<rect height="22" width="92" x="54" y="44"/>
+<text x="100" y="60">
 parameter</text>
 </g>
-<path d=" M 100 21 a 12 12 0 0 1 12 12 v 9 m 116 0 v -9 a 12 12 0 0 1 12 -12"/>
-<path d=" M 112 42 v 0 a 12 12 0 0 0 12 12 m 76 0 h 16 a 12 12 0 0 0 12 -12 v 0"/>
+<path d=" M 30 55 a 12 12 0 0 1 12 12 v 9 m 116 0 v -9 a 12 12 0 0 1 12 -12"/>
+<path d=" M 42 76 v 0 a 12 12 0 0 0 12 12 m 76 0 h 16 a 12 12 0 0 0 12 -12 v 0"/>
 <g class="nonterminal">
-<rect height="22" width="76" x="124" y="43"/>
-<text x="162" y="59">
+<rect height="22" width="76" x="54" y="77"/>
+<text x="92" y="93">
 command</text>
 </g>
 </g>
-<path d=" M 90 21 h 10"/>
+<path d=" M 180 55 h 5 m -5 5 l 5 -5 l -5 -5 m 5 5"/>
+<path d=" M 20 55 h 10"/>
+<path d=" M 170 55 h 10"/>
 </g>
-<path d=" M 250 21 h 5 m -5 5 l 5 -5 l -5 -5 m 5 5"/>
-<path d=" M 240 21 h 10"/>
 </g>
 </svg>

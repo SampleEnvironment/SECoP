@@ -1,12 +1,14 @@
-[`datatype` "[" <
+('datatype')
+[ "[" <
  ["\"bool\""]
- [<"\"double\""#`numbers` "\"int\""#`integers`> < ! ["," <'min_value' "null"#`unrestricted`> ["," <'max_value' "null"#`unrestricted`>]? ] > ]
- ["\"string\"" < ! ["," <'max_bytes'#`integer` "null"#`assume 255`> ["," <'min_bytes'#`integer` "null"#`assume 0`>]? ] > ]
- ["\"command\"" < ! ["," <'datatype'#`argument` "null"> ["," <'datatype'#`result` "null">]? ] > ]
- ["\"blob\"" ["," 'max_bytes'#`integer` ["," <'min_bytes'#`integer` "null"#`assume 1`>]? ] ]
- ["\"array\"" "," 'datatype' "," <'max_items'#`integer` "null"#`unrestricted!`> ["," <'min_items'#`integer` "null"#`assume 0`>]? ]
- ["\"tuple\"" "," "[" 'datatype'*"," "]" ]
+ ["\"double\""#`numbers` "," <'min_value' "null"> "," <'max_value' "null"> ]
+ ["\"int\""#`integers` "," 'min_value' "," 'max_value' ]
+ [<"\"string\"" "\"blob\""> "," ['min_bytes'#`integer` "," 'max_bytes'#`integer`]#`min_bytes MUST be <= max_bytes` ]
+ ["\"array\"" "," 'min_items'#`integer` "," 'max_items'#`integer` "," 'datatype' ]
+ ["\"command\"" "," <'datatype'#`argument` "null"#`no argument`> "," <'datatype'#`result` "null"#`no result`> ]
+ ["\"tuple\"" "," 'datatype'*","  ]
  ["\"enum\"" "," ["{" ['key'#`keys MUST be unique!` ":" 'value'#`integer values,
-MUST be unique!`]*"," "}"]#`a json-object with at least one entry` ]
- ["\"struct\"" "," ["{" ['name'#`names MUST be unique!` ":" 'datatype']*"," "}"]#`a json-object with at least one entry` ]
-> "]" ]
+MUST be unique!`]*"," "}"] ]
+ ["\"struct\"" "," ["{" ['name'#`names MUST be unique!` ":" 'datatype']*"," "}"]]
+> "]"
+]

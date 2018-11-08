@@ -1,1 +1,3 @@
-[`datatype` ["[" 'name of datatype' !*['parameter of datatype' ","] "]"]#`json-array of length >= 1`]
+(`generic structure of` 'datatype')
+[ ["[\"" 'datatype-name' "\"" [
+<! ["," 'min' "," 'max']#`limits: min <= max !`> <!*['datatype' ","] [",{"'mapping'"}"]>]#`parameter of datatype` "]"]]

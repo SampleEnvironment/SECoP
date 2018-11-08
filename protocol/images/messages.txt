@@ -1,2 +1,4 @@
-[`messages` ['message' <! 'CR'#`\\x0D`>#`MUST accept,SHOULD NOT send` 'LF'#`\\x0A`]*!]
+('messages')
+[['message' <! 'CR'#`\\x0D`>#`ignore on reception
+do not send!` 'LF'#`\\x0A`]*!]
 
