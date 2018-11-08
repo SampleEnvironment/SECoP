@@ -50,6 +50,36 @@ Buffering of values is in the current specification (v2018-10-04) only
 performed upon a ``go`` command for the target parameter, all other parameters
 are unbuffered.
 
+Examples
+~~~~~~~~
+buffering a value and starting later::
+
+  > read T1:target
+  < update T1:target [120,{"t":1234567890}]                    (**)
+  > buffer T1:target 300
+  < update T1:target [120,{"t":1234567891,"b":300.0}]          (*)
+  < buffered T1:target [120,{{"t":1234567891,"b":300.0}]
+
+  > do T1:go
+  < update T1:status [[300,"ramping"],{"t":1234678900}]        (*)
+  < update T1:target [300,{"t":1234678900}]                    (*)
+  < done T1:go [null,{"t":1234678900}]
+  < update T1:value [120.2,{"t":1234678900.2}]                 (*)
+
+:note: (*) happens only if the module got 'activated' and will be sent on all connections which 'activated' the module.
+
+       (**) will also be sent on all connections which 'activated' the module.
+
+
+
 Discussion
 ----------
-so far none.
+
+video conference 2018-11-07
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The above proposal shall be augmented with some examples (done).
+It should be an extension.
+It needs further discussion.
+Issue 28 also needs to be considered/updated.
+

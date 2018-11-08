@@ -20,6 +20,8 @@ Add the following list of extension mechanisms to the specification:
   *note:* this may also be used to more precisely specifiy errors, as the errorclass is transferred in the specifier field.
   i.e. the ``BadValue`` errorclass may be extended into ``BadValue:WrongType``, ``BadValue:IllegalValue``, etc.... subclasses.
 
+* define additional parameter/command/property names
+
 * extend reports (only append to them, never touch the already defined fields)
 
   *note:* The structure report may need to be nested inside a json-array in the future, should we need to extend that.
@@ -28,8 +30,15 @@ Add the following list of extension mechanisms to the specification:
 
 * define additional status groups or statuscodes
 
+* define additional interface classes/features
 
 
 Discussion
 ----------
-No discussion of this issue in its current form yet.
+
+video conference 2018-11-07
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Decisions:
+ - Should be explained in more detail, as it is intended to give hints to implementors.
+ - keep it under discussion for now.

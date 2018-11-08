@@ -61,3 +61,21 @@ It may also be necessary to adapt the definition of the datatypes by removing th
 the numeric datatypes could be ALWAYS restricted.
 
 :related: Issue 21, Issue 23, Issue 41
+
+
+video conference 2018-11-07
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+decision:
+ - specification of the HZB C-api will be moved someplace els
+ - the limits on all datatypes are always to be specified. Exception: for ``["double"]``, each of the two limits may be specified as ``null``.
+ - the limits are alwasy to be specified in min,max order.
+ - an optional parameter-property ``precision`` is to be defined, specifying a 2-tuple [ number of significant digits, smallest difference between distinct values ].
+ - SECoP assumes, an Integer be representable with signed 24 bits (i.e. all integers SHOULD fit inside -2\ :sup:`24` ... 2\ :sup:`24`),
+   as some JSON libraries parse JSON-numbers with 32bit float too.
+   Also no use case of a bigger integer was found.
+ - physical quantities SHOULD be represented by ``["double"]`` and not by ``["int"]`` !
+ - a new Issue is to be created for 'scaled integers' see `Issue 44`_
+ - issue is to be closed (for now)
+
+.. _`Issue 44`: 044p%20Scaled%20integers.rst

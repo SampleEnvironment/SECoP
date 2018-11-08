@@ -26,3 +26,11 @@ Explicit listing of features seems better than guessing them from the existence 
 Open question: how to figure out the difference of an unknown base class to a known base class?
 
 Markus proposes to use features instead of interface classes.
+
+video conference 2018-11-07
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Markus does not supports this. An Experiment can be performed without features or classes, just by adressing the parameters and commands in a generic way.
+
+Klaus wants more discussion about this.
+
+Enrico supports this.

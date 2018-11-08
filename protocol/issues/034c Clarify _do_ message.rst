@@ -76,4 +76,12 @@ and change the text in `datatypes`_ to::
 
 Discussion
 ----------
-not discussed in its current form.
+
+video conference 2018-11-07
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Decision:
+ - wording in current spec should be improved
+ - ``do module:command`` and ``do module:command null`` MUST be treated by ALL SEC-nodes the same.
+ - an ECS is free to choose which form it generates.
+ - closing this issue.

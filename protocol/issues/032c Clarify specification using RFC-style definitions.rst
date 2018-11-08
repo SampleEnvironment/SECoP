@@ -54,6 +54,13 @@ The section about the (de-)serialisation of messages should be reworded using :R
 
 Discussion
 ----------
-so far none.
+
+video conference 2018-11-07
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Decisions:
+ - proposal accepted, i.e. the current sigle file specification will get reworked
+ - a later specification should be in rfc style with two documents: 'basic' and 'extensions'
+ - issue is to be closed for now.
 
 

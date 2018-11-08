@@ -78,4 +78,14 @@ display the correct unit for subelements.
 
 Discussion
 ----------
-never discussed. So far the unit property was thought, to always be a string.
+So far the unit property was thought, to always be a string.
+
+
+video conference 2018-11-07
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Decisions:
+ - this should be an extension, not in the core
+ - keep it open for discussion and possible later inclusion in the specification.
+ - reserve the parameter-name ``unit`` and the qualifier name ``u``
+ - until decided otherwise, numeric parameters (incl. arrays of numeric values) have a mandatory ``unit`` property of a parameter as a string. other parameters have no unit.

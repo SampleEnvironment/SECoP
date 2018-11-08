@@ -5,7 +5,7 @@
 SECoP: Sample Environment Communication Protocol
 ################################################
 
-V2018-10-04
+V2018-11-07
 
 Introduction
 ============
@@ -15,13 +15,14 @@ environment communication" is to establish a common standard protocol
 SECoP for interfacing sample environment equipment to experiment control
 software.
 
-  Definition: Experiment Control Software ECS
-     Software controlling the hardware for carrying out an experiment. Includes the user
-     interface. Usually speaks several protocols with different parts of the instrument.
-     Often also called instrument control.
+Definition: Experiment Control Software ECS
+     Software controlling the hardware for carrying out an experiment.
+     Includes the user interface. Usually speaks several protocols with
+     different parts of the instrument.
+     Often also called short instrument control.
 
 There is a task (7.1) within the European framework SINE2020 also
-dealing with this subject. In its description we read:
+dealing with this subject. In its description we read::
 
     ... The standard should be defined in a way that it is compatible
     with a broad variety of soft- and hardware operated at the different
@@ -39,7 +40,7 @@ experiment should be straightforward. An ECS can be built in a way, that
 the configuration of a SEC node may be as short as entering a network
 address, as the description can be loaded over the protocol.
 
-  Definition: Sample Environment Control Node (SEC node)
+Definition: Sample Environment Control Node (SEC node)
     Computing unit or process or task, connected to all control units (temperature controller,
     flow controller, pressure sensor ...) of a sample environment, bridge to the ECS.
     SECoP specifies how ECS speaks with the SEC node.
@@ -89,27 +90,26 @@ Hardware Abstraction
 Modules
 -------
 
-  Definition: Module
+Definition: Module
     One logical component of an abstract view of the sample environment. Can at least be read.
     May be ’driven' (set new setpoint). May have parameters influencing how it achieves
     its function (e.g. PID parameters). May have some additional diagnostics (read-only) parameters.
     May provide some additional status information (temperature stable?, setpoint reached?)
     Reading a module returns the result of the corresponding physical measurement.
 
-In earlier discussion we used the term "device" for module, which might
+We intentionally avoid the term "device", which might
 be misleading, as "device" is often used for an entire apparatus, like a
 cryomagnet or humidity cell. In the context of SECoP, an apparatus in
 general is composed of several modules. For example different
-temperature sensors in one apparatus can be seen as different modules.
+temperature sensors in one apparatus are to be seen as different modules.
 
-An SEC node controls several (or one or no) modules. Modules also have
-some descriptive data (name, type, list\_of\_parameters,
-list-of\_commands,...).
+An SEC node controls a set of named modules. Modules also have
+some descriptive data (type, list-of-parameters, list-of-commands, ...).
 
 Accessibles
 -----------
 
-A module has several accessibles associated with it. An accessibles is
+A module has several accessibles associated with it. An accessible is
 addressed by the combination of module and accessible name. Module names
 have to be unique within an SEC node, accessible names have to be unique
 within a module. There are two basic types of accessibles: parameters and commands.
@@ -117,6 +117,8 @@ within a module. There are two basic types of accessibles: parameters and comman
 Module and accessible names should be in english (incl. acronyms), using
 only ascii letters + digits and some additional characters (see section `Protocol`_).
 A maximum name length might be imposed by the SEC node.
+
+:note: in some meeting we agreed on names beeing shorter than 64 (ASCII) characters.
 
 Parameter:
     The main parameter of a module is its value. Writable parameters may influence the
@@ -169,6 +171,10 @@ The following parameters were discussed at a meeting.
      (read only double, expected time to reach target in seconds)
 
 *note: ``use_ramp`` is under discussion. A ``mode`` enum is proposed instead.*
+
+The following parameter names are reserved without having an accosiated functionality, yet.
+
+-  **unit** (See `SECoP Issue 36: Dynamic units`_)
 
 Command:
     Commands are provided to initiate specified actions of the module.
@@ -245,6 +251,7 @@ and an JSON object containing the Qualifiers_ for this value as its second eleme
 *remark: future revisions may append additional elements.
 These are to be ignored for implementations of the current specification*
 
+
 Error report
 ------------
 An error report is only used in a `error reply`_ indicating that the requested action could
@@ -259,6 +266,7 @@ so that a client may sort out, which of the requests it sent got an error.*
 
 *remark: There is no way for a SEC node the report some general error information without
 a client sending a request.*
+
 
 Structure report
 ----------------
@@ -292,13 +300,20 @@ Currently 2 qualifiers are defined:
    as the value. So far the interpretation of "e" is fnot fixed.
    (sigma vs. RMS difference vs. ....)
 
-other qualifiers might be added later to the standard.
-If an unknown element is encountered, it is to be ignored (for now).
+These qualifiers are currently reserved:
 
-*See also:* `SECoP Issue 28: Clarify buffering mechanism`_ and `SECoP Issue 36: Dynamic units`_
+- "u"
+   See `SECoP Issue 36: Dynamic units`_
+
+- "b"
+   See `SECoP Issue 28: Clarify buffering mechanism`_ and `SECoP Issue 29: New messages for buffering`_
+
+other qualifiers might be added later to the standard.
+If an unknown element is encountered, it is to be ignored.
 
 .. note:: To check if a SEC node supports time stamping, a `ping` request can be sent.
           (See also `heartbeat`_).
+
 
 Interface Classes
 -----------------
@@ -333,6 +348,7 @@ The last one in the list must be one of the base classes listed above.
 
 .. _`Interface Classes and Features`: Interface%20Classes%20and%20Features.rst
 
+
 Features
 --------
 
@@ -342,7 +358,9 @@ As the list of interface classes would risk to increase a lot with possible
 combinations, *features* come into place. A feature is a modular functionality,
 with some predefined parameters and commands.
 
-For examples of features see the separate document "Interface Classes and Features".
+For examples of features see the separate document `Interface Classes and Features`_.
+*Note: these examples are not yet part of the standard!*
+
 
 Protocol
 ========
@@ -392,7 +410,7 @@ appear as the first character.
 .. image:: images/name.svg
    :alt: name ::= [a-zA-Z_] [a-zA-Z0-9_]*
 
-Identifiers starting with underscore are
+Identifiers starting with underscore ('custom-names') are
 reserved for special purposes like internal use for debugging. The
 identifier length is limited (<=63 characters). Module names on a SEC Node
 and parameter names within a module must not differ when uppercase letters
@@ -407,7 +425,7 @@ an underscore and not defined in the following list are reserved for future exte
 
 When implementing SEC nodes or ECS-clients, a 'MUST-ignore' policy should be applied to unknown
 or additional parts.
-Unknown messages are to be replied with an appropriate ProtocolError by a SEC node.
+Unknown or malformed messages are to be replied with an appropriate ``ProtocolError`` by a SEC node.
 An ECS-client must ignore such messages. See also section `Future Compatibility`_.
 
 Essentially the connections between an ECS and a SEC node can operate in one of two modes:
@@ -426,7 +444,7 @@ either indicating success of the request or flag an error.
 *note: to clarify optionality of some messages, the following table is split into two:
 basic messages (which MUST be implemented like specified) and extended messages which SHOULD be implemented.*
 
-*note: for clarification, the symbol ``␣`` is used here instead of a space character. <elem> refers to the element elem which is defined in another section.*
+*note: for clarification, the symbol* "``␣``" *is used here instead of a space character. <elem> refers to the element elem which is defined in another section.*
 
 .. table:: basic messages
 
@@ -501,9 +519,9 @@ Example:
 .. code::
 
   > *IDN?
-  < ISSE&SINE2020,SECoP,V2018-10-04,draft
+  < ISSE&SINE2020,SECoP,V2018-11-07,draft
 
-So far the SECoP version is given like "V2018-10-04", i.e. a capital "V" followed by a date in
+So far the SECoP version is given like "V2018-11-07", i.e. a capital "V" followed by a date in
 ``year-month-day`` format with 4 and 2 digits respectively.
 The ``add.info`` field is used to differentiate between draft, release candidates (rc1, rc2,...) and final.
 
@@ -549,12 +567,6 @@ In this case, the "active" reply also contains the module name.
 A SEC Node not implementing module-wise activation MUST NOT sent the module
 name in its reply to an module-wise activation request,
 and MUST activate all modules (*fallback mode*).
-
-*remark: This mechanism may be extended to specify modulename:parametername for a parameter-wise activation.
-A SEC node capable of module-wise activation SHOULD NOT fallback to global activation
-if it encounters such a request. Instead it SHOULD fallback to module-wise activation,
-i.e. ignore anything after (including the) colon in the specifier.*
-
 
 Update
 ~~~~~~
@@ -687,8 +699,14 @@ and communicated before.
 Actions which have to wait for physical changes, can be triggered with a command, but not be waited upon.
 The information about the duration and success of such an action has to be transferred via the status parameter.
 
-.. important:: If a command does not require an argument, the argument SHOULD be transferred as json-null.
+.. important:: If a command does not require an argument, an argument MAY still be transferred as json-null.
  A SEC node MUST also accept the message, if the data part is emtpy and perform the same action.
+ More precisely, any SEC-node MUST treat the following to messages the same:
+
+ - ``do <module>:<command>``
+ - ``do <module>:<command> null``
+
+ An ECS SHOULD only generate the shorter version.
 
 Example:
 
@@ -1003,6 +1021,23 @@ Accessible Properties
      of the same module.
      (*see:* `SECoP Issue 8: Groups and Hierarchy`_)
 
+The following parameters are under discussion and their name is now reserved:
+
+- precision
+   optional, JSON-number specifying the smallest difference between distinct values. Only for ``["double"]`` typed parameters.
+   See also `SECoP Issue 42: Requirements of datatypes`_.
+
+- fmtstr
+   optional string as a hint on how to format numeric parameters for the user.
+   The string must follow this EBNF::
+
+     fmtstr ::= "%" digit? "."? digit? ( "e" | "f" | "g" )
+
+   See also `SECoP Issue 42: Requirements of datatypes`_.
+   .. image:: images/fmtstr.svg
+      :alt: fmtstr ::= "%" digit? "."? digit? ( "e" | "f" | "g" )
+
+
 *remark: the parameter-property ``group`` is used for grouping of parameters within a module,
 the module-property ``group`` is used for grouping of modules within a node.*
 
@@ -1034,6 +1069,11 @@ Arrays store a given number of dataelements having the same datatype.
 Structs are comparable to tuples, with the difference of using named entries whose order is irrelevant during transport.
 
 For ranges and precisions see `SECoP Issue 42: Requirements of datatypes`_.
+The limits, which have to be specified with the datatype, are always inclusive,
+i.e. the value is allowed to have one of the values of the limits.
+Also, both limits may be set to the same value, in which case there is just one allowed value.
+
+One possible extension is discussed in `SECoP Issue 44: Scaled integers`_.
 
 All datatypes are specified in the descriptive data in the following generic form:
 
@@ -1056,12 +1096,10 @@ double
     :stub-columns: 1
 
     * - Datatype
-      - | ``["double"]`` *or*
-        | ``["double", <min>]`` *or*
-        | ``["double", <min>, <max>]``
+      - | ``["double", <min>, <max>]``
         |
-        | if ``<max>`` is not given or ``null``, there is no upper limit
-        | if ``<min>`` is not given or ``null``, there is no lower limit
+        | if ``<max>`` is ``null``, there is no upper limit
+        | if ``<min>`` is ``null``, there is no lower limit
         | ``<max>`` and ``<min>`` are numbers with ``<min>`` <= ``<max>``
 
     * - Example
@@ -1070,9 +1108,6 @@ double
     * - Transport example
       - | as JSON-number:
         | ``3.14159265``
-
-    * - Datatype in C/C++
-      - | double
 
 
 int
@@ -1083,12 +1118,9 @@ int
     :stub-columns: 1
 
     * - Datatype
-      - | ``["int"]`` *or*
-        | ``["int", <min>]`` *or*
-        | ``["int", <min>, <max>]``
+      - | ``["int", <min>, <max>]``
         |
-        | if ``<max>`` is not given or ``null``, there is no upper limit
-        | if ``<min>`` is not given or ``null``, there is no lower limit
+        | ``<max>`` and ``<min>`` MUST be given
         | ``<max>`` and ``<min>`` are integers with ``<min>`` <= ``<max>``
 
     * - Example
@@ -1097,9 +1129,6 @@ int
     * - Transport example
       - | as JSON-number:
         | ``-55``
-
-    * - Datatype in C/C++
-      - | int64_t
 
 
 bool
@@ -1115,9 +1144,6 @@ bool
     * - Transport example
       - | as JSON-boolean: true or false
         | ``true``
-
-    * - Datatype in C/C++
-      - | int64_t
 
 
 enum
@@ -1138,9 +1164,6 @@ enum
       - | as JSON-number, the client performs the mapping back to the name:
         | ``200``
 
-    * - Datatype in C/C++
-      - | int64_t
-
 
 string
 ------
@@ -1150,24 +1173,17 @@ string
     :stub-columns: 1
 
     * - Datatype
-      - | ``["string"]`` *or*
-        | ``["string", <max len>]`` *or*
-        | ``["string", <max len>, <min len>]``
+      - | ``["string", <min len>, <max len>]``
         |
-        | if ``<max len>`` is not given or ``null``, it is assumed to be 255.
-        | if ``<min len>`` is not given or ``null``, it is assumed to be 0.
-        | ``<max len>`` and ``<min len>`` are integers with ``<min len>`` <= ``<max len>`` (if both given)
-        | the length is counting the number of bytes used when the string is utf8 encoded, not characters
+        | ``<max len>`` and ``<min len>`` are integers with ``<min len>`` <= ``<max len>``
+        | the length is counting the number of bytes (**not** characters!) used when the string is utf8 encoded!
 
     * - Example
-      - ``["string", 80]``
+      - ``["string", 0, 80]``
 
     * - Transport example
       - | as JSON-string:
         | ``"Hello\n\u2343World!"``
-
-    * - Datatype in C/C++ API
-      - | char \*
 
 
 blob
@@ -1178,21 +1194,17 @@ blob
     :stub-columns: 1
 
     * - Datatype
-      - | ``["blob", <max len>]`` *or*
-        | ``["blob", <max len>, <min len>]``
+      - | ``["blob", <min len>, <max len>]``
         |
-        | if ``<min len>`` is not given, it is assumed as 1.
-        | ``<max len>`` and ``<min len>`` are integers with ``<min len>`` <= ``<max len>`` (if both given)
+        | ``<max len>`` and ``<min len>`` are integers with ``<min len>`` <= ``<max len>``
+        | the length is counting the number of bytes (i.e. **not** the size of the transport representation)
 
     * - Example
-      - ``["blob", 64]``
+      - ``["blob", 1, 64]``
 
     * - Transport example
       - | as single-line base64 (see :RFC:`4648`) encoded JSON-string:
         | ``"AA=="``
-
-    * - Datatype in C/C++ API
-      - | struct {int64_t len, char \*data}
 
 
 array
@@ -1203,23 +1215,17 @@ array
     :stub-columns: 1
 
     * - Datatype
-      - | ``["array", <basic type>, <max len>]`` *or*
-        | ``["array", <basic type>, <max len>, <min len>]``
+      - | ``["array", <min len>, <max len>, <basic type>]``
         |
-        | if ``<min len>`` is not given or ``null``, it is assumed as 0.
-        | if ``<max len>`` is not given or ``null``, the array is unrestricted! (**avoid this !**)
-        | ``<max len>`` and ``<min len>`` are integers with ``<min len>`` <= ``<max len>`` (if both given)
+        | ``<max len>`` and ``<min len>`` are integers with ``<min len>`` <= ``<max len>``
         | the length is the number of elements
 
     * - Example
-      - ``["array", ["int"], 10]``
+      - ``["array", 3, 10, ["int", 0, 9]]``
 
     * - Transport example
       - | as JSON-array:
         | ``[3,4,7,2,1]``
-
-    * - Datatype in C/C++ API
-      - | <basic_datatype>[]
 
 
 tuple
@@ -1230,19 +1236,14 @@ tuple
     :stub-columns: 1
 
     * - Datatype
-      - | ``["tuple", [<datatype>, <datatype>, ...]]``
+      - | ``["tuple", <datatype>, <datatype>, ...]``
 
     * - Example
-      - | ``["tuple", [["int"], ["string"]]]``
-        |
-        | *note: may reduce nesting level by one without probs.*
+      - | ``["tuple", ["int", 0, 999], ["string", 0, 99]]``
 
     * - Transport example
       - | as JSON-array:
         | ``[300,"accelerating"]``
-
-    * - Datatype in C/C++ API
-      - | struct
 
 
 struct
@@ -1262,10 +1263,6 @@ struct
       - | as JSON-object:
         | ``{"x": 0, "y": 1}``
 
-    * - Datatype in C/C++ API
-      - | struct
-        |
-        | might be null
 
 *remark: see also* `SECoP Issue 35: Partial structs`_
 
@@ -1278,12 +1275,10 @@ command
     :stub-columns: 1
 
     * - Datatype
-      - | ``["command"]`` *or*
-        | ``["command", <argumenttype>]`` *or*
-        | ``["command", <argumenttype>, <resulttype>]]``
+      - | ``["command", <argumenttype>, <resulttype>]]``
         |
-        | if ``<argumenttype>`` is not given or ``null``, the command has no argument
-        | if ``<resulttype>`` is not given or ``null``, the command returns no result
+        | if ``<argumenttype>`` is ``null``, the command has no argument
+        | if ``<resulttype>`` is ``null``, the command returns no result
         | only one argument is allowed, though several arguments may be used if
         | encapsulated in a structural datatype (struct, tuple or array).
         | If such encapsulation or data grouping is needed, a struct SHOULD be used.
@@ -1291,11 +1286,11 @@ command
         | in the description of the command.
 
     * - Example
-      - ``["command", ["string"], ["string"]]``
+      - ``["command", ["bool"], ["bool"]]``
 
     * - Transport examples
-      - | > do module:communicate "Hello"
-        | < done module:communicate ["World!",{t:123456789.2}]
+      - | > do module:invert true
+        | < done module:invert [false,{t:123456789.2}]
 
 *remark: see also* `SECoP Issue 35: Partial structs`_
 
@@ -1385,11 +1380,12 @@ The above diagrams were generated using the library from http://github.com/lukas
 .. _`SECoP Issue 18: Interface classes`: issues/018d%20Interface%20Classes.rst
 .. _`SECoP Issue 22: Enable Module instead of Shutdown Command`: issues/022u%20Enable%20Module%20instead%20of%20Shutdown%20Command.rst
 .. _`SECoP Issue 26: More Module Meanings`: issues/026d%20More%20Module%20Meanings.rst
-.. _`SECoP Issue 28: Clarify buffering mechanism`: issues/028p%20Clarify%20buffering%20mechanism.rst
-.. _`SECoP Issue 29: New messages for buffering`: issues/029p%20New%20messages%20for%20buffering.rst
-.. _`SECoP Issue 35: Partial structs`: issues/035p%20Partial%20structs.rst
-.. _`SECoP Issue 36: Dynamic units`: issues/036p%20Dynamic%20units.rst
-.. _`SECoP Issue 37: Clarification of status`: issues/037p%20Clarification%20of%20status.rst
-.. _`SECoP Issue 38: Extension mechanisms`: issues/038p%20Extension%20mechanisms.rst
-.. _`SECoP Issue 42: Requirements of datatypes`: issues/042p%20Requirements%20of%20datatypes.rst
-.. _`SECoP Issue 43: Parameters and units`: issues/043p%20Parameters%20and%20units.rst
+.. _`SECoP Issue 28: Clarify buffering mechanism`: issues/028d%20Clarify%20buffering%20mechanism.rst
+.. _`SECoP Issue 29: New messages for buffering`: issues/029d%20New%20messages%20for%20buffering.rst
+.. _`SECoP Issue 35: Partial structs`: issues/035d%20Partial%20structs.rst
+.. _`SECoP Issue 36: Dynamic units`: issues/036d%20Dynamic%20units.rst
+.. _`SECoP Issue 37: Clarification of status`: issues/037d%20Clarification%20of%20status.rst
+.. _`SECoP Issue 38: Extension mechanisms`: issues/038d%20Extension%20mechanisms.rst
+.. _`SECoP Issue 42: Requirements of datatypes`: issues/042d%20Requirements%20of%20datatypes.rst
+.. _`SECoP Issue 43: Parameters and units`: issues/043d%20Parameters%20and%20units.rst
+.. _`SECoP Issue 44: Scaled integers`: issues/044p%20Scaled%20integers.rst

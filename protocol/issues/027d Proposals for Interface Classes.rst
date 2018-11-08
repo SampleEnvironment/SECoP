@@ -265,3 +265,17 @@ topic raised on several discussions.
 not discussed in present form.
 
 :note: the above is a first workable proposal.
+
+video conference 2018-11-07
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Klaus investigate the usefulness of the proposed classes.
+
+``Sensor``, ``Actuator``, ``PIDController`` and ``Communicator`` are already good candidates for inclusion
+into the next version of the spec. The others are too specific and may be implemented as custom classes (prefix class name with '_' !)
+
+
+Decision:
+ - keep as 'under discussion'
+
+

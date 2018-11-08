@@ -38,3 +38,10 @@ Since commands now only have single argument, the use case is actually 'overload
 of commands by selecting the subcommand via the name of the structs member.
 
 :related: `Issue 23: Adjust datatypes`_, `Issue 21: Usage of JSON null`_
+
+
+video conference 2018-11-07
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Use-cases need to be written down more clearly.
+Issue is to be kept open for later inclusion.

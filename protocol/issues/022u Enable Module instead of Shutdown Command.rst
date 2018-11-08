@@ -55,3 +55,12 @@ Enrico wrote::
     and this then enables/disables all modules from that specific group.
 
     Just my 0.02€.
+
+
+Discussion
+----------
+
+video conference 2018-11-07
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Markus supports this.
+Klaus wants more discussion on this.

@@ -246,3 +246,24 @@ Further clarifications + definitions may be needed to find a consensus.
 **The assignment of the special states ``UNKNOWN`` and ``DISABLED`` is preliminary and needs discussion!**
 
 .. _`SECoP Issue 22: Enable Module instead of Shutdown Command`: issues/022u%20Enable%20Module%20instead%20of%20Shutdown%20Command.rst
+
+video conference 2018-11-07
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Essentially he above proposal is seen as too complex.
+Markus proposes that simple SEC-nodes use 100/200/300/400 for IDLE/WARN/BUSY/ERROR.
+An ECS MUST treat 100..199/200..299/300..399/400.498 as IDLE/WARN/BUSY/ERROR.
+If an ECS can't handle WARN, it should treat it like IDLE.
+
+UNKNOWN is not needed. DISABLED gets (for now) assigned the special value 499.
+This is to be discussed, as there are different opinions about whether DISABLED is an ERROR or an status of its own.
+Enrico proposed to use 0 for DISABLED.
+
+The difference between a WARN and a self-clearing ERROR are to be worked out by Klaus.
+It may be needed to introduce self-clearing and persistent Errors (need to be 'reset'ed).
+Until then, ERROR is sticky, i.e. it needs a ``reset``.
+
+Common agreement about that if an Error occurs and some 'safety' actions are performed (leaving the module in a different state than it was prepared to be),
+this always MUST be an sticky ERROR.
+
+The Issue is kept open for discussion.

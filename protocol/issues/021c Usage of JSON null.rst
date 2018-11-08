@@ -37,7 +37,7 @@ Is it allowed that a complex datatype contains *null* elements in an update mess
 in case the data is only partly invalid? What about replies to *read* messages with
 a complex datatype? In this case, an error message would suppress the information
 about the valid elements ...
-  
+
 
 Usage on null values in *change* messages
 #########################################
@@ -60,3 +60,10 @@ Opinions:
 Markus: do not allow *null* in *change* messages, or introduce a property *change_may_contain_null_elements=true* (or something shorter) on the parameters which accept this behaviour.
 
 note: partly related to Issue 35: Partial structs
+
+video conference 2018-11-07
+---------------------------
+
+Decisions:
+ - close for now. ``null`` isn't (to be) used in data transfers.
+ - may be reopened if a use case arise

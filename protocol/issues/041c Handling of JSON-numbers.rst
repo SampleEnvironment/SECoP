@@ -29,3 +29,10 @@ Once discussed briefly, but neglected as not relevant.
 Should still be defined instead of leaving this as implementation specifc.
 
 Enrico votes for 1), falling back to 3), if 1) finds no majority.
+
+video conference 2018-11-07
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Decision:
+ - All agree on 1), with a fall-back to 3) should a serious use case arise
+ - close the issue (for now), to be reopened if such a use-case arise

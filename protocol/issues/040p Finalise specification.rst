@@ -13,4 +13,8 @@ As long as clarifying *note* and *remark* snippets are needed, its not yet a spe
 
 Discussion
 ----------
-not discussed yet.
+No decisions or detailed discussions so far.
+
+video conference 2018-11-07
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Markus supports this.

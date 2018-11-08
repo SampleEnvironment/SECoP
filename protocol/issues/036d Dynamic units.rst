@@ -50,3 +50,12 @@ topic brought up once but was not so clearly specified and discussion was postpo
 case would be found. Use case was found now and given in the Motivation.
 
 No discussion of this issue in its current form yet.
+
+video conference 2018-11-07
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Agreement about the proposal, it should just not be included now.
+Also, it should be an extension and will not belong to the core.
+
+Issue is to be kept open for discussion for later inclusion.
+

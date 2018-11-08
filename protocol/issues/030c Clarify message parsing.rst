@@ -74,6 +74,23 @@ Further processing (checking action against the list of predefined actions,
 checking validity of the utf-8 or json data-part, checking data against the datatypes, etc....)
 is not covered in this issue.
 
+The following example MUST produce a ``ProtocollError`` as it's JSON part is invalid::
+
+   "action  xyz"       ; note: two spaces
+   "action specifier xyz"
+
+The following messages MUST be treated the same::
+
+   "action specifier <valid JSON>"
+   "action specifier   <valid JSON>"    ; note: extra space at beginning of JSON part
+   "action specifier <valid JSON>   "   ; note: extra space at end of JSON part
+
+i.e. only the first two spaces are used for splitting the message into components.
+
+*note:* JSON-value may contain an indefinite amount of whitespace before/between/after values.
+The choosen Message format just forbids JSON-value encodings which include ``CR`` or ``LF`` characters.
+(i.e. you should use the 'compact' format in your JSON library of choice.)
+
 
 Discussion
 ----------
@@ -85,3 +102,9 @@ This addition was not yet discussed, but would (if agreed upon) greatly simplify
 message parsing of the current specification and provide a backwards compatible
 fall-back, should a future revision want to distinguish between a missing part,
 an empty part or a json-null.
+
+video conference 2018-11-07
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Decisions:
+  - accepted, closing this after adding some notes.

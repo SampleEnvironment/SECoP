@@ -82,8 +82,11 @@ MUST to be broadcast (+ internally reflected for polling clients)
 
 Discussion
 ----------
-Briefly discussed in video conference at 2018-10-04.
-General agreeement, but not (yet) finally decided as accepted.
+
+video conference at 2018-10-04
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+General agreement, but not (yet) finally decided as accepted.
 
 Comment by Markus:
   I agree fully on the subject, I just wonder if we can not describe the essential thing
@@ -101,4 +104,27 @@ Comment by Markus:
   There is an other possible problem in synchronous mode: when polling is slow, an IDLE status
   may be missed if the next action is issued by an other client. In order to avoid this, the
   first client might want to poll the target value too and check if it was changed.
+
+
+video conference at 2018-11-07
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Comment by Markus:
+    sequence: point (1) should be skipped.
+
+    There might be SEC-Nodes allowing to change the target while running.
+
+    If the ECS wants to change any parameter (including target) it should just try - and react on the IsBusy error message accordingly, either by waiting for idle, by sending a stop command first, or by raising an error condition, depending on the context.
+
+    I do not think that it is a good idea to let the ECS remember a parameter change to be done later, when the module is no longer busy.
+
+Comment by Klaus:
+    To point 6 in the sequence: shouldn't we demand that the ECS must process all messages from one SEC-node in the right temporal order?
+
+Comment by Enrico:
+    point 1 is not strictly needed, point 6 should be formulated more clear. point 6 avoids a rare problem if an ECS uses two connections, one with and one without activation, and the message handling code is written in a simple-minded way.
+
+Agreement on the above proposal, closing this issue.
+A shortened version of the above is to be included in the specification. It should also contain some message examples (to show the expected order of events).
+
 

@@ -74,3 +74,7 @@ Discussion
 ----------
 No discussion of this issue in its current form yet.
 Several parts were used in meetings as basis for decision-making.
+
+video conference 2018-11-07
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Markus supports this.

@@ -80,7 +80,7 @@ Behaviour of ``go``/``hold``/``abort``/``stop`` commands
    to a value close to the present one. Act as if this value would have been the initial target.
    If a value was buffered for target, it is cleared.
    This should also trigger update events on all enabled connections.
-   
+
 
 Problems
 ~~~~~~~~
@@ -91,5 +91,11 @@ See `Issue 29: New messages for buffering`_
 
 Discussion
 ----------
-so far none.
+
+video conference 2018-11-07
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Will be updated once Issue 29 is sorted out.
+
+Keep as 'under discussion' for now.
 

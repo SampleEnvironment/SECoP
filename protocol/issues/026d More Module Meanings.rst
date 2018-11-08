@@ -9,3 +9,9 @@ Some problem is, that the exact meaning might differ.
 
 As a general rule, we might say that '_regulation' can be postfixed to any menaing, if the quantity generating module is different from the (closer to the sample) relevant measuring device.
 
+Discussion
+----------
+
+video conference 2018-11-07
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Markus and Klaus support this.

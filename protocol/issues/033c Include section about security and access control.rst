@@ -17,8 +17,8 @@ Enrico proposes to include a section called "security and access control"
 stating the committees decision and list a few examples how both can be achieved
 by other means.
 
-One example could be to use SECoP over openTLS (see :RFC:`8446') to encrypt
-communication and restrict acces to those clients having the right certificates
+One example could be to use SECoP over openTLS (see :RFC:`8446`) to encrypt
+communication and restrict access to those clients having the right certificates
 (depending on the TLS configuration).
 
 Another example could a filter, which disallow certain accesses.
@@ -41,6 +41,12 @@ Discussion
 Discussion usually settled quickly on 'It's not SECoP's task to provide
 encryption or access control'.
 
-Still it was not yet decided to put this into the specification.
+video conference 2018-11-07
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Decisions:
+ - proposal accepted, a section should be included in the specification.
+ - Another Section about datatransfer should also be included.
+ - Issue is to be closed.
 
 
