@@ -140,7 +140,7 @@ Issue 36: Dynamic units
 
 Markus votes for optional support.
 
-Agreement: if we want to do it, would do it like proposed, but we want to specify this now.
+Agreement: if we want to do it, would do it like proposed, but we don't want to specify this now.
 
 Issue is to be kept open for possible later implementation.
 Parameter name 'unit' and qualifier 'u' are to be reserved.
@@ -239,6 +239,9 @@ Klaus proposes to keep this open for now and not put it in the specification.
 We keep having a string-type ``unit`` property for numeric parameters (incl. arrays of numeric datatypes).
 Other parameters have no ``unit`` property.
 
+Comment Klaus: You can't prevent somebody from adding a ``unit`` property to a parameter. So the formulation should be:
+Other parameters are not expected to have a ``unit`` property.
+
 
 Issue 34: Clarify do message
 ++++++++++++++++++++++++++++
@@ -332,9 +335,11 @@ Enrico will improve the Issue 29 with some message examples.
 
 Klaus likes it after improvements.
 Anders accepts the solution, but is worried about possibly overcomplicating things.
-Markus wants to discuss the proposal with the ill people.
+Markus wants to discuss the proposal with the ILL people.
 
 keep Issues as to be discussed.
+
+Enrico proposes to test the functionality with a Huber goniometer at MLZ.
 
 (Issue 29 will probably be implemented as proposed, Issue 28 re-worded after that.)
 
