@@ -85,7 +85,7 @@ The following messages MUST be treated the same::
    "action specifier   <valid JSON>"    ; note: extra space at beginning of JSON part
    "action specifier <valid JSON>   "   ; note: extra space at end of JSON part
 
-i.e. only the first two spaces are used for splitting the message into components.
+i.e. **only the first two spaces are used for splitting the message into components**.
 
 *note:* JSON-value may contain an indefinite amount of whitespace before/between/after values.
 The choosen Message format just forbids JSON-value encodings which include ``CR`` or ``LF`` characters.

@@ -88,7 +88,7 @@ This results in a lengthy discussion.
 Markus proposes to have IDLE/WARN/BUSY + self-clearing + sticky ERROR.
 'sticky' Errors need a reset() command.
 
-more precisely: measument scripts in the ECS should stop on error-replies, not necessary on an error-status.
+more precisely: measurement scripts in the ECS should stop on error-replies, not necessary on an error-status.
 
 Enrico: But then we don't need a 'self-clearing' error state.
 
@@ -96,7 +96,9 @@ Markus wants a more precise definition of WARN vs. Error.
 
 Enrico points out that self-clearing errors may be missed by polling ECS.
 
-Klaus states, that an error-condition which leaves the module in a different state than before (switching off heaters, quenching of a magnet) this SHOULD DEFINITELY a sticky error.
+Klaus states, that an error-condition which leaves the module in a different state than before
+(switching off heaters, quenching of a magnet) SHOULD DEFINITELY be a sticky error.
+
 WARN is also fine, no discussion about that.
 The open question keeps to be the distinction between 'self-clearing errors' and WARN.
 
@@ -146,8 +148,8 @@ Issue is to be kept open for possible later implementation.
 Parameter name 'unit' and qualifier 'u' are to be reserved.
 
 
-Issue 42: requirements of datatytpes
-++++++++++++++++++++++++++++++++++++
+Issue 42: requirements of datatypes
++++++++++++++++++++++++++++++++++++
 
 :Markus:
     floating point:
@@ -201,9 +203,11 @@ Markus thinks, an integer should not be used to represent physical quantities.
 
 Discussion about this (sensible data ranges, bitsizes, et...).
 
-SECoP should assumes that integers are normally between -2**24..2**24.
+SECoP should assume that integers are normally between -2**24..2**24, which is still representable in 32 bit real numbers
 
-Enrico will write an Issue about `scaled integers`.
+Enrico will write an Issue about `scaled integers`. See `Issue 44`_
+
+.. _`Issue 44`: ../issues/044p%20Scaled%20integers.rst
 
 
 Issue 43: Parameters and units
@@ -308,12 +312,12 @@ Issue 27: Proposals for Interface Classes
 
 Issue was proposed by Enrico.
 
-Klaus could agree on Sonsor, Actuator, PIDController, Communicator in the next version.
+Klaus could agree on Sensor, Actuator, PIDController, Communicator in the next version.
 Klaus doesn't want to rush now.
 
-General Agreement on starting without this now, though it is a good idea.
+General Agreement on starting without this now, though it is a good idea to have interface classes.
 
-Markus would agree to have those classes in the specification.
+Markus agree to have those classes in the specification (later).
 
 keep as 'under discussion'
 
@@ -339,7 +343,7 @@ Markus wants to discuss the proposal with the ILL people.
 
 keep Issues as to be discussed.
 
-Enrico proposes to test the functionality with a Huber goniometer at MLZ.
+Enrico proposes to test the functionality with a Huber motor controller at MLZ.
 
 (Issue 29 will probably be implemented as proposed, Issue 28 re-worded after that.)
 
@@ -414,7 +418,7 @@ Issue 21: Usage of JSON null
 ++++++++++++++++++++++++++++
 
 keeps as under discussion, as no use case showed up.
-``null`` isn't used for data exchange.
+``null`` isn't used for regular data exchange.
 
 close for now.
 

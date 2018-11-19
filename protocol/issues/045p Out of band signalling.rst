@@ -31,7 +31,7 @@ It seems a waste to only inform the ECS about a problem, especially since the re
 Building on Solution a), the qualifier may be extended with a field ``err`` containing the error-message, the
 corresponding ``error`` reply would have contained.
 
-The qualifier may also be extended with an ``l``\ astvalue key containing the last valid value.
+The qualifier may also be extended with an ``l``\ (lastvalue) key containing the last valid value.
 (Trying to keep complexity at the ECS side would speak against it, as the last valid value my also be cached there.
  On the other hand, if all clients disconnect, nobody would have this value anymore, so if it is needed to store the last valid value, the SEC-node would have to do it.)
 
@@ -50,7 +50,7 @@ As this defines a new action, the fields may be reorganised here. The other solu
 
 Discussion
 ----------
-So far the motivation and the solution revolve around the use case, where a parameter con no longer be read.
+So far the motivation and the solution revolve around the use case, where a parameter can no longer be read.
 It is to be discussed if there are more use cases to be covered.
 
 not discussed in its present form.

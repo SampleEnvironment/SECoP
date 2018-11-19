@@ -2,11 +2,18 @@
 [ <
  <["\"description\"" ":" 'descriptive text']
  ["\"datatype\"" ":" 'datatype']
- ["\"readonly\"" ":" <"true" "false">]>#`mandatory`
+>#`always mandatory`
+<
+ ["\"readonly\"" ":" <"true" "false">]
+>#`mandatory for parameters`
 <
  ["\"visibility\"" ":" <"\"expert" "\"advanced\"" "\"user\"">]
  ["\"group\"" ":" 'groupname']
+ ['custom-property']
+>#`optional`
+<
  ["\"unit\"" ":" 'unit of parameter']
  ["\"precision\"" ":" 'precision']
- ['custom-property']
->#`optional`>]
+ ["\"fmtstr\"" ":" 'fmtstr']
+>#`optional for numeric parameters`
+>]

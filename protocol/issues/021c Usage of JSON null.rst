@@ -65,5 +65,5 @@ video conference 2018-11-07
 ---------------------------
 
 Decisions:
- - close for now. ``null`` isn't (to be) used in data transfers.
+ - close for now. ``null`` isn't (to be) used in regular data transfers.
  - may be reopened if a use case arise
