@@ -17,7 +17,7 @@ in the vidconf 2018-11-07 it was proposed to make a new property
 Solution a: fmtstr only
 +++++++++++++++++++++++
 
-For the UI, the easieast would be to specify a C-style format %.<digits>(e|f|g)
+For the UI, the easiest would be to specify a C-style format %.<digits>(e|f|g)
 as name Enno proposes "fmtstr". Markus would strongly advise to be strict on the
 syntax: do not allow other characters in the format, no field size etc.
 
