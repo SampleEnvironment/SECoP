@@ -1,4 +1,4 @@
-SECoP Issue 49: Precision of FLoating Point Values
+SECoP Issue 49: Precision of Floating Point Values
 ==================================================
 
 Motivation
