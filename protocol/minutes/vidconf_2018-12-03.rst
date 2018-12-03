@@ -1,0 +1,127 @@
+Videoconference 2018-12-03
+==========================
+
+.. sidebar:: participants
+
+     * Klaus Kiefer
+     * Markus Zolliker
+     * Niklas Ekström (on behalf of Anders Petterson)
+     * Enrico Faulhaber
+
+.. contents:: Contents
+    :local:
+    :depth: 2
+
+
+Issue 26: More Module Meanings
+------------------------------
+close for now. maybe reopened later, if needed.
+
+
+Issue 37: Clarify status
+------------------------
+discussion about naming and ways to 'acknowledge an error'.
+need better definition/clarification of ``reset``.
+``reset`` should **NEVER** end in a BUSY state, but may also be used to acknowledge an error.
+current definition of ``reset`` should be reworded.
+
+A command acknowledging an error is needed (lets call it ``ack_error`` for the moment.
+Also a command 'setting the module in a predefined state' command is also defined.
+
+discussion about ``prepare``, ``shutdown`` ``reset``: meanings and semantics
+
+Markus proposes to remove ``shutdown`` and ``reset`` (in its current form)
+and handle those cases in a separate 'Mastermodule' with a specialized interface_class.
+This should be discussed in Issue 22.
+
+If something influences more than one module, it should be handled by a 'master' module.
+For this a module-property 'master_of', listing the names of the controlled modules should be defined.
+This shoould also have a specialized interface_class.
+Discussion should continue in a new Issue.
+
+We need a command which acknowledges an error, the name is not yet defined.
+Enrico likes ``reset``, Klaus dislikes this. Markus prefers ``ackerror``.
+
+All agree, to reserve codes like 'x0y' for further usages by the specification.
+
+Discussion about assignment of error-codes to 'disabled'.
+Enrico thinks 'disabled' should be a distinct state, not an error.
+
+After a discussion, 0 is neglected. 500 should be used for ``DISABLED``
+
+
+Issue 43:
+---------
+If a a numeric parameter has no physical unit, the unit property is not mandatory.
+
+In addition, the qualifier name 'unit' is to be reserved (meaning the same as 'u').
+
+We don't want to support dynamic units.
+Units SHOULD be 'defined' in the descriptive data **only**.
+
+Issue should be marked as **EXPERIMENTAL**.
+Issue is to be closed (for now). It may be re-opened.
+
+
+Issue 45: Async error updates
+-----------------------------
+should be renamed!
+
+an error preparing an async update should be transferred as an ``update`` event
+with a json-null value in the data-report and (in this case only) have an
+error-qualifier `error` specifying the error message, the ``error`` reply would have contained.
+
+We essentially want to transfer two additional informations:
+ 1) the read failed
+ 2) why the read failed.
+
+agreement on using ``null`` for the value for (1) and using a qualifier ``error`` for (2).
+
+Discussion about what information should be contained in the qualifier?
+
+A second version could be use an error-report which would have been sent if the ECS would have triggered the ``read`` on that parameter.
+
+Discussion about putting all information into an 'error' qualifier or re-using the error-report.
+
+Also, transferring the 'lastvalue' is rejected.
+
+summary:
+~~~~~~~~
+whenever an async update can not determine its value, it should send an ``update`` message with a data-report containing json-``null`` and an additional qualifier ``error`` (which is only present in this case!).
+The qualifier should be a modified error-report, containing the error-class instead of the origin.
+
+The spec needs adaptions: the secnode may now send async error-information.
+
+Also, the usage of json-null is to be added to Issue 21.
+(Issue 21 should stay closed).
+
+
+Issue 47: Error classes
+-----------------------
+add "OutOfRange"
+
+
+Issue 46: remote logging
+------------------------
+Agreement, closing Issue.
+
+
+Issue 48: mode parameter
+------------------------
+Markus raises the questions, how to handle multiple, independent operation modes.
+Enrico wants to see a use case.
+
+Klaus agrees on having a reserved name ``mode`` as an enum.
+It has to be specified in the specific classes anyway.
+
+
+Issue 44: scaled integers
+-------------------------
+Discussion is postponed.
+
+Same for other unresolved issues.
+
+
+Next meeting
+------------
+Jan. 16(th) 2019 at 10:00 o'clock as video conference.
