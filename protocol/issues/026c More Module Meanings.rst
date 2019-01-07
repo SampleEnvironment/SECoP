@@ -15,3 +15,7 @@ Discussion
 video conference 2018-11-07
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Markus and Klaus support this.
+
+video conference 2019-12-03
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Issue closed, to be reopened when needed
