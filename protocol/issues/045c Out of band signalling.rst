@@ -1,5 +1,5 @@
-SECoP Issue 45: Out of band signalling
-======================================
+SECoP Issue 45: Async error updates
+===================================
 
 Motivation
 ----------
@@ -56,3 +56,11 @@ It is to be discussed if there are more use cases to be covered.
 not discussed in its present form.
 
 Enrico prefers Solution b) and does not like Solution d).
+
+Decisions from vidconf 2018-12-03
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Based on solution (b):
+
+whenever an async update can not determine its value, it should send an ``update`` message with a data-report containing json-``null`` and an additional qualifier ``error`` (which is only present in this case!).
+The qualifier should be a modified error-report, containing the error-class instead of the origin.
