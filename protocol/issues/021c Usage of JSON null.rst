@@ -67,3 +67,8 @@ video conference 2018-11-07
 Decisions:
  - close for now. ``null`` isn't (to be) used in regular data transfers.
  - may be reopened if a use case arise
+
+video conference 2018-12-03
+---------------------------
+
+null is used as a value in an async error reply (see issue 45)
