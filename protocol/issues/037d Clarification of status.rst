@@ -267,3 +267,11 @@ Common agreement about that if an Error occurs and some 'safety' actions are per
 this always MUST be an sticky ERROR.
 
 The Issue is kept open for discussion.
+
+video conference 2018-12-03
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- DISABLED has now the code 500 (first digits differs from ERROR, but code adjacent to ERROR)
+- UNKNOWN not generally defined (an 4xx error might be used)
+- x0y reserved for further usage by specification
+- anything else? -> we might close this issue
