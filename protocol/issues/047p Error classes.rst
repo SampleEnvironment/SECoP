@@ -48,6 +48,9 @@ they depend on state information internal to either the sec-node, the module or 
         does not match the limits given in the descriptive data, or if the number of elements in an array
         does not match the limits given in the descriptive data.
 
+    * - OutOfRange
+      - The value read from the hardware is out of sensor or calibration range
+      
     * - BadJSON
       - The data part of the message can not be parsed, i.e. the JSON-data is no valid JSON.
 
