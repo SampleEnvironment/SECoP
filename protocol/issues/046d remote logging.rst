@@ -78,3 +78,10 @@ Note:
 not discussed in its present form.
 
 to be implemented in FRAPPY as custom extension (actions prefixed with ``_``).
+
+Decision from vidconf 2018-12-03
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+accepted in it precision form
+
+ready to be closed?
