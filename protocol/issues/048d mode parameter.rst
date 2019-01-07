@@ -29,3 +29,8 @@ Discussion
 ----------
 
 not discussed in its present form.
+
+vidconf 2018-12-03
+~~~~~~~~~~~~~~~~~~
+
+- decision to reserve the parameter name 'mode' for this purpose
