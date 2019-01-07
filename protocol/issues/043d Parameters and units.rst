@@ -89,3 +89,11 @@ Decisions:
  - keep it open for discussion and possible later inclusion in the specification.
  - reserve the parameter-name ``unit`` and the qualifier name ``u``
  - until decided otherwise, numeric parameters (incl. arrays of numeric values) have a mandatory ``unit`` property of a parameter as a string. other parameters have no unit.
+
+video conference 2018-12-03
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Decisions:
+ - confirm that the unit property is not mandatory, at lest for the case where the unit is 1.
+ - no dynamic units for now, but the qualifier name 'unit' is reserved for this
+ - closed for now
