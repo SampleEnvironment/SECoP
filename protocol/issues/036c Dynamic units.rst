@@ -59,3 +59,7 @@ Also, it should be an extension and will not belong to the core.
 
 Issue is to be kept open for discussion for later inclusion.
 
+video conference 2018-12-03
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- for now this issue is to be closed. Only opened, if new use cases arised, which can not be nicely solved by other means.
