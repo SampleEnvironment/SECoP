@@ -58,7 +58,7 @@ not discussed in its present form.
 Enrico prefers Solution b) and does not like Solution d).
 
 Decisions from vidconf 2018-12-03
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++++++++++++++++++++++++++++++++++
 
 Based on solution (b):
 
