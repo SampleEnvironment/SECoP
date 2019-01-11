@@ -82,7 +82,7 @@ decision:
 
 after thoughts
 ~~~~~~~~~~~~~~
-At makes more sense to define two properties:
+It makes more sense to define two properties:
 
 precision:
     a double type value specifiying the smallest difference between distinct values (should be called resolution then)
@@ -91,3 +91,7 @@ fmtstr:
     a string containing formatting options (used to display values to the user)
     follows a syntax of  ``% [digits] . [digits] [f|g|e]`` or similiar.
     may also be more restricitve like ``%.[digit] (e|f|g)``.
+
+see also `Issue 49`_
+
+.. _`Issue 49`: 049p%20Precision.rst
