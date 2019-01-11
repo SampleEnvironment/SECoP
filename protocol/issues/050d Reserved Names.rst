@@ -23,6 +23,6 @@ Discussion
 
 Markus:
 I see no need to put reserved names in the standard. Names of custom extensions
-anyway start with an underscore, therefore we have no dange of names clashes.
-We might keep a list of reserved names as an issue, for internal use within
+anyway start with an underscore, therefore we have no danger of names clashes.
+If needed, we might keep a list of reserved names as an issue, for internal use within
 the committee.
