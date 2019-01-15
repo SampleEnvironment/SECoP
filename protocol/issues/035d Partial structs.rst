@@ -27,6 +27,10 @@ Also allow ``do`` with partial struct data.
 Still, only the elements referenced in the datatype are allowed, but we should allow to
 not have to specify ALL of them.
 
+To implement this, the datatype descriptor for `struct` should be extended by a list of names (a JSON-array), naming the optional struct elements (as strings).
+SEC-Nodes not supporting this feature will only use the mapping and NOT provide that list of names.
+(Thea may, however, put an empty list there which should be interpreted the same.)
+ECS not knowing about the optionality of struct elements will always transfer everything, so compatibility is not harmed.
 
 
 Discussion
@@ -34,8 +38,9 @@ Discussion
 topic brought up several times, discussion usually goes into the direction of:
 we'll specify if we get the use case....
 
-Since commands now only have single argument, the use case is actually 'overloading'
+Since commands now only have single argument, one use case is actually 'overloading'
 of commands by selecting the subcommand via the name of the structs member.
+Another is to specify only the changed p, i or d component without having to always specify all of them.
 
 :related: `Issue 23: Adjust datatypes`_, `Issue 21: Usage of JSON null`_
 
@@ -45,3 +50,6 @@ video conference 2018-11-07
 
 Use-cases need to be written down more clearly.
 Issue is to be kept open for later inclusion.
+
+around dec 2018 the idea of putting a list of optional elements popped up.
+(this is described now above and is to be discussed.)
