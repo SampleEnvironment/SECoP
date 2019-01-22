@@ -40,7 +40,6 @@ for filename in sorted(glob('*.rst')):
     newfilename = "%.3d %s.rst" % (num, stitle)
     label = "SECoP Issue %d: %s" % (num, ttitle)
     newtitle = "%s (%s)" % (label, state)
-    print newtitle
     issueslist.append("    %s     `%s`_" % (STATES[state], label))
     files[num] = newfilename
     stdlabels[num] = label
@@ -102,7 +101,6 @@ def update_links(filename, files, stdlabels):
 
 with open('001 About SECoP Issues.rst', 'r') as fil:
     text = fil.read().split('\n')
-text=['','']
 
 text[0] = 'SECoP Issues'
 text[1] = '============'
