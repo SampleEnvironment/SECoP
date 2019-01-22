@@ -156,7 +156,7 @@ The following parameters are predefined (this list will be extended):
     Code 401 (Name: UNKNOWN) is a predefined value for ERROR, its meaning is: the SEC node can not (yet)
     determine the status.
     
-    .. admonition:: Remark
+    :Remark:
 
         it is proposed to add additional states (starting,
         started, pausing, paused, stopping, warning, ...). It has to be
@@ -166,10 +166,10 @@ The following parameters are predefined (this list will be extended):
 
     :See also: `SECoP Issue 37: Clarification of status`_
 
-    .. note::
+    :Note:
         the behaviour of a module in each of the predefined states is not yet 100% defined.
 
-    .. note::
+    :Note:
         a module only need to declare the status values which it implements. i.e. an Readable module
         does not need a BUSY status.
 
@@ -256,12 +256,12 @@ TO BE DONE:
      When this command is sent, and the triggered action is finished (status in idle mode),
      it is safe to switch off the related device.
 
-.. admonition:: Remark
+    :Remark:
 
-    there is an alternative proposal for
-    implementing the shutdown function, see `SECoP Issue 22: Enable Module instead of Shutdown Command`_
+        there is an alternative proposal for
+        implementing the shutdown function, see `SECoP Issue 22: Enable Module instead of Shutdown Command`_
 
-.. admonition:: Remark
+:Remark:
 
     The mechanics for buffering values and the semantics for the above commands except ``stop`` and ``reset``
     are not yet finalized. see also discussion in `SECoP Issue 28: Clarify buffering mechanism`_
@@ -282,7 +282,7 @@ Data report
 A JSON array with the value of a parameter as its first element,
 and an JSON object containing the Qualifiers_ for this value as its second element.
 
-.. admonition:: Remark
+:Remark:
 
     future revisions may append additional elements.
     These are to be ignored for implementations of the current specification
@@ -297,9 +297,9 @@ The Error report is a JSON-array containing the request message leading to the r
 as its second element. The third element is a JSON-Object, containing possibly
 implementation specific information about the error (stack dump etc.).
 
-.. note:
-   See Qualifier_ 'error', for errors not related to a request, but occuring while
-   determining a parameter.
+:Note:
+    See Qualifier_ 'error', for errors not related to a request, but occuring while
+    determining a parameter.
 
 
 Structure report
@@ -313,14 +313,14 @@ Value
 -----
 Values are transferred as a JSON-Value.
 
-.. admonition:: Programming Hint
+:Programming Hint:
 
     Some JSON libraries do not allow simple JSON values in their conversion functions.
     Whether or not a simple JSON value is a valid JSON text, is controversial,
     see this `stackoverflow issue <https://stackoverflow.com/questions/19569221>`_ and :rfc:`8259`
 
     (clarification: a *JSON document* is either a *JSON object* or a *JSON array*,
-    a *simple JSON value*, for example a bare string or number, is a *JSON value*
+    a *simple JSON value* (for example a bare string or number) is a *JSON value*,
     which is not a *JSON document*)
 
     If an implementation uses a libray, which can not convert simple JSON values,
@@ -346,7 +346,7 @@ Currently 2 qualifiers are defined:
    represented as a number, in general a floating point when the resolution
    is better than 1 second.
 
-    .. note::
+    :Note:
         To check if a SEC node supports time stamping, a `ping` request can be sent.
         (See also `heartbeat`_).
 
@@ -383,7 +383,7 @@ first) and is stored in the module-property `interface_class`.
 The ECS chooses the first class from the list which is known to it.
 The last one in the list must be one of the base classes listed above.
 
-.. admonition:: Remark
+:Remark:
 
     The list may also be empty, indicating that the module in question does not even conform to the Readable class!
 
@@ -442,7 +442,7 @@ i.e. message starts with an action keyword, followed optionally by one space and
 formatted value (see :RFC:`8259`) called data, which absorbs the remaining characters up to the
 final LF.
 
-.. note::
+:Note:
     numerical values and strings appear 'naturally' formatted in JSON-text, i.e. 5.0 or "a string".
 
 The specifier consists of a module identifier and for most actions followed by a colon as separator
@@ -496,7 +496,7 @@ Async mode:
 In both cases, a request from the ECS to the SEC node is to be followed by an reply from the SEC node to the ECS,
 either indicating success of the request or flag an error.
 
-.. note::
+:Note:
     an ECS may try to send a request before it received the reply to an earlier request.
     This has two implications: a SEC-node may serialize requests and fulfil them strictly in order.
     In that case the ECS should not overflow the input buffer of the SEC-node.
@@ -505,14 +505,14 @@ either indicating success of the request or flag an error.
     if a SEC-node is operating strictly in order or if it can work on multiple requests simultaneously.
 
 
-.. note::
+:Note:
     to improve compatibility, any ECS client SHOULD always be aware of updates.
 
-.. note::
+:Note:
     to clarify optionality of some messages, the following table is split into two:
     basic messages (which MUST be implemented like specified) and extended messages which SHOULD be implemented.
 
-.. note::
+:Note:
     for clarification, the symbol "``␣``" is used here instead of a space character. <elem> refers to the element elem which is defined in another section.
 
 
@@ -557,10 +557,10 @@ either indicating success of the request or flag an error.
      `execute command`_      request        ``do␣module:command␣``\ (<argument> | ``null``)
     ======================= ============== ==================
 
-.. admonition:: Remark
+    :Remark:
 
-    We tried to keep this list small. However a possible extension is discussed in
-    `SECoP Issue 29: New messages for buffering`_ and `SECoP Issue 46: Remote logging`_
+        We tried to keep this list small. However a possible extension is discussed in
+        `SECoP Issue 29: New messages for buffering`_ and `SECoP Issue 46: Remote logging`_
 
 Theory of operation:
     The first messages to be exchanged after the a connection between an ECS and a SEC node is established
@@ -591,10 +591,10 @@ Correct handling of side-effects:
 
   4) SEC-Node sends the reply to the request of point 2) indicating the success of the request.
 
-     .. note::
+     :Note:
          This may also be an error. In that case point 3) was likely not fully performed.
 
-     .. note::
+     :Note:
         An error may be replied after the status was sent to BUSY:
         if triggering the intented action failed (Communication problems?).
 
@@ -602,7 +602,7 @@ Correct handling of side-effects:
      after the reply of point 4) MUST query the status parameter synchronously
      to avoid the race-condition of missing the (possible) BUSY status-code.
 
-     .. note::
+     :Note:
          temporal order should be kept wherever possible!
 
   6) when the action is finally finshed and the module no longer to be considered BUSY,
@@ -658,12 +658,12 @@ Example:
 The dot (second item in the reply message) is a placeholder for extensibility reasons.
 A client implementing the current specification MUST ignore it.
 
-.. admonition:: Remark
+:Remark:
 
     this reply might be a very long line, no raw line breaks are allowed in the
     JSON part! I.e. the JSON-part should be as compact as possible.*
 
-.. note::
+:Note:
     The use of a single dot for the specifier is a little contrary to the other messages addressing the
     SEC-node. It may be changed in a later revision. ECS-clients are advised to ignore the specifier part
     of the describing message. A SEC-node SHOULD use a dot for the specifier.
@@ -675,13 +675,13 @@ The parameterless "activate" request triggers the SEC node to send the
 values of all its modules and parameters as update messages (initial updates). When this
 is finished, the SEC node must send an "active" reply. (*global activation*)
 
-.. note::
+:Note:
     the values transferred are not necessarily read fresh from the hardware, check the timestamps!
 
-.. note::
+:Note:
     This initial update is to help the ECS establish a copy of the 'assumed-to-be-current' values.
 
-.. note::
+:Note:
     An ECS MUST be able to handle the case of an update occuring during the initial phase is over, i.e.
     it must handle the case of receiving more than one update for any valid specifier.
 
@@ -718,11 +718,11 @@ The example shows an ``activate`` request triggering an initial update of two va
 t1:value and t1:status, followed by the ``active`` reply.
 After this two more updates on the t1:value show up after roughly 1s between each.
 
-.. note::
+:Note:
     it is vital that all initial updates are sent, **before** the 'active' reply is sent!
     (an ECS may rely on having gotten all values)
 
-.. note::
+:Note:
     to speed up the activation process, polling + caching of all parameters on the SEC-node is adviced,
     i.e. the parameters should not just be read for activation, as this may take a long time.
 
@@ -741,7 +741,7 @@ Example:
   < update t1:value [295.13,{"t":1505396348.188388}]
   < inactive
 
-.. admonition:: Remark
+:Remark:
 
     the update message in the second line was sent before the deactivate message
     was treated. After the "inactive" message, the client can expect that no more untriggered
@@ -752,7 +752,7 @@ The deactivate message might optionally accept a module name as second item
 of the message for module-wise deactivation. If module-wise deactivation is not
 supported, it should ignore a deactivate message which contains a module name.
 
-.. admonition:: Remark
+:Remark:
 
     it is not clear, if module-wise deactivation is really useful. A SEC Node
     supporting module-wise activation does not necessarily need to support module-wise
@@ -768,11 +768,11 @@ having activated the parameter/module in question, get an "update" message.
 After all side-effects are communicated, a "changed" reply is then send, containing a
 `Data report`_ of the read-back value.
 
-.. admonition:: Remark
+:Remarks:
 
-  * If the value is not stored in hardware, the "update" message can be sent immediately.*
-  * The read-back value should always reflect the value actually used.*
-  * an client having activated updates may get an ``update`` message before the ``changed`` message, both containing the same data report.
+    * If the value is not stored in hardware, the "update" message can be sent immediately.*
+    * The read-back value should always reflect the value actually used.*
+    * an client having activated updates may get an ``update`` message before the ``changed`` message, both containing the same data report.
 
 
 Example on a connection with activated updates. Qualifiers are replaced by {...} for brevity here.
@@ -792,7 +792,7 @@ The ECS will be informed with a further update message on mf:status,
 when the module has finished ramping.
 Until then, it will get regular updates on the current main value (see last update above).
 
-.. note::
+:Note:
     it is vital that all 'side-effects' are realized (i.e. stored in internal variables) and be communicated, **before** the 'changed' reply is sent!
 
 
@@ -814,7 +814,7 @@ Example:
   > read t1:status
   > update t1:status [[100,"OK"],{"t":1505396348.548}]
 
-.. admonition:: Remark
+:Remark:
 
     If a client has activated the module/parameter for which it sent a ``read`` request,
     it may receive more than one 'update' message, especially if SEC node side polling is active.
@@ -822,8 +822,7 @@ Example:
     and or due to a specific read. An ECS-client may just use the first matching message and treat it
     as 'the reply'.*
 
-.. note::
-    see also `SECoP Issue 45: Async Error Updates`_ how to handle cases in which the value can not be read.
+:see also: `SECoP Issue 45: Async Error Updates`_ how to handle cases in which the value can not be read.
 
 
 Execute Command
@@ -969,7 +968,7 @@ they depend on state information internal to either the sec-node, the module or 
     * - InternalError
       - Something that should never happen just happened.
 
-.. admonition:: Remark
+:Remark:
 
     This list may be extended, if needed. clients should treat unknown error classes as generic as possible.
 
@@ -1000,7 +999,7 @@ Logging
   least specific item where logging is supported. e.g. if logging for <module>:<param> is requested, but the SEC-node
   only support logging of the module, this should be reflected in the reply and the logging of the module is to be influenced.
 
-  Note: it is not foreseen to query the currently active logging level. It is supposed to default to ``"off"``.
+  :Note: it is not foreseen to query the currently active logging level. It is supposed to default to ``"off"``.
 
 ``log``:
   followed by a specifier of <modulename>:<loglevel> and the message to be logged as JSON-string in the datapart.
@@ -1037,7 +1036,7 @@ The `Qualifiers`_ part SHOULD only contain the timestamp (as member "t") if the
 SEC node supports timestamping.
 This can be used to synchronize the time between ECS and SEC node.
 
-.. admonition:: Remark
+:Remark:
 
     The qualifiers could also be an empty JSON-object, indicating lack of timestamping support.*
 
@@ -1162,7 +1161,7 @@ Module Properties
      optional string indicating a hint for UI's for which user roles the module should be display or hidden.
      MUST be one of "expert" (3), "advanced" (2) or "user" (1) (default).
 
-     .. note::
+     :Note:
          this does not imply that the access is controlled. It is just a
          hint to the UI for the amount of exposed modules. A visibility of "advanced" (2) means
          that the UI should hide the module for users, but show it for experts and
@@ -1171,13 +1170,13 @@ Module Properties
 -  interface_class
      mandatory list of matching classes for the module, for example ``["Magnet", "Drivable"]``
 
-     .. note::
+     :Note:
         as this is a list it SHOULD actually have been called ``interface_classes`` or ``interfaces``
 
 -  features
      optional list of features for the module, for example ``["HasRamp", "HasTolerance"]``
 
-     .. note::
+     :Note:
         this is not yet part of the standard
 
      :see also: `SECoP Issue 18: Interface classes`_
@@ -1248,7 +1247,7 @@ Accessible Properties
     mandatory datatype of the accessible, see `Data Types`_.
     This is always a JSON-Array containing at least one element: a string naming the datatype.
 
-    .. note::
+    :Note:
         commands and parameters can be distinguished by the datatype.
 
 - unit
@@ -1263,7 +1262,7 @@ Accessible Properties
 - visibility
     optional, the visibility of the accessible. values and meaning as for module-visibility above.
 
-    .. admonition:: Remark
+    :Remark:
 
         this 'inherits' from the module property. i.e. if it is not specified, the
         value of the module-property (if given) should be used instead
@@ -1296,7 +1295,7 @@ The following properties are under discussion and their name is now reserved:
 - export
     reserved for internal use, MUST never appear in descriptive data
 
-.. admonition:: Remark
+:Remark:
 
     the parameter-property ``group`` is used for grouping of parameters within a module,
     the module-property ``group`` is used for grouping of modules within a node.
@@ -1617,7 +1616,7 @@ The herein specified protocol has foreseen some extension mechanisms in its desi
 
 * add actions, keeping the 'triple' structure of action/specifier/data
 
-  .. note::
+  :Note:
       Thats why custom actions MUST be prefixed with an underscore.
 
 * extent specifier with ':' separated identifiers, getting more and more specific
@@ -1634,7 +1633,7 @@ The herein specified protocol has foreseen some extension mechanisms in its desi
 
 * extend reports (only append to them, never changing the already defined fields)
 
-  .. note::
+  :Note:
       The structure report may need to be nested inside a json-array in the future, should we need to extend that.
 
 * use so far unused datafields (there are not so many).
@@ -1711,7 +1710,7 @@ Essentially this boils down to:
 
 Complying to these rules maximize to possibility of future + backwards compatibility.
 
-.. note::
+:Note:
     also check* `SECoP Issue 36: Dynamic units`_ *as it may have implications for a certain implementation.*
 
 
