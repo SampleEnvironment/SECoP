@@ -320,7 +320,7 @@ Values are transferred as a JSON-Value.
     see this `stackoverflow issue <https://stackoverflow.com/questions/19569221>`_ and :rfc:`8259`
 
     (clarification: a *JSON document* is either a *JSON object* or a *JSON array*,
-    a *simple JSON value* (for example a bare string or number) is a *JSON value*,
+    a *simple JSON value*, for example a bare string or number, is a *JSON value*
     which is not a *JSON document*)
 
     If an implementation uses a libray, which can not convert simple JSON values,
