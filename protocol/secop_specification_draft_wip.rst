@@ -339,12 +339,12 @@ They are collected as named values in a JSON-object.
 Currently 2 qualifiers are defined:
 
 - "t"
-   The timestemp when the parameter has changed or was verified/measured (when no timestamp
-   is given, the ECS may use the arrival time of the update message as the timestamp).
-   It SHOULD be given, if the SEC node has a synchronized time,
-   the format is that of a UNIX time stamp, i.e. seconds since 1970-01-01T00:00:00+00:00Z,
-   represented as a number, in general a floating point when the resolution
-   is better than 1 second.
+    The timestemp when the parameter has changed or was verified/measured (when no timestamp
+    is given, the ECS may use the arrival time of the update message as the timestamp).
+    It SHOULD be given, if the SEC node has a synchronized time,
+    the format is that of a UNIX time stamp, i.e. seconds since 1970-01-01T00:00:00+00:00Z,
+    represented as a number, in general a floating point when the resolution
+    is better than 1 second.
 
     :Note:
         To check if a SEC node supports time stamping, a `ping` request can be sent.
@@ -557,10 +557,10 @@ either indicating success of the request or flag an error.
      `execute command`_      request        ``do␣module:command␣``\ (<argument> | ``null``)
     ======================= ============== ==================
 
-    :Remark:
+:Remark:
 
-        We tried to keep this list small. However a possible extension is discussed in
-        `SECoP Issue 29: New messages for buffering`_ and `SECoP Issue 46: Remote logging`_
+    We tried to keep this list small. However a possible extension is discussed in
+    `SECoP Issue 29: New messages for buffering`_ and `SECoP Issue 46: Remote logging`_
 
 Theory of operation:
     The first messages to be exchanged after the a connection between an ECS and a SEC node is established
@@ -661,7 +661,7 @@ A client implementing the current specification MUST ignore it.
 :Remark:
 
     this reply might be a very long line, no raw line breaks are allowed in the
-    JSON part! I.e. the JSON-part should be as compact as possible.*
+    JSON part! I.e. the JSON-part should be as compact as possible.
 
 :Note:
     The use of a single dot for the specifier is a little contrary to the other messages addressing the
@@ -770,8 +770,8 @@ After all side-effects are communicated, a "changed" reply is then send, contain
 
 :Remarks:
 
-    * If the value is not stored in hardware, the "update" message can be sent immediately.*
-    * The read-back value should always reflect the value actually used.*
+    * If the value is not stored in hardware, the "update" message can be sent immediately.
+    * The read-back value should always reflect the value actually used.
     * an client having activated updates may get an ``update`` message before the ``changed`` message, both containing the same data report.
 
 
@@ -820,7 +820,7 @@ Example:
     it may receive more than one 'update' message, especially if SEC node side polling is active.
     There is no indication, which message was sent due to polling (or other clients requesting a 'read')
     and or due to a specific read. An ECS-client may just use the first matching message and treat it
-    as 'the reply'.*
+    as 'the reply'.
 
 :see also: `SECoP Issue 45: Async Error Updates`_ how to handle cases in which the value can not be read.
 
@@ -1038,7 +1038,7 @@ This can be used to synchronize the time between ECS and SEC node.
 
 :Remark:
 
-    The qualifiers could also be an empty JSON-object, indicating lack of timestamping support.*
+    The qualifiers could also be an empty JSON-object, indicating lack of timestamping support.
 
 For debugging purposes, when *id* in the ``ping`` request is omitted,
 in the ``pong`` reply there are two spaces after ``pong``.
@@ -1711,7 +1711,7 @@ Essentially this boils down to:
 Complying to these rules maximize to possibility of future + backwards compatibility.
 
 :Note:
-    also check* `SECoP Issue 36: Dynamic units`_ *as it may have implications for a certain implementation.*
+    also check `SECoP Issue 36: Dynamic units`_ *as it may have implications for a certain implementation.*
 
 
 Binary representations of the protocol
