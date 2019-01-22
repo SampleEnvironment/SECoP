@@ -275,7 +275,7 @@ Currently 2 qualifiers are defined:
    represented as a number, in general a floating point when the resolution
    is better than 1 second.
 
-  *See also* `SECoP Issue 3:Timestamp Format`_
+  *See also* `SECoP Issue 3: Timestamp Format`_
 
 - "e"
    the uncertainity of the quantity. MUST be in the same units
@@ -788,7 +788,7 @@ Example:
   < pong 123 [null, {"t": 1505396348.543}]
 
 
-*Related SECoP Issues:* `SECoP Issue 3:Timestamp Format`_ and `SECoP Issue 7:Time Synchronization`_
+*Related SECoP Issues:* `SECoP Issue 3: Timestamp Format`_ and `SECoP Issue 7: Time Synchronization`_
 
 
 
@@ -1382,16 +1382,18 @@ The author approved using these images here. The licence reads as follows::
 
 
 
-.. _`SECoP Issue 3:Timestamp Format`: issues/003c%20Timestamp%20Format.rst
-.. _`SECoP Issue 4: The Timeout SEC Node Property`: issues/004c%20The%20Timeout%20SEC%20Node%20Property.rst
-.. _`SECoP Issue 6: Keep Alive`: issues/006c%20Keep%20Alive.rst
-.. _`SECoP Issue 7:Time Synchronization`: issues/007c%20Time%20Synchronization.rst
-.. _`SECoP Issue 8: Groups and Hierarchy`: issues/008c%20Groups%20and%20Hierarchy.rst
-.. _`SECoP Issue 9: Module Meaning` : issues/009c%20Module%20Meaning.rst
-.. _`SECoP Issue 18: Interface classes`: issues/018d%20Interface%20Classes.rst
-.. _`SECoP Issue 22: Enable Module instead of Shutdown Command`: issues/022u%20Enable%20Module%20instead%20of%20Shutdown%20Command.rst
-.. _`SECoP Issue 26: More Module Meanings`: issues/026d%20More%20Module%20Meanings.rst
-.. _`SECoP Issue 28: Clarify buffering mechanism`: issues/028p%20Clarify%20buffering%20mechanism.rst
-.. _`SECoP Issue 29: New messages for buffering`: issues/029p%20New%20messages%20for%20buffering.rst
-.. _`SECoP Issue 35: Partial structs`: issues/035p%20Partial%20structs.rst
-.. _`SECoP Issue 36: Dynamic units`: issues/036p%20Dynamic%20units.rst
+.. DO NOT TOUCH --- following links are automatically updated by issue/makeissuelist.py
+.. _`SECoP Issue 3: Timestamp Format`: issues/003%20Timestamp%20Format.rst
+.. _`SECoP Issue 4: The Timeout SEC Node Property`: issues/004%20The%20Timeout%20SEC%20Node%20Property.rst
+.. _`SECoP Issue 6: Keep Alive`: issues/006%20Keep%20Alive.rst
+.. _`SECoP Issue 7: Time Synchronization`: issues/007%20Time%20Synchronization.rst
+.. _`SECoP Issue 8: Groups and Hierarchy`: issues/008%20Groups%20and%20Hierarchy.rst
+.. _`SECoP Issue 9: Module Meaning`: issues/009%20Module%20Meaning.rst
+.. _`SECoP Issue 18: Interface classes`: issues/018%20Interface%20Classes.rst
+.. _`SECoP Issue 22: Enable Module instead of Shutdown Command`: issues/022%20Enable%20Module%20instead%20of%20Shutdown%20Command.rst
+.. _`SECoP Issue 26: More Module Meanings`: issues/026%20More%20Module%20Meanings.rst
+.. _`SECoP Issue 28: Clarify buffering mechanism`: issues/028%20Clarify%20buffering%20mechanism.rst
+.. _`SECoP Issue 29: New messages for buffering`: issues/029%20New%20messages%20for%20buffering.rst
+.. _`SECoP Issue 35: Partial structs`: issues/035%20Partial%20Structs.rst
+.. _`SECoP Issue 36: Dynamic units`: issues/036%20Dynamic%20units.rst
+.. DO NOT TOUCH --- above links are automatically updated by issue/makeissuelist.py
