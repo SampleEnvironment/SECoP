@@ -11,7 +11,7 @@ the restriction.
 Proposal
 --------
 
-There are not restrictions imposed on the nesting of datatypes.
+The restrictions imposed on the nesting of datatypes are removed from the specification.
 
 Discussion
 ----------

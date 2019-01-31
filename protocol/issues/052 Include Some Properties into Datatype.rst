@@ -64,7 +64,8 @@ For parameters with this type, it is not needed to indicate the properties
         | ``<scale>`` is a number
         | the fourth element is a json object, with the following possible members:
         | unit, fmtstr
-        | :Remark:
+        |
+        | Remark:
         |   fmtstr might be guessed from scale, but still an implementor may want to
         |   give it explicitly. relative_precision equal to scale.
 
