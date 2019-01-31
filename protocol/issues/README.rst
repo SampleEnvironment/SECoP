@@ -96,6 +96,8 @@ Issues List
     d     `SECoP Issue 48: mode parameter`_
     p     `SECoP Issue 49: Precision of Floating Point Values`_
     d     `SECoP Issue 50: Reserved Names`_
+    p     `SECoP Issue 51: No Restrictions on Datatype Nesting`_
+    p     `SECoP Issue 52: Include Some Properties into Datatype`_
     ===== =======
 
 .. _`SECoP Issue 1: About SECoP Issues`: 001%20About%20SECoP%20Issues.rst
@@ -148,3 +150,5 @@ Issues List
 .. _`SECoP Issue 48: mode parameter`: 048%20mode%20parameter.rst
 .. _`SECoP Issue 49: Precision of Floating Point Values`: 049%20Precision%20of%20Floating%20Point%20Values.rst
 .. _`SECoP Issue 50: Reserved Names`: 050%20Reserved%20Names.rst
+.. _`SECoP Issue 51: No Restrictions on Datatype Nesting`: 051%20No%20Restrictions%20on%20Datatype%20Nesting.rst
+.. _`SECoP Issue 52: Include Some Properties into Datatype`: 052%20Include%20Some%20Properties%20into%20Datatype.rst
