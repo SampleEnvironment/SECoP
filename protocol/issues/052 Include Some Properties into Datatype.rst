@@ -8,7 +8,7 @@ The properties 'unit', 'fmtstr', 'absolute_precision' and 'relative_precision' s
 to the datatype declaration for the following reasons:
 
 1) Programmatically, the functionality related to these properties are better stored
-  together with the datatype.
+   together with the datatype.
 
 2) It makes it possible to use these properties in doubles nested within structs or tuples
 
@@ -76,7 +76,7 @@ For parameters with this type, it is not needed to indicate the properties
     * - Transport examples
       - | An integer JSON-number, ``1255`` meaning 125.5
 
-The realted items are removed from the list of predefined properties, and the
+The related items are removed from the list of predefined properties, and the
 description of their meaning is moved to the Datatypes chapter.
 
 
