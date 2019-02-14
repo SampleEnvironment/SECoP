@@ -86,7 +86,7 @@ Problems
 ~~~~~~~~
 See `Issue 29: New messages for buffering`_
 
-.. _`Issue 29: New messages for buffering`: 029p%20New%20messages%20for%20buffering.rst
+.. _`Issue 29: New messages for buffering`: 029%20New%20messages%20for%20buffering.rst
 
 
 Discussion
