@@ -115,7 +115,7 @@ have to be unique within an SEC node, accessible names have to be unique
 within a module. There are two basic types of accessibles: parameters and commands.
 
 Module and accessible names should be in english (incl. acronyms), using
-only ascii letters + digits and some additional characters (see section `Protocol`_).
+only ASCII letters + digits and some additional characters (see section `Protocol`_).
 The maximum name length is 63 characters.
 
 Parameters
@@ -164,7 +164,7 @@ The following parameters are predefined (this list will be extended):
         makes sense. Generally we want to keep the number of states as
         small as possible here.
 
-    :See also: `SECoP Issue 37: Clarification of status`_
+    :related issue: `SECoP Issue 37: Clarification of status`_
 
     :Note:
         the behaviour of a module in each of the predefined states is not yet 100% defined.
@@ -264,7 +264,7 @@ TO BE DONE:
 :Remark:
 
     The mechanics for buffering values and the semantics for the above commands except ``stop`` and ``reset``
-    are not yet finalized. see also discussion in `SECoP Issue 28: Clarify buffering mechanism`_
+    are not yet finalized. See also discussion in `SECoP Issue 28: Clarify buffering mechanism`_
 
 
 Properties
@@ -326,7 +326,7 @@ Values are transferred as a JSON-Value.
     If an implementation uses a libray, which can not convert simple JSON values,
     the implemetation can add angular brackets around a JSON value, decode it
     and take the first element of the result. When encoding the reverse action might be
-    used as a workaround. see also :RFC:`7493`
+    used as a workaround. See also :RFC:`7493`
  
 
 Qualifiers
@@ -357,9 +357,7 @@ Currently 2 qualifiers are defined:
 
 - "error"
    If an error occurs while determining a parameter, this qualifier contains a
-   modified error report, structured like the normal <`Error Report`_>, but with
-   the first elements containing the error class as a string instead of the
-   request message.
+   modified error report. See 'update'_.
 
 other qualifiers might be added later to the standard.
 If an unknown element is encountered, it is to be ignored.
@@ -452,7 +450,7 @@ and a parameter or command identifier:
    :alt: specifier ::= module | module ":" (parameter|command)
 
 All identifiers (for properties, accessibles and modules) are composed by
-ascii letters, digits and underscore, where a digit may not
+ASCII letters, digits and underscore, where a digit may not
 appear as the first character.
 
 .. image:: images/name.svg
@@ -533,8 +531,8 @@ either indicating success of the request or flag an error.
           \                  reply          ``pong␣<identifier>␣``\ <`Data Report`_>
      `change value`_         request        ``change␣<module>:<parameter>␣``\ Value_
           \                  reply          ``changed␣<module>:<parameter>␣``\ <`Data Report`_>
-     `execute command`_      request        ``do␣<module>:<command>␣``\ Value_
-          \                  reply          ``done␣<module>:<command>␣``\ <`Data Report`_>
+     `execute command`_      request        ``do␣<module>:<command>␣`` (**only for argumentless commands!**)
+          \                  reply          ``done␣<module>:<command>␣``\ <`Data Report`_> (with null as value)
      `read request`_         request        ``read␣<module>:<parameter>`` (**triggers an update**)
      value update_  event    event          ``update␣<module>:<parameter>␣``\ <`Data Report`_>
      `error reply`_          reply          ``error␣<errorclass>␣``\ <`Error Report`_>
@@ -554,13 +552,14 @@ either indicating success of the request or flag an error.
        module-wise           reply          ``inactive␣<module>``
      `heartbeat`_            request        ``ping``
       with empty identifier  reply          ``pong␣␣``\ <`Data Report`_>
-     `execute command`_      request        ``do␣module:command␣``\ (<argument> | ``null``)
+     `execute command`_      request        ``do␣<module>:<command>␣``\ (\ Value_ | ``null``)
+          \                  reply          ``done␣<module>:<command>␣``\ <`Data Report`_>
     ======================= ============== ==================
 
 :Remark:
 
     We tried to keep this list small. However a possible extension is discussed in
-    `SECoP Issue 29: New messages for buffering`_ and `SECoP Issue 46: Remote logging`_
+    `SECoP Issue 29: New messages for buffering`_
 
 Theory of operation:
     The first messages to be exchanged after the a connection between an ECS and a SEC node is established
@@ -702,6 +701,10 @@ element, and an JSON object containing the `Qualifiers`_ as its second element.
 
 An update may also be triggered by an `read request`_, in which case the value reported in the data report is fresh (i.e. just obtained from a hw).
 
+If an error occurs while determining a parameter, an update message has to be sent,
+with null for the value, and with a the qualifier "error" containing a modified error
+report. The latter is structured like the normal <`Error Report`_>, but with the first
+elements containing the error class as a string instead of the request message.
 
 Example:
 
@@ -821,8 +824,6 @@ Example:
     There is no indication, which message was sent due to polling (or other clients requesting a 'read')
     and or due to a specific read. An ECS-client may just use the first matching message and treat it
     as 'the reply'.
-
-:see also: `SECoP Issue 45: Async Error Updates`_ how to handle cases in which the value can not be read.
 
 
 Execute Command
@@ -1026,6 +1027,7 @@ another example::
 
 Heartbeat
 ~~~~~~~~~
+
 In order to detect that the other end of the communication is not dead,
 a heartbeat may be sent. The second part of the message (the id) must
 not contain a space and should be short and not be re-used.
@@ -1173,21 +1175,13 @@ Module Properties
      :Note:
         as this is a list it SHOULD actually have been called ``interface_classes`` or ``interfaces``
 
--  features
-     optional list of features for the module, for example ``["HasRamp", "HasTolerance"]``
-
-     :Note:
-        this is not yet part of the standard
-
-     :see also: `SECoP Issue 18: Interface classes`_
-
 -  group
      optional identifier, may contain ":" which may be interpreted as path separator.
      The ECS may group the modules according to this property.
      The lowercase version of a group must not match any lowercase version of a module name on
      the same SEC node.
 
-     :see also: `SECoP Issue 8: Groups and Hierarchy`_
+     :related issue: `SECoP Issue 8: Groups and Hierarchy`_
 
 -  meaning
      optional tuple, with the following two elements:
@@ -1211,7 +1205,7 @@ Module Properties
         (closer to the sample) relevant measuring device. A regulation device MUST have an
         ``interface_class`` of at least ``Writable``.
 
-        :see also: `SECoP Issue 26: More Module Meanings`_
+        :related issue: `SECoP Issue 26: More Module Meanings`_
 
      2. a value describing the importance, with the following values:
 
@@ -1223,7 +1217,7 @@ Module Properties
         Intermediate values might be used. The range for each category starts at the indicated value minus 5
         and ends below the indicated value plus 5.
 
-        :see also: `SECoP Issue 9: Module Meaning`_
+        :related issue: `SECoP Issue 9: Module Meaning`_
 
 
 Accessible Properties
@@ -1273,13 +1267,13 @@ Accessible Properties
     The lowercase version of a group must not match any lowercase version of an accessible name
     of the same module.
 
-    :see also: `SECoP Issue 8: Groups and Hierarchy`_
+    :related issue: `SECoP Issue 8: Groups and Hierarchy`_
 
 The following properties are under discussion and their name is now reserved:
 
 - precision
     optional, JSON-number specifying the smallest difference between distinct values. Only for ``["double"]`` typed parameters.
-    :see also: `SECoP Issue 42: Requirements of datatypes`_
+    :related issue: `SECoP Issue 42: Requirements of datatypes`_
 
 - fmtstr
    optional string as a hint on how to format numeric parameters for the user.
@@ -1287,7 +1281,7 @@ The following properties are under discussion and their name is now reserved:
 
      fmtstr ::= "%" "."? digits* ( "e" | "f" | "g" )
 
-   :see also: `SECoP Issue 42: Requirements of datatypes`_
+   :related issue: `SECoP Issue 42: Requirements of datatypes`_
 
    .. image:: images/fmtstr.svg
        :alt: fmtstr ::= "%" "."? digits* ( "e" | "f" | "g" )
@@ -1331,8 +1325,6 @@ For ranges and precisions see `SECoP Issue 42: Requirements of datatypes`_.
 The limits, which have to be specified with the datatype, are always inclusive,
 i.e. the value is allowed to have one of the values of the limits.
 Also, both limits may be set to the same value, in which case there is just one allowed value.
-
-One possible extension is discussed in `SECoP Issue 44: Scaled integers`_.
 
 All datatypes are specified in the descriptive data in the following generic form:
 
@@ -1516,14 +1508,13 @@ struct
       - | ``["struct", {<name> : <datatype>, <name>: <datatype>, ....}]``
         | or
         | ``["struct", {<name> : <datatype>, <name>: <datatype>, ....}, [<name>, <name>, ...]]``
-        | In the seconds form, the third elements list the optional elements.
+        | In the second form, the third JSON-array element lists the optional struct elements.
         | In 'change' and 'do' commands, the ECS might omit these elements, all other
         | elements must be given.
         | The effect of a 'change' action with omitted elements should be the same
         | as if the current values of these elements would have been sent with it.
         | The effect of a 'do' action should be the same, as if the omitted elements
-        | would be replaced by a default value (TODO: should we use a JSON-object instead
-        | for the default values?).
+        | would be replaced by a default value.
 
     * - Example
       - ``["struct", {"y":["int"], "x":["enum",{"On":1, "Off":0}]}]``
@@ -1532,7 +1523,7 @@ struct
       - | as JSON-object:
         | ``{"x": 0, "y": 1}``
 
-:see also: `SECoP Issue 35: Partial structs`_
+:related issue: `SECoP Issue 35: Partial structs`_
 
 
 scaled integers
@@ -1563,6 +1554,7 @@ For parameters with this type, it is not needed to indicate the properties
     * - Transport examples
       - | An integer JSON-number, ``1255`` meaning 125.5
        
+:related issue: `SECoP Issue 44: Scaled integers`_.
         
 
 command
@@ -1661,7 +1653,7 @@ Only those messages are ALLOWED to be generated by any software complying to thi
     .. image:: images/defined-replies.svg
        :alt: defined_replies
 
-The specification is intended to grow and adopt to new needs. (see also `SECoP Issue 38: Extension mechanisms`_)
+The specification is intended to grow and adopt to new needs. (related issue `SECoP Issue 38: Extension mechanisms`_)
 To future proof the the communication the following messages MUST be parsed and treated correctly
 (i.e. the ignored_value part is to be ignored).
 
