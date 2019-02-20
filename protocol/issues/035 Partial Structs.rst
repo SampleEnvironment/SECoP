@@ -29,7 +29,7 @@ not have to specify ALL of them.
 
 To implement this, the datatype descriptor for `struct` should be extended by a list of names (a JSON-array), naming the optional struct elements (as strings).
 SEC-Nodes not supporting this feature will only use the mapping and NOT provide that list of names.
-(Thea may, however, put an empty list there which should be interpreted the same.)
+(They may, however, put an empty list there which should be interpreted the same.)
 ECS not knowing about the optionality of struct elements will always transfer everything, so compatibility is not harmed.
 
 
