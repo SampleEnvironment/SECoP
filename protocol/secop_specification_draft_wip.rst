@@ -155,7 +155,7 @@ The following parameters are predefined (this list will be extended):
     Codes 1 to 99, codes of the form x0y and codes above 499 are reserved for future use by the standard.
     Code 401 (Name: UNKNOWN) is a predefined value for ERROR, its meaning is: the SEC node can not (yet)
     determine the status.
-    
+
     :Remark:
 
         it is proposed to add additional states (starting,
@@ -193,7 +193,7 @@ The following parameters are predefined (this list will be extended):
     The available operation modes can not be predefined in the specification, since
     they depend on the specific module.
     The value 0 SHOULD be used as default, and be the mode which is used normally.
-    
+
     Example:
     a temperate controller module may define the mode as follows:
 
@@ -230,7 +230,7 @@ The following commands are predefined (extensible):
      When the ``stop`` command is sent, the SEC node SHOULD set the target parameter
      to a value close to the present one. Then it SHOULD act as if this value would have
      been the initial target.
-     
+
 -  **reset**
      optional command for putting the module to a state predefined by the implementation.
 
@@ -298,7 +298,7 @@ as its second element. The third element is a JSON-Object, containing possibly
 implementation specific information about the error (stack dump etc.).
 
 :Note:
-    See Qualifier_ 'error', for errors not related to a request, but occuring while
+    See Qualifiers_ 'error', for errors not related to a request, but occuring while
     determining a parameter.
 
 
@@ -327,7 +327,7 @@ Values are transferred as a JSON-Value.
     the implemetation can add angular brackets around a JSON value, decode it
     and take the first element of the result. When encoding the reverse action might be
     used as a workaround. See also :RFC:`7493`
- 
+
 
 Qualifiers
 ----------
@@ -400,12 +400,12 @@ More Interface Classes
 
 Communicator:
     Has a communicate command.
-    
+
     The communicate command is used mainly for debugging reasons, or as a workaround
     for using hardware features not implemented in the SEC node.
-    
+
     TODO: does the argument and the result need to be a string?
-    
+
 
 Protocol
 ========
@@ -923,7 +923,7 @@ they depend on state information internal to either the sec-node, the module or 
 
     * - OutOfRange
       - The value read from the hardware is out of sensor or calibration range
-      
+
     * - BadJSON
       - The data part of the message can not be parsed, i.e. the JSON-data is no valid JSON.
 
@@ -1532,7 +1532,7 @@ scaled integers
 Scaled integers are to be treated as 'double' in the ECS, they are just transported
 differently. The main motivation for this datatype is for SEC nodes with limited
 capabilities, where floating point calculation is a major effort.
-For parameters with this type, it is not needed to indicate the properties 
+For parameters with this type, it is not needed to indicate the properties
 'absolute_resolution' and 'fmtstr', as they can be derived from the datatype.
 
 
@@ -1550,12 +1550,12 @@ For parameters with this type, it is not needed to indicate the properties
     * - Example
       - ``["scaled", 0, 250, 0.1]``
         i.e. a double value between 0.0 and 250.0
- 
+
     * - Transport examples
       - | An integer JSON-number, ``1255`` meaning 125.5
-       
+
 :related issue: `SECoP Issue 44: Scaled integers`_.
-        
+
 
 command
 -------
