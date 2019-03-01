@@ -1513,8 +1513,10 @@ struct
         | elements must be given.
         | The effect of a 'change' action with omitted elements should be the same
         | as if the current values of these elements would have been sent with it.
+        | NOT REALLY PRECISE:
         | The effect of a 'do' action should be the same, as if the omitted elements
         | would be replaced by a default value.
+        | In all other messages, all elements have to be given.
 
     * - Example
       - ``["struct", {"y":["int"], "x":["enum",{"On":1, "Off":0}]}]``
@@ -1738,7 +1740,6 @@ The above diagrams were generated using a modified copy of https://github.com/En
 .. _`SECoP Issue 7: Time Synchronization`: issues/007%20Time%20Synchronization.rst
 .. _`SECoP Issue 8: Groups and Hierarchy`: issues/008%20Groups%20and%20Hierarchy.rst
 .. _`SECoP Issue 9: Module Meaning`: issues/009%20Module%20Meaning.rst
-.. _`SECoP Issue 18: Interface classes`: issues/018%20Interface%20Classes.rst
 .. _`SECoP Issue 22: Enable Module instead of Shutdown Command`: issues/022%20Enable%20Module%20instead%20of%20Shutdown%20Command.rst
 .. _`SECoP Issue 26: More Module Meanings`: issues/026%20More%20Module%20Meanings.rst
 .. _`SECoP Issue 28: Clarify buffering mechanism`: issues/028%20Clarify%20buffering%20mechanism.rst
@@ -1750,6 +1751,4 @@ The above diagrams were generated using a modified copy of https://github.com/En
 .. _`SECoP Issue 42: Requirements of datatypes`: issues/042%20Requirements%20of%20datatypes.rst
 .. _`SECoP Issue 43: Parameters and units`: issues/043%20Parameters%20and%20units.rst
 .. _`SECoP Issue 44: Scaled integers`: issues/044%20Scaled%20integers.rst
-.. _`SECoP Issue 45: Async Error Updates`: issues/045%20Async%20error%20updates.rst
-.. _`SECoP Issue 46: Remote logging`: issues/046%20remote%20logging.rst
 .. DO NOT TOUCH --- above links are automatically updated by issue/makeissuelist.py

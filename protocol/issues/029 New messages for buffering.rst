@@ -13,7 +13,7 @@ Also it may have ambigous meanings, especially if a later revision changes the
 In addition it requires additional overhead in the case of 'normally I would want to
 buffer this value, but just now I want an immediate action'.
 
-.. _`Issue 28: Clarify buffering mechanism`: 028p%20Clarify%20buffering%20mechanism.rst
+.. _`Issue 28: Clarify buffering mechanism`: 028%20Clarify%20buffering%20mechanism.rst
 
 Proposal
 --------
