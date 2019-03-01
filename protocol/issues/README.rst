@@ -90,7 +90,7 @@ Issues List
     \     `SECoP Issue 42: Requirements of datatypes`_
     \     `SECoP Issue 43: Parameters and units`_
     p     `SECoP Issue 44: Scaled integers`_
-    \     `SECoP Issue 45: Async error updates`_
+    d     `SECoP Issue 45: Async error updates`_
     d     `SECoP Issue 46: remote logging`_
     p     `SECoP Issue 47: Error classes`_
     d     `SECoP Issue 48: mode parameter`_
@@ -98,6 +98,8 @@ Issues List
     d     `SECoP Issue 50: Reserved Names`_
     p     `SECoP Issue 51: No Restrictions on Datatype Nesting`_
     p     `SECoP Issue 52: Include Some Properties into Datatype`_
+    d     `SECoP Issue 53: Custom Status Values`_
+    d     `SECoP Issue 54: Splitting _update_ into two Message Types`_
     ===== =======
 
 .. _`SECoP Issue 1: About SECoP Issues`: 001%20About%20SECoP%20Issues.rst
@@ -152,3 +154,5 @@ Issues List
 .. _`SECoP Issue 50: Reserved Names`: 050%20Reserved%20Names.rst
 .. _`SECoP Issue 51: No Restrictions on Datatype Nesting`: 051%20No%20Restrictions%20on%20Datatype%20Nesting.rst
 .. _`SECoP Issue 52: Include Some Properties into Datatype`: 052%20Include%20Some%20Properties%20into%20Datatype.rst
+.. _`SECoP Issue 53: Custom Status Values`: 053%20Custom%20Status%20Values.rst
+.. _`SECoP Issue 54: Splitting _update_ into two Message Types`: 054%20Splitting%20_update_%20into%20two%20Message%20Types.rst
