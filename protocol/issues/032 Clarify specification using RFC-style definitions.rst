@@ -48,7 +48,7 @@ syntax ABNF
 The section about the (de-)serialisation of messages should be reworded using :RFC:`5234`.
 (see also `Issue 30: Clarify message parsing`_)
 
-.. _`Issue 30: Clarify message parsing`: 030p%20Clarify%20message%20parsing.rst
+.. _`Issue 30: Clarify message parsing`: 030%20Clarify%20message%20parsing.rst
 
 
 

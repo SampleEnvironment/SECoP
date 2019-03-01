@@ -78,7 +78,7 @@ decision:
  - a new Issue is to be created for 'scaled integers' see `Issue 44`_
  - issue is to be closed (for now)
 
-.. _`Issue 44`: 044p%20Scaled%20integers.rst
+.. _`Issue 44`: 044%20Scaled%20integers.rst
 
 after thoughts
 ~~~~~~~~~~~~~~
@@ -94,4 +94,4 @@ fmtstr:
 
 see also `Issue 49`_
 
-.. _`Issue 49`: 049p%20Precision.rst
+.. _`Issue 49`: 049%20Precision%20of%20Floating%20Point%20Values.rst
