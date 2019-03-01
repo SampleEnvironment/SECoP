@@ -16,8 +16,8 @@ Currently, a value must always be complete, forbidding above use cases.
 
 .. note:: renaming 'struct' may help clarifying the issue, see also `Issue 23: Adjust datatypes`_.
 
-.. _`Issue 21: Usage of JSON null`: 021d%20Usage%20of%20JSON%20null.rst
-.. _`Issue 23: Adjust datatypes`: 023p%20Adjust%20datatypes.rst
+.. _`Issue 21: Usage of JSON null`: 021%20Usage%20of%20JSON%20null.rst
+.. _`Issue 23: Adjust datatypes`: 023%20Adjust%20datatypes.rst
 
 Proposal
 --------

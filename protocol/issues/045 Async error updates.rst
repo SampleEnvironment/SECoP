@@ -1,5 +1,5 @@
-SECoP Issue 45: Async error updates (closed)
-============================================
+SECoP Issue 45: Async error updates (under discussion)
+======================================================
 
 Motivation
 ----------
@@ -64,3 +64,14 @@ Based on solution (b):
 
 whenever an async update can not determine its value, it should send an ``update`` message with a data-report containing json-``null`` and an additional qualifier ``error`` (which is only present in this case!).
 The qualifier should be a modified error-report, containing the error-class instead of the origin.
+
+Reopened 
+++++++++
+
+The following fact is a little unsatisfactory from the programmer point of view: a reply to
+a ``read`` message which could also appear as an async error message, looks completely
+different. The question is, if the format of such en error message should not be
+like the sync error message. Related to `Issue 54: Splitting _update_ into two Message Types`.
+
+.. _`Issue 54: Splitting _update_ into two Message Types`: 054%20Splitting%20_update_%20into%20two%20Message%20Types.rst
+
