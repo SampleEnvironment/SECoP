@@ -35,11 +35,13 @@ Proposal proposed at above vidconf:
 Proposal by Markus:
 
 4) Instead of a separate property, add an item to the features property. The item
-   must start with a facility name (for example "psi.ch.guifeatures").
-   You might say, that this is not what features were for, but if we think
+   must start with a facility name (for example "psi.ch.sinqfeatures").
+   You might say, that this is not what features were made for, but if we think
    general, it is not really different. We always said, that features are not
    just a list of mandatory parameters, but also a specification of some behaviour,
    which might not be known otherwise just from the description.
+   Such a feature might not only include the meaning of status values, but also
+   custom properties.
 
 
 
