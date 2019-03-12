@@ -100,6 +100,7 @@ Issues List
     p     `SECoP Issue 52: Include Some Properties into Datatype`_
     d     `SECoP Issue 53: Custom Status Values`_
     d     `SECoP Issue 54: Splitting _update_ into two Message Types`_
+    p     `SECoP Issue 55: Reformat Datatype description`_
     ===== =======
 
 .. _`SECoP Issue 1: About SECoP Issues`: 001%20About%20SECoP%20Issues.rst
@@ -156,3 +157,4 @@ Issues List
 .. _`SECoP Issue 52: Include Some Properties into Datatype`: 052%20Include%20Some%20Properties%20into%20Datatype.rst
 .. _`SECoP Issue 53: Custom Status Values`: 053%20Custom%20Status%20Values.rst
 .. _`SECoP Issue 54: Splitting _update_ into two Message Types`: 054%20Splitting%20_update_%20into%20two%20Message%20Types.rst
+.. _`SECoP Issue 55: Reformat Datatype description`: 055%20Reformat%20Datatype%20description.rst
