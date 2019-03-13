@@ -1298,8 +1298,8 @@ Parameter Properties
 
     :related issue: `SECoP Issue 49: Precision of Floating Point Values`_
 
-   .. image:: images/fmtstr.svg
-       :alt: fmtstr ::= "%" "."? digits* ( "e" | "f" | "g" )
+    .. image:: images/fmtstr.svg
+        :alt: fmtstr ::= "%" "."? digits* ( "e" | "f" | "g" )
 
 
 
