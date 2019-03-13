@@ -33,7 +33,7 @@ Lutz wants to have properties/information on the same level.
 Also he thinks the descriptive data is more easy to read.
 
 A discussion about the secop philosophy takes some time....
-The discussion goes on about which 'properties' are properties of the paramter and which are actually 'properties' of the datatype.
+The discussion goes on about which 'properties' are properties of the parameter and which are actually 'properties' of the datatype.
 
 Agreement on the need of a structured way of adding units/fmtstr.
 
@@ -65,7 +65,7 @@ Custom status values must be interpreted in the context of the implementor.
 Markus writes an issue for this.
 
 General agreement that even custom staus code have to be implemented properly.
-(so that they cann all be mapped to the enerig SECoP codes).
+(so that they cann all be mapped to the generic SECoP codes).
 Also a central registry is out.
 
 
@@ -80,7 +80,7 @@ Issue 45 is to be re-opened.
 Klaus proposes to use a new message type 'reply' for replies to 'read'requests to better distinguish async and sync read requests.
 Lutz proposes 'value'.
 
-Markus opens a new issues about 'splitting `change` into two messagetypes'.
+Markus opens a new issues about 'splitting `update` into two messagetypes'.
 
 
 Communicator class

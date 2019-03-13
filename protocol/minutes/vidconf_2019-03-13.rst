@@ -1,0 +1,102 @@
+Videoconference 2018-12-03
+==========================
+
+.. sidebar:: participants
+
+     * Klaus Kiefer
+     * Lutz Rossa
+     * Markus Zolliker
+     * Niklas Ekström (on behalf of Anders Petterson)
+     * Enrico Faulhaber
+     * Frank Wutzler
+
+.. contents:: Contents
+    :local:
+    :depth: 2
+
+Opening
+-------
+Agreement on the agenda previously sent by Markus.
+
+Discussion about the issues Klaus found during implementation of a magnet.
+
+Enrico prepares a demo of a switching magnet with/without substates.
+
+Prepeparation of Meeting at ILL
+-------------------------------
+Everybody should prepare (as homework) possible sequences of substates for magnet/motor/temperature controller.
+Also: are these substates are a nice to have feature for the user or crucial for operation.
+
+Discussion about 'measurements'. and their usage and status codes.
+
+Klaus proposes to write down our handshake model more explicit.
+Enrico proposes to use more sequence diagrams.
+
+What are the 'features' their ECS relly need to use.
+We should focus on discussions of use cases, not pre-existing solutions.
+
+
+Discussion about renaming of 'datatype'
+---------------------------------------
+As there are no strong reasons to rename it, Enrico is against it.
+The proposed renaming to 'datadescriptor' is rejected.
+
+
+Discussion about change of the format of 'datatype'
+---------------------------------------------------
+After a lengthy discussion, further discussion is postponed.
+A good compromise could be to stick to [<identifier>, {key:value pairs}].
+
+
+Issue 53: Custom Status Values / 'implementor' property
+-------------------------------------------------------
+There should only be a single implementor per *module*.
+Discussion about the format of it and how to format an implementor.
+The implementor should be globally unique.
+
+The specification may need a (short) section about how to generate the required uniqueness of the names.
+
+
+Issue 54: Splitting _update_ into two Message Types
+---------------------------------------------------
+The reply to `read` is to be renamed to `reply` instead of `update`.
+Agreement on this.
+
+
+Discussion about 'Issue 45: Async error updates'
+------------------------------------------------
+Related to Issue 54.
+
+Here the splitting of `update` into two different messages is discussed.
+Klaus likes to have two actions for `error` and `update_error` but sticking to the same format.
+
+Agreement on having explicit error messages, sticking to the same format.
+
+Enrico proposes that error messages start with 'error_' followed by the original action, the original specifier and then
+an json-array containing the error-class (instead of the origin as of now).
+
+Discussion about transaction ids - rejected as not needed as the SEC-node should keep the order of requests.
+Also, only *one* synchronous command per specifier is intended to be used.
+
+
+Communicator class
+------------------
+Markus agrees on having an (abstract) base class for 'communication modules'.
+Lutz denies the existence of a proper use case.
+Enrico disagrees.
+
+After a discussion about several use cases, 'Communicator' as accepted as the fourth interface class.
+
+
+frequently asked questions
+--------------------------
+Frank and Lutz found some frequently asked questions: where to put them?
+May be very helpfully to discuss for the 'secop-rules' and for teaching SECoP.
+
+Agreement on putting it on github.
+Details are to be discussed before and at the next meeting.
+
+
+next meeting
+------------
+2019-03-20..21(st) at ILL.
