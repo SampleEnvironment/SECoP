@@ -1,5 +1,5 @@
-SECoP Issue 49: Precision of Floating Point Values (proposed)
-=============================================================
+SECoP Issue 49: Precision of Floating Point Values (closed)
+===========================================================
 
 Motivation
 ----------
@@ -40,5 +40,14 @@ Solution d: fmtstr and absprecision
 +++++++++++++++++++++++++++++++++++
 
 "absprecision" could then be named "precision"
+
+Decision at vidconf_2019-01-16
+------------------------------
+
+* `fmtstr` should be (restricted) c-style printf like formatting string ('%.4f')
+* `resolution` should be in two properties: `absolute_resolution` and `relative_resolution`, containing floating point numbers.
+* except for the name change, agreed, adapt the issue (Solution c) , close and put into specification.
+
+
 
 

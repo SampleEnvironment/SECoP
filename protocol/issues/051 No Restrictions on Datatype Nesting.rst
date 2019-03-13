@@ -1,5 +1,5 @@
-SECoP Issue 51: No Restrictions on Datatype Nesting (proposed)
-==============================================================
+SECoP Issue 51: No Restrictions on Datatype Nesting (closed)
+============================================================
 
 Motivation
 ----------
@@ -16,3 +16,7 @@ The restrictions imposed on the nesting of datatypes are removed from the specif
 Discussion
 ----------
 
+vidconf_2019-02-16
+~~~~~~~~~~~~~~~~~~
+
+recommend to use a simple as possible structure, but don't restrict the nesting level. agreed, closing this.

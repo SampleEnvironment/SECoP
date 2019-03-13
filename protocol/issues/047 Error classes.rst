@@ -1,5 +1,5 @@
-SECoP Issue 47: Error classes (proposed)
-========================================
+SECoP Issue 47: Error classes (closed)
+======================================
 
 Motivation
 ----------
@@ -107,4 +107,4 @@ they depend on state information internal to either the sec-node, the module or 
 Discussion
 ----------
 
-not discussed in its present form.
+agreement on its current form on viconf_2019-01-16, needs more examples, close the issue and put into specification

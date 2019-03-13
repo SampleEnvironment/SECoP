@@ -1,5 +1,5 @@
-SECoP Issue 46: remote logging (under discussion)
-=================================================
+SECoP Issue 46: remote logging (closed)
+=======================================
 
 Motivation
 ----------
@@ -79,7 +79,8 @@ not discussed in its present form.
 
 to be implemented in FRAPPY as custom extension (actions prefixed with ``_``).
 
-Decision from vidconf 2018-12-03
+Decision from vidconf 2019-01-16
 ++++++++++++++++++++++++++++++++
 
-agreed, ready to be closed?
+agreed, but JSON value "off" should be used instead of false
+closed

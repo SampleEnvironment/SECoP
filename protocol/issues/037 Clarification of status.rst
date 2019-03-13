@@ -1,5 +1,5 @@
-SECoP Issue 37: Clarification of status (under discussion)
-==========================================================
+SECoP Issue 37: Clarification of status (closed)
+================================================
 
 Motivation
 -----------
@@ -276,6 +276,14 @@ video conference 2018-12-03
 - UNKNOWN not generally defined (an 4xx error might be used)
 - x0y reserved for further usage by specification
 - anything else? -> we might close this issue
+
+Decision from vidconf_2019-01-16
+--------------------------------
+
+* statuscode for DISABLED is 0, UNKNWON is 401
+* stauscodes 1-99 are RESEVED and MUST NOT be used, if they are seen, they are to be interpreted like DISABLED.
+* close the issue
+
 
 
 .. DO NOT TOUCH --- following links are automatically updated by issue/makeissuelist.py

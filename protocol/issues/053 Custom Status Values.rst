@@ -1,5 +1,5 @@
-SECoP Issue 53: Custom Status Values (under discussion)
-=======================================================
+SECoP Issue 53: Custom Status Values (closed)
+=============================================
 
 Motivation
 ----------
@@ -42,6 +42,17 @@ Proposal by Markus:
    which might not be known otherwise just from the description.
    Such a feature might not only include the meaning of status values, but also
    custom properties.
+   
+
+Decision on vidconf_2019-03-13
+------------------------------
+   
+There should only be a single implementor per *module*.
+Discussion about the format of it and how to format an implementor.
+The implementor should be globally unique.
+
+The specification may need a (short) section about how to generate the required uniqueness of the names.
+
 
 
 

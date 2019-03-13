@@ -80,26 +80,26 @@ Issues List
     \     `SECoP Issue 32: Clarify specification using RFC-style definitions`_
     \     `SECoP Issue 33: Include section about security and access control`_
     \     `SECoP Issue 34: Clarify 'do' message`_
-    d     `SECoP Issue 35: Partial Structs`_
+    \     `SECoP Issue 35: Partial Structs`_
     \     `SECoP Issue 36: Dynamic units`_
-    d     `SECoP Issue 37: Clarification of status`_
-    d     `SECoP Issue 38: Extension mechanisms`_
+    \     `SECoP Issue 37: Clarification of status`_
+    \     `SECoP Issue 38: Extension mechanisms`_
     p     `SECoP Issue 39: Use cases`_
     p     `SECoP Issue 40: Finalise Specification`_
     \     `SECoP Issue 41: Handling of JSON-numbers`_
     \     `SECoP Issue 42: Requirements of datatypes`_
     \     `SECoP Issue 43: Parameters and units`_
-    p     `SECoP Issue 44: Scaled integers`_
+    \     `SECoP Issue 44: Scaled integers`_
     d     `SECoP Issue 45: Async error updates`_
-    d     `SECoP Issue 46: remote logging`_
-    p     `SECoP Issue 47: Error classes`_
-    d     `SECoP Issue 48: mode parameter`_
-    p     `SECoP Issue 49: Precision of Floating Point Values`_
-    d     `SECoP Issue 50: Reserved Names`_
-    p     `SECoP Issue 51: No Restrictions on Datatype Nesting`_
+    \     `SECoP Issue 46: remote logging`_
+    \     `SECoP Issue 47: Error classes`_
+    \     `SECoP Issue 48: mode parameter`_
+    \     `SECoP Issue 49: Precision of Floating Point Values`_
+    p     `SECoP Issue 50: Reserved Names`_
+    \     `SECoP Issue 51: No Restrictions on Datatype Nesting`_
     p     `SECoP Issue 52: Include Some Properties into Datatype`_
-    d     `SECoP Issue 53: Custom Status Values`_
-    d     `SECoP Issue 54: Splitting _update_ into two Message Types`_
+    \     `SECoP Issue 53: Custom Status Values`_
+    \     `SECoP Issue 54: Splitting _update_ into two Message Types`_
     p     `SECoP Issue 55: Reformat Datatype description`_
     ===== =======
 

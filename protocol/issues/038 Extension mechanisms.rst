@@ -1,5 +1,5 @@
-SECoP Issue 38: Extension mechanisms (under discussion)
-=======================================================
+SECoP Issue 38: Extension mechanisms (closed)
+=============================================
 
 Motivation
 -----------
@@ -42,3 +42,9 @@ video conference 2018-11-07
 Decisions:
  - Should be explained in more detail, as it is intended to give hints to implementors.
  - keep it under discussion for now.
+
+video conference 2019-01-16
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+primarily an internal document. used for finding good ways for extensions.
+
+can be closed, tagged as internal document.

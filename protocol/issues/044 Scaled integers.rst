@@ -1,5 +1,5 @@
-SECoP Issue 44: Scaled integers (proposed)
-==========================================
+SECoP Issue 44: Scaled integers (closed)
+========================================
 
 Motivation
 ----------
@@ -39,4 +39,5 @@ scaled integer
 
 Discussion
 ----------
-not discussed in its present form.
+
+Agreement on the issue in the current form at vidconf_2019-01-16 , close the issue and include in the specification.

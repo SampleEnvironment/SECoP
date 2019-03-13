@@ -1,5 +1,5 @@
-SECoP Issue 48: mode parameter (under discussion)
-=================================================
+SECoP Issue 48: mode parameter (closed)
+=======================================
 
 Motivation
 ----------
@@ -34,3 +34,9 @@ vidconf 2018-12-03
 ~~~~~~~~~~~~~~~~~~
 
 - decision to reserve the parameter name 'mode' for this purpose
+
+vidconf 2019-01-16
+~~~~~~~~~~~~~~~~~~
+
+- no reservation needed, but 'mode' is accepted as standard parameter.
+0 should be a good 'default' setting.

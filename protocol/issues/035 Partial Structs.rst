@@ -1,5 +1,5 @@
-SECoP Issue 35: Partial Structs (under discussion)
-==================================================
+SECoP Issue 35: Partial Structs (closed)
+========================================
 
 Motivation
 -----------
@@ -27,7 +27,8 @@ Also allow ``do`` with partial struct data.
 Still, only the elements referenced in the datatype are allowed, but we should allow to
 not have to specify ALL of them.
 
-To implement this, the datatype descriptor for `struct` should be extended by a list of names (a JSON-array), naming the optional struct elements (as strings).
+To implement this, the datatype descriptor for `struct` should be extended by a list of names (a JSON-array),
+naming the optional struct elements (as strings).
 SEC-Nodes not supporting this feature will only use the mapping and NOT provide that list of names.
 (They may, however, put an empty list there which should be interpreted the same.)
 ECS not knowing about the optionality of struct elements will always transfer everything, so compatibility is not harmed.
@@ -53,3 +54,13 @@ Issue is to be kept open for later inclusion.
 
 around dec 2018 the idea of putting a list of optional elements popped up.
 (this is described now above and is to be discussed.)
+
+Decision
+--------
+
+video conference 2018-02-20
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* agreement on it, but partiality should never be mandatory.
+* updates and replies MUST still contain the full struct, only the `change`/`do` actions may use the partial struct.
+* agreement, close the issue and put into the specification

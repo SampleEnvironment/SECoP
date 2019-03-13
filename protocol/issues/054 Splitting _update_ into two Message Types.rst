@@ -1,5 +1,5 @@
-SECoP Issue 54: Splitting _update_ into two Message Types (under discussion)
-============================================================================
+SECoP Issue 54: Splitting _update_ into two Message Types (closed)
+==================================================================
 
 Motivation
 ----------
@@ -34,4 +34,12 @@ If no (preferred by Markus), the only thing which has to be guaranteed, is what 
 proposed: all side effects on a *change* command have to be realized (i.e. influenced
 parameters updated) before the corresponding *changed* message. For clarity reasons
 we still might choose to have different names for read reply and async update.
+
+Decision on vidconf_2019-03-13
+------------------------------
+   
+The reply to `read` is to be renamed to `reply` instead of `update`.
+Agreement on this.
+The discussion related to Issue 45 (Async Error Updates) about the format
+of the 'error' message will continue.
 
