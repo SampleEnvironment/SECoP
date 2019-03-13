@@ -1282,21 +1282,19 @@ Parameter Properties
 - absolute_precision
     optional, JSON-number specifying the smallest difference between distinct values.
     Only for ``["double"]`` typed parameters.
+    
     :related issue: `SECoP Issue 49: Precision of Floating Point Values`_
 
 - relative_precision
     optional, JSON-number specifying the smallest relative difference
     abs(a-b) / max(abs(a),abs(b)) between distinct values.
     Only for ``["double"]`` typed parameters.
-    :related issue: `SECoP Issue 49: Precision of Floating Point Values`_
 
 - fmtstr
     optional string as a hint on how to format numeric parameters for the user.
     The string must follow this EBNF::
 
       fmtstr ::= "%" "."? digits* ( "e" | "f" | "g" )
-
-    :related issue: `SECoP Issue 49: Precision of Floating Point Values`_
 
     .. image:: images/fmtstr.svg
         :alt: fmtstr ::= "%" "."? digits* ( "e" | "f" | "g" )
