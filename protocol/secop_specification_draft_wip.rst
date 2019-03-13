@@ -1229,13 +1229,39 @@ Accessible Properties
 .. image:: images/accessible-property.svg
    :alt: property ::= (name ":" property_value)
 
+(TODO: Above image to be updated for distinction accessible- / parameter- property)
 
 - description
     mandatory string describing the accessible, formatted as for module-description
     or node-description
 
+- group
+    optional identifier, may contain ":" which may be interpreted as path separator.
+    The ECS may group the parameters according to this property.
+    The lowercase version of a group must not match any lowercase version of an accessible name
+    of the same module.
+
+    :related issue: `SECoP Issue 8: Groups and Hierarchy`_
+
+- visibility
+    optional, the visibility of the accessible. values and meaning as for module-visibility above.
+
+    :Remark:
+
+        this 'inherits' from the module property. i.e. if it is not specified, the
+        value of the module-property (if given) should be used instead
+
+:Remark:
+
+    the accessible-property ``group`` is used for grouping of accesibles within a module,
+    the module-property ``group`` is used for grouping of modules within a node.
+
+
+Parameter Properties
+--------------------
+
 - readonly
-    mandatory boolean value indiciation if this parameter may be changed by an ECS, or not
+    mandatory boolean value. Indication if this parameter may be changed by an ECS, or not
 
 - datatype
     mandatory datatype of the accessible, see `Data Types`_.
@@ -1253,46 +1279,28 @@ Accessible Properties
 
     :related: `SECoP Issue 43: Parameters and units`_
 
-- visibility
-    optional, the visibility of the accessible. values and meaning as for module-visibility above.
+- absolute_precision
+    optional, JSON-number specifying the smallest difference between distinct values.
+    Only for ``["double"]`` typed parameters.
+    :related issue: `SECoP Issue 49: Precision of Floating Point Values`_
 
-    :Remark:
-
-        this 'inherits' from the module property. i.e. if it is not specified, the
-        value of the module-property (if given) should be used instead
-
-- group
-    optional identifier, may contain ":" which may be interpreted as path separator.
-    The ECS may group the parameters according to this property.
-    The lowercase version of a group must not match any lowercase version of an accessible name
-    of the same module.
-
-    :related issue: `SECoP Issue 8: Groups and Hierarchy`_
-
-The following properties are under discussion and their name is now reserved:
-
-- precision
-    optional, JSON-number specifying the smallest difference between distinct values. Only for ``["double"]`` typed parameters.
-    :related issue: `SECoP Issue 42: Requirements of datatypes`_
+- relative_precision
+    optional, JSON-number specifying the smallest relative difference
+    abs(a-b) / max(abs(a),abs(b)) between distinct values.
+    Only for ``["double"]`` typed parameters.
+    :related issue: `SECoP Issue 49: Precision of Floating Point Values`_
 
 - fmtstr
-   optional string as a hint on how to format numeric parameters for the user.
-   The string must follow this EBNF::
+    optional string as a hint on how to format numeric parameters for the user.
+    The string must follow this EBNF::
 
-     fmtstr ::= "%" "."? digits* ( "e" | "f" | "g" )
+      fmtstr ::= "%" "."? digits* ( "e" | "f" | "g" )
 
-   :related issue: `SECoP Issue 42: Requirements of datatypes`_
+    :related issue: `SECoP Issue 49: Precision of Floating Point Values`_
 
    .. image:: images/fmtstr.svg
        :alt: fmtstr ::= "%" "."? digits* ( "e" | "f" | "g" )
 
-- export
-    reserved for internal use, MUST never appear in descriptive data
-
-:Remark:
-
-    the parameter-property ``group`` is used for grouping of parameters within a module,
-    the module-property ``group`` is used for grouping of modules within a node.
 
 
 Custom Properties
