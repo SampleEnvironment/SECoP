@@ -1285,7 +1285,7 @@ Parameter Properties
     
 - relative_precision
     optional, JSON-number specifying the smallest relative difference
-    abs(a-b) / max(abs(a),abs(b)) between distinct values.
+    ``abs(a-b) / max(abs(a),abs(b))`` between distinct values.
     Only for ``["double"]`` typed parameters.
 
     :related: `SECoP Issue 49: Precision of Floating Point Values`_
