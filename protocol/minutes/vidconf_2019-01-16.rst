@@ -111,6 +111,7 @@ SECoP Issue 28: Clarify buffering mechanism + SECoP Issue 29: New messages for b
 first discussion will ILL people happened, but not all questions are answered.
 Issue 29 Shall be closed at the ILL-meeting, Issue 28 needs rethinking after Issue 29 is agreed and closed.
 
+
 next vidconf
 ------------
 2019-02-20 10' oclock
