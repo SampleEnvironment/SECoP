@@ -155,6 +155,11 @@ The following parameters are predefined (this list will be extended):
     Codes 1 to 99, codes of the form x0y and codes above 499 are reserved for future use by the standard.
     Code 401 (Name: UNKNOWN) is a predefined value for ERROR, its meaning is: the SEC node can not (yet)
     determine the status.
+    
+    Codes 110...199, 210...299, 310...399 and 410...499 are custom codes. Their meaning
+    can be defined by the implementor (see `implementor`_ property). The ECS MUST treat the
+    second and first digit as 0, if it does not know about the specific meaning defined by
+    the implementor.
 
     :Remark:
 
@@ -230,6 +235,13 @@ The following commands are predefined (extensible):
      When the ``stop`` command is sent, the SEC node SHOULD set the target parameter
      to a value close to the present one. Then it SHOULD act as if this value would have
      been the initial target.
+
+-  **communicate**
+     Used for direct communication with hardware, with proprietary commands. It is useful
+     for debugging purposes, or if the implementor wants to give access to parameters not
+     supported by the driver. The datatype might be string, or any other datatype suitable
+     to the protocol of the device. The ``communicate`` command  is meant to be used in
+     module with the ``Communicator`` interface class.
 
 -  **reset**
      optional command for putting the module to a state predefined by the implementation.
@@ -403,8 +415,6 @@ Communicator:
 
     The communicate command is used mainly for debugging reasons, or as a workaround
     for using hardware features not implemented in the SEC node.
-
-    TODO: does the argument and the result need to be a string?
 
 
 Protocol
@@ -1219,6 +1229,13 @@ Module Properties
 
         :related issue: `SECoP Issue 9: Module Meaning`_
 
+-  _`implementor`
+     The implementor of a module, defining the meaning of custom status values, custom
+     properties and custom accessibles. The implementor must be globally unique, for example
+     'sinq.psi.ch'. This may be achieved by including a domain name, but it does not need
+     to be a registered name, and other means of assuring a global unique name are also possible.
+    
+
 
 Accessible Properties
 ---------------------
@@ -1308,7 +1325,9 @@ Custom properties may further augment accessibles, modules or the SEC-node descr
 .. image:: images/custom-property.svg
    :alt: property ::= ("_" name ":" property_value)
 
-As for all custom extensions, the names must be prefixed with an underscore.
+As for all custom extensions, the names must be prefixed with an underscore. The meaning
+of custom properties is dependent on the implementor, given by the `implementor`_
+module property. An ECS not knowing the meaning of a custom property SHOULD ignore it. 
 
 
 Data Types
