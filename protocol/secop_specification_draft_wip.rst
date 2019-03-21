@@ -1296,11 +1296,11 @@ Parameter Properties
 
     :related: `SECoP Issue 43: Parameters and units`_
 
-- absolute_precision
+- absolute_resolution
     optional, JSON-number specifying the smallest difference between distinct values.
     Only for ``["double"]`` typed parameters.
     
-- relative_precision
+- relative_resolution
     optional, JSON-number specifying the smallest relative difference
     ``abs(a-b) / max(abs(a),abs(b))`` between distinct values.
     Only for ``["double"]`` typed parameters.
@@ -1776,4 +1776,5 @@ The above diagrams were generated using a modified copy of https://github.com/En
 .. _`SECoP Issue 42: Requirements of datatypes`: issues/042%20Requirements%20of%20datatypes.rst
 .. _`SECoP Issue 43: Parameters and units`: issues/043%20Parameters%20and%20units.rst
 .. _`SECoP Issue 44: Scaled integers`: issues/044%20Scaled%20integers.rst
+.. _`SECoP Issue 49: Precision of Floating Point Values`: issues/049%20Precision%20of%20Floating%20Point%20Values.rst
 .. DO NOT TOUCH --- above links are automatically updated by issue/makeissuelist.py
