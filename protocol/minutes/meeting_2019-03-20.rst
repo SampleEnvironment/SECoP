@@ -95,7 +95,7 @@ Discussion about the minimal interface: Paolo thinks that `go` should be mandato
 
 Discussion about what is allowed in which situation and what not.
 
-Ill prefers that there is only one action allowed at any time, you would need to stop it before changing even a parameter (and then use `go` again).
+ILL prefers that there is only one action allowed at any time, you would need to stop it before changing even a parameter (and then use `go` again).
 Enrico points out a possible mixup of discussions of ICS and SECoP.
 Also, there are ECS, which are running fine without supporting the concept of an 'apply', i.e. each change of parameters takes effect 'immediately'.
 Eddy clarifies.
@@ -199,8 +199,16 @@ Discussion about precision of values
 Markus proposes to have 0 as default for `absolute_precision` and 1.2e-7 for`relative_precision` and
 that effective precision is the bigger of `absolute_precision` and value*`relative_precision`.
 
+:Remark by M.Z. after the meeting:
+
+    this should be `absolute_resolution` / `relative_resolution`
+
 Enrico points out, that for scaled integers, the `absolute_precision` should default to `1/scale`.
 Agreement on this.
+
+:Remark by M.Z. after the meeting:
+
+    this should be: ... the `absolute_resolution` should default to `scale`.
 
 
 Discussion about reconfiguring a sec-node: it should close all connections to force all clients to re-issue a describe command.
