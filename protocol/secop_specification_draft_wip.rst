@@ -1594,12 +1594,12 @@ In addition to ``scale``, ``min`` and ``max`` the following datatype properties 
     optional string as a hint on how to format numeric parameters for the user.
     default value:
     if scale < 1: "%.<n>f" where <n> = floor(log10(scale))
-    if scale >= 1: "%g"
+    if scale >= 1: "%.0f"
 
-    The string must follow the following syntax\:
+    The string must follow the following syntax (TODO: update image to allow "%.0f")\:
 
     .. image:: images/fmtstr.svg
-        :alt: fmtstr ::= "%" "."? digits* ( "e" | "f" | "g" )
+        :alt: fmtstr ::= "%" "." digits* ( "e" | "f" | "g" )
 
 
 :related issue: `SECoP Issue 44: Scaled integers`_.
