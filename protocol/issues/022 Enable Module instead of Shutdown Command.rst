@@ -57,6 +57,8 @@ Enrico wrote::
     Just my 0.02€.
 
 
+We might need an additional substate "SHUTDOWN" belonging to IDLE (or ERROR or DISABLED).
+
 Discussion
 ----------
 
