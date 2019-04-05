@@ -1365,12 +1365,12 @@ The following datatype properties are defined for ``double``:
 
 - fmtstr
     optional string as a hint on how to format numeric parameters for the user.
-    default value: "%g"
+    default value: "%.6g"
 
-    The string must follow the following syntax\:
+    The string must follow the following syntax (TODO: update image to allow "%.0f")\:
 
     .. image:: images/fmtstr.svg
-        :alt: fmtstr ::= "%" "."? digits* ( "e" | "f" | "g" )
+        :alt: fmtstr ::= "%" "." digits* ( "e" | "f" | "g" )
 
 
 int
