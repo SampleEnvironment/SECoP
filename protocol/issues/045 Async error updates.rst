@@ -1,5 +1,5 @@
-SECoP Issue 45: Async error updates (under discussion)
-======================================================
+SECoP Issue 45: Async error updates (closed)
+============================================
 
 Motivation
 ----------
@@ -74,4 +74,10 @@ different. The question is, if the format of such en error message should not be
 like the sync error message. Related to `Issue 54: Splitting _update_ into two Message Types`.
 
 .. _`Issue 54: Splitting _update_ into two Message Types`: 054%20Splitting%20_update_%20into%20two%20Message%20Types.rst
+
+Decision on the Meeting 2019-03-21
+----------------------------------
+
+Error messages for all replies All request actions + the update get an 'error_' twin for error reply.
+
 

@@ -1,5 +1,5 @@
-SECoP Issue 29: New messages for buffering (under discussion)
-=============================================================
+SECoP Issue 29: New messages for buffering (closed)
+===================================================
 
 The problem
 -----------
@@ -83,3 +83,7 @@ It should be an extension.
 It needs further discussion.
 Issue 28 also needs to be considered/updated.
 
+Decision on the Meeting 2019-03-21
+----------------------------------
+
+Extra messages for buffering are not needed.

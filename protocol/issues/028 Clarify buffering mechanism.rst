@@ -1,5 +1,5 @@
-SECoP Issue 28: Clarify buffering mechanism (under discussion)
-==============================================================
+SECoP Issue 28: Clarify buffering mechanism (closed)
+====================================================
 
 The buffering mechanism
 -----------------------
@@ -99,3 +99,7 @@ Will be updated once Issue 29 is sorted out.
 
 Keep as 'under discussion' for now.
 
+Decision on the Meeting 2019-03-21
+----------------------------------
+
+Extra messages for buffering are not needed.

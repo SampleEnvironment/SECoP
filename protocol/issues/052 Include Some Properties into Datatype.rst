@@ -1,5 +1,5 @@
-SECoP Issue 52: Include Some Properties into Datatype (proposed)
-================================================================
+SECoP Issue 52: Include Some Properties into Datatype (closed)
+==============================================================
 
 Motivation
 ----------
@@ -80,6 +80,10 @@ The related items are removed from the list of predefined properties, and the
 description of their meaning is moved to the Datatypes chapter.
 
 
-Discussion
-----------
+Decision on the Meeting 2019-03-21
+----------------------------------
+
+The properties 'unit', 'fmtstr', 'absolute_resolution' and 'relative_resolution'
+are included into the datatype. For the syntax see Issue 55 Reformat Datatype description
+
 

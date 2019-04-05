@@ -73,8 +73,8 @@ Issues List
     \     `SECoP Issue 25: Pong Format`_
     \     `SECoP Issue 26: More Module Meanings`_
     d     `SECoP Issue 27: Proposals for Interface Classes`_
-    d     `SECoP Issue 28: Clarify buffering mechanism`_
-    d     `SECoP Issue 29: New messages for buffering`_
+    \     `SECoP Issue 28: Clarify buffering mechanism`_
+    \     `SECoP Issue 29: New messages for buffering`_
     \     `SECoP Issue 30: Clarify Message parsing`_
     \     `SECoP Issue 31: Clarify timing requirements of status updates`_
     \     `SECoP Issue 32: Clarify specification using RFC-style definitions`_
@@ -90,17 +90,17 @@ Issues List
     \     `SECoP Issue 42: Requirements of datatypes`_
     \     `SECoP Issue 43: Parameters and units`_
     \     `SECoP Issue 44: Scaled integers`_
-    d     `SECoP Issue 45: Async error updates`_
+    \     `SECoP Issue 45: Async error updates`_
     \     `SECoP Issue 46: remote logging`_
     \     `SECoP Issue 47: Error classes`_
     \     `SECoP Issue 48: mode parameter`_
     \     `SECoP Issue 49: Precision of Floating Point Values`_
     p     `SECoP Issue 50: Reserved Names`_
     \     `SECoP Issue 51: No Restrictions on Datatype Nesting`_
-    p     `SECoP Issue 52: Include Some Properties into Datatype`_
+    \     `SECoP Issue 52: Include Some Properties into Datatype`_
     \     `SECoP Issue 53: Custom Status Values`_
     \     `SECoP Issue 54: Splitting _update_ into two Message Types`_
-    p     `SECoP Issue 55: Reformat Datatype description`_
+    \     `SECoP Issue 55: Reformat Datatype description`_
     ===== =======
 
 .. _`SECoP Issue 1: About SECoP Issues`: 001%20About%20SECoP%20Issues.rst

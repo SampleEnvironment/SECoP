@@ -161,14 +161,6 @@ The following parameters are predefined (this list will be extended):
     second and first digit as 0, if it does not know about the specific meaning defined by
     the implementor.
 
-    :Remark:
-
-        it is proposed to add additional states (starting,
-        started, pausing, paused, stopping, warning, ...). It has to be
-        discussed, if this (and therefore a start and pause command)
-        makes sense. Generally we want to keep the number of states as
-        small as possible here.
-
     :related issue: `SECoP Issue 37: Clarification of status`_
 
     :Note:
@@ -246,12 +238,14 @@ The following commands are predefined (extensible):
 -  **reset**
      optional command for putting the module to a state predefined by the implementation.
 
-TO BE DONE:
-
 -  **go**
-     optional on a drivable. If present, the 'go' command is used to start the
-     module. If not present the module is started upon a change on the target
-     parameter.
+     optional command for starting an action. If the 'go' command is present,
+     changing any parameter (especially the 'target' parameter) does not yet initiate any
+     action leading to a BUSY state.
+     In contrast, if no 'go' command is present, changing the target will start an action
+     trying to change the value to get closer to the target, which usually leads to a BUSY
+     state. Changing any parameter, which has an impact on measured values, should
+     be executed immediately.
 
 -  **hold**
      optional command on a drivable. Stay more or less where you are, cease
@@ -259,24 +253,15 @@ TO BE DONE:
      trigger with 'go', or if not present, by putting the target parameter to its
      present value.
 
--  **abort**
-     optional command. Stops the running module in a safe way (for example
-     switches the heater off).
-
 -  **shutdown**
      optional command for shuting down the hardware.
      When this command is sent, and the triggered action is finished (status in idle mode),
      it is safe to switch off the related device.
 
-    :Remark:
+     :Remark:
 
         there is an alternative proposal for
         implementing the shutdown function, see `SECoP Issue 22: Enable Module instead of Shutdown Command`_
-
-:Remark:
-
-    The mechanics for buffering values and the semantics for the above commands except ``stop`` and ``reset``
-    are not yet finalized. See also discussion in `SECoP Issue 28: Clarify buffering mechanism`_
 
 
 Properties
@@ -544,8 +529,9 @@ either indicating success of the request or flag an error.
      `execute command`_      request        ``do␣<module>:<command>␣`` (**only for argumentless commands!**)
           \                  reply          ``done␣<module>:<command>␣``\ <`Data Report`_> (with null as value)
      `read request`_         request        ``read␣<module>:<parameter>`` (**triggers an update**)
+        \                    reply          ``reply␣<module>:<parameter>␣``\ <`Data Report`_>
      value update_  event    event          ``update␣<module>:<parameter>␣``\ <`Data Report`_>
-     `error reply`_          reply          ``error␣<errorclass>␣``\ <`Error Report`_>
+     `error reply`_          reply          ``error_<message>␣<module>:<parameter>␣``\ <`Error Report`_>
     ======================= ============== ==================
 
 .. table:: extended messages
@@ -566,10 +552,6 @@ either indicating success of the request or flag an error.
           \                  reply          ``done␣<module>:<command>␣``\ <`Data Report`_>
     ======================= ============== ==================
 
-:Remark:
-
-    We tried to keep this list small. However a possible extension is discussed in
-    `SECoP Issue 29: New messages for buffering`_
 
 Theory of operation:
     The first messages to be exchanged after the a connection between an ECS and a SEC node is established
@@ -1287,35 +1269,10 @@ Parameter Properties
     :Note:
         commands and parameters can be distinguished by the datatype.
 
-- unit
-    optional string giving the unit of the parameter.
-    (default: unitless, SHOULD be given, if meaningfull, empty string: unit is one)
-    Only SI-units (including prefix) SHOULD be used for SECoP units preferrably.
-
-    atm. only defined for numeric parameters (incl. array of numeric values all having the same unit).
-
-    :related: `SECoP Issue 43: Parameters and units`_
-
-- absolute_resolution
-    optional, JSON-number specifying the smallest difference between distinct values.
-    Only for ``["double"]`` typed parameters.
-    
-- relative_resolution
-    optional, JSON-number specifying the smallest relative difference
-    ``abs(a-b) / max(abs(a),abs(b))`` between distinct values.
-    Only for ``["double"]`` typed parameters.
-
-    :related: `SECoP Issue 49: Precision of Floating Point Values`_
-
-- fmtstr
-    optional string as a hint on how to format numeric parameters for the user.
-    The string must follow this EBNF::
-
-      fmtstr ::= "%" "."? digits* ( "e" | "f" | "g" )
-
-    .. image:: images/fmtstr.svg
-        :alt: fmtstr ::= "%" "."? digits* ( "e" | "f" | "g" )
-
+- constant
+    optional. If given, the parameter is constant and has the given value.
+    Such a parameter can neither be read nor written, and it will not be transferred
+    after the activate command.
 
 
 Custom Properties
@@ -1372,18 +1329,48 @@ double
     :stub-columns: 1
 
     * - Datatype
-      - | ``["double", <min>, <max>]``
-        |
-        | if ``<min>`` is ``null``, there is no upper limit
-        | if ``<max>`` is ``null``, there is no lower limit
-        | ``<min>`` and ``<max>`` are numbers with ``<min>`` <= ``<max>``
+      - | ``["double", {`` <datatype properties> ``}]``
+        | <datatype properties> = ``<name>: <value> ...``
+        | see below
 
     * - Example
-      - ``["double", 0, 100]``
+      - ``["double", {"min": 0, "max": 100, "fmtstr": "%.3f"]``
 
     * - Transport example
       - | as JSON-number:
         | ``3.14159265``
+
+The following datatype properties are defined for ``double``:
+
+- min
+    lower limit. if min is omitted, there is no lower limit
+    
+- max
+    upper limit. if max is omitted, there is no upper limit
+
+- unit
+    optional string giving the unit of the parameter.
+    (default: unitless. SHOULD be given, if meaningfull. empty string: unit is one)
+    Only SI-units (including prefix) SHOULD be used for SECoP units preferrably.
+    :related: `SECoP Issue 43: Parameters and units`_
+
+- absolute_resolution
+    optional, JSON-number specifying the smallest difference between distinct values.
+    
+- relative_resolution
+    optional, JSON-number specifying the smallest relative difference
+    between distinct values ``abs(a-b) <= relative_resolution * max(abs(a),abs(b))`` .
+
+    :related: `SECoP Issue 49: Precision of Floating Point Values`_
+
+- fmtstr
+    optional string as a hint on how to format numeric parameters for the user.
+    default value: "%g"
+
+    The string must follow the following syntax\:
+
+    .. image:: images/fmtstr.svg
+        :alt: fmtstr ::= "%" "."? digits* ( "e" | "f" | "g" )
 
 
 int
@@ -1394,13 +1381,13 @@ int
     :stub-columns: 1
 
     * - Datatype
-      - | ``["int", <min>, <max>]``
+      - | ``["int", {"min": <min>, "max": <max>}]``
         |
         | ``<min>`` and ``<max>`` MUST be given
         | ``<min>`` and ``<max>`` are integers with ``<min>`` <= ``<max>``
 
     * - Example
-      - ``["int", -100, 100]``
+      - ``["int", {"min": 0, "max": 100}]``
 
     * - Transport example
       - | as JSON-number:
@@ -1415,7 +1402,7 @@ bool
     :stub-columns: 1
 
     * - Datatype
-      - | ``["bool"]``
+      - | ``["bool", {}]``
 
     * - Transport example
       - | as JSON-boolean: true or false
@@ -1430,7 +1417,7 @@ enum
     :stub-columns: 1
 
     * - Datatype
-      - | ``["enum", {<name> : <value>, ....}]``
+      - | ``["enum", {"members": {<name> : <value>, ....}}]``
         | ``name``\ s are strings, ``value``\ s are (small) integers, both ``name``\ s and ``value``\ s MUST be unique
 
     * - Example
@@ -1449,13 +1436,15 @@ string
     :stub-columns: 1
 
     * - Datatype
-      - | ``["string", <min len>, <max len>]``
+      - | ``["string", {"max": <max len>}]``
+        | ``["string", {"min": <min len>, "max": <max len>}]``
         |
         | ``<min len>`` and ``<max len>`` are integers with ``<min len>`` <= ``<max len>``
+        | the default for ``<min len>`` is 0, ``<max len>`` must be given. 
         | the length is counting the number of bytes (**not** characters!) used when the string is utf8 encoded!
 
     * - Example
-      - ``["string", 0, 80]``
+      - ``["string", {"min": 0, "max": 80}]``
 
     * - Transport example
       - | as JSON-string:
@@ -1470,13 +1459,15 @@ blob
     :stub-columns: 1
 
     * - Datatype
-      - | ``["blob", <min len>, <max len>]``
+      - | ``["blob", {"max": <max len>}]``
+        | ``["blob", {"min": <min len>, "max": <max len>}]``
         |
         | ``<min len>`` and ``<max len>`` are integers with ``<min len>`` <= ``<max len>``
-        | the length is counting the number of bytes (i.e. **not** the size of the transport representation)
+        | the default for ``<min len>`` is 0, ``<max len>`` must be given. 
+        | the length is counting the number of bytes (**not** the size of the encoded string)
 
     * - Example
-      - ``["blob", 1, 64]``
+      - ``["blob", {"min": 1, "max": 64}]``
 
     * - Transport example
       - | as single-line base64 (see :RFC:`4648`) encoded JSON-string:
@@ -1491,13 +1482,14 @@ array
     :stub-columns: 1
 
     * - Datatype
-      - | ``["array", <min len>, <max len>, <basic type>]``
+      - | ``["array", {"min": <min len>, "max": <max len>, "members": <basic type>}]``
         |
         | ``<min len>`` and ``<max len>`` are integers with ``<min len>`` <= ``<max len>``
+        | the default for ``<min len>`` is 0, ``<max len>`` must be given. 
         | the length is the number of elements
 
     * - Example
-      - ``["array", 3, 10, ["int", 0, 9]]``
+      - ``["array", {"min": 3, "max": 10, ["int", {"min": 0, "max": 9}]}]``
 
     * - Transport example
       - | as JSON-array:
@@ -1512,10 +1504,10 @@ tuple
     :stub-columns: 1
 
     * - Datatype
-      - | ``["tuple", <datatype>, <datatype>, ...]``
+      - | ``["tuple", {"members": [<datatype>, <datatype>, ...]}]``
 
     * - Example
-      - | ``["tuple", ["int", 0, 999], ["string", 0, 99]]``
+      - | ``["tuple", {"members": [["int", {"min": 0, "max": 999}], ["string", {"min": 0, "max": 80}]]}]``
 
     * - Transport example
       - | as JSON-array:
@@ -1530,10 +1522,10 @@ struct
     :stub-columns: 1
 
     * - Datatype
-      - | ``["struct", {<name> : <datatype>, <name>: <datatype>, ....}]``
+      - | ``["struct", {"members": {<name> : <datatype>, <name>: <datatype>, ....}}]``
         | or
-        | ``["struct", {<name> : <datatype>, <name>: <datatype>, ....}, [<name>, <name>, ...]]``
-        | In the second form, the third JSON-array element lists the optional struct elements.
+        | ``["struct", {"members": {<name> : <datatype>, <name>: <datatype>, ....}, "optional": ["name", ...]]``
+        | In the second form, the names of optional struct elements is given.
         | In 'change' and 'do' commands, the ECS might omit these elements, all other
         | elements must be given.
         | The effect of a 'change' action with omitted elements should be the same
@@ -1544,7 +1536,7 @@ struct
         | In all other messages, all elements have to be given.
 
     * - Example
-      - ``["struct", {"y":["int"], "x":["enum",{"On":1, "Off":0}]}]``
+      - ``["struct", {"members": {"y":["int"], "x":["enum",{"On":1, "Off":0}]}}]``
 
     * - Transport example
       - | as JSON-object:
@@ -1559,8 +1551,6 @@ scaled integers
 Scaled integers are to be treated as 'double' in the ECS, they are just transported
 differently. The main motivation for this datatype is for SEC nodes with limited
 capabilities, where floating point calculation is a major effort.
-For parameters with this type, it is not needed to indicate the properties
-'absolute_resolution' and 'fmtstr', as they can be derived from the datatype.
 
 
 .. list-table::
@@ -1568,18 +1558,49 @@ For parameters with this type, it is not needed to indicate the properties
     :stub-columns: 1
 
     * - Datatype
-      - | ``["scaled", <min>, <max>, <scale>]``
+      - | ``["scaled", {"scale": scale, "min": <min>, "max": <max> `` <datatype properties> ``}]``
+        | <datatype properties> = ``<name>: <value> ...`` (see below)
         |
-        | ``<min>`` and ``<max>`` MUST be given
+        | ``scale``, ``<min>`` and ``<max>`` MUST be given
         | ``<min>`` and ``<max>`` are integers with ``<min>`` <= ``<max>``
-        | ``<scale>`` is a number
+        | ``<scale>`` is a number > 0
 
     * - Example
-      - ``["scaled", 0, 250, 0.1]``
-        i.e. a double value between 0.0 and 250.0
+      - ``["scaled", {"scale": 0.1, "min": 0, "max": 250}]``
+        i.e. a double value between 0.0 and 25.0
 
     * - Transport examples
       - | An integer JSON-number, ``1255`` meaning 125.5
+
+In addition to ``scale``, ``min`` and ``max`` the following datatype properties are defined for ``scaled``:
+
+- unit
+    optional string giving the unit of the parameter.
+    (default: unitless. SHOULD be given, if meaningfull. empty string: unit is one)
+    Only SI-units (including prefix) SHOULD be used for SECoP units preferrably.
+    :related: `SECoP Issue 43: Parameters and units`_
+
+- absolute_resolution
+    optional, a JSON-number specifying the smallest difference between distinct values.
+    usually not needed (default is ``scale``)
+    
+- relative_resolution
+    optional, JSON-number specifying the smallest relative difference
+    between distinct values ``abs(a-b) <= relative_resolution * max(abs(a),abs(b))`` .
+
+    :related: `SECoP Issue 49: Precision of Floating Point Values`_
+
+- fmtstr
+    optional string as a hint on how to format numeric parameters for the user.
+    default value:
+    if scale < 1: "%.<n>f" where <n> = floor(log10(scale))
+    if scale >= 1: "%g"
+
+    The string must follow the following syntax\:
+
+    .. image:: images/fmtstr.svg
+        :alt: fmtstr ::= "%" "."? digits* ( "e" | "f" | "g" )
+
 
 :related issue: `SECoP Issue 44: Scaled integers`_.
 
@@ -1592,7 +1613,7 @@ command
     :stub-columns: 1
 
     * - Datatype
-      - | ``["command", <argumenttype>, <resulttype>]]``
+      - | ``["command", {"argument": <argumenttype>, "result": <resulttype>}]``
         |
         | if ``<argumenttype>`` is ``null``, the command has no argument
         | if ``<resulttype>`` is ``null``, the command returns no result
@@ -1603,7 +1624,7 @@ command
         | in the description of the command.
 
     * - Example
-      - ``["command", ["bool"], ["bool"]]``
+      - ``["command", {"argument": ["bool", {}], "result": ["bool", {}]]``
 
     * - Transport examples
       - | > ``do module:invert true``
@@ -1767,8 +1788,6 @@ The above diagrams were generated using a modified copy of https://github.com/En
 .. _`SECoP Issue 9: Module Meaning`: issues/009%20Module%20Meaning.rst
 .. _`SECoP Issue 22: Enable Module instead of Shutdown Command`: issues/022%20Enable%20Module%20instead%20of%20Shutdown%20Command.rst
 .. _`SECoP Issue 26: More Module Meanings`: issues/026%20More%20Module%20Meanings.rst
-.. _`SECoP Issue 28: Clarify buffering mechanism`: issues/028%20Clarify%20buffering%20mechanism.rst
-.. _`SECoP Issue 29: New messages for buffering`: issues/029%20New%20messages%20for%20buffering.rst
 .. _`SECoP Issue 35: Partial structs`: issues/035%20Partial%20Structs.rst
 .. _`SECoP Issue 36: Dynamic units`: issues/036%20Dynamic%20units.rst
 .. _`SECoP Issue 37: Clarification of status`: issues/037%20Clarification%20of%20status.rst

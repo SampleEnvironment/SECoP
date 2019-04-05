@@ -1,5 +1,5 @@
-SECoP Issue 55: Reformat Datatype description (proposed)
-========================================================
+SECoP Issue 55: Reformat Datatype description (closed)
+======================================================
 
 Motivation
 ----------
@@ -348,3 +348,29 @@ For completeness here is the definition of known SECoP data descriptors:
 
 Discussion
 ----------
+
+Arguments against:
+
+- less changes (there is already some code around which has to be changed)
+- it less visible, that some things have to mandatory
+- the message type is not necessarily at the beginning
+
+Arguments for the change:
+
+- it seems more logic, not to have two different places for "datatype properties":
+  in a JSON array, and in a JSON object
+- having everything in an JSON object is more explicit, because the names are given.
+
+
+Decision on the Meeting 2019-03-21
+----------------------------------
+
+The datatype is a JSON-Array with two elements, the first is the message type,
+the second a JSON object containing the datatype properties.
+The names of the datatype properties follow the proposal above, except than
+"min" and "max" is used instead of "mininum_..." and "maximum_..." for all
+concerned types.
+
+This way, the message type is clearly visible at the beginning, and the value
+of the type is meaningful enough in order not to need a name.
+
