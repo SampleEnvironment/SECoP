@@ -1593,8 +1593,7 @@ In addition to ``scale``, ``min`` and ``max`` the following datatype properties 
 - fmtstr
     optional string as a hint on how to format numeric parameters for the user.
     default value:
-    if scale < 1: "%.<n>f" where <n> = floor(log10(scale))
-    if scale >= 1: "%.0f"
+    "%.<n>f" where <n> = max(0,floor(log10(scale)))
 
     The string must follow the following syntax (TODO: update image to allow "%.0f")\:
 
