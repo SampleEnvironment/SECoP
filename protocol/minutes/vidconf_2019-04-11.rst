@@ -55,7 +55,7 @@ default fmtstr for double/scaled
 for "double":
         "%.6g" (which is the same as "%g")
 for "scaled":
-        "%.<n>f" where <n> = max(0,floor(-log10(scale)))
+        "%.<n>f" where <n> = max(0,-floor(log10(scale)))
         for example: scale = 0.0888888 -> default fmtstr = "%.2f"
         scale = 15 -> fmtstr = "%.0f"
 

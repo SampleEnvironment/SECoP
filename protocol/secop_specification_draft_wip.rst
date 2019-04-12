@@ -238,8 +238,14 @@ The following commands are predefined (extensible):
 -  **reset**
      optional command for putting the module to a state predefined by the implementation.
 
+-  **clear_errors**
+     This command tries to clear an error state. It may be called when status is ERROR,
+     and the command will try to transfrom status to IDLE or WARN. If it can not
+     do it, the status should not change or change to an other ERROR state before
+     returning ``done <module>:clear_errors``
+
 -  **go**
-     optional command for starting an action. If the 'go' command is present,
+     optional command for starting an action. If the ``go`` command is present,
      changing any parameter (especially the 'target' parameter) does not yet initiate any
      action leading to a BUSY state.
      In contrast, if no 'go' command is present, changing the target will start an action
@@ -250,7 +256,7 @@ The following commands are predefined (extensible):
 -  **hold**
      optional command on a drivable. Stay more or less where you are, cease
      movement, be ready to continue soon, target value is kept. Continuation can be
-     trigger with 'go', or if not present, by putting the target parameter to its
+     trigger with ``go``, or if not present, by putting the target parameter to its
      present value.
 
 -  **shutdown**
@@ -1329,8 +1335,8 @@ double
     :stub-columns: 1
 
     * - Datatype
-      - | ``["double", {`` <datatype properties> ``}]``
-        | <datatype properties> = ``<name>: <value> ...``
+      - | ``["double", {<datatype properties>}]``
+        | <datatype properties> = ``<name>: <value>, ...``
         | see below
 
     * - Example
@@ -1356,10 +1362,15 @@ The following datatype properties are defined for ``double``:
 
 - absolute_resolution
     optional, JSON-number specifying the smallest difference between distinct values.
+    default value: 0
     
 - relative_resolution
     optional, JSON-number specifying the smallest relative difference
     between distinct values ``abs(a-b) <= relative_resolution * max(abs(a),abs(b))`` .
+    default value: 1.2e-7 (enough for single precision floats)
+
+    if both ``absolute_resolution`` and ``relative_resolution`` are given, the expected
+    resolution is ``max(absolute_resolution, abs(value) * relative_resolution)``
 
     :related: `SECoP Issue 49: Precision of Floating Point Values`_
 
@@ -1558,8 +1569,8 @@ capabilities, where floating point calculation is a major effort.
     :stub-columns: 1
 
     * - Datatype
-      - | ``["scaled", {"scale": scale, "min": <min>, "max": <max> `` <datatype properties> ``}]``
-        | <datatype properties> = ``<name>: <value> ...`` (see below)
+      - | ``["scaled", {"scale": scale, "min": <min>, "max": <max> <datatype properties>}]``
+        | <datatype properties> = ``, <name>: <value>, ...``
         |
         | ``scale``, ``<min>`` and ``<max>`` MUST be given
         | ``<min>`` and ``<max>`` are integers with ``<min>`` <= ``<max>``
@@ -1581,19 +1592,22 @@ In addition to ``scale``, ``min`` and ``max`` the following datatype properties 
     :related: `SECoP Issue 43: Parameters and units`_
 
 - absolute_resolution
-    optional, a JSON-number specifying the smallest difference between distinct values.
-    usually not needed (default is ``scale``)
+    optional, JSON-number specifying the smallest difference between distinct values.
+    default: ``scale``
     
 - relative_resolution
     optional, JSON-number specifying the smallest relative difference
     between distinct values ``abs(a-b) <= relative_resolution * max(abs(a),abs(b))`` .
+    default value: 1.2e-7 (enough for single precision floats)
+
+    if both ``absolute_resolution`` and ``relative_resolution`` are given, the expected
+    resolution is ``max(absolute_resolution, abs(value) * relative_resolution)``
 
     :related: `SECoP Issue 49: Precision of Floating Point Values`_
 
 - fmtstr
     optional string as a hint on how to format numeric parameters for the user.
-    default value:
-    "%.<n>f" where <n> = max(0,floor(log10(scale)))
+    default value: "%.<n>f" where <n> = max(0,-floor(log10(scale)))
 
     The string must follow the following syntax (TODO: update image to allow "%.0f")\:
 
@@ -1612,10 +1626,13 @@ command
     :stub-columns: 1
 
     * - Datatype
-      - | ``["command", {"argument": <argumenttype>, "result": <resulttype>}]``
+      - | ``["command", {}]``
+        | ``["command", {"argument": <argumenttype>}]``
+        | ``["command", {"result": <resulttype>}]``
+        | ``["command", {"argument": <argumenttype>, "result": <resulttype>}]``
         |
-        | if ``<argumenttype>`` is ``null``, the command has no argument
-        | if ``<resulttype>`` is ``null``, the command returns no result
+        | if ``<argumenttype>`` is omitted, the command has no argument
+        | if ``<resulttype>`` is omitted, the command returns no result
         | only one argument is allowed, though several arguments may be used if
         | encapsulated in a structural datatype (struct, tuple or array).
         | If such encapsulation or data grouping is needed, a struct SHOULD be used.
