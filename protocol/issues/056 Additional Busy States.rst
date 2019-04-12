@@ -163,4 +163,4 @@ The advantage of this approach is, that it is "self documented", by the selectio
 the parameter names, and the description of the parameter.
 
 A disadvantage is, that the criteria are preselected and then valid for all clients,
-the can not be different for different clients. But do we need that really?
+they can not be chosen on the fly for different clients. But do we need that really?
