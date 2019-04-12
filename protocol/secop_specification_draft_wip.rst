@@ -1366,11 +1366,16 @@ The following datatype properties are defined for ``double``:
     
 - relative_resolution
     optional, JSON-number specifying the smallest relative difference
-    between distinct values ``abs(a-b) <= relative_resolution * max(abs(a),abs(b))`` .
+    between distinct values:
+    
+    ``abs(a-b) <= relative_resolution * max(abs(a),abs(b))``
+    
     default value: 1.2e-7 (enough for single precision floats)
 
     if both ``absolute_resolution`` and ``relative_resolution`` are given, the expected
-    resolution is ``max(absolute_resolution, abs(value) * relative_resolution)``
+    resolution is:
+    
+    ``max(absolute_resolution, abs(value) * relative_resolution)``
 
     :related: `SECoP Issue 49: Precision of Floating Point Values`_
 
@@ -1597,11 +1602,16 @@ In addition to ``scale``, ``min`` and ``max`` the following datatype properties 
     
 - relative_resolution
     optional, JSON-number specifying the smallest relative difference
-    between distinct values ``abs(a-b) <= relative_resolution * max(abs(a),abs(b))`` .
+    between distinct values:
+    
+    ``abs(a-b) <= relative_resolution * max(abs(a),abs(b))``
+    
     default value: 1.2e-7 (enough for single precision floats)
 
     if both ``absolute_resolution`` and ``relative_resolution`` are given, the expected
-    resolution is ``max(absolute_resolution, abs(value) * relative_resolution)``
+    resolution is:
+    
+    ``max(absolute_resolution, abs(value) * relative_resolution)``
 
     :related: `SECoP Issue 49: Precision of Floating Point Values`_
 
