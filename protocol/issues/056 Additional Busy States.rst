@@ -119,13 +119,13 @@ an example):
 
 Existing commands:
 
-``drive <module> <target>`` means: change target and wait for IDLE
-``run <module> <target>`` means: change target and do not wait
+* ``drive <module> <target>`` means: change target and wait for IDLE
+* ``run <module> <target>`` means: change target and do not wait
 
 New commands or command options:
 
-``drive -quick <module> <target>`` means: change target and wait for IDLE or FINALIZING
-``drive -extended <module> <target>`` means: change target and wait for IDLE after EARLY_IDLE
+* ``drive -quick <module> <target>`` means: change target and wait for IDLE or FINALIZING
+* ``drive -extended <module> <target>`` means: change target and wait for IDLE after EARLY_IDLE
 
 The advantage of this approach is, that one can decide 'on the fly', which mode to
 use, and it is not dependent on the setting of a parameter, which somebody has set
