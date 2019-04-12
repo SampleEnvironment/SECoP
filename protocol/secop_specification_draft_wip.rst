@@ -1598,7 +1598,7 @@ In addition to ``scale``, ``min`` and ``max`` the following datatype properties 
 
 - absolute_resolution
     optional, JSON-number specifying the smallest difference between distinct values.
-    default: ``scale``
+    default value: ``scale``
     
 - relative_resolution
     optional, JSON-number specifying the smallest relative difference
