@@ -99,8 +99,8 @@ The status would be BUSY while preparing, IDLE afterwards. However, for being
 explicit, we might introduce PREPARED, which would be a substate of IDLE.
 This additional state is needed, if we define 'IDLE' as: 'the value is at target'.
 
-C) Actions affecting the main value
-+++++++++++++++++++++++++++++++++++
+C) Actions affecting the main value (Example: reference run)
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 In addition to the (A) and (B), there might be other actions, which we want to know
 when they end. There are different types of such actions. For example a reference
@@ -109,8 +109,8 @@ it is clear, that after a command 'reference_run' the module is BUSY until the
 reference run is finished, and target and value should be identical after a reference
 run.
 
-D) Actions not affecting the main value
-+++++++++++++++++++++++++++++++++++++++
+D) Actions not affecting the main value (Example: going persistent)
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 Going from persistent mode to non persistent mode is an example for an action, which
 does not influence the main value. The user might want to do this in order to
