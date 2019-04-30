@@ -103,11 +103,11 @@ C) Actions affecting the main value
 +++++++++++++++++++++++++++++++++++
 
 In addition to the (A) and (B), there might be other actions, which we want to know
-when they end. These are different types of such actions. For example a reference
+when they end. There are different types of such actions. For example a reference
 run on a motor: during a reference run, the value is obviously not at target, so
 it is clear, that after a command 'reference_run' the module is BUSY until the
 reference run is finished, and target and value should be identical after a reference
-run. 
+run.
 
 D) Actions not affecting the main value
 +++++++++++++++++++++++++++++++++++++++
@@ -115,11 +115,11 @@ D) Actions not affecting the main value
 Going from persistent mode to non persistent mode is an example for an action, which
 does not influence the main value. The user might want to do this in order to
 save time on the next field change. Or (s)he want to do the inverse to save helium.
-The question is, if it is necessary for the ECS to wait for the end of such an action?
+The question is: is it is necessary for the ECS to wait for the end of such an action?
 The status text might give an indication of the progress of such an action to the user,
 but the ECS will normally not care. With the exception of the case, where the SEC-Node
 software does not accept new actions while others are running. This is handled by the
-next use case/
+next use case.
 
 E) Actions blocking new commands
 ++++++++++++++++++++++++++++++++
@@ -140,7 +140,7 @@ With this in mind, a defined BUSY substate with the meaning (3) is not really ne
 Actions which do not affect the main value, but can not be interrupted, may just be
 IDLE with a different status text, or may be a custom substate of IDLE.
 However, if the committee decides, that it is better to use a defined substate for that,
-we might define new substate of IDLE, withe the meaning (3) of busy.
+we might define new substate of IDLE, with the meaning (3) of busy.
 However a name BUSY_IDLE or IDLE_BUSY seems not very nice. In this case the name of
 the substate should be chosen by the implementor, for example CHANGING_PERSISTENCY.
 
