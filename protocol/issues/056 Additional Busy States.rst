@@ -67,92 +67,104 @@ We may in addition introduce FINALIZE=301 (substate of BUSY!), which means:
 Additional considerations after vidconf-2019-04-11
 --------------------------------------------------
 
-Preparing
-+++++++++
+Use cases wich may need substates
++++++++++++++++++++++++++++++++++
 
-We decided to define a 'prepare' command. The meaning is: bring the module
+In the following, use cases were collected, which might need substates or additional
+commands, but let us start with the simplest use case:
+
+A) Simple use case: Wait until a value has reached target
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+This is the simplest use case, and as it is probably also the main usage, it must be
+simple: After a *change target* (or *go*), the ECS has to wait before the value has
+reached target, before it is collecting some data under stable conditions.
+For this use case, the simplest solution is, that the transition from
+BUSY to IDLE happens when stable conditions are reached, and in the most efficient
+solution, this happens as soon as possible, not waiting for example for cooling the
+switch heater and ramping down the current in the leads of a superconducting magnet.
+
+For the example of the superconducting magnet, an implementor might choose to
+stay BUSY while ramping down the leads for simplicity - this is o.k., it is just
+not ideal, because it is a waste of time.
+
+B) Preparing
+++++++++++++
+
+For special cases, measurements might already happen while ramping the main value.
+For this purpose, the 'prepare' command is proposed. The meaning is: bring the module
 into a state, where the 'moving' of the main value can start immediately.
-I think this is undisputed. It seems not necessary to introduce an additional
-state PREPARING for that.
+It seems not necessary to introduce an additional state PREPARING for that:
+The status would be BUSY while preparing, IDLE afterwards. However, for being
+explicit, we might introduce PREPARED, which would be a substate of IDLE.
+This additional state is needed, if we define 'IDLE' as: 'the value is at target'.
 
+C) Actions affecting the main value
++++++++++++++++++++++++++++++++++++
 
-Use case for meaning (3)
-++++++++++++++++++++++++
+In addition to the (A) and (B), there might be other actions, which we want to know
+when they end. These are different types of such actions. For example a reference
+run on a motor: during a reference run, the value is obviously not at target, so
+it is clear, that after a command 'reference_run' the module is BUSY until the
+reference run is finished, and target and value should be identical after a reference
+run. 
 
-In the discussion on vidconf-2019-04-11 it was not clear if the ECS needs to
-know the status in the sense of meaning (3).
+D) Actions not affecting the main value
++++++++++++++++++++++++++++++++++++++++
 
-It is clear, that the ECS can always try to do any action, and the SEC node can
-reply with an 'IsBusy' error in this case. The question was: **when does it make sense for
-the ECS to retry?** A sensible answer is: **whenever the status changes** or more
-precise: whenever the status code **or** the status text changes. This means that we
+Going from persistent mode to non persistent mode is an example for an action, which
+does not influence the main value. The user might want to do this in order to
+save time on the next field change. Or (s)he want to do the inverse to save helium.
+The question is, if it is necessary for the ECS to wait for the end of such an action?
+The status text might give an indication of the progress of such an action to the user,
+but the ECS will normally not care. With the exception of the case, where the SEC-Node
+software does not accept new actions while others are running. This is handled by the
+next use case/
+
+E) Actions blocking new commands
+++++++++++++++++++++++++++++++++
+
+If the ECS wants to initiate an action, but the SEC-Node can not yet accept it,
+because it is still busy with an other action, the reply would be an 'IsBusy'
+error message. The question is then: *when does it make sense for
+the ECS to retry?* A sensible answer is: *whenever the status changes* or more
+precise: whenever the status code *or* the status text changes. This means that we
 do not need substates for this meaning, it is enough for the SEC-node to change the
 status text. It is clear, that the ECS may get an IsBusy error again, but it is not
 forced to try repeatedly and guess what frequency is meaningful.
+Above is valid for asynchronous communication. In case of synchronous operation,
+anyway a polling has to be done. Whether the client polls the status, or retries
+the operation comes more or less to the same.
 
+With this in mind, a defined BUSY substate with the meaning (3) is not really needed.
+Actions which do not affect the main value, but can not be interrupted, may just be
+IDLE with a different status text, or may be a custom substate of IDLE.
+However, if the committee decides, that it is better to use a defined substate for that,
+we might define new substate of IDLE, withe the meaning (3) of busy.
+However a name BUSY_IDLE or IDLE_BUSY seems not very nice. In this case the name of
+the substate should be chosen by the implementor, for example CHANGING_PERSISTENCY.
 
-Definition of BUSY
-++++++++++++++++++
+F) Influencing the end of the BUSY phase
+++++++++++++++++++++++++++++++++++++++++
 
-Therefore let us define BUSY not as logical OR of (1) and (3), but:
+Some users may want to influence the criterium for the end of BUSY phase.
 
-* the status is BUSY, whenever an action is not yet 'completed'.
-* 'completed' is defined by the implementor of an action, but in the following sense:
-    - A 'change target' action is completed, when the value reaches the target, and
-      when there influence of this action on the experiment has stabilized.
-      The crucial point here: both criteria above depend on some tolerance
-      threshold.
-    - An action might be finished, but still some process triggered by this action may
-      be under way, if this process is not hindering other actions to be performed.
+For example:
 
+1) During cooldown of the superconducting switch, the magnetic field might
+   still oscillate slightly, so the user wants to wait for this before
+   measuring.
+   
+2) Not really a sample environment issue, but otherwise a good example: the user
+   wants to wait until air cushions have switched off, because the beam geometry
+   is affected sligthly.
+   
+3) Tolerance and window of temperature
 
-Now a SEC-Node implementor might want to offer a possibility to influence the criteria
-for an action to be 'completed'. Still I want to compare two possibilities:
-
-
-Substates
-+++++++++
-
-We might specify a substate FINALIZING=301 and/or EARLY_IDLE=101, and then the ECS
-might decide, how to deal with that. Possible options for an ECS (using SICS as
-an example):
-
-Existing commands:
-
-* ``drive <module> <target>`` means: change target and wait for IDLE
-* ``run <module> <target>`` means: change target and do not wait
-
-New commands or command options:
-
-* ``drive -quick <module> <target>`` means: change target and wait for IDLE or FINALIZING
-* ``drive -extended <module> <target>`` means: change target and wait for IDLE after EARLY_IDLE
-
-The advantage of this approach is, that one can decide 'on the fly', which mode to
-use, and it is not dependent on the setting of a parameter, which somebody has set
-at some time. The downside is: You have to modify the 'drive' command, which is
-quite a big thing.
-
-The other approach is to introduce a new parameter ``drivemode`` on the ECS side, with
-values (0: quick, 1: normal, 2: extended), which can be preset for all further drive
-commands on that module.
-
-<module> drivemode 1
-
-We could also imagine to have a global parameter on the ECS, which is influencing
-the drive command of all modules.
-
-I think the main problem of both variants of this approach is, that we have no easy
-possibility to document what these substates mean for a specific module.
-
-
-Extra Parameters on the Module
-++++++++++++++++++++++++++++++
-
-Instead of additional substates, the SEC-node offers one or several additional parameter(s),
-influencing, when the transition to IDLE happens. This is already the case on
-some temperature modules, with the window/tolerance parameters. For the example
-of motors with air cushions, this might be a parameter settling_time,
-defining how long to wait after the air cushion was switch off. Or, for a
+Instead of additional substates, the SEC-node may offer one or several additional parameter(s),
+influencing, when the transition to IDLE happens. This is already the case in
+example (3) above. For the example of motors with air cushions, this might be a parameter
+settling_time, defining how long to wait after the air cushion was switch off. Or, for a
 magnet, it might be a parameter "complete_on" with the values "field_at_target",
 "switch_closed" and "leads_at_zero".
 
