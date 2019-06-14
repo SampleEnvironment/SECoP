@@ -5,6 +5,7 @@ Motivation
 ----------
 
 Combining the information about flow control with other status values might not be a good idea, as:
+
 * it is not easily extensible, if in future we need more states
 * in the current model, for each target state, we need a command, where for the proposed model,
   we have a parameter set_mode instead, which takes whe same number of values
@@ -17,6 +18,7 @@ Proposal
 
 Introduce a mode (readonly) / set_mode (writable) parameter instead of only a mode (writable)
 parameter, and skip all of prepare, finalize, shutdown.
+
 * predefine at least the following codes for set_mode: DISABLED, LOCKED, PREPARED
 * predefine at least the following codes for mode: DISABLED, LOCKED, PREPARED, INITIALIZING, PREPARING, MOVING, STABILIZE, FINALIZE
 * reduce the predefined status codes to: DISABLED, IDLE, WARN, UNSTABLE, BUSY, FINALIZE, ERROR
@@ -36,7 +38,7 @@ Cryomagnet Example
 model A
 ~~~~~~~
 
-Model decidied in Munich.
+Model decided in May 2019 in Munich.
 The status code contains all information of "flow control". There information
 about the final state is lacking.
 
@@ -48,11 +50,11 @@ about the final state is lacking.
 model B
 ~~~~~~~
 
-Proposed model. The status code contains only the information needed for the classical
-experiment. After a change target the measurement starts as soon as the status code is either
+Proposed model. The status code contains only the information needed for the classical experiment.
+After a change target the ECS wait before starting the measurement until the status code is either
 FINALIZE, IDLE or WARN (or any substates of them).
-For the special case, where one wants to measure while MOVING the set_mode / mode parameter
-has to be examined.
+For the special case, where one wants to measure while MOVING the set_mode/mode parameter
+has to be used/examined.
 
 * parameters: value, status, target, mode, set_mode
 * commands: stop
@@ -69,10 +71,10 @@ codes are using a more general wording.
 In a row with an action, all other columns take their value before the reply message to the action is communicated.
 In between the rows, always some time pass.
 
-No 'go' command is assumed. In case themodule is implemented with a 'go' command, just send
-a 'go' after any 'change target' in model A, and after any 'change target' and 'change set_mode'
-in model B. In model B, when doing a 'change target' and a 'change mode' togther, only send
-one 'go' command.
+No `go` command is assumed. In case themodule is implemented with a `go` command, just send
+a `go` after any `change target` in model A, and after any `change target` and `change set_mode`
+in model B. In model B, when doing a `change target` and a `change mode` togther, only send
+one `go` command.
 
 initialize the module
 ~~~~~~~~~~~~~~~~~~~~~
@@ -175,7 +177,7 @@ change target with predefined final state locked
 * initial state: prepared (driven), value=1
 * wanted state: persistent (locked), value=2
 * Remark for model B only: if the SEC Node does not accept set_mode while BUSY, wait until IDLE before changing set_mode 
-* if the module has a 'go' command, change mode/set_mode and target before sending 'go'
+* if the module has a `go` command, change mode/set_mode and target before sending `go`
 +-----------------------------+-----------------------------------------------+-------------+
 |model A                      |model B                                        |both         |
 +----------+------+-----------+----------------+--------+---------+-----------+-------------+
@@ -204,7 +206,7 @@ change target with predefined final state prepared
 * inital state (as final state above): locked (persistent), value=2
 * wanted state: prepared (driven), value=3
 * Remark for model B only: if the SEC Node does not accept change target while BUSY, wait until IDLE before changing target
-* if the module has a 'go' command, change mode/set_mode and target before sending 'go'
+* if the module has a `go` command, change mode/set_mode and target before sending `go`
 +-------------------------------+-------------------------------------------------+-------------+
 |model A                        |model B                                          |both         |
 +------------+------+-----------+------------------+--------+---------+-----------+-------------+
