@@ -1,0 +1,82 @@
+Videoconference 2019-06-13
+==========================
+
+.. sidebar:: participants
+
+     * Klaus Kiefer
+     * Lutz Rossa
+     * Markus Zolliker
+     * Niklas Ekström
+     * Anders Petterson
+     * Enrico Faulhaber
+     * Frank Wutzler
+
+
+.. contents:: Contents
+    :local:
+    :depth: 2
+
+
+Opening
+-------
+Discussion of the agenda.
+
+
+Agenda
+------
+1) JSON form for modules and accessibles list
+2) remove combinatoric busy status values telling "may accept commands"
+3) slowly changing parameters
+4) depending on the decision from (2): further reduction of the number of status values
+
+
+1) JSON form for modules and accessibles list
+---------------------------------------------
+Discussion about the need for changing the formatting again.
+Agreement on trying to get a final version.
+Discussion about using a JSON library that keeps the order vs. structuring te data
+in an order-keeping way.
+
+Decision is to change 'list of (key, value) pairs' back to JSON-object.
+Also, it should be noted in the specification, that the order of {} entries
+should be kept, i.e. SECoP uses a restricted version of JSON.
+In addition, the formatting of datatypes is to change from a 2 element list to a JSON-object with a single entry.
+(essentially converting ["type",{...}] to {"type":{...}} )
+
+
+2) remove combinatoric busy status values telling "may accept commands"
+-----------------------------------------------------------------------
+Enrico though that a Module would only ever use one of a pair (code, code+10).
+Unfortunately, this is not always true.
+Enrico and Markus think that the +10 is not essential and may be omitted.
+After a short discussion, it turns out that this information is not really needed,
+as any ECS needs to handle possible errors anyway.
+
+Agreement on leaving out the '+10' extra codes.
+
+A lengthy discussion is digressed by topic: generic reordering of the status codes.
+The discussion gets more complicated by discussing usages and scenarios for different codes.
+
+Klaus proposal:
+ 100..199 Idle
+ 200..249 Warn not measure
+ 250..299 Warn measure
+ 300..349 Busy not measure
+ 350..399 Busy measure
+ 400..999 Error
+
+
+3) slowly changing parameters
+-----------------------------
+Only acceptable case is the `mode`.
+lengthy discussion about `mode` and `set_mode`. Markus will write a proposal.
+
+
+4) depending on the decision from (3): further reduction of the number of status values
+---------------------------------------------------------------------------------------
+postponed to be discussed after the above is decided.
+
+
+Next meeting
+------------
+2019-07-09 13:00
