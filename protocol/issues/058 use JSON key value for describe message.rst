@@ -90,9 +90,9 @@ this might be confusing.
 On the video meeting 2019-06-13 the following decision about ordering of
 modules / accessibles was taken:
 
-... change 'list of (key, value) pairs' back to JSON-object. Also, it should be
-noted in the specification, that the order of {} entries should be kept,
-i.e. SECoP uses a restricted version of JSON.
+    ... change 'list of (key, value) pairs' back to JSON-object. Also, it should be
+    noted in the specification, that the order of {} entries should be kept,
+    i.e. SECoP uses a restricted version of JSON.
 
 Later, in a discussion by E-mail, the idea of using a restricted version of JSON
 was criticized.
@@ -102,15 +102,15 @@ possible changed to "order".
 
 Proposals for the wording of the specification of optionality of the "order" property:
 
-For the functionality, the order of modules and accessibles does not matter.
-Order of such elements might be considered as a cosmetic issue.
-For debugging reasons, it is an advantage to use JSON libraries keeping the order
-on both the SEC-node and the ECS.
-A SEC-node programmer, who cares about the order, and does not want to rely on the
-behaviour of the JSON libraries, has to specify the "order" property.
-An ECS, who cares about the order, and does not want to rely on the
-behaviour of the JSON libraries, must interprete the "order" property and sort
-the elements accordingly. 
+    For the functionality, the order of modules and accessibles does not matter.
+    Order of such elements might be considered as a cosmetic issue.
+    For debugging reasons, it is an advantage to use JSON libraries keeping the order
+    on both the SEC-node and the ECS.
+    A SEC-node programmer, who cares about the order, and does not want to rely on the
+    behaviour of the JSON libraries, has to specify the "order" property.
+    An ECS, who cares about the order, and does not want to rely on the
+    behaviour of the JSON libraries, must interprete the "order" property and sort
+    the elements accordingly. 
 
 
 Decision
