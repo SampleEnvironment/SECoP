@@ -58,12 +58,12 @@ A lengthy discussion is digressed by topic: generic reordering of the status cod
 The discussion gets more complicated by discussing usages and scenarios for different codes.
 
 Klaus proposal:
- 100..199 Idle
- 200..249 Warn not measure
- 250..299 Warn measure
- 300..349 Busy not measure
- 350..399 Busy measure
- 400..999 Error
+  * 100..199 Idle
+  * 200..249 Warn not measure
+  * 250..299 Warn measure
+  * 300..349 Busy not measure
+  * 350..399 Busy measure
+  * 400..999 Error
 
 
 3) slowly changing parameters
