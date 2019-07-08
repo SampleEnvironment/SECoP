@@ -253,3 +253,80 @@ shut down
 |        |AUTO|DISABLED   |                  |DISABLED|DISABLED |DISABLED   |shut down  |
 +--------+----+-----------+------------------+--------+---------+-----------+-----------+
 
+
+Conclusion
+..........
+
+The initial motivation of above proposal was:
+
+a) splitting some information in order not to overload that status parameter.
+   The number of status code is reduced from 11 to 8, which is not a lot.
+   
+b) the idea of implementing "slow" state parameters with a set_<state>/<state> parameter
+   pair instead of a command/parameter pair a proposed in the 2019-05-20 meeting at MLZ.
+   As we do prefer to have module instead of "slow" state parameters, we do not have
+   to introduce a new concept here.
+
+With above proposal we see, that the model B only reduced the number of status values
+from 11 to 8. Which is not a lot. If we come back to the ideas from the MLZ meeting,
+but without the information about accepting new commands, this would lead to the
+following list:
+
+
++-----------------------+--------------+
+|status                 |use cases     |
++----+------------------+----+----+----+
+|code|name              |wait|meas|ramp|
++====+==================+====+====+====+
+|0   |DISABLED          |    |    |    |
++----+------------------+----+----+----+
+|100 |IDLE              |    |meas|    |
++----+------------------+----+----+----+
+|110 |PREPARED          |    |meas|    |
++----+------------------+----+----+----+
+|200 |WARN              |    |meas|    |
++----+------------------+----+----+----+
+|250 |WARN_UNSTABLE     |    |    |    |
++----+------------------+----+----+----+
+|300 |BUSY              |wait|    |    |
++----+------------------+----+----+----+
+|310 |PREPARING         |wait|meas|    |
++----+------------------+----+----+----+
+|320 |PREPARING_UNSTABLE|wait|    |    |
++----+------------------+----+----+----+
+|330 |MOVING            |wait|    |ramp|
++----+------------------+----+----+----+
+|340 |STABLIZING        |wait|    |    |
++----+------------------+----+----+----+
+|350 |FINALIZING        |    |meas|    |
++----+------------------+----+----+----+
+|400 |ERROR             |    |    |    |
++----+------------------+----+----+----+
+|401 |UNKNOWN           |    |    |    |
++----+------------------+----+----+----+
+
+Use cases:
+  * "wait": waiting after change target before continuing measurement
+  * "meas": valid measurement, useful for event mode data acquisition
+  * "ramp": measurement while ramping
+  
+However, we have to decide how to trigger mode changes:
+
+a) Commands: shutdown, prepare, finalize
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+We may still need a 'mode' parameter, in order to define where to go after a change target,
+e.g. preselect to stay in driven mode or go always to persistent mode.
+
+b) Only a mode parameter
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+The mode parameter acts like above 'set_mode parameter'. Changing the mode parameter
+would trigger mode changes directly. This would then the second exception to the rule,
+that a parameter change should not lead to a BUSY state.
+
+The advantage of approach (b) is, that the target mode is always visible.
+
+
+
+

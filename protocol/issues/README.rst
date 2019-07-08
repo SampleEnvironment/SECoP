@@ -102,6 +102,8 @@ Issues List
     \     `SECoP Issue 54: Splitting _update_ into two Message Types`_
     \     `SECoP Issue 55: Reformat Datatype description`_
     d     `SECoP Issue 56: Additional Busy States`_
+    d     `SECoP Issue 58: use JSON key, value for describe message`_
+    d     `SECoP Issue 59: set_mode and mode instead of some commands`_
     ===== =======
 
 .. _`SECoP Issue 1: About SECoP Issues`: 001%20About%20SECoP%20Issues.rst
@@ -160,3 +162,5 @@ Issues List
 .. _`SECoP Issue 54: Splitting _update_ into two Message Types`: 054%20Splitting%20_update_%20into%20two%20Message%20Types.rst
 .. _`SECoP Issue 55: Reformat Datatype description`: 055%20Reformat%20Datatype%20description.rst
 .. _`SECoP Issue 56: Additional Busy States`: 056%20Additional%20Busy%20States.rst
+.. _`SECoP Issue 58: use JSON key, value for describe message`: 058%20use%20JSON%20key%20value%20for%20describe%20message.rst
+.. _`SECoP Issue 59: set_mode and mode instead of some commands`: 059%20set_mode%20and%20mode%20instead%20of%20some%20commands.rst
