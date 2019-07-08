@@ -30,6 +30,11 @@ adjust:
   optional, a command with a numeric argument and no result, essentially adjusting the current reading to the given value.
   (i.e. if a sensor shows 10.2 mm and gets an adjust(10), it will then read 10.0 mm).
 
+:remark from Markus:
+    I would stringly recommend to have an 'offset' or 'zero' parameter in addition. This makes changing offset
+    reproducible. It might not be needed to define the exact meaning of offset, especially the sign, but
+    this way it would be easy to change back to a previous value reproducibly.
+
 Actuator
 ~~~~~~~~
 
@@ -265,6 +270,11 @@ topic raised on several discussions.
 not discussed in present form.
 
 :note: the above is a first workable proposal.
+
+:remark from Markus:
+    Instead of Sensor, Actuator, PIDController we should have features HasCalibration, HasOffset,
+    HasRamp, HasPID as there are no interdependencies.
+
 
 video conference 2018-11-07
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
