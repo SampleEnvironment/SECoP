@@ -267,10 +267,8 @@ b) the idea of implementing "slow" state parameters with a set_<state>/<state> p
    As we do prefer to have module instead of "slow" state parameters, we do not have
    to introduce a new concept here.
 
-With above proposal we see, that the model B only reduced the number of status values
-from 11 to 8. Which is not a lot. If we come back to the ideas from the MLZ meeting,
-but without the information about accepting new commands, this would lead to the
-following list:
+If we come back to the ideas from the MLZ meeting, but without the information about
+accepting new commands, this would lead to the following list:
 
 
 +-----------------------+--------------+
@@ -326,6 +324,12 @@ would trigger mode changes directly. This would then the second exception to the
 that a parameter change should not lead to a BUSY state.
 
 The advantage of approach (b) is, that the target mode is always visible.
+
+We would need at least the following predefined meaning for mode values:
+
+  * DISABLE(D)  = 0 ?
+  * LOCK(ED)    = 1 ?
+  * PREPARE(D)  = 2 ?
 
 
 
