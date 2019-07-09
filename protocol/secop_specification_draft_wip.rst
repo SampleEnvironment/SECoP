@@ -1351,8 +1351,6 @@ Also, both limits may be set to the same value, in which case there is just one 
 
 All datatypes are specified in the descriptive data in the following generic form:
 
-datatype
-~~~~~~~~
 .. image:: images/2019-07-09/datatype.png
    :alt: datatype ::= '{' datatype_name ':' '{' ( property ( ',' property )* )? '}'
 
