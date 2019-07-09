@@ -1106,14 +1106,14 @@ The format of the descriptive data is JSON, as all other data in SECoP.
 SEC Node Properties
 -------------------
 
-.. image:: images/2019-07-07/SEC_node_description.png
+.. image:: images/2019-07-09/SEC_node_description.png
    :alt: SEC_node_description ::= '{' (SEC_node_property ( ',' SEC_node_property)* )? '}'
 
 .. image:: images/sec-node-description.svg
    :alt: SEC_node_description ::= '{' (SEC_node_property ( ',' SEC_node_property)* )? '}'
 
 
-.. image:: images/2019-07-07/SEC_node_property.png
+.. image:: images/2019-07-09/SEC_node_property.png
    :alt: SEC_node_property ::= property |  ( '"modules":' '{' (name ':' module_description (',' name ':' module_description)*)? '}')
 
 .. image:: images/sec-node-property.svg
@@ -1151,13 +1151,13 @@ communication of a SEC node.
 Module Properties
 -----------------
 
-.. image:: images/2019-07-07/module_description.png
+.. image:: images/2019-07-09/module_description.png
    :alt: module_description ::= '{' (module_property ( ',' module_property)* )? '}'
 
 .. image:: images/module-description.svg
    :alt: module_description ::= '{' (module_property ( ',' module_property)* )? '}'
 
-.. image:: images/2019-07-07/module_property.png
+.. image:: images/2019-07-09/module_property.png
    :alt: module_property ::= property |  ( '"accessibles":' '{' (name ':' properties (',' name ':' properties)*)? '}')
 
 .. image:: images/module-property.svg
@@ -1239,13 +1239,13 @@ Module Properties
 
 Accessible Properties
 ---------------------
-.. image:: images/2019-07-07/accessible_description.png
+.. image:: images/2019-07-09/accessible_description.png
    :alt: accessible_description ::=  '{' (property ( ',' property)* )? '}'
 
 .. image:: images/accessible-description.svg
    :alt: properties ::=  '{' (property ( ',' property)* )? '}'
 
-.. image:: images/2019-07-07/property.png
+.. image:: images/2019-07-09/property.png
    :alt: property ::= (name ":" property_value)
 
 .. image:: images/accessible-property.svg
@@ -1334,7 +1334,7 @@ Also, both limits may be set to the same value, in which case there is just one 
 
 All datatypes are specified in the descriptive data in the following generic form:
 
-.. image:: images/2019-07-07/datatype.png
+.. image:: images/2019-07-09/datatype.png
    :alt: datatype ::= '{' datatype_name ':' '{' ( property ( ',' property )* )? '}'
 
 .. image:: images/datatype-generic.svg
@@ -1478,7 +1478,7 @@ In addition to ``scale``, ``min`` and ``max`` the following datatype properties 
 
     The string must follow the following syntax (TODO: update image to allow "%.0f")\:
 
-    .. image:: images/2019-07-07/fmtstr.png
+    .. image:: images/2019-07-09/fmtstr.png
         :alt: fmtstr ::= "%" "." [1-9] [0-9]* ( "e" | "f" | "g" )
 
     .. image:: images/fmtstr.svg
