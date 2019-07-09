@@ -185,7 +185,7 @@ The following parameters are predefined (this list will be extended):
 - time_to_target
     (read only double, expected time to reach target in seconds)
 
-- mode (PROBABLY TO BE CHANGED!)
+- mode
     A parameter of datatype enum, for selecting the operation mode of a module.
     The available operation modes can not be predefined in the specification, since
     they depend on the specific module.
@@ -259,7 +259,7 @@ The following commands are predefined (extensible):
      trigger with ``go``, or if not present, by putting the target parameter to its
      present value.
 
--  **shutdown** (PROBABLY TO BE CHANGED)
+-  **shutdown**
      optional command for shuting down the hardware.
      When this command is sent, and the triggered action is finished (status in idle mode),
      it is safe to switch off the related device.
@@ -650,7 +650,7 @@ Example:
 .. code::
 
   > describe
-  < describing . {"modules":{"t1":{"interface_class":["TemperatureSensor","Readable"],"accessibles":{"value": ...
+  < describing . {"modules":["t1",["interface_class",["TemperatureSensor","Readable"],"accessibles",["value", ...
 
 The dot (second item in the reply message) is a placeholder for extensibility reasons.
 A client implementing the current specification MUST ignore it.
@@ -1106,25 +1106,18 @@ The format of the descriptive data is JSON, as all other data in SECoP.
 SEC Node Properties
 -------------------
 
-.. image:: images/2019-07-07/SEC_node_description.png
-   :alt: SEC_node_description ::= '{' (SEC_node_property ( ',' SEC_node_property)* )? '}'
-
 .. image:: images/sec-node-description.svg
    :alt: SEC_node_description ::= '{' (SEC_node_property ( ',' SEC_node_property)* )? '}'
 
 
-.. image:: images/2019-07-07/SEC_node_property.png
-   :alt: SEC_node_property ::= property |  ( '"modules":' '{' (name ':' module_description (',' name ':' module_description)*)? '}')
-
 .. image:: images/sec-node-property.svg
-   :alt: SEC_node_property ::= property |  ( '"modules":' '{' (name ':' module_description (',' name ':' module_description)*)? '}')
+   :alt: SEC_node_property ::= property |  ( '"modules":' '[' (name ',' module_description (',' name ',' module_description)*)? ']')
 
 there might be properties such as a timeout which are relevant for the
 communication of a SEC node.
 
 -  modules
-     mandatory, a JSON-object with names of modules as key and JSON-objects as
-     values, see `Module Properties`_.
+     mandatory, list of modules and their properties, see `Module Properties`_.
 
 -  equipment_id
      mandatory, worldwide unqiue id of an equipment as string. Should contain the name of the
@@ -1151,17 +1144,12 @@ communication of a SEC node.
 Module Properties
 -----------------
 
-.. image:: images/2019-07-07/module_description.png
-   :alt: module_description ::= '{' (module_property ( ',' module_property)* )? '}'
-
 .. image:: images/module-description.svg
    :alt: module_description ::= '{' (module_property ( ',' module_property)* )? '}'
 
-.. image:: images/2019-07-07/module_property.png
-   :alt: module_property ::= property |  ( '"accessibles":' '{' (name ':' properties (',' name ':' properties)*)? '}')
 
 .. image:: images/module-property.svg
-   :alt: module_property ::= property |  ( '"accessibles":' '{' (name ':' properties (',' name ':' properties)*)? '}')
+   :alt: module_property ::= property |  ( '"accessibles":' '[' (name ',' properties (',' name ',' properties)*)? ']') ']')
 
 -  accessibles
      mandatory list of accessibles and their properties, see `Accessible Properties`_.
@@ -1171,11 +1159,11 @@ Module Properties
 
 -  visibility
      optional string indicating a hint for UI's for which user roles the module should be display or hidden.
-     MUST be one of "expert", "advanced" or "user" (default).
+     MUST be one of "expert" (3), "advanced" (2) or "user" (1) (default).
 
      :Note:
          this does not imply that the access is controlled. It is just a
-         hint to the UI for the amount of exposed modules. A visibility of "advanced" means
+         hint to the UI for the amount of exposed modules. A visibility of "advanced" (2) means
          that the UI should hide the module for users, but show it for experts and
          advanced users.
 
@@ -1239,18 +1227,14 @@ Module Properties
 
 Accessible Properties
 ---------------------
-.. image:: images/2019-07-07/accessible_description.png
-   :alt: accessible_description ::=  '{' (property ( ',' property)* )? '}'
-
 .. image:: images/accessible-description.svg
    :alt: properties ::=  '{' (property ( ',' property)* )? '}'
 
-.. image:: images/2019-07-07/property.png
-   :alt: property ::= (name ":" property_value)
 
 .. image:: images/accessible-property.svg
    :alt: property ::= (name ":" property_value)
 
+(TODO: Above image to be updated for distinction accessible- / parameter- property)
 
 - description
     mandatory string describing the accessible, formatted as for module-description
@@ -1301,8 +1285,6 @@ Custom Properties
 -----------------
 Custom properties may further augment accessibles, modules or the SEC-node description.
 
-compact version: no railroad diagram
-
 .. image:: images/custom-property.svg
    :alt: property ::= ("_" name ":" property_value)
 
@@ -1334,14 +1316,9 @@ Also, both limits may be set to the same value, in which case there is just one 
 
 All datatypes are specified in the descriptive data in the following generic form:
 
-.. image:: images/2019-07-07/datatype.png
-   :alt: datatype ::= '{' datatype_name ':' '{' ( property ( ',' property )* )? '}'
-
 .. image:: images/datatype-generic.svg
 
 Here is an overview of all defined datatypes:
-
-compact version: no railroad diagram
 
 .. image:: images/datatype.svg
 
@@ -1357,13 +1334,15 @@ double
     :widths: 20 80
     :stub-columns: 1
 
-    * - optional properties (see below)
-      - ``min``, ``max``, ``fmtstr``, ``absolute_resolution``, ``relative_resolution``
+    * - Datatype
+      - | ``["double", {<datatype properties>}]``
+        | <datatype properties> = ``<name>: <value>, ...``
+        | see below
 
-    * - example
-      - ``{"double": {"min": 0, "max": 100, "fmtstr": "%.3f"}``
+    * - Example
+      - ``["double", {"min": 0, "max": 100, "fmtstr": "%.3f"]``
 
-    * - transport example
+    * - Transport example
       - | as JSON-number:
         | ``3.14159265``
 
@@ -1410,6 +1389,178 @@ The following datatype properties are defined for ``double``:
         :alt: fmtstr ::= "%" "." digits* ( "e" | "f" | "g" )
 
 
+int
+---
+
+.. list-table::
+    :widths: 20 80
+    :stub-columns: 1
+
+    * - Datatype
+      - | ``["int", {"min": <min>, "max": <max>}]``
+        |
+        | ``<min>`` and ``<max>`` MUST be given
+        | ``<min>`` and ``<max>`` are integers with ``<min>`` <= ``<max>``
+
+    * - Example
+      - ``["int", {"min": 0, "max": 100}]``
+
+    * - Transport example
+      - | as JSON-number:
+        | ``-55``
+
+
+bool
+----
+
+.. list-table::
+    :widths: 20 80
+    :stub-columns: 1
+
+    * - Datatype
+      - | ``["bool", {}]``
+
+    * - Transport example
+      - | as JSON-boolean: true or false
+        | ``true``
+
+
+enum
+----
+
+.. list-table::
+    :widths: 20 80
+    :stub-columns: 1
+
+    * - Datatype
+      - | ``["enum", {"members": {<name> : <value>, ....}}]``
+        | ``name``\ s are strings, ``value``\ s are (small) integers, both ``name``\ s and ``value``\ s MUST be unique
+
+    * - Example
+      - ``["enum", {"IDLE":100,"WARN":200,"BUSY":300,"ERROR":400}]``
+
+    * - Transport example
+      - | as JSON-number, the client performs the mapping back to the name:
+        | ``200``
+
+
+string
+------
+
+.. list-table::
+    :widths: 20 80
+    :stub-columns: 1
+
+    * - Datatype
+      - | ``["string", {"max": <max len>}]``
+        | ``["string", {"min": <min len>, "max": <max len>}]``
+        |
+        | ``<min len>`` and ``<max len>`` are integers with ``<min len>`` <= ``<max len>``
+        | the default for ``<min len>`` is 0, ``<max len>`` must be given. 
+        | the length is counting the number of bytes (**not** characters!) used when the string is utf8 encoded!
+
+    * - Example
+      - ``["string", {"min": 0, "max": 80}]``
+
+    * - Transport example
+      - | as JSON-string:
+        | ``"Hello\n\u2343World!"``
+
+
+blob
+----
+
+.. list-table::
+    :widths: 20 80
+    :stub-columns: 1
+
+    * - Datatype
+      - | ``["blob", {"max": <max len>}]``
+        | ``["blob", {"min": <min len>, "max": <max len>}]``
+        |
+        | ``<min len>`` and ``<max len>`` are integers with ``<min len>`` <= ``<max len>``
+        | the default for ``<min len>`` is 0, ``<max len>`` must be given. 
+        | the length is counting the number of bytes (**not** the size of the encoded string)
+
+    * - Example
+      - ``["blob", {"min": 1, "max": 64}]``
+
+    * - Transport example
+      - | as single-line base64 (see :RFC:`4648`) encoded JSON-string:
+        | ``"AA=="``
+
+
+array
+-----
+
+.. list-table::
+    :widths: 20 80
+    :stub-columns: 1
+
+    * - Datatype
+      - | ``["array", {"min": <min len>, "max": <max len>, "members": <basic type>}]``
+        |
+        | ``<min len>`` and ``<max len>`` are integers with ``<min len>`` <= ``<max len>``
+        | the default for ``<min len>`` is 0, ``<max len>`` must be given. 
+        | the length is the number of elements
+
+    * - Example
+      - ``["array", {"min": 3, "max": 10, ["int", {"min": 0, "max": 9}]}]``
+
+    * - Transport example
+      - | as JSON-array:
+        | ``[3,4,7,2,1]``
+
+
+tuple
+-----
+
+.. list-table::
+    :widths: 20 80
+    :stub-columns: 1
+
+    * - Datatype
+      - | ``["tuple", {"members": [<datatype>, <datatype>, ...]}]``
+
+    * - Example
+      - | ``["tuple", {"members": [["int", {"min": 0, "max": 999}], ["string", {"min": 0, "max": 80}]]}]``
+
+    * - Transport example
+      - | as JSON-array:
+        | ``[300,"accelerating"]``
+
+
+struct
+------
+
+.. list-table::
+    :widths: 20 80
+    :stub-columns: 1
+
+    * - Datatype
+      - | ``["struct", {"members": {<name> : <datatype>, <name>: <datatype>, ....}}]``
+        | or
+        | ``["struct", {"members": {<name> : <datatype>, <name>: <datatype>, ....}, "optional": ["name", ...]]``
+        | In the second form, the names of optional struct elements is given.
+        | In 'change' and 'do' commands, the ECS might omit these elements, all other
+        | elements must be given.
+        | The effect of a 'change' action with omitted elements should be the same
+        | as if the current values of these elements would have been sent with it.
+        | NOT REALLY PRECISE:
+        | The effect of a 'do' action should be the same, as if the omitted elements
+        | would be replaced by a default value.
+        | In all other messages, all elements have to be given.
+
+    * - Example
+      - ``["struct", {"members": {"y":["int"], "x":["enum",{"On":1, "Off":0}]}}]``
+
+    * - Transport example
+      - | as JSON-object:
+        | ``{"x": 0, "y": 1}``
+
+:related issue: `SECoP Issue 35: Partial structs`_
+
+
 scaled integers
 ---------------
 
@@ -1422,31 +1573,23 @@ capabilities, where floating point calculation is a major effort.
     :widths: 20 80
     :stub-columns: 1
 
-    * - mandatory properties (see below)
-      - ``scale``,  ``min``, ``max``
+    * - Datatype
+      - | ``["scaled", {"scale": scale, "min": <min>, "max": <max> <datatype properties>}]``
+        | <datatype properties> = ``, <name>: <value>, ...``
+        |
+        | ``scale``, ``<min>`` and ``<max>`` MUST be given
+        | ``<min>`` and ``<max>`` are integers with ``<min>`` <= ``<max>``
+        | ``<scale>`` is a number > 0
 
-    * - optional properties (see below)
-      - ``unit``, ``absolute_resolution``, ``relative_resolution``, ``fmtstr``
+    * - Example
+      - ``["scaled", {"scale": 0.1, "min": 0, "max": 250}]``
+        i.e. a double value between 0.0 and 25.0
 
-    * - example
-      - | ``{"scaled": {"scale": 0.1, "min": 0, "max": 250}}``
-        | i.e. a double value between 0.0 and 25.0
-
-    * - transport examples
-      - | an integer JSON-number, ``1255`` meaning 125.5
+    * - Transport examples
+      - | An integer JSON-number, ``1255`` meaning 125.5
 
 In addition to ``scale``, ``min`` and ``max`` the following datatype properties are defined for ``scaled``:
 
-- scale
-    a scale factor to be multiplied with the transported integer
-
-- min, max
-    ``<min>`` <= ``<max>``. The limits of the transported integer. The limits of the represented floating point
-    value are ``<min>*<scale>, <max>*<scale>``
-
-- max
-    the maximum transported integer (the upper limit of the represented floating point value is max * scale)
-    
 - unit
     optional string giving the unit of the parameter.
     (default: unitless. SHOULD be given, if meaningfull. empty string: unit is one)
@@ -1478,188 +1621,11 @@ In addition to ``scale``, ``min`` and ``max`` the following datatype properties 
 
     The string must follow the following syntax (TODO: update image to allow "%.0f")\:
 
-    .. image:: images/2019-07-07/fmtstr.png
-        :alt: fmtstr ::= "%" "." [1-9] [0-9]* ( "e" | "f" | "g" )
-
     .. image:: images/fmtstr.svg
-        :alt: fmtstr ::= "%" "." [1-9] [0-9]* ( "e" | "f" | "g" )
+        :alt: fmtstr ::= "%" "." digits* ( "e" | "f" | "g" )
 
 
 :related issue: `SECoP Issue 44: Scaled integers`_.
-
-
-int
----
-
-.. list-table::
-    :widths: 20 80
-    :stub-columns: 1
-
-    * - mandatory properties
-      - | ``min``, ``max`` (integer limits)
-        | ``min`` <= ``max``
-
-    * - example
-      - ``{"int": {"min": 0, "max": 100}}``
-
-    * - transport example
-      - | as JSON-number:
-        | ``-55``
-
-    :Remark:
-    
-        Use _double_ for any physical quantity, even if the resolution is 1 or higher.
-        An _int_ has no unit.
-
-bool
-----
-
-.. list-table::
-    :widths: 20 80
-    :stub-columns: 1
-
-    * - syntax
-      - | ``{"bool": {}}``
-
-    * - transport example
-      - | as JSON-boolean: true or false
-        | ``true``
-
-
-enum
-----
-
-.. list-table::
-    :widths: 20 80
-    :stub-columns: 1
-
-    * - mandatory property
-      - | ``"members": {<name> : <value>, ....}``
-        | ``name``\ s are strings, ``value``\ s are (small) integers, both ``name``\ s and ``value``\ s MUST be unique
-
-    * - example
-      - ``{"enum": {"IDLE":100,"WARN":200,"BUSY":300,"ERROR":400}}``
-
-    * - transport example
-      - | as JSON-number, the client performs the mapping back to the name:
-        | ``200``
-
-
-string
-------
-
-.. list-table::
-    :widths: 20 80
-    :stub-columns: 1
-
-    * - mandatory property
-      - | ``max`` (maximum length)
-        | the length is counting the number of bytes (**not** characters!) used when the string is utf8 encoded!
-      
-    * - optional property
-      - ``min`` (minimum length, default 0)
-
-    * - Example
-      - ``{"string": {"max": 80}}``
-
-    * - Transport example
-      - | as JSON-string:
-        | ``"Hello\n\u2343World!"``
-
-
-blob
-----
-
-.. list-table::
-    :widths: 20 80
-    :stub-columns: 1
-
-    * - mandatory property
-      - | ``max`` (maximum length)
-        | the length is counting the number of bytes (**not** the size of the encoded string)
-      
-    * - optional property
-      - ``min`` (minimum length, default 0)
-
-    * - example
-      - ``{"blob": {"min": 1, "max": 64}}``
-
-    * - transport example
-      - | as single-line base64 (see :RFC:`4648`) encoded JSON-string:
-        | ``"AA=="``
-
-
-array
------
-
-.. list-table::
-    :widths: 20 80
-    :stub-columns: 1
-
-    * - mandatory properties
-      - | ``max`` (maximum length), ``members``
-        | the length is counting the number of elements
-
-    * - optional property
-      - ``min`` (minimum length, default 0)
-
-    * - Example
-      - ``{"array": {"min": 3, "max": 10, "members" : {"int": {"min": 0, "max": 9}}}}``
-
-    * - transport example
-      - | as JSON-array:
-        | ``[3,4,7,2,1]``
-
-
-tuple
------
-
-.. list-table::
-    :widths: 20 80
-    :stub-columns: 1
-
-    * - mandatory property
-      - ``members`` (a JSON array listing the datatypes of the members)
-
-    * - example
-      - ``{"tuple": {"members": [{"int": {"min": 0, "max": 999}}, {"string": {"max": 80}}]}}``
-
-    * - transport example
-      - | as JSON-array:
-        | ``[300,"accelerating"]``
-
-
-struct
-------
-
-.. list-table::
-    :widths: 20 80
-    :stub-columns: 1
-
-    * - mandatory property
-      - ``members`` (a JSON object containing the names and datatypes of the members)
-
-    * - optional property
-      - | ``optional`` (the names of optional struct elements is given)
-        | In 'change' and 'do' commands, the ECS might omit these elements, all other
-        | elements must be given.
-        | The effect of a 'change' action with omitted elements should be the same
-        | as if the current values of these elements would have been sent with it.
-        | NOT REALLY PRECISE:
-        | The effect of a 'do' action should be the same, as if the omitted elements
-        | would be replaced by a default value.
-        | In all other messages (i.e. in replies and updates), all elements have to be given.
-
-    * - example
-      - ``{"struct": {"members": {"y":{"double"}, "x":{"enum": {"members":{"On":1, "Off":0}}}}}}``
-
-    * - transport example
-      - | as JSON-object:
-        | ``{"x": 0.5, "y": 1}``
-
-:related issue: `SECoP Issue 35: Partial structs`_
-
-
 
 
 command
