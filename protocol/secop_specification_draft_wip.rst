@@ -1422,10 +1422,13 @@ The following datatype properties are defined for ``double``:
     optional string as a hint on how to format numeric parameters for the user.
     default value: "%.6g"
 
-    The string must follow the following syntax (TODO: update image to allow "%.0f")\:
+    The string must follow the following syntax:
 
+    .. image:: images/2019-07-09/fmtstr.png
+        :alt: fmtstr ::= "%" "." [1-9] [0-9]* ( "e" | "f" | "g" )
+        
     .. image:: images/fmtstr.svg
-        :alt: fmtstr ::= "%" "." digits* ( "e" | "f" | "g" )
+        :alt: fmtstr ::= "%" "." [1-9] [0-9]* ( "e" | "f" | "g" )
 
 
 scaled integers
@@ -1493,14 +1496,9 @@ In addition to ``scale``, ``min`` and ``max`` the following datatype properties 
 - fmtstr
     optional string as a hint on how to format numeric parameters for the user.
     default value: "%.<n>f" where <n> = max(0,-floor(log10(scale)))
+    
+    The string must follow the same syntax as above for ``double``.
 
-    The string must follow the following syntax (TODO: update image to allow "%.0f")\:
-
-    .. image:: images/2019-07-09/fmtstr.png
-        :alt: fmtstr ::= "%" "." [1-9] [0-9]* ( "e" | "f" | "g" )
-        
-    .. image:: images/fmtstr.svg
-        :alt: fmtstr ::= "%" "." [1-9] [0-9]* ( "e" | "f" | "g" )
 
 
 :related issue: `SECoP Issue 44: Scaled integers`_.
