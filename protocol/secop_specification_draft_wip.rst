@@ -1106,10 +1106,10 @@ The format of the descriptive data is JSON, as all other data in SECoP.
 SEC Node Properties
 -------------------
 
-.. figure:: images/2019-07-09/SEC_node_description.png
+SEC_node_description
+~~~~~~~~~~~~~~~~~~~~
+.. image:: images/2019-07-09/SEC_node_description.png
    :alt: SEC_node_description ::= '{' (SEC_node_property ( ',' SEC_node_property)* )? '}'
-
-   SEC_node_description
 
 
 .. image:: images/sec-node-description.svg
@@ -1117,11 +1117,8 @@ SEC Node Properties
 
 SEC_node_property
 ~~~~~~~~~~~~~~~~~
-
-.. figure:: images/2019-07-09/SEC_node_property.png
+.. image:: images/2019-07-09/SEC_node_property.png
    :alt: SEC_node_property ::= property |  ( '"modules":' '{' (name ':' module_description (',' name ':' module_description)*)? '}')
-
-   SEC_node_property
 
 
 .. image:: images/sec-node-property.svg
@@ -1159,19 +1156,19 @@ communication of a SEC node.
 Module Properties
 -----------------
 
-.. figure:: images/2019-07-09/module_description.png
+module_description
+~~~~~~~~~~~~~~~~~~
+.. image:: images/2019-07-09/module_description.png
    :alt: module_description ::= '{' (module_property ( ',' module_property)* )? '}'
-
-   module_description
 
 
 .. image:: images/module-description.svg
    :alt: module_description ::= '{' (module_property ( ',' module_property)* )? '}'
 
-.. figure:: images/2019-07-09/module_property.png
+module_property
+~~~~~~~~~~~~~~~
+.. image:: images/2019-07-09/module_property.png
    :alt: module_property ::= property |  ( '"accessibles":' '{' (name ':' properties (',' name ':' properties)*)? '}')
-
-   module_property
 
    
 .. image:: images/module-property.svg
@@ -1254,18 +1251,18 @@ Module Properties
 Accessible Properties
 ---------------------
 
-.. figure:: images/2019-07-09/accessible_description.png
+accessible_description
+~~~~~~~~~~~~~~~~~~~~~~
+.. image:: images/2019-07-09/accessible_description.png
    :alt: accessible_description ::=  '{' (property ( ',' property)* )? '}'
-
-   accessible_description
 
 .. image:: images/accessible-description.svg
    :alt: properties ::=  '{' (property ( ',' property)* )? '}'
 
-.. figure:: images/2019-07-09/property.png
+property
+~~~~~~~~
+.. image:: images/2019-07-09/property.png
    :alt: property ::= (name ":" property_value)
-
-   property
 
  
 .. image:: images/accessible-property.svg
@@ -1354,10 +1351,11 @@ Also, both limits may be set to the same value, in which case there is just one 
 
 All datatypes are specified in the descriptive data in the following generic form:
 
-.. figure:: images/2019-07-09/datatype.png
+datatype
+~~~~~~~~
+.. image:: images/2019-07-09/datatype.png
    :alt: datatype ::= '{' datatype_name ':' '{' ( property ( ',' property )* )? '}'
 
-   datatype
 
 .. image:: images/datatype-generic.svg
 
@@ -1500,10 +1498,8 @@ In addition to ``scale``, ``min`` and ``max`` the following datatype properties 
 
     The string must follow the following syntax (TODO: update image to allow "%.0f")\:
 
-    .. figure:: images/2019-07-09/fmtstr.png
+    .. image:: images/2019-07-09/fmtstr.png
         :alt: fmtstr ::= "%" "." [1-9] [0-9]* ( "e" | "f" | "g" )
-
-        fmtstr
         
     .. image:: images/fmtstr.svg
         :alt: fmtstr ::= "%" "." [1-9] [0-9]* ( "e" | "f" | "g" )
