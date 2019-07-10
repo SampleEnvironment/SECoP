@@ -1106,12 +1106,6 @@ The format of the descriptive data is JSON, as all other data in SECoP.
 SEC Node Properties
 -------------------
 
-SEC_node_description
-~~~~~~~~~~~~~~~~~~~~
-.. image:: images/2019-07-09/SEC_node_description.png
-   :alt: SEC_node_description ::= '{' (SEC_node_property ( ',' SEC_node_property)* )? '}'
-
-
 .. image:: images/sec-node-description.svg
    :alt: SEC_node_description ::= '{' (SEC_node_property ( ',' SEC_node_property)* )? '}'
 
@@ -1119,6 +1113,9 @@ SEC_node_property
 ~~~~~~~~~~~~~~~~~
 .. image:: images/2019-07-09/SEC_node_property.png
    :alt: SEC_node_property ::= property |  ( '"modules":' '{' (name ':' module_description (',' name ':' module_description)*)? '}')
+
+TODO:
+    replace railroad diagram with above: list of properties should be extensible without modifing diagram
 
 
 .. image:: images/sec-node-property.svg
@@ -1156,12 +1153,6 @@ communication of a SEC node.
 Module Properties
 -----------------
 
-module_description
-~~~~~~~~~~~~~~~~~~
-.. image:: images/2019-07-09/module_description.png
-   :alt: module_description ::= '{' (module_property ( ',' module_property)* )? '}'
-
-
 .. image:: images/module-description.svg
    :alt: module_description ::= '{' (module_property ( ',' module_property)* )? '}'
 
@@ -1170,7 +1161,9 @@ module_property
 .. image:: images/2019-07-09/module_property.png
    :alt: module_property ::= property |  ( '"accessibles":' '{' (name ':' properties (',' name ':' properties)*)? '}')
 
-   
+TODO:
+    replace railroad diagram with above: list of properties should be extensible without modifing diagram
+
 .. image:: images/module-property.svg
    :alt: module_property ::= property |  ( '"accessibles":' '{' (name ':' properties (',' name ':' properties)*)? '}')
 
@@ -1251,19 +1244,16 @@ module_property
 Accessible Properties
 ---------------------
 
-accessible_description
-~~~~~~~~~~~~~~~~~~~~~~
-.. image:: images/2019-07-09/accessible_description.png
-   :alt: accessible_description ::=  '{' (property ( ',' property)* )? '}'
-
 .. image:: images/accessible-description.svg
-   :alt: properties ::=  '{' (property ( ',' property)* )? '}'
+   :alt: accessible_description ::=  '{' (property ( ',' property)* )? '}'
 
 property
 ~~~~~~~~
 .. image:: images/2019-07-09/property.png
    :alt: property ::= (name ":" property_value)
 
+TODO:
+    replace railroad diagram with above: list of properties should be extensible without modifing diagram
  
 .. image:: images/accessible-property.svg
    :alt: property ::= (name ":" property_value)
@@ -1364,12 +1354,15 @@ datatype_property
 .. image:: images/2019-07-09/property.png
    :alt: property ::= (name ":" property_value)
 
+TODO:
+    replace by above two diagrams
 
 .. image:: images/datatype-generic.svg
 
 Here is an overview of all defined datatypes:
 
-compact version: no railroad diagram
+TODO:
+    remove diagram, as all information is in list below, nothing really different from generic
 
 .. image:: images/datatype.svg
 
@@ -1421,13 +1414,16 @@ optional datatype properties
     optional string as a hint on how to format numeric parameters for the user.
     default value: "%.6g"
 
-    The string must follow the following syntax:
+    The string must obey the following syntax:
 
     .. image:: images/2019-07-09/fmtstr.png
-        :alt: fmtstr ::= "%" "." [1-9] [0-9]* ( "e" | "f" | "g" )
+        :alt: fmtstr   ::= '%' '.' [1-9]? [0-9] ( 'e' | 'f' | 'g' )
+    
+    TODO:
+        replace, %.0f should be allowed
         
     .. image:: images/fmtstr.svg
-        :alt: fmtstr ::= "%" "." [1-9] [0-9]* ( "e" | "f" | "g" )
+        :alt: fmtstr ::= "%" "." [1-9] [0-9]? ( "e" | "f" | "g" )
       
 
 example
@@ -1489,7 +1485,7 @@ optional datatype properties
     optional string as a hint on how to format numeric parameters for the user.
     default value: "%.<n>f" where <n> = max(0,-floor(log10(scale)))
     
-    The string must follow the same syntax as above for ``double``.
+    The string must obey the same syntax as above for ``double``.
 
 example
 ~~~~~~~
