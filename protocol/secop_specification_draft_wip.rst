@@ -1200,7 +1200,7 @@ optional module properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ``visibility``
-    string indicating a hint for UI's for which user roles the module should be display or hidden.
+     string indicating a hint for UI's for which user roles the module should be display or hidden.
      MUST be one of "expert", "advanced" or "user" (default).
 
      :Note:
@@ -1210,7 +1210,7 @@ optional module properties
          advanced users.
 
 ``group``
-    identifier, may contain ":" which may be interpreted as path separator.
+     identifier, may contain ":" which may be interpreted as path separator.
      The ECS may group the modules according to this property.
      The lowercase version of a group must not match any lowercase version of a module name on
      the same SEC node.
@@ -1253,7 +1253,9 @@ optional module properties
 
         :related issue: `SECoP Issue 9: Module Meaning`_
 
-_`implementor`
+.. _implementor:
+
+``implementor``
      The implementor of a module, defining the meaning of custom status values, custom
      properties and custom accessibles. The implementor must be globally unique, for example
      'sinq.psi.ch'. This may be achieved by including a domain name, but it does not need
