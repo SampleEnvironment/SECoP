@@ -1103,11 +1103,9 @@ The format of the descriptive data is JSON, as all other data in SECoP.
 .. each *.svg has a *.txt file which contains the description
 .. there is a (not yet checked in) Makefile which re-generates the svg's from the txt's
 
-SEC Node Properties
--------------------
+SEC Node Description
+--------------------
 
-SEC_node_description
-~~~~~~~~~~~~~~~~~~~~
 .. image:: images/2019-07-09/SEC_node_description.png
    :alt: SEC_node_description ::= '{' ( property ',' )* '"modules":' modules ( ',' property )* '}'
 
@@ -1116,8 +1114,8 @@ TODO:
 
 .. image:: images/sec-node-description.svg
 
-property
-~~~~~~~~
+property:
+
 .. image:: images/2019-07-09/property.png
    :alt: property ::= name ':' value
 
@@ -1131,18 +1129,12 @@ mandatory SEC node properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ``modules``
-     a JSON-object with names of modules as key and JSON-objects as
-     values, see `Module Properties`_.
+    a JSON-object with names of modules as key and JSON-objects as
+    values, see `Module Properties`_.
 
-modules
-~~~~~~~
-.. image:: images/2019-07-09/modules.png
-   :alt: modules  ::= '{' ( name ':' module_description ( ',' name ':' module_description )* )? '}'
+    .. image:: images/2019-07-09/modules.png
+        :alt: modules  ::= '{' ( name ':' module_description ( ',' name ':' module_description )* )? '}'
 
-module_description
-~~~~~~~~~~~~~~~~~~
-.. image:: images/2019-07-09/module_description.png
-   :alt: module_description ::= '{' ( property ',' )* '"accessibles":' accessibles ( ',' property )* '}'
 
 ``equipment_id``
      worldwide unqiue id of an equipment as string. Should contain the name of the
@@ -1169,8 +1161,11 @@ optional SEC node properties
      Default: 10 sec, *see* `SECoP Issue 4: The Timeout SEC Node Property`_)
 
 
-Module Properties
------------------
+Module Description
+------------------
+
+.. image:: images/2019-07-09/module_description.png
+   :alt: module_description ::= '{' ( property ',' )* '"accessibles":' accessibles ( ',' property )* '}'
 
 TODO:
     replace with above diagram
@@ -1178,7 +1173,7 @@ TODO:
 .. image:: images/module-description.svg
 
 TODO:
-    remove, list of properties should be extensible without modifing any diagram
+    remove following diagram, list of properties should be extensible without modifing any diagram
 
 .. image:: images/module-property.svg
    :alt: module_property ::= property |  ( '"accessibles":' '{' (name ':' properties (',' name ':' properties)*)? '}')
@@ -1189,16 +1184,9 @@ mandatory module properties
 ``accessibles``
     list of accessibles and their properties, see `Accessible Properties`_.
 
-accessibles
-~~~~~~~~~~~
-.. image:: images/2019-07-09/accessibles.png
-   :alt: accessibles ::= '{' ( name ':' accessible_description ( ',' name ':' accessible_description )* )? '}'
+    .. image:: images/2019-07-09/accessibles.png
+        :alt: accessibles ::= '{' ( name ':' accessible_description ( ',' name ':' accessible_description )* )? '}'
 
-accessibles_description
-~~~~~~~~~~~~~~~~~~~~~~~
-.. image:: images/2019-07-09/accessible_description.png
-   :alt: accessible_description ::= '{' property+ '}'
- 
 ``description``
     text describing the module, formatted like the node-property description
 
@@ -1273,9 +1261,12 @@ optional module properties
     
 
 
-Accessible Properties
----------------------
+Accessible Description
+----------------------
 
+.. image:: images/2019-07-09/accessible_description.png
+   :alt: accessible_description ::= '{' property+ '}'
+ 
 TODO:
     remove following railroad diagram: list of properties should be extensible without modifing diagram
  
@@ -1315,7 +1306,7 @@ optional accessible properties
 
 :Remark:
 
-    the accessible-property ``group`` is used for grouping of accesibles within a module,
+    the accessible-property ``group`` is used for grouping of accessibles within a module,
     the module-property ``group`` is used for grouping of modules within a node.
 
 ``visibility``
