@@ -1114,10 +1114,12 @@ TODO:
 
 .. image:: images/sec-node-description.svg
 
-property:
+.. compound::
 
-.. image:: images/2019-07-09/property.png
-   :alt: property ::= name ':' value
+    property:
+
+    .. image:: images/2019-07-09/property.png
+        :alt: property ::= name ':' value
 
 TODO:
     replace with above simplified version, list of properties should be extensible without modifing any diagram
@@ -1125,7 +1127,7 @@ TODO:
 .. image:: images/sec-node-property.svg
 
 
-mandatory SEC node properties
+Mandatory SEC Node Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ``modules``
@@ -1147,7 +1149,7 @@ mandatory SEC node properties
      The formatting should follow the 'git' standard, i.e. a short headline (max 72 chars),
      followed by ``\n\n`` and then a more detailed description, using ``\n`` for linebreaks.
 
-optional SEC node properties
+Optional SEC Node Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ``firmware``
@@ -1178,7 +1180,7 @@ TODO:
 .. image:: images/module-property.svg
    :alt: module_property ::= property |  ( '"accessibles":' '{' (name ':' properties (',' name ':' properties)*)? '}')
 
-mandatory module properties
+Mandatory Module Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ``accessibles``
@@ -1196,7 +1198,7 @@ mandatory module properties
     :Note:
         as this is a list it SHOULD actually have been called ``interface_classes`` or ``interfaces``
 
-optional module properties
+Optional Module Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ``visibility``
@@ -1275,14 +1277,14 @@ TODO:
 .. image:: images/accessible-property.svg
    :alt: property ::= (name ":" property_value)
 
-mandatory accessible properties
+Mandatory Accessible Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ``description``
     string describing the accessible, formatted as for module-description
     or node-description
 
-mandatory parameter properties
+Mandatory Parameter Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ``readonly``
@@ -1295,7 +1297,7 @@ mandatory parameter properties
     :Note:
         commands and parameters can be distinguished by the datatype.
 
-optional accessible properties
+Optional Accessible Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ``group``
@@ -1323,7 +1325,7 @@ optional accessible properties
         
 
 
-optional parameter properties
+Optional Parameter Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ``constant``
@@ -1366,20 +1368,24 @@ The limits, which have to be specified with the datatype, are always inclusive,
 i.e. the value is allowed to have one of the values of the limits.
 Also, both limits may be set to the same value, in which case there is just one allowed value.
 
-syntax of datatype
+Syntax of Datatype
 ------------------
 
 All datatypes are specified in the descriptive data in the following generic form:
 
-datatype
-~~~~~~~~
-.. image:: images/2019-07-09/datatype.png
-   :alt: datatype ::= '{' datatype_name ':' '{' ( datatype_property ( ',' datatype_property )* )? '}'
+.. compound::
 
-datatype_property
-~~~~~~~~~~~~~~~~~
-.. image:: images/2019-07-09/property.png
-   :alt: property ::= name ":" property_value
+    datatype:
+    
+    .. image:: images/2019-07-09/datatype.png
+        :alt: datatype ::= '{' datatype_name ':' '{' ( datatype_property ( ',' datatype_property )* )? '}'
+
+.. compound::
+
+    datatype_property:
+    
+    .. image:: images/2019-07-09/property.png
+        :alt: property ::= name ":" property_value
 
 TODO:
     replace by above two diagrams
@@ -1398,8 +1404,8 @@ TODO:
     :local:
     :backlinks: entry
 
-double
-------
+Floating Point Numbers: ``double``
+----------------------------------
 
 Datatype to be used for all physical quantities.
 
@@ -1413,7 +1419,7 @@ PROPOSED:
 
     :related issue: `SECoP Issue 42: Requirements of datatypes`_
 
-optional datatype properties
+Optional Datatype Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ``min``:
@@ -1458,33 +1464,33 @@ optional datatype properties
         :alt: fmtstr   ::= '%' '.' [1-9]? [0-9] ( 'e' | 'f' | 'g' )
     
     TODO:
-        replace, %.0f should be allowed
+        replace, as %.0f should be allowed
         
     .. image:: images/fmtstr.svg
         :alt: fmtstr ::= "%" "." [1-9] [0-9]? ( "e" | "f" | "g" )
       
 
-example
+Example
 ~~~~~~~
 
 ``{"double": {"min": 0, "max": 100, "fmtstr": "%.3f"}``
 
-transport
+Transport
 ~~~~~~~~~
 as JSON-number
 
 example: ``3.14159265``
 
 
-scaled integers
----------------
+Scaled Integer: ``scaled``
+--------------------------
 
 Scaled integers are to be treated as 'double' in the ECS, they are just transported
 differently. The main motivation for this datatype is for SEC nodes with limited
 capabilities, where floating point calculation is a major effort.
 
 
-mandatory datatype properties
+Mandatory Datatype Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ``scale``
@@ -1494,7 +1500,7 @@ mandatory datatype properties
     The limits of the transported integer. ``<min>`` <= ``<max>``. 
     The limits of the represented floating point value are ``<min>*<scale>, <max>*<scale>``
 
-optional datatype properties
+Optional Datatype Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ``unit``
@@ -1524,12 +1530,12 @@ optional datatype properties
     
     The string must obey the same syntax as above for ``double``.
 
-example
+Example
 ~~~~~~~
 ``{"scaled": {"scale": 0.1, "min": 0, "max": 250}}``
 i.e. a double value between 0.0 and 25.0
 
-transport
+Transport
 ~~~~~~~~~
 an integer JSON-number
 
@@ -1539,8 +1545,8 @@ for example ``1255`` meaning 125.5
 :related issue: `SECoP Issue 44: Scaled integers`_.
 
 
-int
----
+Integer: ``int``
+----------------
 
 PROPOSED:
     Datatype to be used for integer numbers.
@@ -1567,8 +1573,8 @@ example: ``-55``
 
         
 
-bool
-----
+Boolean: ``bool``
+-----------------
 
 syntax
 ~~~~~~
@@ -1579,8 +1585,8 @@ transport
 ``true`` or ``false``
 
 
-enum
-----
+Enumeratated Type: ``enum``
+---------------------------
 
 mandatory datatype property
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1600,8 +1606,8 @@ as JSON-number, the client may perform a mapping back to the name
 example: ``200``
 
 
-string
-------
+String: ``string``
+------------------
 
 mandatory datatype property
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1625,8 +1631,8 @@ as JSON-string
 example: ``"Hello\n\u2343World!"``
 
 
-blob
-----
+Binary Large Object: ``blob``
+-----------------------------
 
 mandatory datatype property
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1649,8 +1655,8 @@ as single-line base64 (see :RFC:`4648`) encoded JSON-string
 example: ``"AA=="``
 
 
-array
------
+Sequence of Equally Typed Items : ``array``
+-------------------------------------------
 
 mandatory datatype properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1673,8 +1679,8 @@ as JSON-array
 example: ``[3,4,7,2,1]``
 
 
-tuple
------
+Finite Sequence of Items with Individually Defined Type: ``tuple``
+------------------------------------------------------------------
 
 mandatory datatype property
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1692,8 +1698,8 @@ as JSON-array
 ``[300,"accelerating"]``
 
 
-struct
-------
+Collection of Named Items: ``struct``
+-------------------------------------
 
 mandatory datatype property
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
