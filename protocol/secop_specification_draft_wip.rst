@@ -5,7 +5,7 @@
 SECoP: Sample Environment Communication Protocol
 ################################################
 
-V2018-11-07
+V2019-07-09 v1.1beta
 
 Introduction
 ============
@@ -1350,6 +1350,11 @@ module property. An ECS not knowing the meaning of a custom property SHOULD igno
 
 Data Types
 ==========
+
+.. contents::
+    :depth: 1
+    :local:
+    :backlinks: entry
 
 SECoP defines a very flexible data typing system. Data types are used to describe
 the possible values of parameters and how they are serialized.
