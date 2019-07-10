@@ -1158,7 +1158,7 @@ optional SEC node properties
 ``timeout``
      value in seconds, a SEC node should be able to respond within
      a time well below this value. (i.e. this is a reply-timeout.)
-     Default: 10 sec, *see* `SECoP Issue 4: The Timeout SEC Node Property`_)
+     Default: 10 sec, *see* `SECoP Issue 4: The Timeout SEC Node Property`_
 
 
 Module Description
@@ -1193,7 +1193,7 @@ mandatory module properties
 ``interface_class``
     list of matching classes for the module, for example ``["Magnet", "Drivable"]``
 
-     :Note:
+    :Note:
         as this is a list it SHOULD actually have been called ``interface_classes`` or ``interfaces``
 
 optional module properties
@@ -1220,7 +1220,7 @@ optional module properties
 ``meaning``
     tuple, with the following two elements:
 
-    1. a string from an extensible list of predefined meanings:
+    1.  a string from an extensible list of predefined meanings:
 
         * 'temperature'   (the sample temperature)
         * 'temperature_regulation' (to be specified only if different from 'temperature')
@@ -1241,7 +1241,7 @@ optional module properties
 
         :related issue: `SECoP Issue 26: More Module Meanings`_
 
-    2. a value describing the importance, with the following values:
+    2.  a value describing the importance, with the following values:
 
         - 10 means the instrument/beamline (Example: room temperature sensor always present)
         - 20 means the surrounding sample environemnt (Example: VTI temperature)
@@ -1304,18 +1304,21 @@ optional accessible properties
 
     :related issue: `SECoP Issue 8: Groups and Hierarchy`_
 
-:Remark:
+    :Remark:
 
-    the accessible-property ``group`` is used for grouping of accessibles within a module,
-    the module-property ``group`` is used for grouping of modules within a node.
+        the accessible-property ``group`` is used for grouping of accessibles within a module,
+        the module-property ``group`` is used for grouping of modules within a node.
 
 ``visibility``
     the visibility of the accessible. values and meaning as for module-visibility above.
 
     :Remark:
 
-        this 'inherits' from the module property. i.e. if it is not specified, the
-        value of the module-property (if given) should be used instead
+        Setting an accessibles visibility equal or higher than its modules
+        visibility has the same effect as omitting the visibility.
+        For example a client respecting visibility in 'user' mode, will not show modules
+        with 'advanced' visibility, and therefore also not their accessibles.
+        
 
 
 optional parameter properties
@@ -1357,7 +1360,6 @@ Tuples allow to combine a fixed amount of values with different datatypes in an 
 Arrays store a given number of dataelements having the same datatype.
 Structs are comparable to tuples, with the difference of using named entries whose order is irrelevant during transport.
 
-For ranges and precisions see `SECoP Issue 42: Requirements of datatypes`_.
 The limits, which have to be specified with the datatype, are always inclusive,
 i.e. the value is allowed to have one of the values of the limits.
 Also, both limits may be set to the same value, in which case there is just one allowed value.
@@ -1375,7 +1377,7 @@ datatype
 datatype_property
 ~~~~~~~~~~~~~~~~~
 .. image:: images/2019-07-09/property.png
-   :alt: property ::= (name ":" property_value)
+   :alt: property ::= name ":" property_value
 
 TODO:
     replace by above two diagrams
@@ -1397,6 +1399,18 @@ TODO:
 double
 ------
 
+Datatype to be used for all physical quantities.
+
+PROPOSED:
+    The ECS SHOULD use internally IEEE-754 double floating point values and MUST support AT LEAST
+    the full IEEE-754 single float value range and precision. However, NaN, infinite and
+    denormalized numbers do not need to be supported.
+
+    If the relative resolution is not given or higher than 1.2e-7, single precision floats
+    might be used in the ECS.
+
+    :related issue: `SECoP Issue 42: Requirements of datatypes`_
+
 optional datatype properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1407,20 +1421,19 @@ optional datatype properties
     upper limit. if max is omitted, there is no upper limit
 
 ``unit``
-    optional string giving the unit of the parameter.
+    string giving the unit of the parameter.
     
     SHOULD be given, if meaningfull. Unitless if omitted or empty string.
-    Preferrably SI-units (including prefix) SHOULD be used,
+    Preferrably SI-units (including prefix) SHOULD be used.
     
     :related: `SECoP Issue 43: Parameters and units`_
 
 ``absolute_resolution``
-    optional, JSON-number specifying the smallest difference between distinct values.
+    JSON-number specifying the smallest difference between distinct values.
     default value: 0
     
 ``relative_resolution``
-    optional, JSON-number specifying the smallest relative difference
-    between distinct values:
+    JSON-number specifying the smallest relative difference between distinct values:
     
     ``abs(a-b) <= relative_resolution * max(abs(a),abs(b))``
     
@@ -1434,7 +1447,7 @@ optional datatype properties
     :related: `SECoP Issue 49: Precision of Floating Point Values`_
 
 ``fmtstr``
-    optional string as a hint on how to format numeric parameters for the user.
+    string as a hint on how to format numeric parameters for the user.
     default value: "%.6g"
 
     The string must obey the following syntax:
@@ -1450,7 +1463,7 @@ optional datatype properties
       
 
 example
-~~~~~~
+~~~~~~~
 
 ``{"double": {"min": 0, "max": 100, "fmtstr": "%.3f"}``
 
@@ -1483,15 +1496,14 @@ optional datatype properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ``unit``
-    optional string giving the unit of the parameter. (see datatype ``double``)
+    string giving the unit of the parameter. (see datatype ``double``)
 
 ``absolute_resolution``
-    optional, JSON-number specifying the smallest difference between distinct values.
+    JSON-number specifying the smallest difference between distinct values.
     default value: ``scale``
     
 ``relative_resolution``
-    optional, JSON-number specifying the smallest relative difference
-    between distinct values:
+    JSON-number specifying the smallest relative difference between distinct values:
     
     ``abs(a-b) <= relative_resolution * max(abs(a),abs(b))``
     
@@ -1505,7 +1517,7 @@ optional datatype properties
     :related: `SECoP Issue 49: Precision of Floating Point Values`_
 
 ``fmtstr``
-    optional string as a hint on how to format numeric parameters for the user.
+    string as a hint on how to format numeric parameters for the user.
     default value: "%.<n>f" where <n> = max(0,-floor(log10(scale)))
     
     The string must obey the same syntax as above for ``double``.
@@ -1528,6 +1540,14 @@ for example ``1255`` meaning 125.5
 int
 ---
 
+PROPOSED:
+    Datatype to be used for integer numbers.
+    For any physical quantitiy _double_ or _scaled_ must be used, even when the resolution
+    is 1 or higher. An _int_ has no unit. 
+    An integer MUST be representable with signed 24 bits (i.e. all integers SHOULD fit
+    inside -2\ :sup:`24` ... 2\ :sup:`24`), as some JSON libraries might parse JSON-numbers
+    with 32bit float too. Also no use case of a bigger integer was found.
+
 mandatory datatype properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ``min``, ``max``
@@ -1543,10 +1563,6 @@ as JSON-number
 
 example: ``-55``
 
-:Remark:
-
-    An _int_ has no unit. For any physical quantitiy please use _double_,
-    even when the resolution is 1 or higher.
         
 
 bool
