@@ -1130,7 +1130,7 @@ mandatory SEC node properties
 
 ``modules``
     a JSON-object with names of modules as key and JSON-objects as
-    values, see `Module Properties`_.
+    values, see `Module Description`_.
 
     .. image:: images/2019-07-09/modules.png
         :alt: modules  ::= '{' ( name ':' module_description ( ',' name ':' module_description )* )? '}'
@@ -1182,7 +1182,7 @@ mandatory module properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ``accessibles``
-    list of accessibles and their properties, see `Accessible Properties`_.
+    list of accessibles and their properties, see `Accessible Description`_.
 
     .. image:: images/2019-07-09/accessibles.png
         :alt: accessibles ::= '{' ( name ':' accessible_description ( ',' name ':' accessible_description )* )? '}'
@@ -1220,7 +1220,7 @@ optional module properties
 ``meaning``
     tuple, with the following two elements:
 
-     1. a string from an extensible list of predefined meanings:
+    1. a string from an extensible list of predefined meanings:
 
         * 'temperature'   (the sample temperature)
         * 'temperature_regulation' (to be specified only if different from 'temperature')
@@ -1241,7 +1241,7 @@ optional module properties
 
         :related issue: `SECoP Issue 26: More Module Meanings`_
 
-     2. a value describing the importance, with the following values:
+    2. a value describing the importance, with the following values:
 
         - 10 means the instrument/beamline (Example: room temperature sensor always present)
         - 20 means the surrounding sample environemnt (Example: VTI temperature)
@@ -1253,7 +1253,7 @@ optional module properties
 
         :related issue: `SECoP Issue 9: Module Meaning`_
 
-``  _`implementor` ``
+_`implementor`
      The implementor of a module, defining the meaning of custom status values, custom
      properties and custom accessibles. The implementor must be globally unique, for example
      'sinq.psi.ch'. This may be achieved by including a domain name, but it does not need
