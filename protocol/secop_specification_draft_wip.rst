@@ -1106,7 +1106,9 @@ The format of the descriptive data is JSON, as all other data in SECoP.
 SEC Node Properties
 -------------------
 
-.. image:: images/sec-node-description.png
+SEC_node_description
+~~~~~~~~~~~~~~~~~~~~
+.. image:: images/SEC_node_description.png
    :alt: SEC_node_description ::= '{' ( property ',' )* '"modules":' modules ( ',' property )* '}'
 
 TODO:
@@ -1114,6 +1116,8 @@ TODO:
 
 .. image:: images/sec-node-description.svg
 
+property
+~~~~~~~~
 .. image:: images/property.png
    :alt: property ::= name ':' value
 
@@ -1130,10 +1134,14 @@ mandatory SEC node properties
      a JSON-object with names of modules as key and JSON-objects as
      values, see `Module Properties`_.
 
+modules
+~~~~~~~
 .. image:: images/modules.png
    :alt: modules  ::= '{' ( name ':' module_description ( ',' name ':' module_description )* )? '}'
 
-.. image:: images/module-description.png
+module_description
+~~~~~~~~~~~~~~~~~~
+.. image:: images/module_description.png
    :alt: module_description ::= '{' ( property ',' )* '"accessibles":' accessibles ( ',' property )* '}'
 
 ``equipment_id``
@@ -1181,10 +1189,14 @@ mandatory module properties
 ``accessibles``
     list of accessibles and their properties, see `Accessible Properties`_.
 
+accessibles
+~~~~~~~~~~~
 .. image:: images/accessibles.png
    :alt: accessibles ::= '{' ( name ':' accessible_description ( ',' name ':' accessible_description )* )? '}'
 
-.. image:: images/accessible-description.png
+accessibles_description
+~~~~~~~~~~~~~~~~~~~~~~~
+.. image:: images/accessible_description.png
    :alt: accessible_description ::= '{' property+ '}'
  
 ``description``
