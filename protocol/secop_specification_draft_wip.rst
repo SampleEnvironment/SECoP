@@ -1108,7 +1108,7 @@ SEC Node Properties
 
 SEC_node_description
 ~~~~~~~~~~~~~~~~~~~~
-.. image:: images/SEC_node_description.png
+.. image:: images/2019-07-09/SEC_node_description.png
    :alt: SEC_node_description ::= '{' ( property ',' )* '"modules":' modules ( ',' property )* '}'
 
 TODO:
@@ -1118,7 +1118,7 @@ TODO:
 
 property
 ~~~~~~~~
-.. image:: images/property.png
+.. image:: images/2019-07-09/property.png
    :alt: property ::= name ':' value
 
 TODO:
@@ -1136,12 +1136,12 @@ mandatory SEC node properties
 
 modules
 ~~~~~~~
-.. image:: images/modules.png
+.. image:: images/2019-07-09/modules.png
    :alt: modules  ::= '{' ( name ':' module_description ( ',' name ':' module_description )* )? '}'
 
 module_description
 ~~~~~~~~~~~~~~~~~~
-.. image:: images/module_description.png
+.. image:: images/2019-07-09/module_description.png
    :alt: module_description ::= '{' ( property ',' )* '"accessibles":' accessibles ( ',' property )* '}'
 
 ``equipment_id``
@@ -1191,12 +1191,12 @@ mandatory module properties
 
 accessibles
 ~~~~~~~~~~~
-.. image:: images/accessibles.png
+.. image:: images/2019-07-09/accessibles.png
    :alt: accessibles ::= '{' ( name ':' accessible_description ( ',' name ':' accessible_description )* )? '}'
 
 accessibles_description
 ~~~~~~~~~~~~~~~~~~~~~~~
-.. image:: images/accessible_description.png
+.. image:: images/2019-07-09/accessible_description.png
    :alt: accessible_description ::= '{' property+ '}'
  
 ``description``
