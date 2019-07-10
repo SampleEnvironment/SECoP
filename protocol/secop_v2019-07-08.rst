@@ -1,11 +1,7 @@
-.. raw:: html
-
-   <h1>THIS DOCUMENT IS WORK IN PROGRESS AND MAY CONTAIN HORRIBLE BUGS!</h1>
-
 SECoP: Sample Environment Communication Protocol
 ################################################
 
-V2018-11-07
+intermediate version V2019-07-08
 
 Introduction
 ============
