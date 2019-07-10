@@ -1106,46 +1106,57 @@ The format of the descriptive data is JSON, as all other data in SECoP.
 SEC Node Properties
 -------------------
 
-.. image:: images/sec-node-description.svg
-   :alt: SEC_node_description ::= '{' (SEC_node_property ( ',' SEC_node_property)* )? '}'
-
-SEC_node_property
-~~~~~~~~~~~~~~~~~
-.. image:: images/2019-07-09/SEC_node_property.png
-   :alt: SEC_node_property ::= property |  ( '"modules":' '{' (name ':' module_description (',' name ':' module_description)*)? '}')
+.. image:: images/sec-node-description.png
+   :alt: SEC_node_description ::= '{' ( property ',' )* '"modules":' modules ( ',' property )* '}'
 
 TODO:
-    replace railroad diagram with above: list of properties should be extensible without modifing diagram
+    replace with above diagram
 
+.. image:: images/sec-node-description.svg
+
+.. image:: images/property.png
+   :alt: property ::= name ':' value
+
+TODO:
+    replace with above simplified version, list of properties should be extensible without modifing any diagram
 
 .. image:: images/sec-node-property.svg
-   :alt: SEC_node_property ::= property |  ( '"modules":' '{' (name ':' module_description (',' name ':' module_description)*)? '}')
 
-there might be properties such as a timeout which are relevant for the
-communication of a SEC node.
 
--  modules
-     mandatory, a JSON-object with names of modules as key and JSON-objects as
+mandatory SEC node properties
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+``modules``
+     a JSON-object with names of modules as key and JSON-objects as
      values, see `Module Properties`_.
 
--  equipment_id
-     mandatory, worldwide unqiue id of an equipment as string. Should contain the name of the
+.. image:: images/modules.png
+   :alt: modules  ::= '{' ( name ':' module_description ( ',' name ':' module_description )* )? '}'
+
+.. image:: images/module-description.png
+   :alt: module_description ::= '{' ( property ',' )* '"accessibles":' accessibles ( ',' property )* '}'
+
+``equipment_id``
+     worldwide unqiue id of an equipment as string. Should contain the name of the
      owner institute or provider company as prefix in order to guarantee worldwide uniqueness.
 
      example: ``"MLZ_ccr12"`` or ``"HZB-vm4"``
 
--  description
-     mandatory text describing the node, in general.
+``description``
+     text describing the node, in general.
      The formatting should follow the 'git' standard, i.e. a short headline (max 72 chars),
      followed by ``\n\n`` and then a more detailed description, using ``\n`` for linebreaks.
 
--  firmware
-     optional, short, string naming the version of the SEC node software.
+optional SEC node properties
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+``firmware``
+     short string naming the version of the SEC node software.
 
      example: ``frappy-0.6.0``
 
--  timeout
-     optional value in seconds, a SEC node should be able to respond within
+``timeout``
+     value in seconds, a SEC node should be able to respond within
      a time well below this value. (i.e. this is a reply-timeout.)
      Default: 10 sec, *see* `SECoP Issue 4: The Timeout SEC Node Property`_)
 
@@ -1153,28 +1164,43 @@ communication of a SEC node.
 Module Properties
 -----------------
 
-.. image:: images/module-description.svg
-   :alt: module_description ::= '{' (module_property ( ',' module_property)* )? '}'
+TODO:
+    replace with above diagram
 
-module_property
-~~~~~~~~~~~~~~~
-.. image:: images/2019-07-09/module_property.png
-   :alt: module_property ::= property |  ( '"accessibles":' '{' (name ':' properties (',' name ':' properties)*)? '}')
+.. image:: images/module-description.svg
 
 TODO:
-    replace railroad diagram with above: list of properties should be extensible without modifing diagram
+    remove, list of properties should be extensible without modifing any diagram
 
 .. image:: images/module-property.svg
    :alt: module_property ::= property |  ( '"accessibles":' '{' (name ':' properties (',' name ':' properties)*)? '}')
 
--  accessibles
-     mandatory list of accessibles and their properties, see `Accessible Properties`_.
+mandatory module properties
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
--  description
-     mandatory text describing the module, formatted like the node-property description
+``accessibles``
+    list of accessibles and their properties, see `Accessible Properties`_.
 
--  visibility
-     optional string indicating a hint for UI's for which user roles the module should be display or hidden.
+.. image:: images/accessibles.png
+   :alt: accessibles ::= '{' ( name ':' accessible_description ( ',' name ':' accessible_description )* )? '}'
+
+.. image:: images/accessible-description.png
+   :alt: accessible_description ::= '{' property+ '}'
+ 
+``description``
+    text describing the module, formatted like the node-property description
+
+``interface_class``
+    list of matching classes for the module, for example ``["Magnet", "Drivable"]``
+
+     :Note:
+        as this is a list it SHOULD actually have been called ``interface_classes`` or ``interfaces``
+
+optional module properties
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+``visibility``
+    string indicating a hint for UI's for which user roles the module should be display or hidden.
      MUST be one of "expert", "advanced" or "user" (default).
 
      :Note:
@@ -1183,22 +1209,16 @@ TODO:
          that the UI should hide the module for users, but show it for experts and
          advanced users.
 
--  interface_class
-     mandatory list of matching classes for the module, for example ``["Magnet", "Drivable"]``
-
-     :Note:
-        as this is a list it SHOULD actually have been called ``interface_classes`` or ``interfaces``
-
--  group
-     optional identifier, may contain ":" which may be interpreted as path separator.
+``group``
+    identifier, may contain ":" which may be interpreted as path separator.
      The ECS may group the modules according to this property.
      The lowercase version of a group must not match any lowercase version of a module name on
      the same SEC node.
 
      :related issue: `SECoP Issue 8: Groups and Hierarchy`_
 
--  meaning
-     optional tuple, with the following two elements:
+``meaning``
+    tuple, with the following two elements:
 
      1. a string from an extensible list of predefined meanings:
 
@@ -1233,7 +1253,7 @@ TODO:
 
         :related issue: `SECoP Issue 9: Module Meaning`_
 
--  _`implementor`
+``  _`implementor` ``
      The implementor of a module, defining the meaning of custom status values, custom
      properties and custom accessibles. The implementor must be globally unique, for example
      'sinq.psi.ch'. This may be achieved by including a domain name, but it does not need
@@ -1244,62 +1264,62 @@ TODO:
 Accessible Properties
 ---------------------
 
-.. image:: images/accessible-description.svg
-   :alt: accessible_description ::=  '{' (property ( ',' property)* )? '}'
-
-property
-~~~~~~~~
-.. image:: images/2019-07-09/property.png
-   :alt: property ::= (name ":" property_value)
-
 TODO:
-    replace railroad diagram with above: list of properties should be extensible without modifing diagram
+    remove following railroad diagram: list of properties should be extensible without modifing diagram
  
 .. image:: images/accessible-property.svg
    :alt: property ::= (name ":" property_value)
 
+mandatory accessible properties
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-- description
-    mandatory string describing the accessible, formatted as for module-description
+``description``
+    string describing the accessible, formatted as for module-description
     or node-description
 
-- group
-    optional identifier, may contain ":" which may be interpreted as path separator.
-    The ECS may group the parameters according to this property.
-    The lowercase version of a group must not match any lowercase version of an accessible name
-    of the same module.
+mandatory parameter properties
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    :related issue: `SECoP Issue 8: Groups and Hierarchy`_
-
-- visibility
-    optional, the visibility of the accessible. values and meaning as for module-visibility above.
-
-    :Remark:
-
-        this 'inherits' from the module property. i.e. if it is not specified, the
-        value of the module-property (if given) should be used instead
-
-:Remark:
-
-    the accessible-property ``group`` is used for grouping of accesibles within a module,
-    the module-property ``group`` is used for grouping of modules within a node.
-
-
-Parameter Properties
---------------------
-
-- readonly
+``readonly``
     mandatory boolean value. Indication if this parameter may be changed by an ECS, or not
 
-- datatype
+``datatype``
     mandatory datatype of the accessible, see `Data Types`_.
     This is always a JSON-Array containing at least one element: a string naming the datatype.
 
     :Note:
         commands and parameters can be distinguished by the datatype.
 
-- constant
-    optional. If given, the parameter is constant and has the given value.
+optional accessible properties
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+``group``
+    identifier, may contain ":" which may be interpreted as path separator.
+    The ECS may group the parameters according to this property.
+    The lowercase version of a group must not match any lowercase version of an accessible name
+    of the same module.
+
+    :related issue: `SECoP Issue 8: Groups and Hierarchy`_
+
+:Remark:
+
+    the accessible-property ``group`` is used for grouping of accesibles within a module,
+    the module-property ``group`` is used for grouping of modules within a node.
+
+``visibility``
+    the visibility of the accessible. values and meaning as for module-visibility above.
+
+    :Remark:
+
+        this 'inherits' from the module property. i.e. if it is not specified, the
+        value of the module-property (if given) should be used instead
+
+
+optional parameter properties
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+``constant``
+    If given, the parameter is constant and has the given value.
     Such a parameter can neither be read nor written, and it will not be transferred
     after the activate command.
 
