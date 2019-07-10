@@ -532,8 +532,8 @@ either indicating success of the request or flag an error.
           \                  reply          ``pong␣<identifier>␣``\ <`Data Report`_>
      `change value`_         request        ``change␣<module>:<parameter>␣``\ <`Value`_>
           \                  reply          ``changed␣<module>:<parameter>␣``\ <`Data Report`_>
-     `execute command`_      request        ``do␣<module>:<command>`` (** argumentless commands only **)
-          \                  reply          ``done␣<module>:<command>␣``\ <`Data Report`_> (** with null as value **)
+     `execute command`_      request        ``do␣<module>:<command>`` (**argumentless commands only**)
+          \                  reply          ``done␣<module>:<command>␣``\ <`Data Report`_> (with null as value)
      `read request`_         request        ``read␣<module>:<parameter>``
         \                    reply          ``reply␣<module>:<parameter>␣``\ <`Data Report`_>
      value update_  event    event          ``update␣<module>:<parameter>␣``\ <`Data Report`_>
