@@ -1349,10 +1349,20 @@ The limits, which have to be specified with the datatype, are always inclusive,
 i.e. the value is allowed to have one of the values of the limits.
 Also, both limits may be set to the same value, in which case there is just one allowed value.
 
+syntax of datatype
+------------------
+
 All datatypes are specified in the descriptive data in the following generic form:
 
+datatype
+~~~~~~~~
 .. image:: images/2019-07-09/datatype.png
-   :alt: datatype ::= '{' datatype_name ':' '{' ( property ( ',' property )* )? '}'
+   :alt: datatype ::= '{' datatype_name ':' '{' ( datatype_property ( ',' datatype_property )* )? '}'
+
+datatype_property
+~~~~~~~~~~~~~~~~~
+.. image:: images/2019-07-09/property.png
+   :alt: property ::= (name ":" property_value)
 
 
 .. image:: images/datatype-generic.svg
@@ -1375,7 +1385,7 @@ double
     :widths: 20 80
     :stub-columns: 1
 
-    * - optional properties (see below)
+    * - optional datatype properties (see below)
       - ``min``, ``max``, ``fmtstr``, ``absolute_resolution``, ``relative_resolution``
 
     * - example
@@ -1443,10 +1453,10 @@ capabilities, where floating point calculation is a major effort.
     :widths: 20 80
     :stub-columns: 1
 
-    * - mandatory properties (see below)
+    * - mandatory datatype properties (see below)
       - ``scale``,  ``min``, ``max``
 
-    * - optional properties (see below)
+    * - optional datatype properties (see below)
       - ``unit``, ``absolute_resolution``, ``relative_resolution``, ``fmtstr``
 
     * - example
@@ -1511,7 +1521,7 @@ int
     :widths: 20 80
     :stub-columns: 1
 
-    * - mandatory properties
+    * - mandatory datatype properties
       - | ``min``, ``max`` (integer limits)
         | ``min`` <= ``max``
 
@@ -1549,7 +1559,7 @@ enum
     :widths: 20 80
     :stub-columns: 1
 
-    * - mandatory property
+    * - mandatory datatype property
       - | ``"members": {<name> : <value>, ....}``
         | ``name``\ s are strings, ``value``\ s are (small) integers, both ``name``\ s and ``value``\ s MUST be unique
 
@@ -1568,11 +1578,11 @@ string
     :widths: 20 80
     :stub-columns: 1
 
-    * - mandatory property
+    * - mandatory datatype property
       - | ``max`` (maximum length)
         | the length is counting the number of bytes (**not** characters!) used when the string is utf8 encoded!
       
-    * - optional property
+    * - optional datatype property
       - ``min`` (minimum length, default 0)
 
     * - Example
@@ -1590,11 +1600,11 @@ blob
     :widths: 20 80
     :stub-columns: 1
 
-    * - mandatory property
+    * - mandatory datatype property
       - | ``max`` (maximum length)
         | the length is counting the number of bytes (**not** the size of the encoded string)
       
-    * - optional property
+    * - optional datatype property
       - ``min`` (minimum length, default 0)
 
     * - example
@@ -1612,11 +1622,11 @@ array
     :widths: 20 80
     :stub-columns: 1
 
-    * - mandatory properties
+    * - mandatory datatype properties
       - | ``max`` (maximum length), ``members``
         | the length is counting the number of elements
 
-    * - optional property
+    * - optional datatype property
       - ``min`` (minimum length, default 0)
 
     * - Example
@@ -1634,7 +1644,7 @@ tuple
     :widths: 20 80
     :stub-columns: 1
 
-    * - mandatory property
+    * - mandatory datatype property
       - ``members`` (a JSON array listing the datatypes of the members)
 
     * - example
@@ -1652,10 +1662,10 @@ struct
     :widths: 20 80
     :stub-columns: 1
 
-    * - mandatory property
+    * - mandatory datatype property
       - ``members`` (a JSON object containing the names and datatypes of the members)
 
-    * - optional property
+    * - optional datatype property
       - | ``optional`` (the names of optional struct elements is given)
         | In 'change' and 'do' commands, the ECS might omit these elements, all other
         | elements must be given.
@@ -1677,7 +1687,6 @@ struct
 
 
 
-
 command
 -------
 
@@ -1685,22 +1694,22 @@ command
     :widths: 20 80
     :stub-columns: 1
 
-    * - Datatype
-      - | ``["command", {}]``
-        | ``["command", {"argument": <argumenttype>}]``
-        | ``["command", {"result": <resulttype>}]``
-        | ``["command", {"argument": <argumenttype>, "result": <resulttype>}]``
-        |
-        | if ``<argumenttype>`` is omitted, the command has no argument
-        | if ``<resulttype>`` is omitted, the command returns no result
+    * - optional datatype properties
+      - | ``argument`` (the datatype of the argument)
         | only one argument is allowed, though several arguments may be used if
         | encapsulated in a structural datatype (struct, tuple or array).
         | If such encapsulation or data grouping is needed, a struct SHOULD be used.
+        |
+        | ``<resulttype>`` (the datatype of the result)
+        | In any case, the meaning of result and argument(s) SHOULD be written down
+        | in the description of the command.| ``["command", {"result": <resulttype>}]``
+        | ``["command", {"argument": <argumenttype>, "result": <resulttype>}]``
+        |
         | In any case, the meaning of result and argument(s) SHOULD be written down
         | in the description of the command.
 
     * - Example
-      - ``["command", {"argument": ["bool", {}], "result": ["bool", {}]]``
+      - ``{"command": {"argument": {"bool": {}}, "result": {"bool": {}}}``
 
     * - Transport examples
       - | > ``do module:invert true``
