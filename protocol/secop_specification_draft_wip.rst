@@ -530,11 +530,13 @@ either indicating success of the request or flag an error.
           \                  reply          ``inactive``
      `heartbeat`_            request        ``ping␣<identifier>``
           \                  reply          ``pong␣<identifier>␣``\ <`Data Report`_>
-     `change value`_         request        ``change␣<module>:<parameter>␣``\ Value_
+     `change value`_         request        ``change␣<module>:<parameter>␣``\ <`Value`_>
           \                  reply          ``changed␣<module>:<parameter>␣``\ <`Data Report`_>
-     `execute command`_      request        ``do␣<module>:<command>␣`` (**only for argumentless commands!**)
-          \                  reply          ``done␣<module>:<command>␣``\ <`Data Report`_> (with null as value)
-     `read request`_         request        ``read␣<module>:<parameter>`` (**triggers an update**)
+     `execute command`_      request        ``do␣<module>:<command>``
+                                            
+                                            ``do␣<module>:<command>␣``\ <Value_>
+          \                  reply          ``done␣<module>:<command>␣``\ <`Data Report`_>
+     `read request`_         request        ``read␣<module>:<parameter>``
         \                    reply          ``reply␣<module>:<parameter>␣``\ <`Data Report`_>
      value update_  event    event          ``update␣<module>:<parameter>␣``\ <`Data Report`_>
      `error reply`_          reply          ``error_<message>␣<module>:<parameter>␣``\ <`Error Report`_>
