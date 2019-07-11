@@ -1137,6 +1137,12 @@ Mandatory SEC Node Properties
     .. image:: images/2019-07-09/modules.png
         :alt: modules  ::= '{' ( name ':' module_description ( ',' name ':' module_description )* )? '}'
 
+    :Remark:
+    
+        Be aware that some JSON libraries may not be able to keep the order of the
+        items in a JSON objects. This is not required by the JSON standard, and not needed
+        the functionality of SECoP. However, for debugging reasons it might be an advantage
+        to use a JSON library which keeps the order of JSON object items.
 
 ``equipment_id``
      worldwide unqiue id of an equipment as string. Should contain the name of the
@@ -1188,6 +1194,13 @@ Mandatory Module Properties
 
     .. image:: images/2019-07-09/accessibles.png
         :alt: accessibles ::= '{' ( name ':' accessible_description ( ',' name ':' accessible_description )* )? '}'
+
+    :Remark:
+    
+        Be aware that some JSON libraries may not be able to keep the order of the
+        items in a JSON objects. This is not required by the JSON standard, and not needed
+        the functionality of SECoP. However, for debugging reasons it might be an advantage
+        to use a JSON library which keeps the order of JSON object items.
 
 ``description``
     text describing the module, formatted like the node-property description
