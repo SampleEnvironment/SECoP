@@ -342,7 +342,7 @@ is too close to ``status``, but ``mode`` alone seems not suitable for something,
 might have a transitional state. An other alternative name for ``set_mode`` could be
 ``mode_target``.
 
-Proposed enum values for (set_)mode:
+Proposed enum values for ``(set_)mode``:
 
 +-----------------+----+
 |name             |code|
@@ -411,7 +411,7 @@ If during the preparing phase the value is unstable or invalid, a simple 300 BUS
 must be used.
 
 350 FINALIZING is used for the case, when the value is already stable at target,
-but some finaling is still happening.
+but some finalizing is still happening.
 
 The MOVING status is no longer reflected in the status, but must be dereived from
-mode(_state).
+``mode(_state)``.
