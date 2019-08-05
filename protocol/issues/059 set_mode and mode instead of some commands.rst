@@ -313,13 +313,13 @@ However, we have to decide how to trigger mode changes:
 a) Commands: shutdown, prepare, finalize
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-We may still need a 'mode' parameter, in order to define where to go after a change target,
+We may still need a ``mode`` parameter, in order to define where to go after a change target,
 e.g. preselect to stay in driven mode or go always to persistent mode.
 
 b) Only a mode parameter
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-The mode parameter acts like above 'set_mode parameter'. Changing the mode parameter
+The mode parameter acts like above ``set_mode`` parameter. Changing the mode parameter
 would trigger mode changes directly. This would then the second exception to the rule,
 that a parameter change should not lead to a BUSY state.
 
@@ -336,11 +336,11 @@ c) mode/mode_state
 ~~~~~~~~~~~~~~~~~~
 
 On the video meeting 2019-07-11 we decided to consider again having two
-parameter set_mode/mode. Markus proposes to change them to mode/mode_state -
-better proposals for naming are welcome. 'status' is already used, 'state'
-is to close to 'status', but 'mode' alone seems not suitable for somthing, which
-might have a transitional state. Other alternative names for 'set_mode': 'target_mode'
-of 'mode_target'.
+parameters set_mode/mode. Markus proposes to change the name to mode/mode_state -
+better proposals for naming are welcome. ``status`` is already used, ``state``
+is too close to ``status``, but ``mode`` alone seems not suitable for something, which
+might have a transitional state. An other alternative name for ``set_mode`` could be
+``mode_target``.
 
 Proposed enum values for (set_)mode:
 
@@ -355,7 +355,7 @@ Proposed enum values for (set_)mode:
 +-----------------+----+
 
 
-Additonal codes for mode(_state):
+Additional codes for mode(_state):
 
 +-----------------+----+
 |name             |code|
@@ -371,10 +371,10 @@ Additonal codes for mode(_state):
 |finalizing       | 105|
 +-----------------+----+
 
+Alternatively, we might choose negative values instead of adding 100.
 
-Alternatively, we could choose negative values instead of adding 100.
 
-Still we would need the following status values:
+Still we would need the following ``status`` values:
 
 +-----------------------+---------+
 |status                 |use cases|
@@ -400,6 +400,11 @@ Still we would need the following status values:
 |401 |UNKNOWN           |    |    |
 +----+------------------+----+----+
 
+use cases:
+
+    * ``wait`` means: we have to wait before we can continue with the value being stable at target.
+    * ``meas`` means: the value is stable, but not necessarily at target.
+
 310 PREPARING is used for the case, when data is always stored, as in neutron
 event mode. It indicates, that the value is still valid during preparing phase.
 If during the preparing phase the value is unstable or invalid, a simple 300 BUSY
@@ -408,5 +413,5 @@ must be used.
 350 FINALIZING is used for the case, when the value is already stable at target,
 but some finaling is still happening.
 
-The 'MOVING' status is no longer reflected in the status, but must be dereived from
+The MOVING status is no longer reflected in the status, but must be dereived from
 mode(_state).
