@@ -1436,7 +1436,7 @@ PROPOSED:
     the full IEEE-754 single float value range and precision. However, NaN, infinite and
     denormalized numbers do not need to be supported.
 
-    If the relative resolution is not given or higher than 1.2e-7, single precision floats
+    If the relative resolution is not given or worse than 1.2e-7, single precision floats
     might be used in the ECS.
 
     :related issue: `SECoP Issue 42: Requirements of datatypes`_
@@ -1573,8 +1573,8 @@ Integer: ``int``
 
 PROPOSED:
     Datatype to be used for integer numbers.
-    For any physical quantitiy _double_ or _scaled_ must be used, even when the resolution
-    is 1 or higher. An _int_ has no unit. 
+    For any physical quantitiy ``double`` or ``scaled`` must be used, even when
+    the resolution is 1 or worse. An ``int`` has no unit. 
     An integer MUST be representable with signed 24 bits (i.e. all integers SHOULD fit
     inside -2\ :sup:`24` ... 2\ :sup:`24`), as some JSON libraries might parse JSON-numbers
     with 32bit float too. Also no use case of a bigger integer was found.
