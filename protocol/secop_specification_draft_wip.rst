@@ -1143,7 +1143,7 @@ Mandatory SEC Node Properties
     
         Be aware that some JSON libraries may not be able to keep the order of the
         items in a JSON objects. This is not required by the JSON standard, and not needed
-        the functionality of SECoP. However, for debugging reasons it might be an advantage
+        for the functionality of SECoP. However, for debugging reasons it might be an advantage
         to use a JSON library which keeps the order of JSON object items.
 
 ``equipment_id``
