@@ -332,5 +332,81 @@ We would need at least the following predefined meaning for mode values:
   * PREPARE(D)  = 2 ?
 
 
+c) mode/mode_state
+~~~~~~~~~~~~~~~~~~
+
+On the video meeting 2019-07-11 we decided to consider again having two
+parameter set_mode/mode. Markus proposes to change them to mode/mode_state -
+better proposals for naming are welcome. 'status' is already used, 'state'
+is to close to 'status', but 'mode' alone seems not suitable for somthing, which
+might have a transitional state. Other alternative names for 'set_mode': 'target_mode'
+of 'mode_target'.
+
+Proposed enum values for (set_)mode:
+
++-----------------+----+
+|name             |code|
++=================+====+
+|disabled         |   0|
++-----------------+----+
+|idle (or locked?)|   1|
++-----------------+----+
+|prepared         |   2|
++-----------------+----+
 
 
+Additonal codes for mode(_state):
+
++-----------------+----+
+|name             |code|
++=================+====+
+|initializing     | 101|
++-----------------+----+
+|disabling        | 102|
++-----------------+----+
+|preparing        | 103|
++-----------------+----+
+|moving           | 104|
++-----------------+----+
+|finalizing       | 105|
++-----------------+----+
+
+
+Alternatively, we could choose negative values instead of adding 100.
+
+Still we would need the following status values:
+
++-----------------------+---------+
+|status                 |use cases|
++----+------------------+----+----+
+|code|name              |wait|meas|
++====+==================+====+====+
+|0   |DISABLED          |    |    |
++----+------------------+----+----+
+|100 |IDLE              |    |meas|
++----+------------------+----+----+
+|200 |WARN              |    |meas|
++----+------------------+----+----+
+|250 |WARN_UNSTABLE     |    |    |
++----+------------------+----+----+
+|300 |BUSY              |wait|    |
++----+------------------+----+----+
+|310 |PREPARING         |wait|meas|
++----+------------------+----+----+
+|350 |FINALIZING        |    |meas|
++----+------------------+----+----+
+|400 |ERROR             |    |    |
++----+------------------+----+----+
+|401 |UNKNOWN           |    |    |
++----+------------------+----+----+
+
+310 PREPARING is used for the case, when data is always stored, as in neutron
+event mode. It indicates, that the value is still valid during preparing phase.
+If during the preparing phase the value is unstable or invalid, a simple 300 BUSY
+must be used.
+
+350 FINALIZING is used for the case, when the value is already stable at target,
+but some finaling is still happening.
+
+The 'MOVING' status is no longer reflected in the status, but must be dereived from
+mode(_state).

@@ -103,7 +103,6 @@ Issues List
     \     `SECoP Issue 55: Reformat Datatype description`_
     d     `SECoP Issue 56: Additional Busy States`_
     d     `SECoP Issue 58: use JSON key, value for describe message`_
-    d     `SECoP Issue 58: use JSON key, value for describe message`_
     d     `SECoP Issue 59: set_mode and mode instead of some commands`_
     ===== =======
 
