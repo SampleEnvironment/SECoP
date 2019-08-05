@@ -413,5 +413,4 @@ must be used.
 350 FINALIZING is used for the case, when the value is already stable at target,
 but some finalizing is still happening.
 
-The MOVING status is no longer reflected in the status, but must be dereived from
-``mode(_state)``.
+MOVING is no longer a value of ``status``, this info must be derived from ``mode(_state)``.
