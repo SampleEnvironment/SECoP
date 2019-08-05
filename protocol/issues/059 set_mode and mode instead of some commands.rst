@@ -331,6 +331,7 @@ We would need at least the following predefined meaning for mode values:
   * LOCK(ED)    = 1 ?
   * PREPARE(D)  = 2 ?
 
+.. _mode_state:
 
 c) mode/mode_state
 ~~~~~~~~~~~~~~~~~~
