@@ -1109,10 +1109,11 @@ SEC Node Description
 .. image:: images/2019-07-09/SEC_node_description.png
    :alt: SEC_node_description ::= '{' ( property ',' )* '"modules":' modules ( ',' property )* '}'
 
-TODO:
+.. TODO: make all railroad diagrams with the same tool
+
     replace with above diagram
 
-.. image:: images/sec-node-description.svg
+    .. image:: images/sec-node-description.svg
 
 .. compound::
 
@@ -1121,10 +1122,11 @@ TODO:
     .. image:: images/2019-07-09/property.png
         :alt: property ::= name ':' value
 
-TODO:
+.. TODO: make all railroad diagrams with the same tool
+
     replace with above simplified version, list of properties should be extensible without modifing any diagram
 
-.. image:: images/sec-node-property.svg
+    .. image:: images/sec-node-property.svg
 
 
 Mandatory SEC Node Properties
@@ -1175,16 +1177,16 @@ Module Description
 .. image:: images/2019-07-09/module_description.png
    :alt: module_description ::= '{' ( property ',' )* '"accessibles":' accessibles ( ',' property )* '}'
 
-TODO:
+.. TODO: make all railroad diagrams with the same tool
+
     replace with above diagram
 
-.. image:: images/module-description.svg
+    .. image:: images/module-description.svg
 
-TODO:
     remove following diagram, list of properties should be extensible without modifing any diagram
 
-.. image:: images/module-property.svg
-   :alt: module_property ::= property |  ( '"accessibles":' '{' (name ':' properties (',' name ':' properties)*)? '}')
+    .. image:: images/module-property.svg
+
 
 Mandatory Module Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1284,11 +1286,11 @@ Accessible Description
 .. image:: images/2019-07-09/accessible_description.png
    :alt: accessible_description ::= '{' property+ '}'
  
-TODO:
+.. TODO: make all railroad diagrams with the same tool
+
     remove following railroad diagram: list of properties should be extensible without modifing diagram
  
-.. image:: images/accessible-property.svg
-   :alt: property ::= (name ":" property_value)
+    .. image:: images/accessible-property.svg
 
 Mandatory Accessible Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1405,17 +1407,19 @@ All datatypes are specified in the descriptive data in the following generic for
     .. image:: images/2019-07-09/property.png
         :alt: property ::= name ":" property_value
 
-TODO:
+.. TODO: make all railroad diagrams with the same tool
+
     replace by above two diagrams
 
-.. image:: images/datatype-generic.svg
+    .. image:: images/datatype-generic.svg
 
 Here is an overview of all defined datatypes:
 
-TODO:
+.. TODO: make all railroad diagrams with the same tool
+
     remove diagram, as all information is in list below, nothing really different from generic
 
-.. image:: images/datatype.svg
+    .. image:: images/datatype.svg
 
 .. contents::
     :depth: 1
@@ -1481,7 +1485,8 @@ Optional Datatype Properties
     .. image:: images/2019-07-09/fmtstr.png
         :alt: fmtstr   ::= '%' '.' [1-9]? [0-9] ( 'e' | 'f' | 'g' )
     
-    TODO:
+.. TODO: make all railroad diagrams with the same tool
+
         replace, as %.0f should be allowed
         
     .. image:: images/fmtstr.svg
