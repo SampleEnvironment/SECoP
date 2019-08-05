@@ -1,6 +1,11 @@
 SECoP Issue 59: set_mode and mode instead of some commands (under discussion)
 =============================================================================
 
+.. contents::
+    :depth: 3
+    :local:
+    :backlinks: entry
+
 Motivation
 ----------
 
@@ -330,8 +335,6 @@ We would need at least the following predefined meaning for mode values:
   * DISABLE(D)  = 0 ?
   * LOCK(ED)    = 1 ?
   * PREPARE(D)  = 2 ?
-
-.. _`mode_state`:
 
 c) mode/mode_state
 ~~~~~~~~~~~~~~~~~~
