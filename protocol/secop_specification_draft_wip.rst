@@ -1577,7 +1577,7 @@ PROPOSED:
     the resolution is 1 or worse. An ``int`` has no unit. 
     An integer MUST be representable with signed 24 bits (i.e. all integers SHOULD fit
     inside -2\ :sup:`24` ... 2\ :sup:`24`), as some JSON libraries might parse JSON-numbers
-    with 32bit float too. Also no use case of a bigger integer was found.
+    with 32bit float too.
 
 mandatory datatype properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
