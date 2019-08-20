@@ -1,0 +1,102 @@
+Videoconference 2019-08-07
+==========================
+
+.. sidebar:: participants
+
+     * Klaus Kiefer
+     * Markus Zolliker
+     * Anders Petterson
+     * Enrico Faulhaber
+     * Frank Wutzler
+
+
+.. contents:: Contents
+    :local:
+    :depth: 2
+
+
+Agenda
+------
+1) formally decide on the Syntax
+2) while working on the draft, I found the following things:
+
+  a) we did not formally decide, but I think we should recommend that the range and resolution of
+     a SECoP 'double' should not be expected to be more than a IEEE-754 double.
+     Please find a proposed text under 4.2 Floating Point Numbers.
+
+  b) I think we decided about a limit of 24 bits for ints (vidconf_2018-11-07), but this was not yet
+     in the standards draft. Please find a proposed text under 4.4 Integer
+
+  c) When Enno reworked the draft some time ago, he changed the content of the 'visibility' property
+     from numbers (3,2,1) to strings ("expert", "advanced", "user"). For me this is o.k., but we
+     should decide formally.
+
+  Please read the draft in order to find other issues which you believe are not clear enough, or
+  which are decided in a meeting, but not mentioned.
+
+3) mode/set_mode stuff  ->  issue 59:
+4) SINE2020 todos leftover
+5) SECoP logo
+6) next vidconf
+
+
+1) formally decide on the Syntax
+--------------------------------
+final decision postponed to next meeting (around mid of september).
+
+Klaus points out that 'datatype' may be misleading and proposes to change it.
+discussed alternatives 'datastructure', 'datadescriptor' and 'typedescriptor'.
+'descriptor' is reject as it is too close to 'description'.
+
+
+2a)
+---
+put a remark there mentioning the topic, but we don't want to put a restriction here.
+
+
+2b)
+---
+put a remark there mentioning the topic, but we don't want to put a restriction here.
+'integers ,may be limited by the use of a specific json library'.
+'anyway, if you think you need such big numbers, you should redthink your decision'.
+
+
+2c)
+---
+Should be strings. It should be noted, that ONLY the 3 predefined strings are allowed.
+
+
+2d) unit for 'integer'
+----------------------
+consent is to allow units for integer, albeit discuraging using this, except for special (i.e. counting) cases.
+If a *physical* unit is used, a double or scaled integer *should* be used.
+
+
+3) mode/set_mode stuff -> issue 59
+----------------------------------
+op_state and op_mode are intended for micromanagment, whereas status is intended to reflect to overall status of the module.
+agreement on having a simple flow control via status.
+
+Markus refines the issue to reflect to discussed points and to clarify even more.
+The general concept is accepted though.
+
+
+4) SINE2020 todos leftover
+--------------------------
+None yet known, expect some to pop up until end of August, when Klaus will have prepared
+the final paperwork for SIN2020.
+Last septemberweek there will be a test between HZB and some people from Prague.
+
+
+5) SECoP logo
+-------------
+Accepted.
+
+
+6) next vidconf
+---------------
+2019-09-18 @ 13:00
+
+7) next face2face meeting
+-------------------------
+Anders will send a doodle around. It may be before the planned vidconf or replace it.
