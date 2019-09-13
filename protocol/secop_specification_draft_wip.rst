@@ -398,7 +398,7 @@ Base classes
 ~~~~~~~~~~~~
 
 Communicator:
-    The main purpose of the module is ommunication.
+    The main purpose of the module is communication.
     It may have none of the predefined parameters of the other classes.
 
     The communicate command is used mainly for debugging reasons, or as a workaround
@@ -641,7 +641,7 @@ Example:
   > *IDN?
   < ISSE&SINE2020,SECoP,V2019-09-16,v1.0
 
-So far the SECoP version is given like "V2019-09-167", i.e. a capital "V" followed by a date in
+So far the SECoP version is given like "V2019-09-16", i.e. a capital "V" followed by a date in
 ``year-month-day`` format with 4 and 2 digits respectively.
 The ``add.info`` field was used to differentiate between draft, release candidates (rc1, rc2,...) and final.
 It is now used to indicate a release name.
