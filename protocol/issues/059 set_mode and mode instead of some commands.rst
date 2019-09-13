@@ -29,7 +29,7 @@ parameter, and skip all of prepare, finalize, shutdown.
 * reduce the predefined status codes to: DISABLED, IDLE, WARN, UNSTABLE, BUSY, PREPARING, MOVING, FINALIZE, ERROR
 
 FINALIZE is still needed, because the ECS will have know when to start the measurement in
-classical neutron scattering mode. 
+classical neutron scattering mode.
 
 Discussion
 ----------

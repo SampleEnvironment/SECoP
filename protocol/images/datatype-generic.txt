@@ -1,3 +1,0 @@
-(`generic structure of` 'datatype')
-[ ["[\"" 'datatype-name' "\"" [
-<! ["," 'min' "," 'max']#`limits: min <= max !`> <!*['datatype' ","] [",{"'mapping'"}"]>]#`parameter of datatype` "]"]]

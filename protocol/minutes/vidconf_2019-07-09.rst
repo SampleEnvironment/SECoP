@@ -6,7 +6,7 @@ Videoconference 2019-07-09
      * Klaus Kiefer
      * Lutz Rossa
      * Markus Zolliker
-     * Niklas Ekström
+     * Niklas EkstrÃ¶m
      * Anders Petterson
      * Enrico Faulhaber
      * Frank Wutzler
@@ -71,4 +71,3 @@ Agreement on this.
 - check specification for **syntax** issues, communicate via e-mail
 - any sine2020 todo's leftover?
 - next meeting 2019-08-07 13:00
-

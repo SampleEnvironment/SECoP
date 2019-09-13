@@ -118,7 +118,7 @@ SPACE</text>
 <path d=" M 451 115 h 8 m 52 0 h 29"/>
 <g>
 <text class="comment" x="495" y="91">
-JSON-text</text>
+JSON-value</text>
 </g>
 <g class="nonterminal">
 <rect height="22" width="52" x="459" y="104"/>

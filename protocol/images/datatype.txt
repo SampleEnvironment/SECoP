@@ -1,14 +1,12 @@
 ('datatype')
-[ "[" <
- ["\"bool\""]
- ["\"double\""#`numbers` "," <'min_value' "null"> "," <'max_value' "null"> ]
- ["\"int\""#`integers` "," 'min_value' "," 'max_value' ]
- [<"\"string\"" "\"blob\""> "," ['min_bytes'#`integer` "," 'max_bytes'#`integer`]#`min_bytes MUST be <= max_bytes` ]
- ["\"array\"" "," 'min_items'#`integer` "," 'max_items'#`integer` "," 'datatype' ]
- ["\"command\"" "," <'datatype'#`argument` "null"#`no argument`> "," <'datatype'#`result` "null"#`no result`> ]
- ["\"tuple\"" "," 'datatype'*","  ]
- ["\"enum\"" "," ["{" ['key'#`keys MUST be unique!` ":" 'value'#`integer values,
-MUST be unique!`]*"," "}"] ]
- ["\"struct\"" "," ["{" ['name'#`names MUST be unique!` ":" 'datatype']*"," "}"]]
-> "]"
+[
+"{"
+"\""
+'name of datatype' 
+"\""
+":"
+"{"
+[ ['datatype-property'*","]? ]
+"}"
+"}"
 ]

@@ -10,5 +10,5 @@
  ["done" "\\x20"#`SPACE` 'module' ":" 'command']
  [<"update" "changed" "buffered"#`see Issue 29`> "\\x20"#`SPACE` 'module' ":" 'parameter']>
  "\\x20"#`SPACE` 'data-report']
- ["error" "\\x20"#`SPACE` 'error-class' "\\x20"#`SPACE` 'error-report']
+ ["error_" 'action' "\\x20"#`SPACE` 'specifier' "\\x20"#`SPACE` 'error-report']
 >]

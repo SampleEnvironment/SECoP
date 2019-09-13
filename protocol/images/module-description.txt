@@ -1,2 +1,2 @@
 ('module-description')
-[ ["{" ['module-property'*","]? "}"]#`a json-object, keys MUST be unique!`]
+[ [ "{" [ ['module-property' ","]*!]? "\"accessibles\":" 'accessibles-description' [["," 'module-property']*!]? "}" ]#`a JSON object`]

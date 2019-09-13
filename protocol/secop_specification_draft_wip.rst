@@ -136,6 +136,7 @@ The following parameters are predefined (this list will be extended):
 - value
     represents the *main* value of a module.
 
+.. _BUSY:
 - status
     (a tuple of two elements: a status with predefined values
     from an Enum_ as "idle","busy","error", and a describing text).
@@ -155,7 +156,7 @@ The following parameters are predefined (this list will be extended):
     Codes 1 to 99, codes of the form x0y and codes above 499 are reserved for future use by the standard.
     Code 401 (Name: UNKNOWN) is a predefined value for ERROR, its meaning is: the SEC node can not (yet)
     determine the status.
-    
+
     Codes 110...199, 210...299, 310...399 and 410...499 are custom codes. Their meaning
     can be defined by the implementor (see `implementor`_ property). The ECS MUST treat the
     second and first digit as 0, if it does not know about the specific meaning defined by
@@ -285,6 +286,8 @@ Data report
 A JSON array with the value of a parameter as its first element,
 and an JSON object containing the Qualifiers_ for this value as its second element.
 
+See also: `Data-report`_.
+
 :Remark:
 
     future revisions may append additional elements.
@@ -299,6 +302,8 @@ The Error report is a JSON-array containing the request message leading to the r
 (minus line endings) as a string in its first element, a (short) human readable text
 as its second element. The third element is a JSON-Object, containing possibly
 implementation specific information about the error (stack dump etc.).
+
+See also: `Error-report`_.
 
 :Note:
     See Qualifiers_ 'error', for errors not related to a request, but occuring while
@@ -339,10 +344,10 @@ Qualifiers optionally augment the value in a reply from the SEC node,
 and present variable information about that parameter.
 They are collected as named values in a JSON-object.
 
-Currently 2 qualifiers are defined:
+Currently 3 qualifiers are defined:
 
 - "t"
-    The timestemp when the parameter has changed or was verified/measured (when no timestamp
+    The timestamp when the parameter has changed or was verified/measured (when no timestamp
     is given, the ECS may use the arrival time of the update message as the timestamp).
     It SHOULD be given, if the SEC node has a synchronized time,
     the format is that of a UNIX time stamp, i.e. seconds since 1970-01-01T00:00:00+00:00Z,
@@ -360,12 +365,13 @@ Currently 2 qualifiers are defined:
 
 - "error"
    If an error occurs while determining a parameter, this qualifier contains a
-   modified error report. See 'update'_.
+   modified error report. See `update`_.
 
 other qualifiers might be added later to the standard.
 If an unknown element is encountered, it is to be ignored.
 
 
+.. _`Interface class`:
 
 Interface Classes
 -----------------
@@ -391,21 +397,25 @@ The last one in the list must be one of the base classes listed above.
 Base classes
 ~~~~~~~~~~~~
 
--  Readable (has at least a value and a status parameter)
-
--  Writable (must have a target parameter to a Readable)
-
--  Drivable (a Writable, must have a stop command, the status parameter will indicate
-   Busy for a longer-lasting operation)
-
-More Interface Classes
-~~~~~~~~~~~~~~~~~~~~~~
-
 Communicator:
-    Has a communicate command.
+    The main purpose of the module is ommunication.
+    It may have none of the predefined parameters of the other classes.
 
     The communicate command is used mainly for debugging reasons, or as a workaround
     for using hardware features not implemented in the SEC node.
+
+Readable:
+    The main purpose is to represent readable values (i.e. from a Sensor).
+    It has at least a value and a status parameter.
+
+Writable:
+    The main purpose is to represent fast settable values (i.e. a switch).
+    It must have a target parameter in addition to what a Readable has.
+
+Drivable:
+    The main purpose is to represent slow settable values (i.e. a temperature or a motorized needle valve).
+    It must have a stop command in addition to what a Writable has.
+    Also, the status parameter will indicate a `BUSY`_ state for a longer-lasting operations.
 
 
 Protocol
@@ -437,12 +447,11 @@ All messages share the same basic structure:
    :alt: message_structure ::= action ( SPACE specifier ( SPACE data )? )?
 
 i.e. message starts with an action keyword, followed optionally by one space and a specifier
-(not containing spaces), followed optionally by one space and a JSON-text
-formatted value (see :RFC:`8259`) called data, which absorbs the remaining characters up to the
-final LF.
+(not containing spaces), followed optionally by one space and a JSON-value (see :RFC:`8259`) called data,
+which absorbs the remaining characters up to the final LF.
 
 :Note:
-    numerical values and strings appear 'naturally' formatted in JSON-text, i.e. 5.0 or "a string".
+    numerical values and strings appear 'naturally' formatted in JSON-value, i.e. 5.0 or "a string".
 
 The specifier consists of a module identifier and for most actions followed by a colon as separator
 and a parameter or command identifier:
@@ -461,15 +470,16 @@ Identifiers starting with underscore ('custom-names') are
 reserved for special purposes like internal use for debugging. The
 identifier length is limited (<=63 characters).
 
-Albeit names MUST be compared/stored case sensitive, names in each scope need to be unique when lowercased.
-The scopes are:
+:Note:
+    Albeit names MUST be compared/stored case sensitive, names in each scope need to be unique when lowercased.
+    The scopes are:
 
-- module names on a SEC Node (including the group entries of those modules)
-- accessible names of a module (including the group entries of those parameters) (each module has its own scope)
-- properties
-- names of elements in a struct (each struct has its own scope)
-- names of variants in an enum (each enum has its own scope)
-- names of qualifiers
+    - module names on a SEC Node (including the group entries of those modules)
+    - accessible names of a module (including the group entries of those parameters) (each module has its own scope)
+    - properties
+    - names of elements in a struct (each struct has its own scope)
+    - names of variants in an enum (each enum has its own scope)
+    - names of qualifiers
 
 SECoP defined names are usually lowercase, though that is not a restriction (esp. not for module names).
 
@@ -482,7 +492,7 @@ an underscore and not defined in the following list are reserved for future exte
 When implementing SEC nodes or ECS-clients, a 'MUST-ignore' policy should be applied to unknown
 or additional parts.
 Unknown or malformed messages are to be replied with an appropriate ``ProtocolError`` by a SEC node.
-An ECS-client must ignore such messages. See also section `Future Compatibility`_.
+An ECS-client must ignore the extra data in such messages. See also section `Future Compatibility`_.
 
 Essentially the connections between an ECS and a SEC node can operate in one of two modes:
 
@@ -505,7 +515,7 @@ either indicating success of the request or flag an error.
 
 
 :Note:
-    to improve compatibility, any ECS client SHOULD always be aware of updates.
+    to improve compatibility, any ECS client SHOULD always be aware of `update`_ messages.
 
 :Note:
     to clarify optionality of some messages, the following table is split into two:
@@ -537,7 +547,7 @@ either indicating success of the request or flag an error.
      `read request`_         request        ``read␣<module>:<parameter>``
         \                    reply          ``reply␣<module>:<parameter>␣``\ <`Data Report`_>
      value update_  event    event          ``update␣<module>:<parameter>␣``\ <`Data Report`_>
-     `error reply`_          reply          ``error_<message>␣<module>:<parameter>␣``\ <`Error Report`_>
+     `error reply`_          reply          ``error_<action>␣<specifier>␣``\ <`Error Report`_>
     ======================= ============== ==================
 
 .. table:: extended messages
@@ -576,17 +586,17 @@ Correct handling of side-effects:
 
   1) ECS sends the initiating message request (either ``change`` target or ``do`` go) and awaits the response.
 
-  2) SEC-Node checks the request and if it can be performed. If not, SEC-node sends an error-reply (sequence done).
+  2) SEC-node checks the request and if it can be performed. If not, SEC-node sends an error-reply (sequence done).
      If nothing is actually to be done, continue to point 4)
 
-  3) SEC-Node 'sets' the status-code to BUSY and instructs the hardware to execute
+  3) SEC-node 'sets' the status-code to BUSY and instructs the hardware to execute
      the requested action.
      Also an ``update`` status event (with the new BUSY status-code) MUST be sent
      to ALL subscribed clients (if any).
      From now on all read requests will also reveal a BUSY status-code.
      If additional parameters are influenced, their updated values should be communicated as well.
 
-  4) SEC-Node sends the reply to the request of point 2) indicating the success of the request.
+  4) SEC-node sends the reply to the request of point 2) indicating the success of the request.
 
      :Note:
          This may also be an error. In that case point 3) was likely not fully performed.
@@ -629,9 +639,9 @@ Example:
 .. code::
 
   > *IDN?
-  < ISSE&SINE2020,SECoP,V2018-11-07,v1.0\beta
+  < ISSE&SINE2020,SECoP,V2019-09-16,v1.0
 
-So far the SECoP version is given like "V2018-11-07", i.e. a capital "V" followed by a date in
+So far the SECoP version is given like "V2019-09-167", i.e. a capital "V" followed by a date in
 ``year-month-day`` format with 4 and 2 digits respectively.
 The ``add.info`` field was used to differentiate between draft, release candidates (rc1, rc2,...) and final.
 It is now used to indicate a release name.
@@ -679,7 +689,7 @@ is finished, the SEC node must send an "active" reply. (*global activation*)
     This initial update is to help the ECS establish a copy of the 'assumed-to-be-current' values.
 
 :Note:
-    An ECS MUST be able to handle the case of an update occuring during the initial phase is over, i.e.
+    An ECS MUST be able to handle the case of an extra update occuring during the initial phase, i.e.
     it must handle the case of receiving more than one update for any valid specifier.
 
 A SEC node might accept a module name as second item of the
@@ -728,6 +738,18 @@ After this two more updates on the t1:value show up after roughly 1s between eac
     i.e. the parameters should not just be read for activation, as this may take a long time.
 
 
+Another Example with a broken Sensor:
+
+.. code::
+
+  > activate
+  < update t1:value [null,{"t":150539648.188388,"error":["HardwareError","Sensor disconnected", {}]}]
+  < update t1:status [[400,"Sensor broken or disconnected"],{"t":1505396348.288388}]
+  < active
+
+Here the current temperature can not be obtained. This is indicated by specifying ``null`` as value and
+the modified error report in the ``"error"`` qualifier.
+
 Deactivate Updates
 ~~~~~~~~~~~~~~~~~~
 
@@ -751,7 +773,8 @@ Example:
 
 The deactivate message might optionally accept a module name as second item
 of the message for module-wise deactivation. If module-wise deactivation is not
-supported, it should ignore a deactivate message which contains a module name.
+supported, the SEC-node should ignore a deactivate message which contains a module name.
+This requires the ECS being able to handle update events at any time!
 
 :Remark:
 
@@ -762,7 +785,7 @@ supported, it should ignore a deactivate message which contains a module name.
 Change Value
 ~~~~~~~~~~~~
 
-the change value message contains the name of the module or parameter
+The change value message contains the name of the module or parameter
 and the value to be set. The value is JSON formatted.
 As soon as the set-value is read back from the hardware, all clients,
 having activated the parameter/module in question, get an "update" message.
@@ -781,7 +804,7 @@ Example on a connection with activated updates. Qualifiers are replaced by {...}
 .. code::
 
   > read mf:status
-  < update mf:status [[100,"OK"],{...}]
+  < reply mf:status [[100,"OK"],{...}]
   > change mf:target 12
   < update mf:status [[300,"ramping field"],{...}]
   < update mf:target [12,{...}]
@@ -811,9 +834,9 @@ Example:
 .. code::
 
   > read t1:value
-  < update t1:value [295.13,{"t":1505396348.188}]
+  < reply t1:value [295.13,{"t":1505396348.188}]
   > read t1:status
-  > update t1:status [[100,"OK"],{"t":1505396348.548}]
+  > reply t1:status [[100,"OK"],{"t":1505396348.548}]
 
 :Remark:
 
@@ -828,7 +851,7 @@ Execute Command
 ~~~~~~~~~~~~~~~
 
 If a command is specified with an argument, the actual argument is given in
-the data part as a json-text. This may be also a json-object if the datatype of
+the data part as a JSON-value. This may be also a JSON-object if the datatype of
 the argument specifies that
 (i.e. the type of the single argument can also be a struct, tuple or an array, see `data types`_).
 The types of arguments must conform to the declared datatypes from the datatype of the command argument.
@@ -838,11 +861,12 @@ The "done" reply always contains a `Data report`_ with the return value.
 If no value is returned, the data part is set to "null".
 The "done" message should be returned quickly, the time scale should be in the
 order of the time needed for communications. Still, all side-effects need to be realized
-and communicated before.
-Actions which have to wait for physical changes, can be triggered with a command, but not be waited upon.
+and communicated before sending the ``done`` message.
+Actions which have to wait for physical changes, can be triggered with a command, but not be waited upon
+before sending the reply.
 The information about the duration and success of such an action has to be transferred via the status parameter.
 
-.. important:: If a command does not require an argument, an argument MAY still be transferred as json-null.
+.. important:: If a command does not require an argument, an argument MAY still be transferred as JSON-null.
  A SEC node MUST also accept the message, if the data part is emtpy and perform the same action.
  More precisely, any SEC-node MUST treat the following two messages the same:
 
@@ -865,7 +889,7 @@ Example:
 Error Reply
 ~~~~~~~~~~~
 
-Contains an error class from the list below as its second item.
+Contains an error class from the list below as its second item (the specifier).
 The third item of the message is an `Error report`_, containing the request message
 (minus line endings) as a string in its first element, a (short) human readable text
 as its second element. The third element is a JSON-Object, containing possibly
@@ -884,92 +908,91 @@ Example:
   > meas:volt?
   < error ProtocolError ["meas:volt?", "unknown keyword", {}]
 
-Error Classes
 
+_`Error Classes`:
+    Error classes are divided into two groups: persisting errors and retryable errors.
+    Persisting errors will yield the exact same error messge if the exact same request is sent at any later time.
+    A retryable error may give different results if the exact same message is sent at a later time, i.e.
+    they depend on state information internal to either the SEC-node, the module or the connected hardware.
 
-Error classes are divided into two groups: persisting errors and retryable errors.
-Persisting errors will yield the exact same error messge if the exact same request is sent at any later time.
-A retryable error may give different results if the exact same message is sent at a later time, i.e.
-they depend on state information internal to either the sec-node, the module or the connected hardware.
+    .. list-table:: persisting errors
+        :widths: 20 80
 
-.. list-table:: persisting errors
-    :widths: 20 80
+        * - NoSuchModule
+          - The action can not be performed as the specified module is non-existent.
 
-    * - NoSuchModule
-      - The action can not be performed as the specified module is non-existent.
+        * - NoSuchParameter
+          - The action can not be performed as the specified parameter is non-existent.
 
-    * - NoSuchParameter
-      - The action can not be performed as the specified parameter is non-existent.
+        * - NoSuchCommand
+          - The specified command does not exist.
 
-    * - NoSuchCommand
-      - The specified command does not exist.
+        * - ReadOnly
+          - The requested write can not be performed on a readonly value..
 
-    * - ReadOnly
-      - The requested write can not be performed on a readonly value..
+        * - WrongType
+          - The requested parameter change or Command can not be performed as the argument has the wrong type.
+            (i.e. a string where a number is expected.)
+            It may also be used if an incomplete struct is sent, but a complete struct is expected.
 
-    * - WrongType
-      - The requested parameter change or Command can not be performed as the argument has the wrong type.
-        (i.e. a string where a number is expected.)
-        It may also be used if an incomplete struct is sent, but a complete struct is expected.
+        * - RangeError
+          - The requested parameter change or Command can not be performed as the argument value is not
+            in the allowed range specified by the datatype property.
+            This also happens if an unspecified Enum variant is tried to be used, the size of a Blob or String
+            does not match the limits given in the descriptive data, or if the number of elements in an array
+            does not match the limits given in the descriptive data.
 
-    * - RangeError
-      - The requested parameter change or Command can not be performed as the argument value is not
-        in the allowed range specified by the datatype property.
-        This also happens if an unspecified Enum variant is tried to be used, the size of a Blob or String
-        does not match the limits given in the descriptive data, or if the number of elements in an array
-        does not match the limits given in the descriptive data.
+        * - BadJSON
+          - The data part of the message can not be parsed, i.e. the JSON-data is no valid JSON.
 
-    * - OutOfRange
-      - The value read from the hardware is out of sensor or calibration range
+        * - NotImplemented
+          - A (not yet) implemented action or combination of action and specifer was requested.
+            This should not be used in productive setups, but is very helpful during development.
 
-    * - BadJSON
-      - The data part of the message can not be parsed, i.e. the JSON-data is no valid JSON.
+        * - HardwareError
+          - The connected hardware operates incorrect or may not operate at all due to errors inside or in connected components.
 
-    * - NotImplemented
-      - A (not yet) implemented action or combination of action and specifer was requested.
-        This should not be used in productive setups, but is very helpful during development.
+        * - ProtocolError
+          - A malformed Request or on unspecified message was sent.
+            This includes non-understood actions and malformed specifiers. Also if the message exceeds an implementation defined maximum size.
+            *note: this may be retryable if induced by a noisy connection. Still that should be fixed first!*
 
-    * - HardwareError
-      - The connected hardware operates incorrect or may not operate at all due to errors inside or in connected components.
+    .. list-table:: retryable errors
+        :widths: 20 80
 
-    * - ProtocolError
-      - A malformed Request or on unspecified message was sent.
-        This includes non-understood actions and malformed specifiers. Also if the message exceeds an implementation defined maximum size.
-        *note: this may be retryable if induced by a noisy connection. Still that should be fixed first!*
+        * - CommandRunning
+          - The command is already executing. request may be retried after the module is no longer BUSY.
 
-.. list-table:: retryable errors
-    :widths: 20 80
+        * - CommunicationFailed
+          - Some communication (with hardware controlled by this SEC node) failed.
 
-    * - CommandRunning
-      - The command is already executing. request may be retried after the module is no longer BUSY.
+        * - TimeoutError
+          - Some initiated action took longer than the maximum allowed time.
 
-    * - CommunicationFailed
-      - Some communication (with hardware controlled by this SEC node) failed.
+        * - IsBusy
+          - The requested action can not be performed while the module is Busy or the command still running.
 
-    * - TimeoutError
-      - Some initiated action took longer than the maximum allowed time.
+        * - IsError
+          - The requested action can not be performed while the module is in error state.
 
-    * - IsBusy
-      - The requested action can not be performed while the module is Busy or the command still running.
+        * - Disabled
+          - The requested action can not be performed while the module is disabled.
 
-    * - IsError
-      - The requested action can not be performed while the module is in error state.
+        * - Impossible
+          - The requested action can not be performed at the moment.
 
-    * - Disabled
-      - The requested action can not be performed while the module is disabled.
+        * - ReadFailed
+          - The requested parameter can not be read just now.
 
-    * - Impossible
-      - The requested action can not be performed at the moment.
+        * - OutOfRange
+          - The value read from the hardware is out of sensor or calibration range
 
-    * - ReadFailed
-      - The requested parameter can not be read just now.
+        * - InternalError
+          - Something that should never happen just happened.
 
-    * - InternalError
-      - Something that should never happen just happened.
+    :Remark:
 
-:Remark:
-
-    This list may be extended, if needed. clients should treat unknown error classes as generic as possible.
+        This list may be extended, if needed. clients should treat unknown error classes as generic as possible.
 
 
 Logging
@@ -979,7 +1002,7 @@ Logging
   followed by a specifier of <modulename> and a string in the JSON-part which is either "debug", "info", "error" or is the JSON-value false.
   This is supposed to set the 'logging level' of the given module (or the whole SEC-node if the specifier is empty) to the given level:
 
-  This scheme may also be extended to configure logging only for selected paramters of selected modules.
+  This scheme may also be extended to configure logging only for selected parameters of selected modules.
 
   :"off":
     Remote logging is completely turned off.
@@ -990,10 +1013,10 @@ Logging
   :"debug":
     All log messages are logged remotely.
 
-  A SEC-node should reply with an error-report (``protocolerror``) if it doesn't implement this message.
+  A SEC-node should reply with an `error-report`_ (``protocolerror``) if it doesn't implement this message.
   Otherwise it should mirror the request, which may be updated with the logging-level actually in use.
   i.e. if an SEC-node does not implement the "debug" level, but "error" and "info" and an ECS request "debug" logging, the
-  reply should contain "info" (as this is 'closer' to the original request which than "error" or ``false``).
+  reply should contain "info" (as this is 'closer' to the original request than "error") or ``false``).
   Similiarly, if logging of a too specific item is requested, the SEC-node should activate the logging on the
   least specific item where logging is supported. e.g. if logging for <module>:<param> is requested, but the SEC-node
   only support logging of the module, this should be reflected in the reply and the logging of the module is to be influenced.
@@ -1002,7 +1025,7 @@ Logging
 
 ``log``:
   followed by a specifier of <modulename>:<loglevel> and the message to be logged as JSON-string in the datapart.
-  This is an asynchronous event only to be sent by the SEC-node to the ECS of it activated logging.
+  This is an asynchronous event only to be sent by the SEC-node to the ECS which activated logging.
 
 
 example::
@@ -1064,8 +1087,9 @@ Generally speaking: both ECS and SEC side needs to be aware that the other
 side may close the connection at any time!
 On reconnect, it is recommended, that the ECS does send a ``*IDN?`` and a ``describe`` message.
 If the reponses match the responses from the previous connection, the ECS should continue
-as if no interruption happend.
+without any internal reconfiguring, as if no interruption happend.
 If the response of the description does not match, it is up to the ECS how to handle this.
+
 Naturally, if the previous connection was activated, an ``activate``
 message has to be sent before it can continue as before.
 
@@ -1075,12 +1099,9 @@ message has to be sent before it can continue as before.
 Multiple Connections
 --------------------
 
-A SEC node restrict the number of simultaneous connections, downto 1.
+A SEC node may restrict the number of simultaneous connections.
 However, each SEC node should support as many connections as technically
 feasible.
-
-Details about how to multiplex multiple connections onto one are to be
-discussed.
 
 
 Descriptive Data
@@ -1106,53 +1127,37 @@ The format of the descriptive data is JSON, as all other data in SECoP.
 SEC Node Description
 --------------------
 
-.. image:: images/2019-07-09/SEC_node_description.png
+.. image:: images/sec-node-description.svg
    :alt: SEC_node_description ::= '{' ( property ',' )* '"modules":' modules ( ',' property )* '}'
-
-.. TODO: make all railroad diagrams with the same tool
-
-    replace with above diagram
-
-    .. image:: images/sec-node-description.svg
 
 .. compound::
 
     property:
 
-    .. image:: images/2019-07-09/property.png
-        :alt: property ::= name ':' value
-
-.. TODO: make all railroad diagrams with the same tool
-
-    replace with above simplified version, list of properties should be extensible without modifing any diagram
-
-    .. image:: images/sec-node-property.svg
+    .. image:: images/property.svg
 
 
 Mandatory SEC Node Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-``modules``
-    a JSON-object with names of modules as key and JSON-objects as
+``"modules"``
+    contains a JSON-object with names of modules as key and JSON-objects as
     values, see `Module Description`_.
 
-    .. image:: images/2019-07-09/modules.png
-        :alt: modules  ::= '{' ( name ':' module_description ( ',' name ':' module_description )* )? '}'
-
     :Remark:
-    
+
         Be aware that some JSON libraries may not be able to keep the order of the
         items in a JSON objects. This is not required by the JSON standard, and not needed
-        for the functionality of SECoP. However, for debugging reasons it might be an advantage
+        for the functionality of SECoP. However, it might be an advantage
         to use a JSON library which keeps the order of JSON object items.
 
-``equipment_id``
+``"equipment_id"``
      worldwide unqiue id of an equipment as string. Should contain the name of the
      owner institute or provider company as prefix in order to guarantee worldwide uniqueness.
 
      example: ``"MLZ_ccr12"`` or ``"HZB-vm4"``
 
-``description``
+``"description"``
      text describing the node, in general.
      The formatting should follow the 'git' standard, i.e. a short headline (max 72 chars),
      followed by ``\n\n`` and then a more detailed description, using ``\n`` for linebreaks.
@@ -1160,12 +1165,12 @@ Mandatory SEC Node Properties
 Optional SEC Node Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-``firmware``
+``"firmware"``
      short string naming the version of the SEC node software.
 
      example: ``frappy-0.6.0``
 
-``timeout``
+``"timeout"``
      value in seconds, a SEC node should be able to respond within
      a time well below this value. (i.e. this is a reply-timeout.)
      Default: 10 sec, *see* `SECoP Issue 4: The Timeout SEC Node Property`_
@@ -1174,40 +1179,27 @@ Optional SEC Node Properties
 Module Description
 ------------------
 
-.. image:: images/2019-07-09/module_description.png
+.. image:: images/module-description.svg
    :alt: module_description ::= '{' ( property ',' )* '"accessibles":' accessibles ( ',' property )* '}'
-
-.. TODO: make all railroad diagrams with the same tool
-
-    replace with above diagram
-
-    .. image:: images/module-description.svg
-
-    remove following diagram, list of properties should be extensible without modifing any diagram
-
-    .. image:: images/module-property.svg
 
 
 Mandatory Module Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-``accessibles``
-    list of accessibles and their properties, see `Accessible Description`_.
-
-    .. image:: images/2019-07-09/accessibles.png
-        :alt: accessibles ::= '{' ( name ':' accessible_description ( ',' name ':' accessible_description )* )? '}'
+``"accessibles"``
+    a JSON-object containing the accessibles and their properties, see `Accessible Description`_.
 
     :Remark:
-    
+
         Be aware that some JSON libraries may not be able to keep the order of the
         items in a JSON objects. This is not required by the JSON standard, and not needed
-        the functionality of SECoP. However, for debugging reasons it might be an advantage
+        the functionality of SECoP. However it might be an advantage
         to use a JSON library which keeps the order of JSON object items.
 
-``description``
+``"description"``
     text describing the module, formatted like the node-property description
 
-``interface_class``
+``"interface_class"``
     list of matching classes for the module, for example ``["Magnet", "Drivable"]``
 
     :Note:
@@ -1216,7 +1208,7 @@ Mandatory Module Properties
 Optional Module Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-``visibility``
+``"visibility"``
      string indicating a hint for UI's for which user roles the module should be display or hidden.
      MUST be one of "expert", "advanced" or "user" (default).
 
@@ -1226,7 +1218,7 @@ Optional Module Properties
          that the UI should hide the module for users, but show it for experts and
          advanced users.
 
-``group``
+``"group"``
      identifier, may contain ":" which may be interpreted as path separator.
      The ECS may group the modules according to this property.
      The lowercase version of a group must not match any lowercase version of a module name on
@@ -1234,27 +1226,27 @@ Optional Module Properties
 
      :related issue: `SECoP Issue 8: Groups and Hierarchy`_
 
-``meaning``
+``"meaning"``
     tuple, with the following two elements:
 
     1.  a string from an extensible list of predefined meanings:
 
-        * 'temperature'   (the sample temperature)
-        * 'temperature_regulation' (to be specified only if different from 'temperature')
-        * 'magneticfield'
-        * 'electricfield'
-        * 'pressure'
-        * 'rotation_z' (counter clockwise when looked at 'from sky to earth')
-        * 'humidity'
-        * 'viscosity'
-        * 'flowrate'
-        * 'concentration'
+        * ``"temperature"``   (the sample temperature)
+        * ``"temperature_regulation"`` (to be specified only if different from 'temperature')
+        * ``"magneticfield"``
+        * ``"electricfield"``
+        * ``"pressure"``
+        * ``"rotation_z"`` (counter clockwise when looked at 'from sky to earth')
+        * ``"humidity"``
+        * ``"viscosity"``
+        * ``"flowrate"``
+        * ``"concentration"``
 
         This list may be extended later.
 
-        '_regulation' may be postfixed, if the quantity generating module is different from the
+        ``_regulation`` may be postfixed, if the quantity generating module is different from the
         (closer to the sample) relevant measuring device. A regulation device MUST have an
-        ``interface_class`` of at least ``Writable``.
+        `interface class`_ of at least ``Writable``.
 
         :related issue: `SECoP Issue 26: More Module Meanings`_
 
@@ -1272,42 +1264,38 @@ Optional Module Properties
 
 .. _implementor:
 
-``implementor``
+``"implementor"``
      The implementor of a module, defining the meaning of custom status values, custom
      properties and custom accessibles. The implementor must be globally unique, for example
      'sinq.psi.ch'. This may be achieved by including a domain name, but it does not need
      to be a registered name, and other means of assuring a global unique name are also possible.
-    
+
 
 
 Accessible Description
 ----------------------
 
-.. image:: images/2019-07-09/accessible_description.png
+.. image:: images/accessible-description.svg
    :alt: accessible_description ::= '{' property+ '}'
- 
-.. TODO: make all railroad diagrams with the same tool
 
-    remove following railroad diagram: list of properties should be extensible without modifing diagram
- 
-    .. image:: images/accessible-property.svg
 
 Mandatory Accessible Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-``description``
+``"description"``
     string describing the accessible, formatted as for module-description
     or node-description
 
 Mandatory Parameter Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-``readonly``
+``"readonly"``
     mandatory boolean value. Indication if this parameter may be changed by an ECS, or not
 
-``datatype``
+``"datatype"``
     mandatory datatype of the accessible, see `Data Types`_.
-    This is always a JSON-Array containing at least one element: a string naming the datatype.
+    This is always a JSON-Object with a single entry mapping the name of the datatype as key to
+    a JSON-object containing the datatypes properties.
 
     :Note:
         commands and parameters can be distinguished by the datatype.
@@ -1315,7 +1303,7 @@ Mandatory Parameter Properties
 Optional Accessible Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-``group``
+``"group"``
     identifier, may contain ":" which may be interpreted as path separator.
     The ECS may group the parameters according to this property.
     The lowercase version of a group must not match any lowercase version of an accessible name
@@ -1328,7 +1316,7 @@ Optional Accessible Properties
         the accessible-property ``group`` is used for grouping of accessibles within a module,
         the module-property ``group`` is used for grouping of modules within a node.
 
-``visibility``
+``"visibility"``
     the visibility of the accessible. values and meaning as for module-visibility above.
 
     :Remark:
@@ -1337,15 +1325,15 @@ Optional Accessible Properties
         visibility has the same effect as omitting the visibility.
         For example a client respecting visibility in 'user' mode, will not show modules
         with 'advanced' visibility, and therefore also not their accessibles.
-        
+
 
 
 Optional Parameter Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-``constant``
+``"constant"``
     If given, the parameter is constant and has the given value.
-    Such a parameter can neither be read nor written, and it will not be transferred
+    Such a parameter can neither be read nor written, and it will **not** be transferred
     after the activate command.
 
 
@@ -1353,23 +1341,13 @@ Custom Properties
 -----------------
 Custom properties may further augment accessibles, modules or the SEC-node description.
 
-compact version: no railroad diagram
-
-.. image:: images/custom-property.svg
-   :alt: property ::= ("_" name ":" property_value)
-
 As for all custom extensions, the names must be prefixed with an underscore. The meaning
 of custom properties is dependent on the implementor, given by the `implementor`_
-module property. An ECS not knowing the meaning of a custom property SHOULD ignore it. 
+module property. An ECS not knowing the meaning of a custom property MUST ignore it.
 
 
 Data Types
 ==========
-
-.. contents::
-    :depth: 1
-    :local:
-    :backlinks: entry
 
 SECoP defines a very flexible data typing system. Data types are used to describe
 the possible values of parameters and how they are serialized.
@@ -1388,43 +1366,21 @@ The limits, which have to be specified with the datatype, are always inclusive,
 i.e. the value is allowed to have one of the values of the limits.
 Also, both limits may be set to the same value, in which case there is just one allowed value.
 
-Syntax of Datatype
-------------------
-
 All datatypes are specified in the descriptive data in the following generic form:
 
-.. compound::
+.. image:: images/datatype.svg
+    :alt: datatype ::= '{' datatype-name ':' '{' ( datatype-property ( ',' datatype-property )* )? '}'
 
-    datatype:
-    
-    .. image:: images/2019-07-09/datatype.png
-        :alt: datatype ::= '{' datatype_name ':' '{' ( datatype_property ( ',' datatype_property )* )? '}'
-
-.. compound::
-
-    datatype_property:
-    
-    .. image:: images/2019-07-09/property.png
-        :alt: property ::= name ":" property_value
-
-.. TODO: make all railroad diagrams with the same tool
-
-    replace by above two diagrams
-
-    .. image:: images/datatype-generic.svg
 
 Here is an overview of all defined datatypes:
-
-.. TODO: make all railroad diagrams with the same tool
-
-    remove diagram, as all information is in list below, nothing really different from generic
-
-    .. image:: images/datatype.svg
 
 .. contents::
     :depth: 1
     :local:
     :backlinks: entry
+
+
+.. _Double:
 
 Floating Point Numbers: ``double``
 ----------------------------------
@@ -1444,54 +1400,47 @@ PROPOSED:
 Optional Datatype Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-``min``:
+``"min"``:
     lower limit. if min is omitted, there is no lower limit
-    
-``max``
+
+``"max"``
     upper limit. if max is omitted, there is no upper limit
 
-``unit``
+``"unit"``
     string giving the unit of the parameter.
-    
+
     SHOULD be given, if meaningfull. Unitless if omitted or empty string.
     Preferrably SI-units (including prefix) SHOULD be used.
-    
+
     :related: `SECoP Issue 43: Parameters and units`_
 
-``absolute_resolution``
+``"absolute_resolution"``
     JSON-number specifying the smallest difference between distinct values.
     default value: 0
-    
-``relative_resolution``
+
+``"relative_resolution"``
     JSON-number specifying the smallest relative difference between distinct values:
-    
+
     ``abs(a-b) <= relative_resolution * max(abs(a),abs(b))``
-    
+
     default value: 1.2e-7 (enough for single precision floats)
 
     if both ``absolute_resolution`` and ``relative_resolution`` are given, the expected
     resolution is:
-    
+
     ``max(absolute_resolution, abs(value) * relative_resolution)``
 
     :related: `SECoP Issue 49: Precision of Floating Point Values`_
 
-``fmtstr``
+``"fmtstr"``
     string as a hint on how to format numeric parameters for the user.
     default value: "%.6g"
 
     The string must obey the following syntax:
 
-    .. image:: images/2019-07-09/fmtstr.png
-        :alt: fmtstr   ::= '%' '.' [1-9]? [0-9] ( 'e' | 'f' | 'g' )
-    
-.. TODO: make all railroad diagrams with the same tool
-
-        replace, as %.0f should be allowed
-        
     .. image:: images/fmtstr.svg
-        :alt: fmtstr ::= "%" "." [1-9] [0-9]? ( "e" | "f" | "g" )
-      
+        :alt: fmtstr ::= "%" "." [1-9]? [0-9] ( "e" | "f" | "g" )
+
 
 Example
 ~~~~~~~
@@ -1504,6 +1453,7 @@ as JSON-number
 
 example: ``3.14159265``
 
+.. _Scaled:
 
 Scaled Integer: ``scaled``
 --------------------------
@@ -1516,57 +1466,60 @@ capabilities, where floating point calculation is a major effort.
 Mandatory Datatype Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-``scale``
-    a scale factor to be multiplied with the transported integer
+``"scale"``
+    a (numeric) scale factor to be multiplied with the transported integer
 
-``min``, ``max``
-    The limits of the transported integer. ``<min>`` <= ``<max>``. 
+``"min"``, ``"max"``
+    The limits of the transported integer. ``<min>`` <= ``<max>``.
     The limits of the represented floating point value are ``<min>*<scale>, <max>*<scale>``
 
 Optional Datatype Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-``unit``
-    string giving the unit of the parameter. (see datatype ``double``)
+``"unit"``
+    string giving the unit of the parameter. (see datatype Double_)
 
-``absolute_resolution``
+``"absolute_resolution"``
     JSON-number specifying the smallest difference between distinct values.
-    default value: ``scale``
-    
-``relative_resolution``
+
+    default value: ``<scale>``
+
+``"relative_resolution"``
     JSON-number specifying the smallest relative difference between distinct values:
-    
+
     ``abs(a-b) <= relative_resolution * max(abs(a),abs(b))``
-    
+
     default value: 1.2e-7 (enough for single precision floats)
 
     if both ``absolute_resolution`` and ``relative_resolution`` are given, the expected
     resolution is:
-    
+
     ``max(absolute_resolution, abs(value) * relative_resolution)``
 
     :related: `SECoP Issue 49: Precision of Floating Point Values`_
 
-``fmtstr``
+``"fmtstr"``
     string as a hint on how to format numeric parameters for the user.
     default value: "%.<n>f" where <n> = max(0,-floor(log10(scale)))
-    
-    The string must obey the same syntax as above for ``double``.
+
+    The string must obey the same syntax as above for Double_.
 
 Example
 ~~~~~~~
-``{"scaled": {"scale": 0.1, "min": 0, "max": 250}}``
-i.e. a double value between 0.0 and 25.0
+``{"scaled": {"scale": 0.1, "min": 0, "max": 2500}}``
+i.e. a value between 0.0 and 250.0
 
 Transport
 ~~~~~~~~~
 an integer JSON-number
 
-for example ``1255`` meaning 125.5
+for example ``1255`` meaning 125.5 in the above example.
 
 
 :related issue: `SECoP Issue 44: Scaled integers`_.
 
+.. _Int:
+.. _Integer:
 
 Integer: ``int``
 ----------------
@@ -1574,14 +1527,14 @@ Integer: ``int``
 PROPOSED:
     Datatype to be used for integer numbers.
     For any physical quantitiy ``double`` or ``scaled`` must be used, even when
-    the resolution is 1 or worse. An ``int`` has no unit. 
+    the resolution is 1 or worse. An int_ has no unit.
     An integer MUST be representable with signed 24 bits (i.e. all integers SHOULD fit
     inside -2\ :sup:`24` ... 2\ :sup:`24`), as some JSON libraries might parse JSON-numbers
     with 32bit float too.
 
 mandatory datatype properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-``min``, ``max``
+``"min"``, ``"max"``
    integer limits, ``<min>`` <= ``<max>``
 
 example
@@ -1594,7 +1547,8 @@ as JSON-number
 
 example: ``-55``
 
-        
+.. _Bool:
+.. _Boolean:
 
 Boolean: ``bool``
 -----------------
@@ -1608,13 +1562,15 @@ transport
 ``true`` or ``false``
 
 
+.. _Enum:
+
 Enumeratated Type: ``enum``
 ---------------------------
 
 mandatory datatype property
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-``members``
-    a JSON object: ``{<name> : <value>, ....}`` 
+``"members"``
+    a JSON-object: ``{<name> : <value>, ....}``
 
     ``name``\ s are strings, ``value``\ s are (small) integers, both ``name``\ s and ``value``\ s MUST be unique
 
@@ -1629,18 +1585,20 @@ as JSON-number, the client may perform a mapping back to the name
 example: ``200``
 
 
+.. _String:
+
 String: ``string``
 ------------------
 
 mandatory datatype property
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-``max``
+``"max"``
     the maximum length, counting the number of bytes (**not** characters!)
     used when the string is utf8 encoded!
-      
+
 optional datatype property
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
-``min``
+``"min"``
     the minimum length, default is 0
 
 example
@@ -1653,18 +1611,19 @@ as JSON-string
 
 example: ``"Hello\n\u2343World!"``
 
+.. _Blob:
 
 Binary Large Object: ``blob``
 -----------------------------
 
 mandatory datatype property
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-``max``
+``"max"``
     the maximum length, counting the number of bytes (**not** the size of the encoded string)
-      
+
 optional datatype property
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
-``min``
+``"min"``
    the minimum length, default is 0
 
 example
@@ -1675,20 +1634,24 @@ transport
 ~~~~~~~~~
 as single-line base64 (see :RFC:`4648`) encoded JSON-string
 
-example: ``"AA=="``
+example: ``"AA=="`` (a single, zero valued byte)
 
+.. _array:
 
 Sequence of Equally Typed Items : ``array``
 -------------------------------------------
 
 mandatory datatype properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-``max``
+``"members"``
+    the datatype of the elements.
+
+``"max"``
     the maximum length, counting the number of elements
 
 optional datatype property
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
-``min``
+``"min"``
     the minimum length, default is 0
 
 example
@@ -1701,13 +1664,14 @@ as JSON-array
 
 example: ``[3,4,7,2,1]``
 
+.. _tuple:
 
 Finite Sequence of Items with Individually Defined Type: ``tuple``
 ------------------------------------------------------------------
 
 mandatory datatype property
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-``members``
+``"members"``
     a JSON array listing the datatypes of the members
 
 example
@@ -1721,25 +1685,27 @@ as JSON-array
 ``[300,"accelerating"]``
 
 
+.. _Struct:
+
 Collection of Named Items: ``struct``
 -------------------------------------
 
 mandatory datatype property
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-``members``
+``"members"``
     a JSON object containing the names and datatypes of the members
 
 optional datatype property
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
-``optional``
+``"optional"``
     the names of optional struct elements is given)
-    
+
     In 'change' and 'do' commands, the ECS might omit these elements, all other
     elements must be given.
     The effect of a 'change' action with omitted elements should be the same
     as if the current values of these elements would have been sent with it.
     The effect of a 'do' action with omitted elements is defined by the implementation.
-    
+
     In all other messages (i.e. in replies and updates), all elements have to be given.
 
 example
@@ -1754,7 +1720,7 @@ example: ``{"x": 0.5, "y": 1}``
 
 :related issue: `SECoP Issue 35: Partial structs`_
 
-
+.. _command:
 
 command
 -------
@@ -1762,15 +1728,15 @@ command
 optional datatype properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-``argument``
-    the datatype of the argument
-    
+``"argument"``
+    the datatype of the single argument, or ``null``.
+
     only one argument is allowed, though several arguments may be used if
     encapsulated in a structural datatype (struct, tuple or array).
     If such encapsulation or data grouping is needed, a struct SHOULD be used.
-    
-``<resulttype>``
-    the datatype of the result
+
+``"result"``
+    the datatype of the single result, or ``null``.
 
     In any case, the meaning of result and argument(s) SHOULD be written down
     in the description of the command.
@@ -1781,6 +1747,8 @@ example
 
 transport example
 ~~~~~~~~~~~~~~~~~
+command values are not transported as such. But commands may be called (i.e. executed) by an ECS.
+Example:
 
 .. code::
 
@@ -1831,7 +1799,7 @@ The herein specified protocol has foreseen some extension mechanisms in its desi
 * extend reports (only append to them, never changing the already defined fields)
 
   :Note:
-      The structure report may need to be nested inside a json-array in the future, should we need to extend that.
+      The structure report may need to be nested inside a JSON-array in the future, should we need to extend that.
 
 * use so far unused datafields (there are not so many).
 
@@ -1881,17 +1849,22 @@ The corresponding reply then contains a double space. This MUST also be parsed c
 
 Similiarly, the reports need to be handled like this:
 
+
+.. _`data-report`:
+
 .. compound::
     Data report:
 
     .. image:: images/data-report.svg
-       :alt: data_report ::= "[" json-value "," qualifiers ("," ignored_value)* "]"
+       :alt: data_report ::= "[" JSON-value "," qualifiers ("," ignored_value)* "]"
+
+.. _`error-report`:
 
 .. compound::
     Error report:
 
     .. image:: images/error-report.svg
-       :alt: error_report ::= '["' copy_of_request '","' error_msg '",' error_info ("," ignored_value)* "]"
+       :alt: error_report ::= '["' errorclass '","' error_msg '",' error_info ("," ignored_value)* "]"
 
 Essentially this boils down to:
   1) ignore additional entries in the list-part of reports

@@ -1,9 +1,0 @@
-('SEC-node-property')
-[ <
- [["\"modules\":" "[" [ ["[" 'name'#`module name` "," 'module-description' "]"]*","]? ] "]"]
- ["\"description\":" 'descriptive text']
- ["\"equipment_id\":" 'equipment_id']
- ["\"firmware\":" 'firmware version']
- ["\"timeout\":" 'timeout in seconds'#`a positive json-number`]
- ['custom-property']
->]

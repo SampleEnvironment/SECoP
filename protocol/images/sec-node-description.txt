@@ -1,2 +1,2 @@
 ('SEC-node-description')
-[ [ "{" ['SEC-node-property'*","]? "}" ]#`a json-object, keys MUST be unique!`]
+[ [ "{" [ ['node-property' ","]*!]? "\"modules\":" 'module-description' [["," 'node-property']*!]? "}" ]#`a JSON object`]

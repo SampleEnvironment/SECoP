@@ -359,53 +359,59 @@ data-report</text>
 <path d=" M 556 417 h 10"/>
 <path d=" M 634 417 h 10"/>
 </g>
-<path d=" M 42 699 v 35 a 12 12 0 0 0 12 12 m 460 0 h 238 m -116 0 l -5 -5 m 0 10 l 5 -5 m 116 0 a 12 12 0 0 0 12 -12 v -35"/>
+<path d=" M 42 699 v 35 a 12 12 0 0 0 12 12 m 530 0 h 168 m -81 0 l -5 -5 m 0 10 l 5 -5 m 81 0 a 12 12 0 0 0 12 -12 v -35"/>
 <g class="sequence">
 <g class="terminal">
-<rect height="22" rx="10" ry="10" width="60" x="54" y="735"/>
-<text x="84" y="751">
-error</text>
+<rect height="22" rx="10" ry="10" width="68" x="54" y="735"/>
+<text x="88" y="751">
+error_</text>
+</g>
+<g class="nonterminal">
+<rect height="22" width="68" x="132" y="735"/>
+<text x="166" y="751">
+action</text>
 </g>
 <g class="labeledbox">
-<rect height="66" width="68" x="124" y="699"/>
-<path d=" M 124 746 h 8 m 52 0 h 8"/>
+<rect height="66" width="68" x="210" y="699"/>
+<path d=" M 210 746 h 8 m 52 0 h 8"/>
 <g>
-<text class="comment" x="154" y="722">
+<text class="comment" x="240" y="722">
 SPACE</text>
 </g>
 <g class="terminal">
-<rect height="22" rx="10" ry="10" width="52" x="132" y="735"/>
-<text x="158" y="751">
+<rect height="22" rx="10" ry="10" width="52" x="218" y="735"/>
+<text x="244" y="751">
 \x20</text>
 </g>
 </g>
 <g class="nonterminal">
-<rect height="22" width="108" x="202" y="735"/>
-<text x="256" y="751">
-error-class</text>
+<rect height="22" width="92" x="288" y="735"/>
+<text x="334" y="751">
+specifier</text>
 </g>
 <g class="labeledbox">
-<rect height="66" width="68" x="320" y="699"/>
-<path d=" M 320 746 h 8 m 52 0 h 8"/>
+<rect height="66" width="68" x="390" y="699"/>
+<path d=" M 390 746 h 8 m 52 0 h 8"/>
 <g>
-<text class="comment" x="350" y="722">
+<text class="comment" x="420" y="722">
 SPACE</text>
 </g>
 <g class="terminal">
-<rect height="22" rx="10" ry="10" width="52" x="328" y="735"/>
-<text x="354" y="751">
+<rect height="22" rx="10" ry="10" width="52" x="398" y="735"/>
+<text x="424" y="751">
 \x20</text>
 </g>
 </g>
 <g class="nonterminal">
-<rect height="22" width="116" x="398" y="735"/>
-<text x="456" y="751">
+<rect height="22" width="116" x="468" y="735"/>
+<text x="526" y="751">
 error-report</text>
 </g>
-<path d=" M 114 746 h 10"/>
-<path d=" M 192 746 h 10"/>
-<path d=" M 310 746 h 10"/>
-<path d=" M 388 746 h 10"/>
+<path d=" M 122 746 h 10"/>
+<path d=" M 200 746 h 10"/>
+<path d=" M 278 746 h 10"/>
+<path d=" M 380 746 h 10"/>
+<path d=" M 458 746 h 10"/>
 </g>
 </g>
 </g>

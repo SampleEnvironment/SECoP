@@ -6,7 +6,7 @@
  ["\\x20"#`SPACE` ['module' 
  [":" 'ignored-value'*":"]?]?
  ["\\x20"#`SPACE` 'ignored-value']?]?]
- ["error" "\\x20"#`SPACE` 'error-class'*[":" 'ignored-value']#`error-subclass to be defined` "\\x20"#`SPACE` 'error-report']
+ ["error_" 'action' "\\x20"#`SPACE` 'specifier'? "\\x20"#`SPACE` 'error-report']
  [<["pong" "\\x20"#`SPACE` 'token'?]
  ["done" "\\x20"#`SPACE` 'module' ":" 'command']
  [<"update" "changed" "buffered"#`see Issue 29`> "\\x20"#`SPACE` 'module' ":" 'parameter']>

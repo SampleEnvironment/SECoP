@@ -1,4 +1,4 @@
-<svg class="railroad" viewBox="0 0 752 919" width="601pt" xmlns="http://www.w3.org/2000/svg">
+<svg class="railroad" viewBox="0 0 712 121" width="569pt" xmlns="http://www.w3.org/2000/svg">
 <style type="text/css">
 
     svg.railroad {
@@ -53,520 +53,80 @@ datatype</text>
 </g>
 </g>
 <g class="sequence">
-<path d=" M 10 50 l 5 5 l -5 5 m 5 -5 h 5"/>
+<path d=" M 10 63 l 5 5 l -5 5 m 5 -5 h 5"/>
 <g class="sequence">
 <g class="terminal">
-<rect height="22" rx="10" ry="10" width="28" x="30" y="44"/>
-<text x="44" y="60">
-[</text>
-</g>
-<g class="choice">
-<path d=" M 68 55 h 24 m 68 0 h 524 m -259 0 l -5 -5 m 0 10 l 5 -5 m 259 0"/>
-<g class="sequence">
-<g class="terminal">
-<rect height="22" rx="10" ry="10" width="68" x="92" y="44"/>
-<text x="126" y="60">
-&quot;bool&quot;</text>
-</g>
-</g>
-<path d=" M 68 55 a 12 12 0 0 1 12 12 v 9 m 592 0 v -9 a 12 12 0 0 1 12 -12"/>
-<path d=" M 80 111 v 66 m 0 -30 l -5 -5 m 10 0 l -5 5 m 0 30 m 592 0 v -66 m 0 36 l -5 5 m 10 0 l -5 -5 m 0 -36"/>
-<path d=" M 80 212 v 41 m 592 0 v -41"/>
-<path d=" M 80 324 v 66 m 0 -30 l -5 -5 m 10 0 l -5 5 m 0 30 m 592 0 v -66 m 0 36 l -5 5 m 10 0 l -5 -5 m 0 -36"/>
-<path d=" M 80 425 v 41 m 592 0 v -41"/>
-<path d=" M 80 501 v 117 m 0 -55 l -5 -5 m 10 0 l -5 5 m 0 55 m 592 0 v -117 m 0 61 l -5 5 m 10 0 l -5 -5 m 0 -61"/>
-<path d=" M 80 618 v 65 m 0 -29 l -5 -5 m 10 0 l -5 5 m 0 29 m 592 0 v -65 m 0 35 l -5 5 m 10 0 l -5 -5 m 0 -35"/>
-<path d=" M 80 738 v 73 m 0 -33 l -5 -5 m 10 0 l -5 5 m 0 33 m 592 0 v -73 m 0 39 l -5 5 m 10 0 l -5 -5 m 0 -39"/>
-<path d=" M 80 76 v 35 a 12 12 0 0 0 12 12 m 476 0 h 92 m -43 0 l -5 -5 m 0 10 l 5 -5 m 43 0 a 12 12 0 0 0 12 -12 v -35"/>
-<g class="sequence">
-<g class="labeledbox">
-<rect height="66" width="100" x="92" y="76"/>
-<path d=" M 92 123 h 8 m 84 0 h 8"/>
-<g>
-<text class="comment" x="129" y="99">
-numbers</text>
-</g>
-<g class="terminal">
-<rect height="22" rx="10" ry="10" width="84" x="100" y="112"/>
-<text x="142" y="128">
-&quot;double&quot;</text>
-</g>
-</g>
-<g class="terminal">
-<rect height="22" rx="10" ry="10" width="28" x="202" y="112"/>
-<text x="216" y="128">
-,</text>
-</g>
-<g class="choice">
-<path d=" M 240 123 h 24 m 92 0 h 24"/>
-<g class="nonterminal">
-<rect height="22" width="92" x="264" y="112"/>
-<text x="310" y="128">
-min_value</text>
-</g>
-<path d=" M 240 123 a 12 12 0 0 1 12 12 v 9 m 116 0 v -9 a 12 12 0 0 1 12 -12"/>
-<path d=" M 252 144 v 0 a 12 12 0 0 0 12 12 m 52 0 h 40 a 12 12 0 0 0 12 -12 v 0"/>
-<g class="terminal">
-<rect height="22" rx="10" ry="10" width="52" x="264" y="145"/>
-<text x="290" y="161">
-null</text>
-</g>
-</g>
-<g class="terminal">
-<rect height="22" rx="10" ry="10" width="28" x="390" y="112"/>
-<text x="404" y="128">
-,</text>
-</g>
-<g class="choice">
-<path d=" M 428 123 h 24 m 92 0 h 24"/>
-<g class="nonterminal">
-<rect height="22" width="92" x="452" y="112"/>
-<text x="498" y="128">
-max_value</text>
-</g>
-<path d=" M 428 123 a 12 12 0 0 1 12 12 v 9 m 116 0 v -9 a 12 12 0 0 1 12 -12"/>
-<path d=" M 440 144 v 0 a 12 12 0 0 0 12 12 m 52 0 h 40 a 12 12 0 0 0 12 -12 v 0"/>
-<g class="terminal">
-<rect height="22" rx="10" ry="10" width="52" x="452" y="145"/>
-<text x="478" y="161">
-null</text>
-</g>
-</g>
-<path d=" M 192 123 h 10"/>
-<path d=" M 230 123 h 10"/>
-<path d=" M 380 123 h 10"/>
-<path d=" M 418 123 h 10"/>
-</g>
-<path d=" M 80 177 v 35 a 12 12 0 0 0 12 12 m 362 0 h 206 m -100 0 l -5 -5 m 0 10 l 5 -5 m 100 0 a 12 12 0 0 0 12 -12 v -35"/>
-<g class="sequence">
-<g class="labeledbox">
-<rect height="66" width="82" x="92" y="177"/>
-<path d=" M 92 224 h 8 m 60 0 h 14"/>
-<g>
-<text class="comment" x="133" y="200">
-integers</text>
-</g>
-<g class="terminal">
-<rect height="22" rx="10" ry="10" width="60" x="100" y="213"/>
-<text x="130" y="229">
-&quot;int&quot;</text>
-</g>
-</g>
-<g class="terminal">
-<rect height="22" rx="10" ry="10" width="28" x="184" y="213"/>
-<text x="198" y="229">
-,</text>
-</g>
-<g class="nonterminal">
-<rect height="22" width="92" x="222" y="213"/>
-<text x="268" y="229">
-min_value</text>
-</g>
-<g class="terminal">
-<rect height="22" rx="10" ry="10" width="28" x="324" y="213"/>
-<text x="338" y="229">
-,</text>
-</g>
-<g class="nonterminal">
-<rect height="22" width="92" x="362" y="213"/>
-<text x="408" y="229">
-max_value</text>
-</g>
-<path d=" M 174 224 h 10"/>
-<path d=" M 212 224 h 10"/>
-<path d=" M 314 224 h 10"/>
-<path d=" M 352 224 h 10"/>
-</g>
-<path d=" M 80 253 v 71 m 0 -32 l -5 -5 m 10 0 l -5 5 m 0 32 a 12 12 0 0 0 12 12 m 460 0 h 108 m -51 0 l -5 -5 m 0 10 l 5 -5 m 51 0 a 12 12 0 0 0 12 -12 v -71 m 0 38 l -5 5 m 10 0 l -5 -5 m 0 -38"/>
-<g class="sequence">
-<g class="choice">
-<path d=" M 92 336 h 24 m 84 0 h 24"/>
-<g class="terminal">
-<rect height="22" rx="10" ry="10" width="84" x="116" y="325"/>
-<text x="158" y="341">
-&quot;string&quot;</text>
-</g>
-<path d=" M 92 336 a 12 12 0 0 1 12 12 v 9 m 108 0 v -9 a 12 12 0 0 1 12 -12"/>
-<path d=" M 104 357 v 0 a 12 12 0 0 0 12 12 m 68 0 h 16 a 12 12 0 0 0 12 -12 v 0"/>
-<g class="terminal">
-<rect height="22" rx="10" ry="10" width="68" x="116" y="358"/>
-<text x="150" y="374">
-&quot;blob&quot;</text>
-</g>
-</g>
-<g class="terminal">
-<rect height="22" rx="10" ry="10" width="28" x="234" y="325"/>
-<text x="248" y="341">
-,</text>
-</g>
-<g class="labeledbox">
-<rect height="110" width="280" x="272" y="253"/>
-<path d=" M 272 336 h 8 m 264 0 h 8"/>
-<g>
-<text class="comment" x="393" y="276">
-min_bytes MUST be &lt;= max_bytes</text>
-</g>
-<g class="sequence">
-<g class="labeledbox">
-<rect height="66" width="108" x="280" y="289"/>
-<path d=" M 280 336 h 8 m 92 0 h 8"/>
-<g>
-<text class="comment" x="317" y="312">
-integer</text>
-</g>
-<g class="nonterminal">
-<rect height="22" width="92" x="288" y="325"/>
-<text x="334" y="341">
-min_bytes</text>
-</g>
-</g>
-<g class="terminal">
-<rect height="22" rx="10" ry="10" width="28" x="398" y="325"/>
-<text x="412" y="341">
-,</text>
-</g>
-<g class="labeledbox">
-<rect height="66" width="108" x="436" y="289"/>
-<path d=" M 436 336 h 8 m 92 0 h 8"/>
-<g>
-<text class="comment" x="473" y="312">
-integer</text>
-</g>
-<g class="nonterminal">
-<rect height="22" width="92" x="444" y="325"/>
-<text x="490" y="341">
-max_bytes</text>
-</g>
-</g>
-<path d=" M 388 336 h 10"/>
-<path d=" M 426 336 h 10"/>
-</g>
-</g>
-<path d=" M 224 336 h 10"/>
-<path d=" M 262 336 h 10"/>
-</g>
-<path d=" M 80 390 v 35 a 12 12 0 0 0 12 12 m 520 0 h 48 a 12 12 0 0 0 12 -12 v -35"/>
-<g class="sequence">
-<g class="terminal">
-<rect height="22" rx="10" ry="10" width="76" x="92" y="426"/>
-<text x="130" y="442">
-&quot;array&quot;</text>
-</g>
-<g class="terminal">
-<rect height="22" rx="10" ry="10" width="28" x="178" y="426"/>
-<text x="192" y="442">
-,</text>
-</g>
-<g class="labeledbox">
-<rect height="66" width="108" x="216" y="390"/>
-<path d=" M 216 437 h 8 m 92 0 h 8"/>
-<g>
-<text class="comment" x="253" y="413">
-integer</text>
-</g>
-<g class="nonterminal">
-<rect height="22" width="92" x="224" y="426"/>
-<text x="270" y="442">
-min_items</text>
-</g>
-</g>
-<g class="terminal">
-<rect height="22" rx="10" ry="10" width="28" x="334" y="426"/>
-<text x="348" y="442">
-,</text>
-</g>
-<g class="labeledbox">
-<rect height="66" width="108" x="372" y="390"/>
-<path d=" M 372 437 h 8 m 92 0 h 8"/>
-<g>
-<text class="comment" x="409" y="413">
-integer</text>
-</g>
-<g class="nonterminal">
-<rect height="22" width="92" x="380" y="426"/>
-<text x="426" y="442">
-max_items</text>
-</g>
-</g>
-<g class="terminal">
-<rect height="22" rx="10" ry="10" width="28" x="490" y="426"/>
-<text x="504" y="442">
-,</text>
-</g>
-<g class="nonterminal">
-<rect height="22" width="84" x="528" y="426"/>
-<text x="570" y="442">
-datatype</text>
-</g>
-<path d=" M 168 437 h 10"/>
-<path d=" M 206 437 h 10"/>
-<path d=" M 324 437 h 10"/>
-<path d=" M 362 437 h 10"/>
-<path d=" M 480 437 h 10"/>
-<path d=" M 518 437 h 10"/>
-</g>
-<path d=" M 80 466 v 35 a 12 12 0 0 0 12 12 m 487 0 h 81 m -37 0 l -5 -5 m 0 10 l 5 -5 m 37 0 a 12 12 0 0 0 12 -12 v -35"/>
-<g class="sequence">
-<g class="terminal">
-<rect height="22" rx="10" ry="10" width="92" x="92" y="502"/>
-<text x="138" y="518">
-&quot;command&quot;</text>
-</g>
-<g class="terminal">
-<rect height="22" rx="10" ry="10" width="28" x="194" y="502"/>
-<text x="208" y="518">
-,</text>
-</g>
-<g class="choice">
-<path d=" M 232 513 h 24 m 100 0 h 27"/>
-<g class="labeledbox">
-<rect height="66" width="100" x="256" y="466"/>
-<path d=" M 256 513 h 8 m 84 0 h 8"/>
-<g>
-<text class="comment" x="297" y="489">
-argument</text>
-</g>
-<g class="nonterminal">
-<rect height="22" width="84" x="264" y="502"/>
-<text x="306" y="518">
-datatype</text>
-</g>
-</g>
-<path d=" M 232 513 a 12 12 0 0 1 12 12 v 17 m 127 0 v -17 a 12 12 0 0 1 12 -12"/>
-<path d=" M 244 542 v 35 a 12 12 0 0 0 12 12 m 103 0 h 0 a 12 12 0 0 0 12 -12 v -35"/>
-<g class="labeledbox">
-<rect height="66" width="103" x="256" y="542"/>
-<path d=" M 256 589 h 8 m 52 0 h 43"/>
-<g>
-<text class="comment" x="307" y="565">
-no argument</text>
-</g>
-<g class="terminal">
-<rect height="22" rx="10" ry="10" width="52" x="264" y="578"/>
-<text x="290" y="594">
-null</text>
-</g>
-</g>
-</g>
-<g class="terminal">
-<rect height="22" rx="10" ry="10" width="28" x="393" y="502"/>
-<text x="407" y="518">
-,</text>
-</g>
-<g class="choice">
-<path d=" M 431 513 h 24 m 100 0 h 24"/>
-<g class="labeledbox">
-<rect height="66" width="100" x="455" y="466"/>
-<path d=" M 455 513 h 8 m 84 0 h 8"/>
-<g>
-<text class="comment" x="489" y="489">
-result</text>
-</g>
-<g class="nonterminal">
-<rect height="22" width="84" x="463" y="502"/>
-<text x="505" y="518">
-datatype</text>
-</g>
-</g>
-<path d=" M 431 513 a 12 12 0 0 1 12 12 v 17 m 124 0 v -17 a 12 12 0 0 1 12 -12"/>
-<path d=" M 443 542 v 35 a 12 12 0 0 0 12 12 m 89 0 h 11 a 12 12 0 0 0 12 -12 v -35"/>
-<g class="labeledbox">
-<rect height="66" width="89" x="455" y="542"/>
-<path d=" M 455 589 h 8 m 52 0 h 29"/>
-<g>
-<text class="comment" x="499" y="565">
-no result</text>
-</g>
-<g class="terminal">
-<rect height="22" rx="10" ry="10" width="52" x="463" y="578"/>
-<text x="489" y="594">
-null</text>
-</g>
-</g>
-</g>
-<path d=" M 184 513 h 10"/>
-<path d=" M 222 513 h 10"/>
-<path d=" M 383 513 h 10"/>
-<path d=" M 421 513 h 10"/>
-</g>
-<path d=" M 80 618 v 0 a 12 12 0 0 0 12 12 m 232 0 h 336 m -165 0 l -5 -5 m 0 10 l 5 -5 m 165 0 a 12 12 0 0 0 12 -12 v 0"/>
-<g class="sequence">
-<g class="terminal">
-<rect height="22" rx="10" ry="10" width="76" x="92" y="619"/>
-<text x="130" y="635">
-&quot;tuple&quot;</text>
-</g>
-<g class="terminal">
-<rect height="22" rx="10" ry="10" width="28" x="178" y="619"/>
-<text x="192" y="635">
-,</text>
-</g>
-<g class="repeat">
-<path d=" M 216 630 h 12 m 84 0 h 12 m -12 0 a 12 12 0 0 1 12 12 v 8 a 12 12 0 0 1 -12 12 m -28 0 h -56 m 31 0 l 5 -5 m 0 10 l -5 -5 m -31 0 a 12 12 0 0 1 -12 -12 v -8 a 12 12 0 0 1 12 -12"/>
-<g class="terminal">
-<rect height="22" rx="10" ry="10" width="28" x="284" y="651"/>
-<text x="298" y="667">
-,</text>
-</g>
-<g class="nonterminal">
-<rect height="22" width="84" x="228" y="619"/>
-<text x="270" y="635">
-datatype</text>
-</g>
-</g>
-<path d=" M 168 630 h 10"/>
-<path d=" M 206 630 h 10"/>
-</g>
-<path d=" M 80 683 v 55 m 0 -24 l -5 -5 m 10 0 l -5 5 m 0 24 a 12 12 0 0 0 12 12 m 568 0 h 0 a 12 12 0 0 0 12 -12 v -55 m 0 30 l -5 5 m 10 0 l -5 -5 m 0 -30"/>
-<g class="sequence">
-<g class="terminal">
-<rect height="22" rx="10" ry="10" width="68" x="92" y="739"/>
-<text x="126" y="755">
-&quot;enum&quot;</text>
-</g>
-<g class="terminal">
-<rect height="22" rx="10" ry="10" width="28" x="170" y="739"/>
-<text x="184" y="755">
-,</text>
-</g>
-<g class="sequence">
-<g class="terminal">
-<rect height="22" rx="10" ry="10" width="28" x="208" y="739"/>
-<text x="222" y="755">
+<rect height="22" rx="10" ry="10" width="28" x="30" y="57"/>
+<text x="44" y="73">
 {</text>
 </g>
-<g class="repeat">
-<path d=" M 246 750 h 12 m 352 0 h 12 m -12 0 a 12 12 0 0 1 12 12 v 16 a 12 12 0 0 1 -12 12 m -28 0 h -324 m 165 0 l 5 -5 m 0 10 l -5 -5 m -165 0 a 12 12 0 0 1 -12 -12 v -16 a 12 12 0 0 1 12 -12"/>
 <g class="terminal">
-<rect height="22" rx="10" ry="10" width="28" x="582" y="779"/>
-<text x="596" y="795">
-,</text>
-</g>
-<g class="sequence">
-<g class="labeledbox">
-<rect height="66" width="173" x="258" y="703"/>
-<path d=" M 258 750 h 8 m 44 0 h 121 m -57 0 l -5 -5 m 0 10 l 5 -5 m 57 0"/>
-<g>
-<text class="comment" x="344" y="726">
-keys MUST be unique!</text>
+<rect height="22" rx="10" ry="10" width="28" x="68" y="57"/>
+<text x="82" y="73">
+&quot;</text>
 </g>
 <g class="nonterminal">
-<rect height="22" width="44" x="266" y="739"/>
-<text x="288" y="755">
-key</text>
-</g>
+<rect height="22" width="148" x="106" y="57"/>
+<text x="180" y="73">
+name of datatype</text>
 </g>
 <g class="terminal">
-<rect height="22" rx="10" ry="10" width="28" x="441" y="739"/>
-<text x="455" y="755">
+<rect height="22" rx="10" ry="10" width="28" x="264" y="57"/>
+<text x="278" y="73">
+&quot;</text>
+</g>
+<g class="terminal">
+<rect height="22" rx="10" ry="10" width="28" x="302" y="57"/>
+<text x="316" y="73">
 :</text>
 </g>
-<g class="labeledbox">
-<rect height="86" width="131" x="479" y="683"/>
-<path d=" M 479 750 h 8 m 60 0 h 63 m -28 0 l -5 -5 m 0 10 l 5 -5 m 28 0"/>
-<g>
-<text class="comment" x="544" y="706">
-integer values,</text>
-<text class="comment" x="544" y="726">
-MUST be unique!</text>
-</g>
-<g class="nonterminal">
-<rect height="22" width="60" x="487" y="739"/>
-<text x="517" y="755">
-value</text>
-</g>
-</g>
-<path d=" M 431 750 h 10"/>
-<path d=" M 469 750 h 10"/>
-</g>
-</g>
 <g class="terminal">
-<rect height="22" rx="10" ry="10" width="28" x="632" y="739"/>
-<text x="646" y="755">
-}</text>
-</g>
-<path d=" M 236 750 h 10"/>
-<path d=" M 622 750 h 10"/>
-</g>
-<path d=" M 160 750 h 10"/>
-<path d=" M 198 750 h 10"/>
-</g>
-<path d=" M 80 811 v 35 a 12 12 0 0 0 12 12 m 544 0 h 24 a 12 12 0 0 0 12 -12 v -35"/>
-<g class="sequence">
-<g class="terminal">
-<rect height="22" rx="10" ry="10" width="84" x="92" y="847"/>
-<text x="134" y="863">
-&quot;struct&quot;</text>
-</g>
-<g class="terminal">
-<rect height="22" rx="10" ry="10" width="28" x="186" y="847"/>
-<text x="200" y="863">
-,</text>
-</g>
-<g class="sequence">
-<g class="terminal">
-<rect height="22" rx="10" ry="10" width="28" x="224" y="847"/>
-<text x="238" y="863">
+<rect height="22" rx="10" ry="10" width="28" x="340" y="57"/>
+<text x="354" y="73">
 {</text>
 </g>
+<g class="sequence">
+<g class="optional">
+<path d=" M 378 68 h 24 m -24 0 a 12 12 0 0 0 12 -12 v 0 a 12 12 0 0 1 12 -12 h 180 m -87 0 l -5 -5 m 0 10 l 5 -5 m 87 0 a 12 12 0 0 1 12 12 v 0 a 12 12 0 0 0 12 12 h -24"/>
+<g class="sequence">
 <g class="repeat">
-<path d=" M 262 858 h 12 m 312 0 h 12 m -12 0 a 12 12 0 0 1 12 12 v 16 a 12 12 0 0 1 -12 12 m -28 0 h -284 m 145 0 l 5 -5 m 0 10 l -5 -5 m -145 0 a 12 12 0 0 1 -12 -12 v -16 a 12 12 0 0 1 12 -12"/>
+<path d=" M 402 68 h 12 m 156 0 h 12 m -12 0 a 12 12 0 0 1 12 12 v 8 a 12 12 0 0 1 -12 12 m -28 0 h -128 m 67 0 l 5 -5 m 0 10 l -5 -5 m -67 0 a 12 12 0 0 1 -12 -12 v -8 a 12 12 0 0 1 12 -12"/>
 <g class="terminal">
-<rect height="22" rx="10" ry="10" width="28" x="558" y="887"/>
-<text x="572" y="903">
+<rect height="22" rx="10" ry="10" width="28" x="542" y="89"/>
+<text x="556" y="105">
 ,</text>
 </g>
-<g class="sequence">
-<g class="labeledbox">
-<rect height="66" width="180" x="274" y="811"/>
-<path d=" M 274 858 h 8 m 52 0 h 120 m -57 0 l -5 -5 m 0 10 l 5 -5 m 57 0"/>
-<g>
-<text class="comment" x="364" y="834">
-names MUST be unique!</text>
-</g>
 <g class="nonterminal">
-<rect height="22" width="52" x="282" y="847"/>
-<text x="308" y="863">
-name</text>
+<rect height="22" width="156" x="414" y="57"/>
+<text x="492" y="73">
+datatype-property</text>
+</g>
+</g>
+</g>
 </g>
 </g>
 <g class="terminal">
-<rect height="22" rx="10" ry="10" width="28" x="464" y="847"/>
-<text x="478" y="863">
-:</text>
-</g>
-<g class="nonterminal">
-<rect height="22" width="84" x="502" y="847"/>
-<text x="544" y="863">
-datatype</text>
-</g>
-<path d=" M 454 858 h 10"/>
-<path d=" M 492 858 h 10"/>
-</g>
-</g>
-<g class="terminal">
-<rect height="22" rx="10" ry="10" width="28" x="608" y="847"/>
-<text x="622" y="863">
+<rect height="22" rx="10" ry="10" width="28" x="616" y="57"/>
+<text x="630" y="73">
 }</text>
 </g>
-<path d=" M 252 858 h 10"/>
-<path d=" M 598 858 h 10"/>
-</g>
-<path d=" M 176 858 h 10"/>
-<path d=" M 214 858 h 10"/>
-</g>
-</g>
 <g class="terminal">
-<rect height="22" rx="10" ry="10" width="28" x="694" y="44"/>
-<text x="708" y="60">
-]</text>
+<rect height="22" rx="10" ry="10" width="28" x="654" y="57"/>
+<text x="668" y="73">
+}</text>
 </g>
-<path d=" M 58 55 h 10"/>
-<path d=" M 684 55 h 10"/>
+<path d=" M 58 68 h 10"/>
+<path d=" M 96 68 h 10"/>
+<path d=" M 254 68 h 10"/>
+<path d=" M 292 68 h 10"/>
+<path d=" M 330 68 h 10"/>
+<path d=" M 368 68 h 10"/>
+<path d=" M 606 68 h 10"/>
+<path d=" M 644 68 h 10"/>
 </g>
-<path d=" M 732 55 h 5 m -5 5 l 5 -5 l -5 -5 m 5 5"/>
-<path d=" M 20 55 h 10"/>
-<path d=" M 722 55 h 10"/>
+<path d=" M 692 68 h 5 m -5 5 l 5 -5 l -5 -5 m 5 5"/>
+<path d=" M 20 68 h 10"/>
+<path d=" M 682 68 h 10"/>
 </g>
 </g>
 </svg>
