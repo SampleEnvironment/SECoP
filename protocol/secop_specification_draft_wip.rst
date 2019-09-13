@@ -1576,7 +1576,7 @@ mandatory datatype property
 
 example
 ~~~~~~~
-``{"enum": {"IDLE":100,"WARN":200,"BUSY":300,"ERROR":400}}``
+``{"enum": {"members":{"IDLE":100,"WARN":200,"BUSY":300,"ERROR":400}}}``
 
 transport
 ~~~~~~~~~
