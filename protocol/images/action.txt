@@ -7,7 +7,6 @@
  "change" "changed"
  "do" "done"
  "read" "update" "error"
- <"buffer" "buffered">#`see Issue 29`
  'custom-action'
 >]
 !!!

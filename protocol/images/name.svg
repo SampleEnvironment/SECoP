@@ -1,4 +1,4 @@
-<svg class="railroad" viewBox="0 0 306 276" width="244pt" xmlns="http://www.w3.org/2000/svg">
+<svg class="railroad" viewBox="0 0 400 276" width="320pt" xmlns="http://www.w3.org/2000/svg">
 <style type="text/css">
 
     svg.railroad {
@@ -50,6 +50,15 @@
 <rect height="22" width="52" x="10" y="10"/>
 <text x="36" y="26">
 name</text>
+</g>
+<g>
+<text class="comment" x="86" y="25">
+or</text>
+</g>
+<g class="nonterminal">
+<rect height="22" width="60" x="110" y="10"/>
+<text x="140" y="26">
+token</text>
 </g>
 </g>
 <g class="sequence">
@@ -104,23 +113,29 @@ underscore</text>
 _</text>
 </g>
 </g>
+<g class="terminal">
+<rect height="22" rx="10" ry="10" width="84" x="136" y="214"/>
+<text x="178" y="230">
+[a-zA-Z]</text>
+</g>
 <g class="repeat">
-<path d=" M 136 225 h 12 m 116 0 h 12 m -12 0 a 12 12 0 0 1 12 12 v 7 a 12 12 0 0 1 -12 12 m -94 0 h -22 a 12 12 0 0 1 -12 -12 v -7 a 12 12 0 0 1 12 -12"/>
+<path d=" M 230 225 h 12 m 116 0 h 12 m -12 0 a 12 12 0 0 1 12 12 v 7 a 12 12 0 0 1 -12 12 m -94 0 h -22 a 12 12 0 0 1 -12 -12 v -7 a 12 12 0 0 1 12 -12"/>
 <g>
-<text class="comment" x="217" y="261">
-max 62 times</text>
+<text class="comment" x="311" y="261">
+max 61 times</text>
 </g>
 <g class="terminal">
-<rect height="22" rx="10" ry="10" width="116" x="148" y="214"/>
-<text x="206" y="230">
+<rect height="22" rx="10" ry="10" width="116" x="242" y="214"/>
+<text x="300" y="230">
 [a-zA-Z0-9_]</text>
 </g>
 </g>
 <path d=" M 126 225 h 10"/>
+<path d=" M 220 225 h 10"/>
 </g>
-<path d=" M 286 225 h 5 m -5 5 l 5 -5 l -5 -5 m 5 5"/>
+<path d=" M 380 225 h 5 m -5 5 l 5 -5 l -5 -5 m 5 5"/>
 <path d=" M 20 225 h 10"/>
-<path d=" M 276 225 h 10"/>
+<path d=" M 370 225 h 10"/>
 </g>
 </g>
 </svg>

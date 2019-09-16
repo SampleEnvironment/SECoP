@@ -6,7 +6,7 @@
  [<"activate" "deactivate"> ["\\x20"#`SPACE` 'module'? ["\\x20"#`SPACE` 'ignored-value']?]?]
  ["read" "\\x20"#`SPACE` 'module' ":" 'parameter' ["\\x20"#`SPACE` 'ignored-value']?]
  ["do" "\\x20"#`SPACE` 'module' ":" 'command' ["\\x20"#`SPACE` 'argument']?]
- [<"change" "buffer"#`see Issue 29`> "\\x20"#`SPACE`
+ ["change" "\\x20"#`SPACE`
  'module' ":" 'parameter' "\\x20"#`SPACE` 'new value']
 >]
 

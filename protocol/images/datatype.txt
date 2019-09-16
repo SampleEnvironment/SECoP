@@ -1,4 +1,4 @@
-('datatype')
+('datainfo')
 [
 "{"
 "\""
@@ -6,7 +6,7 @@
 "\""
 ":"
 "{"
-[ ['datatype-property'*","]? ]
+[ ['data-property'*","]? ]
 "}"
 "}"
 ]

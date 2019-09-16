@@ -1,4 +1,6 @@
 ('specifier')
-[ <! 'token'#[`for` <'ping' 'pong'> `only`]
- ['errorclass' <! [":" 'subclass']>#`likely extension`]#[`for` 'error' `only`]
- ['module' [":" 'parameter']?]>]
+[ <
+ ['module-name' [":" 'accessible-name']?]
+ 'token'
+!
+>]

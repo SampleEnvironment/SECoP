@@ -8,7 +8,7 @@
  ]#`module-wise (de-)activation`
  >]
  ["ping" <!#`for manual debuging only` ["\\x20"#`SPACE` 'token'#`specifier`]>]
- [<"change" "buffer"#`see Issue 29`> "\\x20"#`SPACE` ['module' ":" 'parameter']#`specifier` "\\x20"#`SPACE` 'data']
+ ["change" "\\x20"#`SPACE` ['module' ":" 'parameter']#`specifier` "\\x20"#`SPACE` 'data']
  ["do" "\\x20"#`SPACE` ['module' ":" 'command']#`specifier` ["\\x20"#`SPACE` 'argument'#`data`]?]
  ["read" "\\x20"#`SPACE` ['module' ":" 'parameter']#`specifier`]
 >]
