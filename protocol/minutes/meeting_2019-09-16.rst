@@ -43,12 +43,21 @@ PSI:
     4) Ist it really needed to prefix not-yet-predefined parameter names?
 
 MLZ:
-    5) Why is the syntax so awkward complicated? (datatypes)
+    5) revert change of data info structure to a one key JSON-object
     #) Statuscodes got a mess: can't this be simplified?
     #) definition of other transport protocols? (binary?)
     #) How to handle large binary blobs more efficiently
     #) How to handle/manage high data rate data streams?
 
+1) is clear, will be described in the book
+2) "unit" is optional, if needed, use an empty string.
+3) no
+4) leave like it is.
+5) change to json-object with "type" keyword.
+6) statuscodes were reworked -> done
+7) no binary protocol now. remove from the spec
+8) leave like it is
+9) use another protocol/socket/..., i.e. something else.
 
 2) Report Developments of Beer-Instrument in Prag
 =================================================
@@ -172,8 +181,22 @@ after 1.9 interface classes: feature is missing
 - here error_action is correct
 - remove buffer/buffered
 
+Almost all issues could be solved directly, discussion about status codes to be disussed tomorrow.
+
+status and mode (2019-09-17)
+============================
+a heated discussion abut the current assignment of status codes.
+Anders presented his 'tables' idea.
+
+After a lengthy discussion, a few changes were agreed upon and reworked in the current draft.
+
+
 4) Discussion about Open SECoP Issues:
 ======================================
 
+postponed
+
 5) What is left to be done for Sine2020
 =======================================
+
+Klaus writes two reports and queries the required information directly.

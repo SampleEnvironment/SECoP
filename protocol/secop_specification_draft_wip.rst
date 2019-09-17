@@ -133,37 +133,52 @@ Parameter:
 
 The following parameters are predefined (this list will be extended):
 
-- value
+``"value"``:
     represents the *main* value of a module.
 
 .. _BUSY:
 
-- status
+``"status"``:
     (a tuple of two elements: a status with predefined values
     from an Enum_ as "idle","busy","error", and a describing text).
 
-    .. table:: assignment of status codes
+    :TODO: include a diagram of the generalized state machine
+
+    .. table:: assignment of status code groups
 
          ============ ============== =========================================
           statuscode   variant name   Meaning
          ============ ============== =========================================
             0           DISABLED      Module is not enabled
-          100           IDLE          Module is not performing any action
-          200           WARN          The same as IDLE, but something may not be alright, though it is not a problem (yet)
-          300           BUSY          Module is performing some action
-          400           ERROR         Module is in an error state, something turned out to be a problem.
+          1XX           IDLE          Module is not performing any action
+          2XX           WARN          The same as IDLE, but something may not be alright, though it is not a problem (yet)
+          3XX           BUSY          Module is performing some action
+          4XX           ERROR         Module is in an error state, something turned out to be a problem.
          ============ ============== =========================================
 
-    Codes 1 to 99, codes of the form x0y and codes above 499 are reserved for future use by the standard.
-    Code 401 (Name: UNKNOWN) is a predefined value for ERROR, its meaning is: the SEC node can not (yet)
-    determine the status.
+    .. table:: assignment of sub status (state within the generic state machine)
 
-    Codes 110...199, 210...299, 310...399 and 410...499 are custom codes. Their meaning
-    can be defined by the implementor (see `implementor`_ property). The ECS MUST treat the
-    second and first digit as 0, if it does not know about the specific meaning defined by
-    the implementor.
+         ============ ============== =========================================
+          statuscode   variant name   Meaning
+         ============ ============== =========================================
+            0          Generic       used for generic modules not having a state machine
+           10          Disabling     intermediate state: Standby -> **Disabling** -> Disabled
+           20          Initializing  intermediate state: Disabled -> **Initializing** -> Standby
+           30          Standby       stable, steady state, needs some preparation steps, before a target change is effective
+           40          Preparing     intermediate state: Standby -> **Preparing** -> Prepared
+           50          Prepared      Ready for immediate target change
+           60          Starting      intermediate state: Prepared -> **Starting** -> Ramping -> Stabilizing -> Finalizing -> Prepared
+           70          Ramping       intermediate state: Prepared -> Starting -> **Ramping** -> Stabilizing -> Finalizing -> Prepared
+           80          Stabilizing   intermediate state: Prepared -> Starting -> Ramping -> **Stabilizing** -> Finalizing -> Prepared
+           90          Finalizing    intermediate state: Prepared -> Starting -> Ramping -> Stabilizing -> **Finalizing** -> Prepared
+         ============ ============== =========================================
 
-    :related issue: `SECoP Issue 37: Clarification of status`_
+    Any undefined status code has to be treated like a gneric subcode of the given code number,
+    i.e. 376 should be treated as a generic BUSY until it is defined in the specification.
+
+    :related issues:
+        `SECoP Issue 37: Clarification of status`_,
+        `SECoP Issue 59: set_mode and mode`_
 
     :Note:
         the behaviour of a module in each of the predefined states is not yet 100% defined.
@@ -172,35 +187,31 @@ The following parameters are predefined (this list will be extended):
         a module only need to declare the status values which it implements. i.e. an Readable module
         does not need a BUSY status.
 
-- target
+``"target"``:
     present, if the modules main value is to be changeable remotely, i.e. it is at least a Writable
 
-- pollinterval
+``"pollinterval"``:
     a hint to the module for the polling interval in seconds, type is always an double.
 
-- ramp
+``"ramp"``:
     (writable parameter, desired ramp. Units: main units/min)
 
-- setpoint
+``"setpoint"``:
     (ramping setpoint, read only)
 
-- time_to_target
+``"time_to_target"``:
     (read only double, expected time to reach target in seconds)
 
-- mode (PROBABLY TO BE CHANGED!)
+``"mode"``:
     A parameter of datatype enum, for selecting the operation mode of a module.
     The available operation modes can not be predefined in the specification, since
     they depend on the specific module.
-    The value 0 SHOULD be used as default, and be the mode which is used normally.
 
-    Example:
-    a temperate controller module may define the mode as follows:
-
+    Maximum set of allowed modes:
     .. code::
 
-        ["enum",{"pid": 0, "ramp": 1, "openloop": 2}]
+        {"enum",{"members":{"DISABLED": 0, "STANDBY": 30, "PREPARED": 50}}
 
-    i.e. it supports three modes: "pid", "ramp" and "openloop".
     The meaning of the operation modes SHOULD be described in the description.
 
 Commands
@@ -221,7 +232,7 @@ ECS can use them only in a general way, as their meaning is not known.
 
 The following commands are predefined (extensible):
 
--  **stop**
+``"stop"``:
      mandatory command on a drivable.
      When a modules target is changed (or, if present, when the ``go`` command is sent),
      it is 'driving' to a new value until the target is reached or until its stop command
@@ -230,23 +241,23 @@ The following commands are predefined (extensible):
      to a value close to the present one. Then it SHOULD act as if this value would have
      been the initial target.
 
--  **communicate**
+``"communicate"``:
      Used for direct communication with hardware, with proprietary commands. It is useful
      for debugging purposes, or if the implementor wants to give access to parameters not
      supported by the driver. The datatype might be string, or any other datatype suitable
      to the protocol of the device. The ``communicate`` command  is meant to be used in
      module with the ``Communicator`` interface class.
 
--  **reset**
+``"reset"``
      optional command for putting the module to a state predefined by the implementation.
 
--  **clear_errors**
+``"clear_error"``:
      This command tries to clear an error state. It may be called when status is ERROR,
      and the command will try to transfrom status to IDLE or WARN. If it can not
      do it, the status should not change or change to an other ERROR state before
      returning ``done <module>:clear_errors``
 
--  **go**
+``"go"``: XXX
      optional command for starting an action. If the ``go`` command is present,
      changing any parameter (especially the 'target' parameter) does not yet initiate any
      action leading to a BUSY state.
@@ -255,13 +266,13 @@ The following commands are predefined (extensible):
      state. Changing any parameter, which has an impact on measured values, should
      be executed immediately.
 
--  **hold**
+``"hold"``: XXX
      optional command on a drivable. Stay more or less where you are, cease
      movement, be ready to continue soon, target value is kept. Continuation can be
      trigger with ``go``, or if not present, by putting the target parameter to its
      present value.
 
--  **shutdown** (PROBABLY TO BE CHANGED)
+``"shutdown"`` (PROBABLY TO BE CHANGED) XXX
      optional command for shuting down the hardware.
      When this command is sent, and the triggered action is finished (status in idle mode),
      it is safe to switch off the related device.
@@ -294,21 +305,18 @@ See also: `Data-report`_.
     future revisions may append additional elements.
     These are to be ignored for implementations of the current specification
 
+.. _`error report`:
 
 Error report
 ------------
 An error report is used in a `error reply`_ indicating that the requested action could
 not be performed as request or that other problems occured.
-The Error report is a JSON-array containing the name of one of the `Error classes`_, a human readable string
+The error report is a JSON-array containing the name of one of the `Error classes`_, a human readable string
 and as a third element a JSON-object containing extra error information,
 which may include the timestamp (as key "t") and possible additional
 implementation specific information about the error (stack dump etc.).
 
 See also: `Error-report`_.
-
-:Note:
-    See Qualifiers_ 'error', for errors not related to a request, but occuring while
-    determining a parameter.
 
 
 Structure report
@@ -324,15 +332,15 @@ Values are transferred as a JSON-Value.
 
 :Programming Hint:
 
-    Some JSON libraries do not allow simple JSON values in their conversion functions.
-    Whether or not a simple JSON value is a valid JSON text, is controversial,
-    see this `stackoverflow issue <https://stackoverflow.com/questions/19569221>`_ and :rfc:`8259`
+    Some JSON libraries do not allow all JSON values in their (de-)serialisation functions.
+    Whether or not a JSON value is a valid JSON text, is controversial,
+    see this `stackoverflow issue <https://stackoverflow.com/questions/19569221>`_
+    and :rfc:`8259`.
 
     (clarification: a *JSON document* is either a *JSON object* or a *JSON array*,
-    a *simple JSON value* (for example a bare string or number) is a *JSON value*,
-    which is not a *JSON document*)
+    a *JSON value* is any of a *JSON object*, *JSON array*, *JSON number* or *JSON string*.)
 
-    If an implementation uses a libray, which can not convert simple JSON values,
+    If an implementation uses a libray, which can not (de-)serialize all JSON values,
     the implemetation can add angular brackets around a JSON value, decode it
     and take the first element of the result. When encoding the reverse action might be
     used as a workaround. See also :RFC:`7493`
@@ -345,9 +353,9 @@ Qualifiers optionally augment the value in a reply from the SEC node,
 and present variable information about that parameter.
 They are collected as named values in a JSON-object.
 
-Currently 3 qualifiers are defined:
+Currently 2 qualifiers are defined:
 
-- "t"
+``"t"``:
     The timestamp when the parameter has changed or was verified/measured (when no timestamp
     is given, the ECS may use the arrival time of the update message as the timestamp).
     It SHOULD be given, if the SEC node has a synchronized time,
@@ -359,7 +367,7 @@ Currently 3 qualifiers are defined:
         To check if a SEC node supports time stamping, a `ping` request can be sent.
         (See also `heartbeat`_).
 
-- "e"
+``"e"``:
    the uncertainity of the quantity. MUST be in the same units
    as the value. So far the interpretation of "e" is not fixed.
    (sigma vs. RMS difference vs. ....)
@@ -398,21 +406,27 @@ Base classes
     The main purpose of the module is communication.
     It may have none of the predefined parameters of the other classes.
 
-    The communicate command is used mainly for debugging reasons, or as a workaround
+    The ``communicate`` command is used mainly for debugging reasons, or as a workaround
     for using hardware features not implemented in the SEC node.
+
+.. _Readable:
 
 ``"Readable"``:
     The main purpose is to represent readable values (i.e. from a Sensor).
-    It has at least a value and a status parameter.
+    It has at least a ``value`` and a ``status`` parameter.
+
+.. _Writable:
 
 ``"Writable"``:
     The main purpose is to represent fast settable values (i.e. a switch).
-    It must have a target parameter in addition to what a Readable has.
+    It must have a ``target`` parameter in addition to what a `Readable`_ has.
+
+.. _Drivable:
 
 ``"Drivable"``:
     The main purpose is to represent slow settable values (i.e. a temperature or a motorized needle valve).
-    It must have a stop command in addition to what a Writable has.
-    Also, the status parameter will indicate a `BUSY`_ state for a longer-lasting operations.
+    It must have a ``stop`` command in addition to what a `Writable`_ has.
+    Also, the ``status`` parameter will indicate a `BUSY`_ state for a longer-lasting operations.
 
 
 Protocol
@@ -450,8 +464,8 @@ which absorbs the remaining characters up to the final LF.
 :Note:
     numerical values and strings appear 'naturally' formatted in JSON-value, i.e. 5.0 or "a string".
 
-The specifier consists of a module identifier and for most actions followed by a colon as separator
-and an accessible identifier. In special cases (e.g. ``describe``, ``ping``), the specifier is just a token and may also be empty:
+The specifier consists of a module identifier, and for most actions, followed by a colon as separator
+and an accessible identifier. In special cases (e.g. ``describe``, ``ping``), the specifier is just a token or may be empty:
 
 .. image:: images/specifier.svg
    :alt: specifier ::= module | module ":" (parameter|command)
@@ -510,16 +524,17 @@ either indicating success of the request or flag an error.
     MUST be able to handle the replies arriving out-of-order. Unfortunately there is currently no indication
     if a SEC-node is operating strictly in order or if it can work on multiple requests simultaneously.
 
-
 :Note:
-    to improve compatibility, any ECS client SHOULD always be aware of `update`_ messages.
+    to improve compatibility, any ECS client SHOULD be aware of `update`_ messages at any time.
 
 :Note:
     to clarify optionality of some messages, the following table is split into two:
-    basic messages (which MUST be implemented like specified) and extended messages which SHOULD be implemented.
+    basic messages (which MUST be implemented like specified) and
+    extended messages which SHOULD be implemented.
 
 :Note:
-    for clarification, the symbol "``␣``" is used here instead of a space character. <elem> refers to the element elem which is defined in another section.
+    for clarification, the symbol "``␣``" is used here instead of a space character.
+    <elem> refers to the element elem which is defined in another section.
 
 
 .. table:: basic messages (implementation is mandatory, even if functionality seems not to be needed.)
@@ -636,8 +651,8 @@ request "\ **\*IDN?**\ " is meant to be sent as the first message after
 establishing a connection. The reply consists of 4 comma separated
 fields, where the second and third field determine the used protocol.
 
-In this and in the following examples, messages sent to the server are marked with "> ",
-and messages sent to the client are marked with "< "
+In this and in the following examples, messages sent to the SEC-node are marked with "> ",
+and messages sent to the ECS are marked with "< "
 
 Example:
 
@@ -723,14 +738,14 @@ Example:
   < update t1:value [295.13,{"t":150539648.188388,"e":0.01}]
   < update t1:status [[400,"heater broken or disconnected"],{"t":1505396348.288388}]
   < active
+  < error_update t1:_heaterpower ["HardwareError","heater broken or disconnected",{"t":1505396349.20}]
   < update t1:value [295.14,{"t":1505396349.259845,"e":0.01}]
-  < error_update t1:_heaterpower ["HardwareError","heater broken or disconnected",{"t":1505396349.31}]
   < update t1:value [295.13,{"t":1505396350.324752,"e":0.01}]
 
 The example shows an ``activate`` request triggering an initial update of two values:
 t1:value and t1:status, followed by the ``active`` reply.
 Also, an ``error_update`` for a parameter ``_heaterpower`` is shown.
-After this two more updates on the t1:value show up after roughly 1s between each.
+After this two more updates on the ``t1:value`` show up after roughly 1s between each.
 
 :Note:
     it is vital that all initial updates are sent, **before** the 'active' reply is sent!
@@ -909,6 +924,7 @@ Example:
   > meas:volt?
   < error_meas:volt?  ["ProtocolError","unknown action", {}]
 
+.. _`error-class`:
 
 _`Error Classes`:
     Error classes are divided into two groups: persisting errors and retryable errors.
@@ -943,7 +959,7 @@ _`Error Classes`:
 
         * - RangeError
           - The requested parameter change or Command can not be performed as the argument value is not
-            in the allowed range specified by the datainfo property.
+            in the allowed range specified by the ``datainfo`` property.
             This also happens if an unspecified Enum variant is tried to be used, the size of a Blob or String
             does not match the limits given in the descriptive data, or if the number of elements in an array
             does not match the limits given in the descriptive data.
@@ -1018,7 +1034,7 @@ Logging is an optional message, i.e. a sec-node is not enforced to implement it.
   :"debug":
     All log messages are logged remotely.
 
-  A SEC-node should reply with an `error-report`_ (``protocolerror``) if it doesn't implement this message.
+  A SEC-node should reply with an `error-report`_ (``ProtocolError``) if it doesn't implement this message.
   Otherwise it should mirror the request, which may be updated with the logging-level actually in use.
   i.e. if an SEC-node does not implement the "debug" level, but "error" and "info" and an ECS request "debug" logging, the
   reply should contain "info" (as this is 'closer' to the original request than "error") or ``false``).
@@ -1141,7 +1157,7 @@ SEC Node Description
 Mandatory SEC Node Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-``"modules"``
+``"modules"``:
     contains a JSON-object with names of modules as key and JSON-objects as
     values, see `Module Description`_.
 
@@ -1152,13 +1168,13 @@ Mandatory SEC Node Properties
         for the functionality of SECoP. However, it might be an advantage
         to use a JSON library which keeps the order of JSON object items.
 
-``"equipment_id"``
+``"equipment_id"``:
      worldwide unqiue id of an equipment as string. Should contain the name of the
      owner institute or provider company as prefix in order to guarantee worldwide uniqueness.
 
      example: ``"MLZ_ccr12"`` or ``"HZB-vm4"``
 
-``"description"``
+``"description"``:
      text describing the node, in general.
      The formatting should follow the 'git' standard, i.e. a short headline (max 72 chars),
      followed by ``\n\n`` and then a more detailed description, using ``\n`` for linebreaks.
@@ -1166,12 +1182,19 @@ Mandatory SEC Node Properties
 Optional SEC Node Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-``"firmware"``
+``"firmware"``:
      short string naming the version of the SEC node software.
 
-     example: ``frappy-0.6.0``
+     example: ``"frappy-0.6.0"``
 
-``"timeout"``
+``"implementor"``:
+     Is an optional string.
+     The implementor of a SEC-node, defining the meaning of custom modules, status values, custom
+     properties and custom accessibles. The implementor **must** be globally unique, for example
+     'sinq.psi.ch'. This may be achieved by including a domain name, but it does not need
+     to be a registered name, and other means of assuring a global unique name are also possible.
+
+``"timeout"``:
      value in seconds, a SEC node should be able to respond within
      a time well below this value. (i.e. this is a reply-timeout.)
      Default: 10 sec, *see* `SECoP Issue 4: The Timeout SEC Node Property`_
@@ -1187,7 +1210,7 @@ Module Description
 Mandatory Module Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-``"accessibles"``
+``"accessibles"``:
     a JSON-object containing the accessibles and their properties, see `Accessible Description`_.
 
     :Remark:
@@ -1197,17 +1220,17 @@ Mandatory Module Properties
         the functionality of SECoP. However it might be an advantage
         to use a JSON library which keeps the order of JSON object items.
 
-``"description"``
+``"description"``:
     text describing the module, formatted like the node-property description
 
-``"interface_classes"``
+``"interface_classes"``:
     list of matching classes for the module, for example ``["Magnet", "Drivable"]``
 
 
 Optional Module Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-``"visibility"``
+``"visibility"``:
      string indicating a hint for UI's for which user roles the module should be display or hidden.
      MUST be one of "expert", "advanced" or "user" (default).
 
@@ -1217,7 +1240,7 @@ Optional Module Properties
          that the UI should hide the module for users, but show it for experts and
          advanced users.
 
-``"group"``
+``"group"``:
      identifier, may contain ":" which may be interpreted as path separator between path components.
      The ECS may group the modules according to this property.
      The lowercase version of a path component must not match the lowercase version of any module name on
@@ -1225,7 +1248,7 @@ Optional Module Properties
 
      :related issue: `SECoP Issue 8: Groups and Hierarchy`_
 
-``"meaning"``
+``"meaning"``:
     tuple, with the following two elements:
 
     1.  a string from an extensible list of predefined meanings:
@@ -1263,7 +1286,7 @@ Optional Module Properties
 
 .. _implementor:
 
-``"implementor"``
+``"implementor"``:
      Is an optional string.
      The implementor of a module, defining the meaning of custom status values, custom
      properties and custom accessibles. The implementor must be globally unique, for example
@@ -1281,18 +1304,18 @@ Accessible Description
 Mandatory Accessible Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-``"description"``
+``"description"``:
     string describing the accessible, formatted as for module-description
     or node-description
 
 Mandatory Parameter Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-``"readonly"``
+``"readonly"``:
     mandatory boolean value.
     Indicates whether this parameter may be changed by an ECS, or not.
 
-``"datainfo"``
+``"datainfo"``:
     mandatory datatype of the accessible, see `Data Types`_.
     This is always a JSON-Object with a single entry mapping the name of the datatype as key to
     a JSON-object containing the datatypes properties.
@@ -1303,7 +1326,7 @@ Mandatory Parameter Properties
 Optional Accessible Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-``"group"``
+``"group"``: XXX
     identifier, may contain ":" which may be interpreted as path separator between path components.
     The ECS may group the modules according to this property.
     The lowercase version of a path component must not match the lowercase version of any module name or accessible on
@@ -1316,7 +1339,7 @@ Optional Accessible Properties
         the accessible-property ``group`` is used for grouping of accessibles within a module,
         the module-property ``group`` is used for grouping of modules within a node.
 
-``"visibility"``
+``"visibility"``:
     a string indication a hint for a gui about
     the visibility of the accessible. values and meaning as for module-visibility above.
 
@@ -1332,7 +1355,7 @@ Optional Accessible Properties
 Optional Parameter Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-``"constant"``
+``"constant"``:
     Optional, contains the constant value of a constant parameter.
     If given, the parameter is constant and has the given value.
     Such a parameter can neither be read nor written, and it will **not** be transferred
@@ -1418,10 +1441,10 @@ Optional Data Properties
 ``"min"``:
     lower limit. if min is omitted, there is no lower limit
 
-``"max"``
+``"max"``:
     upper limit. if max is omitted, there is no upper limit
 
-``"unit"``
+``"unit"``:
     string giving the unit of the parameter.
 
     SHOULD be given, if meaningfull. Unitless if omitted or empty string.
@@ -1429,11 +1452,11 @@ Optional Data Properties
 
     :related: `SECoP Issue 43: Parameters and units`_
 
-``"absolute_resolution"``
+``"absolute_resolution"``:
     JSON-number specifying the smallest difference between distinct values.
     default value: 0
 
-``"relative_resolution"``
+``"relative_resolution"``:
     JSON-number specifying the smallest relative difference between distinct values:
 
     ``abs(a-b) <= relative_resolution * max(abs(a),abs(b))``
@@ -1447,7 +1470,7 @@ Optional Data Properties
 
     :related: `SECoP Issue 49: Precision of Floating Point Values`_
 
-``"fmtstr"``
+``"fmtstr"``:
     string as a hint on how to format numeric parameters for the user.
     default value: "%.6g"
 
@@ -1460,7 +1483,7 @@ Optional Data Properties
 Example
 ~~~~~~~
 
-``{"double": {"min": 0, "max": 100, "fmtstr": "%.3f"}``
+``{"type": "double", "min": 0, "max": 100, "fmtstr": "%.3f"}``
 
 Transport
 ~~~~~~~~~
@@ -1481,25 +1504,25 @@ capabilities, where floating point calculation is a major effort.
 Mandatory Data Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-``"scale"``
+``"scale"``:
     a (numeric) scale factor to be multiplied with the transported integer
 
-``"min"``, ``"max"``
+``"min"``, ``"max"``:
     The limits of the transported integer. ``<min>`` <= ``<max>``.
     The limits of the represented floating point value are ``<min>*<scale>, <max>*<scale>``
 
 Optional Data Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-``"unit"``
+``"unit"``:
     string giving the unit of the parameter. (see datatype Double_)
 
-``"absolute_resolution"``
+``"absolute_resolution"``:
     JSON-number specifying the smallest difference between distinct values.
 
     default value: ``<scale>``
 
-``"relative_resolution"``
+``"relative_resolution"``:
     JSON-number specifying the smallest relative difference between distinct values:
 
     ``abs(a-b) <= relative_resolution * max(abs(a),abs(b))``
@@ -1513,7 +1536,7 @@ Optional Data Properties
 
     :related: `SECoP Issue 49: Precision of Floating Point Values`_
 
-``"fmtstr"``
+``"fmtstr"``:
     string as a hint on how to format numeric parameters for the user.
     default value: "%.<n>f" where <n> = max(0,-floor(log10(scale)))
 
@@ -1521,7 +1544,7 @@ Optional Data Properties
 
 Example
 ~~~~~~~
-``{"scaled": {"scale": 0.1, "min": 0, "max": 2500}}``
+``{"type": "scaled", "scale": 0.1, "min": 0, "max": 2500}``
 i.e. a value between 0.0 and 250.0
 
 Transport
@@ -1547,18 +1570,18 @@ with 32bit float too.
 
 mandatory Data Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~
-``"min"``, ``"max"``
+``"min"``, ``"max"``:
    integer limits, ``<min>`` <= ``<max>``
 
 Optional Data Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-``"unit"``
+``"unit"``:
     string giving the unit of the parameter. (see datatype Double_)
 
 example
 ~~~~~~~
-``{"int": {"min": 0, "max": 100}}``
+``{"type": "int", "min": 0, "max": 100}``
 
 transport
 ~~~~~~~~~
@@ -1588,14 +1611,14 @@ Enumerated Type: ``enum``
 
 Mandatory Data Property
 ~~~~~~~~~~~~~~~~~~~~~~~
-``"members"``
+``"members"``:
     a JSON-object: ``{<name> : <value>, ....}``
 
     ``name``\ s are strings, ``value``\ s are (small) integers, both ``name``\ s and ``value``\ s MUST be unique
 
 example
 ~~~~~~~
-``{"enum": {"members":{"IDLE":100,"WARN":200,"BUSY":300,"ERROR":400}}}``
+``{"type":"enum", "members":{"IDLE":100,"WARN":200,"BUSY":300,"ERROR":400}}``
 
 transport
 ~~~~~~~~~
@@ -1609,24 +1632,26 @@ example: ``200``
 String: ``string``
 ------------------
 
-mandatory data property
-~~~~~~~~~~~~~~~~~~~~~~~
+optional data property
+~~~~~~~~~~~~~~~~~~~~~~
 
-``"maxchars"``
-    the maximum length of UTF-8 code points, counting the number of characters (**not** bytes!)
+``"maxchars"``:
+    the maximum length of the string in UTF-8 code points, counting the number of characters (**not** bytes!)
     :note:
         an UTF-8 encoded character may occupy up to 4 bytes.
         Also the end-of-string marker may need another byte for storage.
 
-optional data property
-~~~~~~~~~~~~~~~~~~~~~~
-
-``"minchars"``
+``"minchars"``:
     the minimum length, default is 0
+
+``"isUTF8"``:
+    boolean, if UTF8 characterset is allowed for values, or if the value is allowed only
+    to contain 7Bit ASCII characters (i.e. only codepoints < 128), each occupying a single byte.
+    defaults to **False** if not given.
 
 example
 ~~~~~~~
-``{"string": {"max": 80}}``
+``{"type":"string", "maxchars": 80}``
 
 transport
 ~~~~~~~~~
@@ -1641,17 +1666,17 @@ Binary Large Object: ``blob``
 
 mandatory data property
 ~~~~~~~~~~~~~~~~~~~~~~~
-``"maxbytes"``
+``"maxbytes"``:
     the maximum length, counting the number of bytes (**not** the size of the encoded string)
 
 optional data property
 ~~~~~~~~~~~~~~~~~~~~~~
-``"minbytes"``
+``"minbytes"``:
    the minimum length, default is 0
 
 example
 ~~~~~~~
-``{"blob": {"min": 1, "max": 64}}``
+``{"type": "blob", "min": 1, "max": 64}``
 
 transport
 ~~~~~~~~~
@@ -1667,21 +1692,21 @@ Sequence of Equally Typed Items : ``array``
 mandatory Data Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-``"members"``
+``"members"``:
     the datatype of the elements.
 
-``"maxlen"``
+``"maxlen"``:
     the maximum length, counting the number of elements
 
 optional data property
 ~~~~~~~~~~~~~~~~~~~~~~
 
-``"minlen"``
+``"minlen"``:
     the minimum length, default is 0
 
 example
 ~~~~~~~
-``{"array": {"min": 3, "max": 10, "members" : {"int": {"min": 0, "max": 9}}}}``
+``{"type":"array", "min": 3, "max": 10, "members" : {"type": "int", "min": 0, "max": 9}}``
 
 transport
 ~~~~~~~~~
@@ -1696,12 +1721,12 @@ Finite Sequence of Items with Individually Defined Type: ``tuple``
 
 mandatory data property
 ~~~~~~~~~~~~~~~~~~~~~~~
-``"members"``
+``"members"``:
     a JSON array listing the datatypes of the members
 
 example
 ~~~~~~~
-``{"tuple": {"members": [{"int": {"min": 0, "max": 999}}, {"string": {"max": 80}}]}}``
+``{"type": "tuple", "members": [{"type": "int", "min": 0, "max": 999}, {"type": "string", "maxchars": 80}]}``
 
 transport
 ~~~~~~~~~
@@ -1717,12 +1742,12 @@ Collection of Named Items: ``struct``
 
 mandatory data property
 ~~~~~~~~~~~~~~~~~~~~~~~
-``"members"``
+``"members"``:
     a JSON object containing the names and datatypes of the members
 
 optional data property
 ~~~~~~~~~~~~~~~~~~~~~~
-``"optional"``
+``"optional"``:
     the names of optional struct elements is given)
 
     In 'change' and 'do' commands, the ECS might omit these elements, all other
@@ -1735,7 +1760,7 @@ optional data property
 
 example
 ~~~~~~~
-``{"struct": {"members": {"y":{"double"}, "x":{"enum": {"members":{"On":1, "Off":0}}}}}}``
+``{"type":"struct", "members": {"y":{"type":"double"}, "x":{"type":"enum", "members":{"On":1, "Off":0}}}}}``
 
 transport
 ~~~~~~~~~
@@ -1756,14 +1781,14 @@ If an accessible is a command, its argument and result is described by the ``com
 optional Data Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-``"argument"``
+``"argument"``:
     the datatype of the single argument, or ``null``.
 
     only one argument is allowed, though several arguments may be used if
     encapsulated in a structural datatype (struct, tuple or array).
     If such encapsulation or data grouping is needed, a struct SHOULD be used.
 
-``"result"``
+``"result"``:
     the datatype of the single result, or ``null``.
 
     In any case, the meaning of result and argument(s) SHOULD be written down
@@ -1771,7 +1796,7 @@ optional Data Properties
 
 example
 ~~~~~~~
-``{"command": {"argument": {"bool": {}}, "result": {"bool": {}}}``
+``{"type":"command", "argument": {"type":"bool"}, "result": {"type":"bool"}}``
 
 
 transport example
@@ -1969,4 +1994,5 @@ The above diagrams were generated using a modified copy of https://github.com/En
 .. _`SECoP Issue 43: Parameters and units`: issues/043%20Parameters%20and%20units.rst
 .. _`SECoP Issue 44: Scaled integers`: issues/044%20Scaled%20integers.rst
 .. _`SECoP Issue 49: Precision of Floating Point Values`: issues/049%20Precision%20of%20Floating%20Point%20Values.rst
+.. _`SECoP Issue 59: set_mode and mode`: issues/059%20set_mode%20and%20mode%20instead%20of%20some%20commands.rst
 .. DO NOT TOUCH --- above links are automatically updated by issue/makeissuelist.py
