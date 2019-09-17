@@ -159,22 +159,54 @@ The following parameters are predefined (this list will be extended):
     .. table:: assignment of sub status (state within the generic state machine)
 
          ============ ============== =========================================
-          statuscode   variant name   Meaning
+           subcode     variant name   Meaning
          ============ ============== =========================================
-            0          Generic       used for generic modules not having a state machine
-           10          Disabling     intermediate state: Standby -> **Disabling** -> Disabled
-           20          Initializing  intermediate state: Disabled -> **Initializing** -> Standby
-           30          Standby       stable, steady state, needs some preparation steps, before a target change is effective
-           40          Preparing     intermediate state: Standby -> **Preparing** -> Prepared
-           50          Prepared      Ready for immediate target change
-           60          Starting      intermediate state: Prepared -> **Starting** -> Ramping -> Stabilizing -> Finalizing -> Prepared
-           70          Ramping       intermediate state: Prepared -> Starting -> **Ramping** -> Stabilizing -> Finalizing -> Prepared
-           80          Stabilizing   intermediate state: Prepared -> Starting -> Ramping -> **Stabilizing** -> Finalizing -> Prepared
-           90          Finalizing    intermediate state: Prepared -> Starting -> Ramping -> Stabilizing -> **Finalizing** -> Prepared
+           X0Y         Generic       used for generic modules not having a state machine
+           X1Y         Disabling     intermediate state: Standby -> **Disabling** -> Disabled
+           X2Y         Initializing  intermediate state: Disabled -> **Initializing** -> Standby
+           X3Y         Standby       stable, steady state, needs some preparation steps, before a target change is effective
+           X4Y         Preparing     intermediate state: Standby -> **Preparing** -> Prepared
+           X5Y         Prepared      Ready for immediate target change
+           X6Y         Starting      intermediate state: Prepared -> **Starting** -> Ramping -> Stabilizing -> Prepared
+           X7Y         Ramping       intermediate state: Prepared -> Starting -> **Ramping** -> Stabilizing -> Prepared
+           X8Y         Stabilizing   intermediate state: Prepared -> Starting -> Ramping -> **Stabilizing** -> Prepared
+           X9Y         Finalizing    intermediate state: Prepared or Stabilizing -> **Finalizing** -> Standby
+                                     value has reached the target and any leftover cleanup operation is in progress.
          ============ ============== =========================================
 
+    with ``Y=0`` for now. Future extensions may use different values.
+
+    Since not all combinations are sensible, the following list shows the so far defined codes:
+
+    .. table:: Useful statuscodes
+
+         ============ ================== =========================================
+           subcode     variant name       Meaning
+         ============ ================== =========================================
+             0         DISABLED           Module is not enabled
+           100         IDLE_GENERIC       Module is not performing any action
+           130         IDLE_Standby       stable, steady state, needs some preparation steps, before a target change is effective
+           150         IDLE_Prepared      Ready for immediate target change
+           200         WARN_GENERIC       The same as IDLE, but something may not be alright, though it is not a problem (yet)
+           230         WARN_Standby       -''-
+           250         WARN_Prepared      -''-
+           300         BUSY_GENERIC       Module is performing some action
+           310         BUSY_Disabling     intermediate state: Standby -> **Disabling** -> Disabled
+           320         BUSY_Initializing  intermediate state: Disabled -> **Initializing** -> Standby
+           340         BUSY_Preparing     intermediate state: Standby -> **Preparing** -> Prepared
+           360         BUSY_Starting      intermediate state: Prepared -> **Starting** -> Ramping -> Stabilizing -> Prepared
+           370         BUSY_Ramping       intermediate state: Prepared -> Starting -> **Ramping** -> Stabilizing -> Prepared
+           380         BUSY_Stabilizing   intermediate state: Prepared -> Starting -> Ramping -> **Stabilizing** -> Prepared
+           390         BUSY_Finalizing    intermediate state: Prepared or Stabilizing -> **Finalizing** -> Standby
+                                          value has reached the target and any leftover cleanup operation is in progress.
+           400         ERROR_GENERIC      an Error occured, Module is in an error state, something turned out to be a problem.
+           430         ERROR_Standby      an Error occured, Module is still in Standby state, even after ``clear_errors``.
+           450         ERROR_Prepared     an Error occured, Module is still in Prepared state, even after ``clear_errors``.
+         ============ ================== =========================================
+
+
     Any undefined status code has to be treated like a gneric subcode of the given code number,
-    i.e. 376 should be treated as a generic BUSY until it is defined in the specification.
+    i.e. 376 should be treated as a BUSY_Ramping until it is defined otherwise in the specification.
 
     :related issues:
         `SECoP Issue 37: Clarification of status`_,
