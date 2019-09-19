@@ -184,13 +184,13 @@ The following parameters are predefined (this list will be extended):
            subcode     variant name       Meaning
          ============ ================== =========================================
              0         DISABLED           Module is not enabled
-           100         IDLE_GENERIC       Module is not performing any action
+           100         IDLE_Generic       Module is not performing any action
            130         IDLE_Standby       stable, steady state, needs some preparation steps, before a target change is effective
            150         IDLE_Prepared      Ready for immediate target change
-           200         WARN_GENERIC       The same as IDLE, but something may not be alright, though it is not a problem (yet)
+           200         WARN_Generic       The same as IDLE, but something may not be alright, though it is not a problem (yet)
            230         WARN_Standby       -''-
            250         WARN_Prepared      -''-
-           300         BUSY_GENERIC       Module is performing some action
+           300         BUSY_Generic       Module is performing some action
            310         BUSY_Disabling     intermediate state: Standby -> **Disabling** -> Disabled
            320         BUSY_Initializing  intermediate state: Disabled -> **Initializing** -> Standby
            340         BUSY_Preparing     intermediate state: Standby -> **Preparing** -> Prepared
@@ -199,7 +199,7 @@ The following parameters are predefined (this list will be extended):
            380         BUSY_Stabilizing   intermediate state: Prepared -> Starting -> Ramping -> **Stabilizing** -> Prepared
            390         BUSY_Finalizing    intermediate state: Prepared or Stabilizing -> **Finalizing** -> Standby
                                           value has reached the target and any leftover cleanup operation is in progress.
-           400         ERROR_GENERIC      an Error occured, Module is in an error state, something turned out to be a problem.
+           400         ERROR_Generic      an Error occured, Module is in an error state, something turned out to be a problem.
            430         ERROR_Standby      an Error occured, Module is still in Standby state, even after ``clear_errors``.
            450         ERROR_Prepared     an Error occured, Module is still in Prepared state, even after ``clear_errors``.
          ============ ================== =========================================
@@ -289,7 +289,7 @@ The following commands are predefined (extensible):
      do it, the status should not change or change to an other ERROR state before
      returning ``done <module>:clear_errors``
 
-``"go"``: XXX
+``"go"``:
      optional command for starting an action. If the ``go`` command is present,
      changing any parameter (especially the 'target' parameter) does not yet initiate any
      action leading to a BUSY state.
@@ -298,21 +298,22 @@ The following commands are predefined (extensible):
      state. Changing any parameter, which has an impact on measured values, should
      be executed immediately.
 
-``"hold"``: XXX
+``"hold"``:
      optional command on a drivable. Stay more or less where you are, cease
      movement, be ready to continue soon, target value is kept. Continuation can be
      trigger with ``go``, or if not present, by putting the target parameter to its
      present value.
 
-``"shutdown"`` (PROBABLY TO BE CHANGED) XXX
+``"shutdown"``
      optional command for shuting down the hardware.
-     When this command is sent, and the triggered action is finished (status in idle mode),
+     When this command is sent, and the status is DISABLED,
      it is safe to switch off the related device.
-
-     :Remark:
-
-        there is an alternative proposal for
-        implementing the shutdown function, see `SECoP Issue 22: Enable Module instead of Shutdown Command`_
+ 
+:Note:
+    Going to the DISABLED state, may also be triggered by changing the mode to DISABLED.
+    If the implementor for security reason wants to prohibit any action after a shutdown,
+    this should only be achieved by a shutdown command, as siabling the module should be
+    reversible.
 
 
 Properties
