@@ -389,10 +389,10 @@ Some data properties are changed/renamed:
    * ``maxlen``is now optional
    * a new data property ``isUTF8`` (default: ``false``, which means it must be 7-bit ASCII coded, not containing NUL)
    
-``'blob``:
+``'blob'``:
    ''minbytes``/``maxbytes`` instead of ``min``/``max``
    
-``'array``:
+``'array'``:
    ''minlen``/``maxlen`` instead of ``min``/``max``
 
 
