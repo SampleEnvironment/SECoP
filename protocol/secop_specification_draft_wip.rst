@@ -1665,8 +1665,8 @@ example: ``200``
 String: ``string``
 ------------------
 
-optional data property
-~~~~~~~~~~~~~~~~~~~~~~
+optional data properties
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 ``"maxchars"``:
     the maximum length of the string in UTF-8 code points, counting the number of characters (**not** bytes!)
