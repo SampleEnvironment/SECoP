@@ -374,3 +374,32 @@ concerned types.
 This way, the message type is clearly visible at the beginning, and the value
 of the type is meaningful enough in order not to need a name.
 
+Decision on the Meeting 2019-09-17
+----------------------------------
+
+The 'datatype' property is renamed to 'datainfo'.
+'datainfo' is a JSON-object, where the 'type' element contains the basic data type,
+the remaining elements contain the data properties (renamed from datatype properties).
+
+Some data properties are changed/renamed:
+
+``'string'``:
+   * ``minchars``/``maxchars`` instead of ``min``/``max``, counting the number of
+     character points instead of bytes in case of UTF-8 strings.
+   * ``maxlen``is now optional
+   * a new data property ``isUTF8`` (default: ``false``, which means it must be 7-bit ASCII coded, not containing NUL)
+   
+``'blob``:
+   ''minbytes``/``maxbytes`` instead of ``min``/``max``
+   
+``'array``:
+   ''minlen``/``maxlen`` instead of ``min``/``max``
+
+
+The names of the datatype properties follow the proposal above, except than
+"min" and "max" is used instead of "mininum_..." and "maximum_..." for all
+concerned types.
+
+This way, the message type is clearly visible at the beginning, and the value
+of the type is meaningful enough in order not to need a name.
+
