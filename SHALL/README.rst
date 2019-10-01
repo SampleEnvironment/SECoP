@@ -1,4 +1,4 @@
-SHALL - SECoP hardware abstraction library layer
+SHALL - SECoP hardware abstraction layer library
 ================================================
 
 The aim of these libraries is to provide a convenient entry into the world of `SECoP`_.
