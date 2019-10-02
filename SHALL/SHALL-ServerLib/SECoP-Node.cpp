@@ -61,7 +61,7 @@ SECoP_S_Node::SECoP_S_Node(QString szNodeID, QString szDesc, QHostAddress addres
     enum SECoP_S_error iError(SECoP_S_SUCCESS);
     addProperty(QString("equipment_id"), CSECoPbaseType::simpleString(szNodeID.toUtf8()), false, &iError);
     addProperty(QString("description"), CSECoPbaseType::simpleString(szDesc.toUtf8()), false, &iError);
-    addProperty(QString("firmware"), CSECoPbaseType::simpleString(QString("SECoP server library (Git %1)").
+    addProperty(QString("firmware"), CSECoPbaseType::simpleString(QString("SHALL server library (Git %1)").
                 arg(SECoP_S_Main::getGitVersion().constData()).toUtf8()), true, &iError);
 }
 
