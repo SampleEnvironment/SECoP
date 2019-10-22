@@ -217,7 +217,7 @@ The following parameters are predefined (this list will be extended):
     For the ECS, the codes (and not the names) of the status enum are relevant for the meaning.
     
     The distinction between the status value 360 - 380 is important, if during a target change
-    there is a period, where the value changes in a continuous way, where measurements might be
+    there is a period, where the value changes in a continuous way and measurements might be
     useful. If there is no such period, for example because the value performs some damped oscillation
     from the beginning of the movement, generic BUSY or STABILIZING should be used instead.
 
