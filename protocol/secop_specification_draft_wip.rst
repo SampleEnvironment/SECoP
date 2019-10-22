@@ -174,38 +174,50 @@ The following parameters are predefined (this list will be extended):
                                      value has reached the target and any leftover cleanup operation is in progress.
          ============ ============== =========================================
 
-    with ``Y=0`` for now. Future extensions may use different values.
+    with ``Y=0`` for now. Future extensions may use different values for Y.
 
     Since not all combinations are sensible, the following list shows the so far defined codes:
 
     .. table:: Useful statuscodes
 
-         ============ ================== =========================================
-           subcode     variant name       Meaning
-         ============ ================== =========================================
-             0         DISABLED           Module is not enabled
-           100         IDLE_Generic       Module is not performing any action
-           130         IDLE_Standby       stable, steady state, needs some preparation steps, before a target change is effective
-           150         IDLE_Prepared      Ready for immediate target change
-           200         WARN_Generic       The same as IDLE, but something may not be alright, though it is not a problem (yet)
-           230         WARN_Standby       -''-
-           250         WARN_Prepared      -''-
-           300         BUSY_Generic       Module is performing some action
-           310         BUSY_Disabling     intermediate state: Standby -> **Disabling** -> Disabled
-           320         BUSY_Initializing  intermediate state: Disabled -> **Initializing** -> Standby
-           340         BUSY_Preparing     intermediate state: Standby -> **Preparing** -> Prepared
-           360         BUSY_Starting      intermediate state: Prepared -> **Starting** -> Ramping -> Stabilizing -> Prepared
-           370         BUSY_Ramping       intermediate state: Prepared -> Starting -> **Ramping** -> Stabilizing -> Prepared
-           380         BUSY_Stabilizing   intermediate state: Prepared -> Starting -> Ramping -> **Stabilizing** -> Prepared
-           390         BUSY_Finalizing    intermediate state: Prepared or Stabilizing -> **Finalizing** -> Standby
-                                          value has reached the target and any leftover cleanup operation is in progress.
-           400         ERROR_Generic      an Error occured, Module is in an error state, something turned out to be a problem.
-           430         ERROR_Standby      an Error occured, Module is still in Standby state, even after ``clear_errors``.
-           450         ERROR_Prepared     an Error occured, Module is still in Prepared state, even after ``clear_errors``.
-         ============ ================== =========================================
+         ====== ================ ========== ============== =========================================
+          code   name             generic    variant name   Meaning
+         ====== ================ ========== ============== =========================================
+             0   DISABLED         DISABLED   Generic        Module is not enabled
+           100   IDLE             IDLE       Generic        Module is not performing any action
+           130   STANDBY          IDLE       Standby        Stable, steady state, needs some preparation steps,
+                                                            before a target change is effective
+           150   PREPARED         IDLE       Prepared       Ready for immediate target change
+           200   WARN             WARN       Generic        The same as IDLE, but something may not be alright,
+                                                            though it is not a problem (yet)
+           230   WARN_STANDBY     WARN       Standby        -''-
+           250   WARN_PREPARED    WARN       Prepared       -''-
+           300   BUSY             BUSY       Generic        Module is performing some action
+           310   DISABLING        BUSY       Disabling      Intermediate state: Standby -> **DISABLING** -> Disabled
+           320   INITIALIZING     BUSY       Initializing   Intermediate state: Disabled -> **INITIALIZING** -> Standby
+           340   PREPARING        BUSY       Preparing      Intermediate state: Standby -> **PREPARING** -> PREPARED
+           360   STARTING         BUSY       Starting       Target to be changed, but continuous change has not yet started
+           370   RAMPING          BUSY       Ramping        Continuous change, which might be used for measuring
+           380   STABILIZING      BUSY       Stabilizing    Continuous change has ended, but target value is not yet reached
+           390   FINALIZING       BUSY       Finalizing     Value has reached the target and any leftover cleanup operation
+                                                            is in progress, the measurement could start.
+           400   ERROR            ERROR      Generic        An Error occured, Module is in an error state,
+                                                            something turned out to be a problem.
+           430   ERROR_STANDBY    ERROR      Standby        An Error occured, Module is still in Standby state,
+                                                            even after ``clear_errors``.
+           450   ERROR_PREPARED   ERROR      Prepared       An Error occured, Module is still in PREPARED state,
+                                                            even after ``clear_errors``.
+         ====== ================ ========== ============== =========================================
 
+    For the SEC node, it is recommended to use above names (second column) for the status enum type.
+    For the ECS, the codes (and not the names) of the status enum are relevant for the meaning.
+    
+    The distinction between the status value 360 - 380 is important, if during a target change
+    there is a period, where the value changes in a continuous way, where measurements might be
+    useful. If there is no such period, for example because the value performs some damped oscillation
+    from the beginning of the movement, generic BUSY or STABILIZING should be used instead.
 
-    Any undefined status code has to be treated like a gneric subcode of the given code number,
+    Any undefined status code has to be treated like a generic subcode of the given code number,
     i.e. 376 should be treated as a BUSY_Ramping until it is defined otherwise in the specification.
 
     :related issues:
@@ -424,7 +436,7 @@ specification, but earlier definitions will stay intact, i.e. no
 removals or redefinitions will occur.
 
 The module class is in fact a list of classes (highest level class
-first) and is stored in the module-property `interface_class`.
+first) and is stored in the module-property `interface_classes`.
 The ECS chooses the first class from the list which is known to it.
 The last one in the list must be one of the base classes listed below.
 
@@ -713,7 +725,7 @@ Example:
 .. code::
 
   > describe
-  < describing . {"modules":{"t1":{"interface_class":["TemperatureSensor","Readable"],"accessibles":{"value": ...
+  < describing . {"modules":{"t1":{"interface_classes":["TemperatureSensor","Readable"],"accessibles":{"value": ...
 
 The dot (second item in the reply message) is a placeholder for extensibility reasons.
 A client implementing the current specification MUST ignore it.
@@ -1301,7 +1313,7 @@ Optional Module Properties
 
         ``_regulation`` may be postfixed, if the quantity generating module is different from the
         (closer to the sample) relevant measuring device. A regulation device MUST have an
-        `interface class`_ of at least ``Writable``.
+        `interface classes`_ of at least ``Writable``.
 
         :related issue: `SECoP Issue 26: More Module Meanings`_
 
