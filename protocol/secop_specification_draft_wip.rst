@@ -164,14 +164,16 @@ The following parameters are predefined (this list will be extended):
            X0Y         Generic       used for generic modules not having a state machine
            X1Y         Disabling     intermediate state: Standby -> **Disabling** -> Disabled
            X2Y         Initializing  intermediate state: Disabled -> **Initializing** -> Standby
-           X3Y         Standby       stable, steady state, needs some preparation steps, before a target change is effective
+           X3Y         Standby       stable, steady state, needs some preparation steps,
+                                     before a target change is effective
            X4Y         Preparing     intermediate state: Standby -> **Preparing** -> Prepared
            X5Y         Prepared      Ready for immediate target change
-           X6Y         Starting      intermediate state: Prepared -> **Starting** -> Ramping -> Stabilizing -> Prepared
-           X7Y         Ramping       intermediate state: Prepared -> Starting -> **Ramping** -> Stabilizing -> Prepared
-           X8Y         Stabilizing   intermediate state: Prepared -> Starting -> Ramping -> **Stabilizing** -> Prepared
-           X9Y         Finalizing    intermediate state: Prepared or Stabilizing -> **Finalizing** -> Standby
-                                     value has reached the target and any leftover cleanup operation is in progress.
+           X6Y         Starting      Target has changed, but continuous change has not yet started
+           X7Y         Ramping       Continuous change, which might be used for measuring
+           X8Y         Stabilizing   Continuous change has ended, but target value is not yet reached
+           X9Y         Finalizing    Value has reached the target and any leftover cleanup operation
+                                     is in progress. If the ECS is waiting for the value of this module
+                                     beeing stable at target, it can continue.
          ============ ============== =========================================
 
     with ``Y=0`` for now. Future extensions may use different values for Y.
@@ -196,11 +198,13 @@ The following parameters are predefined (this list will be extended):
            310   DISABLING        BUSY       Disabling      Intermediate state: Standby -> **DISABLING** -> Disabled
            320   INITIALIZING     BUSY       Initializing   Intermediate state: Disabled -> **INITIALIZING** -> Standby
            340   PREPARING        BUSY       Preparing      Intermediate state: Standby -> **PREPARING** -> PREPARED
-           360   STARTING         BUSY       Starting       Target to be changed, but continuous change has not yet started
+           360   STARTING         BUSY       Starting       Target has changed, but continuous change has not yet started
            370   RAMPING          BUSY       Ramping        Continuous change, which might be used for measuring
-           380   STABILIZING      BUSY       Stabilizing    Continuous change has ended, but target value is not yet reached
+           380   STABILIZING      BUSY       Stabilizing    Continuous change has ended, but target value is not
+                                                            yet reached
            390   FINALIZING       BUSY       Finalizing     Value has reached the target and any leftover cleanup operation
-                                                            is in progress, the measurement could start.
+                                                            is in progress. If the ECS is waiting for the value of this
+                                                            module beeing stable at target, it can continue.
            400   ERROR            ERROR      Generic        An Error occured, Module is in an error state,
                                                             something turned out to be a problem.
            430   ERROR_STANDBY    ERROR      Standby        An Error occured, Module is still in Standby state,
