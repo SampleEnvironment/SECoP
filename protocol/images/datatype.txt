@@ -3,6 +3,6 @@
 "{"
 "\"type:\""
 'name of datatype' 
-[ ['data-property'*","]? ]
+[ !*['data-property' ","] ]
 "}"
 ]
