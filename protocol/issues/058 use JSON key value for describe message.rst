@@ -113,15 +113,16 @@ Proposals for the wording of the specification of optionality of the "order" pro
     the elements accordingly. 
 
 
-Decision
+Decision 
 --------
 
-Order of modules / accessibles:
+Modules and accessibles are JSON objects, containing the name of the items as keys
+and their descrption as values. The transmission of the order of items can not
+be guaranteed, as some JSON libraries do not keep the order.
 
-tbd
-
-Datatype property:
+Datatype property: (obsolete, see `SECoP issue 55`_ )
 
 instead of above proposal, the formatting of datatypes is to change from
 a 2 element list to a JSON-object with a single entry.
 (essentially converting ["type",{...}] to {"type":{...}} )
+
