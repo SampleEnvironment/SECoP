@@ -1,5 +1,5 @@
-SECoP Issue 59: set_mode and mode instead of some commands (under discussion)
-=============================================================================
+SECoP Issue 59: set_mode and mode instead of some commands (closed)
+===================================================================
 
 .. contents::
     :depth: 3
@@ -183,7 +183,7 @@ change target with predefined final state STANDBY (persistent)
 
 * initial state: prepared (driven), value=1
 * wanted state: persistent (STANDBY), value=2
-* Remark for model B only: if the SEC Node does not accept op_mode while BUSY, wait until IDLE before changing op_mode 
+* Remark for model B only: if the SEC Node does not accept op_mode while BUSY, wait until IDLE before changing op_mode
 * if the module has a `go` command, change mode/op_mode and target before sending `go`
 
 +-----------------------------+-----------------------------------------------+-------------+
@@ -453,3 +453,26 @@ safe, because ``change enabled`` is not meant to be used in a script.
 
 With this approach, status_code 0 would be named DISABLED, but op_mode 0 would be called
 OFF_STATE or SHUTDOWN.
+
+Decision
+--------
+
+For status codes see `SECoP Issue 56: Additional Busy States`_
+
+The ``shutdown`` command is kept, but neither ``prepare`` nor ``finalize`` are specified
+as predefined commands.  ``mode`` has a predefined meaning:
+
+``"mode"``:
+    A parameter of datatype enum, for selecting the operation mode of a module.
+    The available operation modes can not be predefined in the specification, since
+    they depend on the specific module.
+
+    Maximum set of allowed modes:
+    .. code::
+
+        {"enum",{"members":{"DISABLED": 0, "STANDBY": 30, "PREPARED": 50}}
+
+    The meaning of the operation modes SHOULD be described in the description.
+.. DO NOT TOUCH --- following links are automatically updated by issue/makeissuelist.py
+.. _`SECoP Issue 56: Additional Busy States`: issues/056%20Additional%20Busy%20States.rst
+.. DO NOT TOUCH --- above links are automatically updated by issue/makeissuelist.py

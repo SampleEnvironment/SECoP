@@ -1,5 +1,5 @@
-SECoP Issue 58: use JSON key, value for describe message (under discussion)
-===========================================================================
+SECoP Issue 58: use JSON key, value for describe message (closed)
+=================================================================
 
 Motivation
 ----------
@@ -110,10 +110,10 @@ Proposals for the wording of the specification of optionality of the "order" pro
     behaviour of the JSON libraries, has to specify the "order" property.
     An ECS, who cares about the order, and does not want to rely on the
     behaviour of the JSON libraries, must interprete the "order" property and sort
-    the elements accordingly. 
+    the elements accordingly.
 
 
-Decision 
+Decision
 --------
 
 Modules and accessibles are JSON objects, containing the name of the items as keys

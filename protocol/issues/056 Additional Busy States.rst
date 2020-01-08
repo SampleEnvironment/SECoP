@@ -1,5 +1,5 @@
-SECoP Issue 56: Additional Busy States (under discussion)
-=========================================================
+SECoP Issue 56: Additional Busy States (closed)
+===============================================
 
 Motivation
 ----------
@@ -154,11 +154,11 @@ For example:
 1) During cooldown of the superconducting switch, the magnetic field might
    still oscillate slightly, so the user wants to wait for this before
    measuring.
-   
+
 2) Not really a sample environment issue, but otherwise a good example: the user
    wants to wait until air cushions have switched off, because the beam geometry
    is affected sligthly.
-   
+
 3) Tolerance and window of temperature
 
 Instead of additional substates, the SEC-node may offer one or several additional parameter(s),
@@ -176,3 +176,41 @@ the parameter names, and the description of the parameter.
 
 A disadvantage is, that the criteria are preselected and then valid for all clients,
 they can not be chosen on the fly for different clients. But do we need that really?
+
+
+Decision
+--------
+
+.. table:: Useful statuscodes
+
+     ====== ================ ========== ============== =========================================
+      code   name             generic    variant name   Meaning
+     ====== ================ ========== ============== =========================================
+         0   DISABLED         DISABLED   Generic        Module is not enabled
+       100   IDLE             IDLE       Generic        Module is not performing any action
+       130   STANDBY          IDLE       Standby        Stable, steady state, needs some preparation steps,
+                                                        before a target change is effective
+       150   PREPARED         IDLE       Prepared       Ready for immediate target change
+       200   WARN             WARN       Generic        The same as IDLE, but something may not be alright,
+                                                        though it is not a problem (yet)
+       230   WARN_STANDBY     WARN       Standby        -''-
+       250   WARN_PREPARED    WARN       Prepared       -''-
+       300   BUSY             BUSY       Generic        Module is performing some action
+       310   DISABLING        BUSY       Disabling      Intermediate state: Standby -> **DISABLING** -> Disabled
+       320   INITIALIZING     BUSY       Initializing   Intermediate state: Disabled -> **INITIALIZING** -> Standby
+       340   PREPARING        BUSY       Preparing      Intermediate state: Standby -> **PREPARING** -> PREPARED
+       360   STARTING         BUSY       Starting       Target has changed, but continuous change has not yet started
+       370   RAMPING          BUSY       Ramping        Continuous change, which might be used for measuring
+       380   STABILIZING      BUSY       Stabilizing    Continuous change has ended, but target value is not
+                                                        yet reached
+       390   FINALIZING       BUSY       Finalizing     Value has reached the target and any leftover cleanup operation
+                                                        is in progress. If the ECS is waiting for the value of this
+                                                        module beeing stable at target, it can continue.
+       400   ERROR            ERROR      Generic        An Error occured, Module is in an error state,
+                                                        something turned out to be a problem.
+       430   ERROR_STANDBY    ERROR      Standby        An Error occured, Module is still in Standby state,
+                                                        even after ``clear_errors``.
+       450   ERROR_PREPARED   ERROR      Prepared       An Error occured, Module is still in PREPARED state,
+                                                        even after ``clear_errors``.
+     ====== ================ ========== ============== =========================================
+
