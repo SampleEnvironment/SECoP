@@ -6,7 +6,7 @@ from glob import glob
 import traceback
 import re
 import os
-from urllib import quote
+from urllib.parse import quote
 import io
 
 STATES = {'closed': '\\', 'under discussion':'d', 'unspecified':'u', 'proposed':'p'}
@@ -22,8 +22,8 @@ for filename in sorted(glob('*.rst')):
     try:
         num, title = filepat.match(filename).groups(0)
         num = int(num)
-    except AttributeError, ValueError:
-        # this is probably not an isse file
+    except (AttributeError, ValueError):
+        # this is probably not an issue file
         continue
     with open(filename, 'r') as fil:
         content = fil.read().split('\n')
@@ -59,7 +59,7 @@ for filename in sorted(glob('*.rst')):
 
 def find_links_labels(link):
     global label
-    print link.group(1)
+    print(link.group(1))
     return link.group(1)
 
 def update_links(filename, files, stdlabels):

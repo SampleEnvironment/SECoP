@@ -226,7 +226,7 @@ The following parameters are predefined (this list will be extended):
 
     :related issues:
         `SECoP Issue 37: Clarification of status`_,
-        `SECoP Issue 59: set_mode and mode`_
+        `SECoP Issue 59: set_mode and mode instead of some commands`_
 
     :Note:
         the behaviour of a module in each of the predefined states is not yet 100% defined.
@@ -2034,7 +2034,6 @@ The above diagrams were generated using a modified copy of https://github.com/En
 .. _`SECoP Issue 7: Time Synchronization`: issues/007%20Time%20Synchronization.rst
 .. _`SECoP Issue 8: Groups and Hierarchy`: issues/008%20Groups%20and%20Hierarchy.rst
 .. _`SECoP Issue 9: Module Meaning`: issues/009%20Module%20Meaning.rst
-.. _`SECoP Issue 22: Enable Module instead of Shutdown Command`: issues/022%20Enable%20Module%20instead%20of%20Shutdown%20Command.rst
 .. _`SECoP Issue 26: More Module Meanings`: issues/026%20More%20Module%20Meanings.rst
 .. _`SECoP Issue 35: Partial structs`: issues/035%20Partial%20Structs.rst
 .. _`SECoP Issue 36: Dynamic units`: issues/036%20Dynamic%20units.rst
@@ -2044,5 +2043,5 @@ The above diagrams were generated using a modified copy of https://github.com/En
 .. _`SECoP Issue 43: Parameters and units`: issues/043%20Parameters%20and%20units.rst
 .. _`SECoP Issue 44: Scaled integers`: issues/044%20Scaled%20integers.rst
 .. _`SECoP Issue 49: Precision of Floating Point Values`: issues/049%20Precision%20of%20Floating%20Point%20Values.rst
-.. _`SECoP Issue 59: set_mode and mode`: issues/059%20set_mode%20and%20mode%20instead%20of%20some%20commands.rst
+.. _`SECoP Issue 59: set_mode and mode instead of some commands`: issues/059%20set_mode%20and%20mode%20instead%20of%20some%20commands.rst
 .. DO NOT TOUCH --- above links are automatically updated by issue/makeissuelist.py
