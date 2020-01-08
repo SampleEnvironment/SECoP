@@ -82,13 +82,18 @@ Lessons learned:
 
 3) Go through Github pages for questions and clarifications
 ===========================================================
+
 1 Hardware abstraction
+
 1.2 Accessibles
+
 - status to be discussed
 - mode to be discussed
+
 after 1.9 interface classes: feature is missing
 
 2.1 Message syntax
+
 - specifier: in specifier picture invert order, put module:parameter first
 - basic messages: did wwe decide that "describe module" is not possible?
 - Correct handling of side-effects:
@@ -100,14 +105,16 @@ after 1.9 interface classes: feature is missing
 
 	- Solution:Handshake: idle -> message (-> busy) -> message_reply -> idle
 	- sending status = busy if NOT necessary (if there is no status busy), status can be constant
+
 2.2 Message intents
+
 - section Update
 	- "An update may also be triggered by an read request, in which case the value reported
-	in the data report is fresh (i.e. just obtained from a hw)."
-	This is not always the case or is it defined like this that a read request triggers a
-	read of the hardware? I don't think so.
+	  in the data report is fresh (i.e. just obtained from a hw)."
+	  This is not always the case or is it defined like this that a read request triggers a
+	  read of the hardware? I don't think so.
 	- Examples: in first example there is an error for the status
-	(should not be there, error is handled in the second example)
+	  (should not be there, error is handled in the second example)
 
 - second Note in section Update: "to speed up the activation process.." "should not just be
 	read FROM HARDWARE...."
@@ -139,9 +146,13 @@ after 1.9 interface classes: feature is missing
 	this is an optional message. Do we have other optional messages?
 
 3 Descriptive data
+
 3.2 SEC Node description
+
 - general: what happens if e.g. "equipment_id" is there twice?
+
 3.3 Module Description
+
 - section Mandatory Module Properties
 	Note: as this is a list it SHOULD actually have been called interface_classes
 	or interfaces
@@ -154,7 +165,9 @@ after 1.9 interface classes: feature is missing
 - section implementor
 	is a string
 - feature is missing here as Optional Module Property
+
 3.4 Accessible description
+
 - section mandatory Parameter propertis
 	- "readonly" mandatory boolean value.
 	Indication if this parameter may be changed by an ECS, or not
@@ -164,9 +177,11 @@ after 1.9 interface classes: feature is missing
 	- constant: waht is its datatype? boolean? constant:true
 
 3.5 Custom Properties
+
 - hint about the datatype of a custom property
 
 4 Data Types
+
 - new name: proposal data structure
 - min max optional?
 - inf?
@@ -175,8 +190,8 @@ after 1.9 interface classes: feature is missing
 - remove "command" from datatype context, make it a standalone part
 - float proposed double must single: comment what happens if max or resloution > single?
 
-5
 5.4 Message handling
+
 - why 2 different flowdiagrams for requests and replies respectively?
 - here error_action is correct
 - remove buffer/buffered
