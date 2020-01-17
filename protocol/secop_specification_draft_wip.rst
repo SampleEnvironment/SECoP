@@ -354,7 +354,6 @@ See also: `Data-report`_.
     future revisions may append additional elements.
     These are to be ignored for implementations of the current specification
 
-.. _`error report`:
 
 Error report
 ------------
