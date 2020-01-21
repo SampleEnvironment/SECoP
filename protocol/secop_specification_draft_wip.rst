@@ -142,8 +142,6 @@ The following parameters are predefined (this list will be extended):
     (a tuple of two elements: a status with predefined values
     from an Enum_ as "idle","busy","error", and a describing text).
 
-    :TODO: include a diagram of the generalized state machine
-
     .. table:: assignment of status code groups
 
          ============ ============== =========================================
