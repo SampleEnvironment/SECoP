@@ -215,7 +215,7 @@ The following parameters are predefined (this list will be extended):
 
     For the SEC node, it is recommended to use above names (second column) for the status enum type.
     For the ECS, the codes (and not the names) of the status enum are relevant for the meaning.
-    
+
     The distinction between the status value 360 - 380 is important, if during a target change
     there is a period, where the value changes in a continuous way and measurements might be
     useful. If there is no such period, for example because the value performs some damped oscillation
@@ -256,11 +256,18 @@ The following parameters are predefined (this list will be extended):
     they depend on the specific module.
 
     Maximum set of allowed modes:
+
     .. code::
 
         {"enum",{"members":{"DISABLED": 0, "STANDBY": 30, "PREPARED": 50}}
 
     The meaning of the operation modes SHOULD be described in the description.
+
+    The interplay between the ``mode`` parameter and the status codes can be visualized
+    in the following graph:
+
+.. image:: images/status_diagram.svg
+
 
 Commands
 ~~~~~~~~
@@ -324,7 +331,7 @@ The following commands are predefined (extensible):
      optional command for shuting down the hardware.
      When this command is sent, and the status is DISABLED,
      it is safe to switch off the related device.
- 
+
 :Note:
     Going to the DISABLED state, may also be triggered by changing the mode to DISABLED.
     If the implementor for security reason wants to prohibit any action after a shutdown,
@@ -1685,7 +1692,7 @@ optional data properties
 
 ``"maxchars"``:
     the maximum length of the string in UTF-8 code points, counting the number of characters (**not** bytes!)
-    
+
     :note:
         an UTF-8 encoded character may occupy up to 4 bytes.
         Also the end-of-string marker may need another byte for storage.
