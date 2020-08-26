@@ -1,7 +1,5 @@
 .. raw:: html
 
-   <h1>THIS DOCUMENT IS WORK IN PROGRESS AND MAY CONTAIN HORRIBLE BUGS!</h1>
-
 SECoP: Sample Environment Communication Protocol
 ################################################
 
