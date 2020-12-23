@@ -1648,7 +1648,7 @@ Boolean: ``bool``
 
 syntax
 ~~~~~~
-``{"bool": {}}``
+``{"type": "bool"}``
 
 transport
 ~~~~~~~~~
