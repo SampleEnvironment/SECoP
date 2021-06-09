@@ -33,8 +33,9 @@ for filename in sorted(glob('*.rst')):
         tnum = int(tnum)
         assert tnum == num
         assert content[1].startswith("===")
+        assert state in STATES
     except:
-        print('non standard title:\n%s\n%s' % tuple(content[0:1]))
+        print('non standard title:\n%s\n%s' % tuple(content[0:2]))
         continue
     ttitle = ttitle.strip()
     newfilename = "%.3d %s.rst" % (num, stitle)

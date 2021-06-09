@@ -104,6 +104,10 @@ Issues List
     \     `SECoP Issue 56: Additional Busy States`_
     \     `SECoP Issue 58: use JSON key, value for describe message`_
     \     `SECoP Issue 59: set_mode and mode instead of some commands`_
+    u     `SECoP Issue 60: enhancements to the documentation`_
+    p     `SECoP Issue 61: new predefined property implementation`_
+    u     `SECoP Issue 62: naming convention for related parameters`_
+    u     `SECoP Issue 63: enumeration of floating point values`_
     ===== =======
 
 .. _`SECoP Issue 1: About SECoP Issues`: 001%20About%20SECoP%20Issues.rst
@@ -164,3 +168,7 @@ Issues List
 .. _`SECoP Issue 56: Additional Busy States`: 056%20Additional%20Busy%20States.rst
 .. _`SECoP Issue 58: use JSON key, value for describe message`: 058%20use%20JSON%20key%20value%20for%20describe%20message.rst
 .. _`SECoP Issue 59: set_mode and mode instead of some commands`: 059%20set_mode%20and%20mode%20instead%20of%20some%20commands.rst
+.. _`SECoP Issue 60: enhancements to the documentation`: 060%20enhancements%20to%20the%20documentation.rst
+.. _`SECoP Issue 61: new predefined property implementation`: 061%20new%20predefined%20property%20implementation.rst
+.. _`SECoP Issue 62: naming convention for related parameters`: 062%20naming%20convention%20for%20related%20parameters.rst
+.. _`SECoP Issue 63: enumeration of floating point values`: 063%20enumeration%20of%20floating%20point%20values.rst
