@@ -1,0 +1,52 @@
+Videoconference 2021-06-09
+==========================
+
+.. sidebar:: participants
+
+     * Enrico Faulhaber
+     * Lutz Rossa
+     * Klaus Kiefer
+     * Bastian Klemke
+     * Anders Petterson
+     * Niklas Eckström
+     * Markus Zolliker
+
+
+.. contents:: Contents
+    :local:
+    :depth: 2
+
+
+Agenda
+------
+
+Discuss the description of SECoP example modules 
+1) Example from PSI: PPMS (physical property measurement system) plus additional LakeShore 370 resistance bridge
+2) Example from HZB: Orange cryostat draft
+
+
+1) PPMS + LakeShore 370
+-----------------------
+
+The following issues were discussed:
+
+  * Parameters '_persistentmode' and '_enable' in the magnetic field module should be unified to 'mode'
+  * The 'implementation' module property from Frappy is not (yet) standard
+    (`see SECoP Issue 61: new predefined property implementation`_)
+  * The '_timeout' parameter in the temperature implementation matches the predefined 'timeout' SEC node property.
+    It is proposed to change the name of the parameter.
+  * The main value of the chamber module is an enum. The numbers of the enum of 'value' and 'target' should match
+    after the target is reached. Actually they do not, because the meaning of the numbers is taken from the
+    hardware. Klaus proposed to use commands on a (to be created) pressure module. This has the disadvantage that
+    the Drivable interface can not be used for waiting for success. In fact in the implementation at PSI, the
+    pressure reading is not yet impermented
+  * The LakeShore370 resistivity module has several parameters which can take a discrete number of floating
+    point values, typically 2 values per decade. Actually it is represented as an enum, with the value/unit as
+    name and the internal integer representation as number. It is proposed to extend the SECoP specification
+    for this case (`SECoP Issue 63: enumeration of floating point values`_).
+
+
+2) Orange cryostat draft
+------------------------
+
+The discussion was started, but for time reasons interrupted and postponed to the next video meeting at 2021-06-17.
