@@ -32,7 +32,7 @@ The following issues were discussed:
 
 * Parameters '_persistentmode' and '_enable' in the magnetic field module should be unified to 'mode'
 * The 'implementation' module property from Frappy is not (yet) standard
-  (`see SECoP Issue 61: new predefined property implementation`_)
+  (see `SECoP Issue 61: new predefined property implementation`_)
 * The '_timeout' parameter in the temperature implementation matches the predefined 'timeout' SEC node property.
   It is proposed to change the name of the parameter.
 * in the temperature module there is a '_workingramp' readonly parameter indicating the actually used ramp,
