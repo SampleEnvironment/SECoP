@@ -37,7 +37,7 @@ The following issues were discussed:
   It is proposed to change the name of the parameter.
 * in the temperature module there is a '_workingramp' readonly parameter indicating the actually used ramp,
   where the 'ramp' parameter is the wanted ramp. Enno proposes to define a naming converntion for these
-  cases, like wanted_ramp, actual_ramp.
+  cases, like wanted_ramp, actual_ramp (`SECoP Issue 62: naming convention for related parameters`_).
 * The main value of the chamber module is an enum. The numbers of the enum of 'value' and 'target' should match
   after the target is reached. Actually they do not, because the meaning of the numbers is taken from the
   hardware. Klaus proposed to use commands on a (to be created) pressure module. This has the disadvantage that
