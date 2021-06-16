@@ -25,7 +25,6 @@ Discuss the description of SECoP example modules
 1) Example from PSI: PPMS (physical property measurement system) plus additional LakeShore 370 resistance bridge
 2) Example from HZB: Orange cryostat draft
 
-
 1) PPMS + LakeShore 370
 -----------------------
 
@@ -49,5 +48,9 @@ The following issues were discussed:
 
 2) Orange cryostat draft
 ------------------------
+
+Klaus mentions that when discussing this issue, they found that the SECoP specification may
+need some clarifications/improvements. We create an issue `SECoP Issue 60: enhancements to the documentation`_
+for collecting these items.
 
 The discussion was started, but for time reasons interrupted and postponed to the next video meeting at 2021-06-17.
