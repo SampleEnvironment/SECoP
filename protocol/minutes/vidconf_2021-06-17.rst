@@ -1,0 +1,86 @@
+Videoconference 2021-06-17
+==========================
+
+.. sidebar:: participants
+
+     * Enrico Faulhaber
+     * Lutz Rossa
+     * Klaus Kiefer
+     * Niklas Eckström
+     * Markus Zolliker
+     * Bastian Klemke
+     * Anders Petterson
+
+
+.. contents:: Contents
+    :local:
+    :depth: 2
+
+
+Agenda
+------
+
+Discuss the description of SECoP example modules
+
+1) Continue discussion of Example from HZB: Orange cryostat draft
+2) Example from mlz: 3He cryostat json description
+
+
+1) Orange cryostat draft
+------------------------
+
+Klaus presents his ideas about different 'levels of implementation',
+i.e. what a Basic, Advanced and Expert (full) implementation of a cryostat
+with a temperature regulation loop and several sensors could look like.
+
+Discussion about strong coupling of temperature and resistance value upon reading as a tuple.
+Alternatively, the resistance could be a separate module.
+Another way would be to specify a 'raw_value' or 'resistence' parameter.
+Klaus raises issues about synchronism of these connected parameters.
+Enno proposes a caching solution, exploiting the order of accibles in the description.
+Enno and Markus doubt the general need to have these values tightly coupled as a tuple, as one can be calculated from the other.
+For the time beeing, Klaus will implement the tuple as a custom parameter.
+Markus suggests to evaluate the idea of having a 'Multiple Read' command in
+`SECoP Issue 64: evaluating the need for reading multiple parameters simultaneously`_.
+
+Discussion about p,i and d vs. pid as a struct.
+Klaus would also include the heaterrange in the pid.
+Discussion needed.
+See: `SECoP Issue 67: pid control parameters`_.
+
+Next point is 'mode' where Klaus proposes to 'disengage' the regulation temperature module
+for the 'openloop' mode, which is controlled by a different module, controlling the heater power in that case.
+Enno and Markus would prefer to keep this functionality in the regulation module.
+A longer discussion about how to handle such cases in a more generic case.
+Markus points out that the meaning of the 'value' of a module should never change.
+See: `SECoP Issue 65: handling of coupled (sub)modules`_.
+
+Discussion about the need to have and ways to implement a selection one of several
+Temperature sensors as the one used for regulation.
+
+Discussion about calibriation (data) and how and when this is or should be accessible.
+It is probably best to provide this data as properties.
+Upon change of calibration, the description reflects the new values.
+This means that clients need to re-evaluate the description and we need a way to signal
+this to the clients from the sec node.
+See: `SECoP Issue 66: force re-connect`_.
+
+
+2) Example from mlz: 3He cryostat json description
+
+Approach is found to be a good one, Klaus especially likes the common prefix
+for modules representing the same type of physical quantity (temperatures, pressures).
+However, the heaterrange should be included in the regulation modules. All agree on that.
+Also, small case p would be better prefix for pressure sensors.
+
+A short discussion about if and how to include a schematic (svg) picture of a complex setup (like a gashandling system)
+ends quickly with no result.
+
+The case of standardizing access to p,i and d (or pid) is getting more urgent.
+
+Due to holiday season, the next meeting will be probably 18(th) or 27(th) of august (around 10:00).
+
+.. _`SECoP Issue 64: evaluating the need for reading multiple parameters simultaneously`: ../issues/064%20reading%20multiple%20values.rst
+.. _`SECoP Issue 65: handling of coupled (sub)modules`: ../issues/065%20handling%20coupled%20modules.rst
+.. _`SECoP Issue 66: force re-connect`: ../issues/066%20force%20re-connect.rst
+.. _`SECoP Issue 67: pid control parameters`: ../issues/067%20pid%20control%20parameters.rst
