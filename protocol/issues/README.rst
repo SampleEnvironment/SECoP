@@ -108,6 +108,10 @@ Issues List
     p     `SECoP Issue 61: new predefined property implementation`_
     u     `SECoP Issue 62: naming convention for related parameters`_
     u     `SECoP Issue 63: enumeration of floating point values`_
+    u     `SECoP Issue 64: reading multiple parameters simultaneously`_
+    u     `SECoP Issue 65: handling of coupled modules`_
+    p     `SECoP Issue 66: force re-connect`_
+    u     `SECoP Issue 67: pid control parameters`_
     ===== =======
 
 .. _`SECoP Issue 1: About SECoP Issues`: 001%20About%20SECoP%20Issues.rst
@@ -172,3 +176,7 @@ Issues List
 .. _`SECoP Issue 61: new predefined property implementation`: 061%20new%20predefined%20property%20implementation.rst
 .. _`SECoP Issue 62: naming convention for related parameters`: 062%20naming%20convention%20for%20related%20parameters.rst
 .. _`SECoP Issue 63: enumeration of floating point values`: 063%20enumeration%20of%20floating%20point%20values.rst
+.. _`SECoP Issue 64: reading multiple parameters simultaneously`: 064%20reading%20multiple%20parameters%20simultaneously.rst
+.. _`SECoP Issue 65: handling of coupled modules`: 065%20handling%20of%20coupled%20modules.rst
+.. _`SECoP Issue 66: force re-connect`: 066%20force%20re-connect.rst
+.. _`SECoP Issue 67: pid control parameters`: 067%20pid%20control%20parameters.rst
