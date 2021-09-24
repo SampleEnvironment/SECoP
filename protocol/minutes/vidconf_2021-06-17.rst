@@ -67,6 +67,7 @@ See: `SECoP Issue 66: force re-connect`_.
 
 
 2) Example from mlz: 3He cryostat json description
+--------------------------------------------------
 
 Approach is found to be a good one, Klaus especially likes the common prefix
 for modules representing the same type of physical quantity (temperatures, pressures).
