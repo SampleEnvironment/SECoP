@@ -58,7 +58,9 @@ for collecting these items.
 
 The discussion was started, but for time reasons interrupted and postponed to the next video meeting at 2021-06-17.
 
+.. DO NOT TOUCH --- following links are automatically updated by issue/makeissuelist.py
 .. _`SECoP Issue 60: enhancements to the documentation`: ../issues/060%20enhancements%20to%20the%20documentation.rst
 .. _`SECoP Issue 61: new predefined property implementation`: ../issues/061%20new%20predefined%20property%20implementation.rst
 .. _`SECoP Issue 62: naming convention for related parameters`: ../issues/062%20naming%20convention%20for%20related%20parameters.rst
 .. _`SECoP Issue 63: enumeration of floating point values`: ../issues/063%20enumeration%20of%20floating%20point%20values.rst
+.. DO NOT TOUCH --- above links are automatically updated by issue/makeissuelist.py

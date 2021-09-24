@@ -11,7 +11,7 @@ import io
 
 STATES = {'closed': '\\', 'under discussion':'d', 'unspecified':'u', 'proposed':'p'}
 filepat  = re.compile(r'(\d\d\d) (.*).rst')
-titlepat = re.compile(r'SECoP Issue (\d*): ([^(]*)(?:\((.*)\))?$')
+titlepat = re.compile(r'SECoP Issue (\d*): (.*)\(([^\)]*)\)?$')
 propername = re.compile(r'[^\w \-\_]+')
 issueslist = []
 linkdict = {}
@@ -20,7 +20,7 @@ stdlabels = {}
 
 for filename in sorted(glob('*.rst')):
     try:
-        num, title = filepat.match(filename).groups(0)
+        num, shortfilename = filepat.match(filename).groups(0)
         num = int(num)
     except (AttributeError, ValueError):
         # this is probably not an issue file
@@ -28,17 +28,22 @@ for filename in sorted(glob('*.rst')):
     with open(filename, 'r') as fil:
         content = fil.read().split('\n')
     try:
+        titleline = content[0].strip()
         tnum, ttitle, state = titlepat.match(content[0]).groups(0)
         stitle = " ".join(propername.sub(' ', ttitle).split())
         tnum = int(tnum)
         assert tnum == num
         assert content[1].startswith("===")
         assert state in STATES
-    except:
+    except TimeoutError:
         print('non standard title:\n%s\n%s' % tuple(content[0:2]))
         continue
     ttitle = ttitle.strip()
-    newfilename = "%.3d %s.rst" % (num, stitle)
+    if shortfilename != stitle:
+        print('\nWARNING: filename and title to not match')
+        print('  %s' % filename)
+        print('      %s' % ttitle)
+    newfilename = filename
     label = "SECoP Issue %d: %s" % (num, ttitle)
     newtitle = "%s (%s)" % (label, state)
     issueslist.append("    %s     `%s`_" % (STATES[state], label))
@@ -48,6 +53,7 @@ for filename in sorted(glob('*.rst')):
     if newtitle != content[0]:
         print('change title to: %s', newtitle)
     elif newfilename != filename:
+        # obsolete ?
         print('change filename to %s' % newfilename)
     else:
         continue
@@ -63,7 +69,7 @@ def find_links_labels(link):
     print(link.group(1))
     return link.group(1)
 
-def update_links(filename, files, stdlabels):
+def update_links(filename, files, stdlabels, basepath):
     with io.open(filename, encoding='utf-8') as fil:
         content = fil.read()
     pat = re.compile(r'`(SECoP Issue \d+:[^\n`]*)`_')
@@ -82,11 +88,11 @@ def update_links(filename, files, stdlabels):
         link = []
         for label in labels:
             if label.lower() != stdlabels[num].lower():
-                print('WARNING: labels do not match:')
+                print('\nWARNING: labels do not match in', filename)
                 print('   "%s"' % label)
                 print('   "%s"' % stdlabels[num])
             link.append('.. _`%s`:' % label)
-        link_list.append('\n'.join(link) + ' issues/%s' % quote(files[num]))
+        link_list.append('\n'.join(link) + ' %s%s' % (basepath, quote(files[num])))
     marker = '.. DO NOT TOUCH --- %s links are automatically updated by issue/makeissuelist.py\n'
     cleaned = re.sub(r'.. _`SECoP Issue \d+: .*`: .*\n', '', content)
     parts = re.split(marker % r'\w*', cleaned)
@@ -109,11 +115,14 @@ text[1] = '============'
 header = '    ===== ======='
 with open('README.rst', 'w') as fil:
     fil.write("\n".join(text + ['Issues List\n===========', '\n.. table::\n', header] + issueslist
-                        + [header, ''] + list(linkdict.values())))
+                        + [header, ''] + list(linkdict.values())+ ['']))
 
 for filename in glob('../*.rst'):
-    update_links(filename, files, stdlabels)
+    update_links(filename, files, stdlabels, 'issues/')
 
-for filename in glob('*.rst'):
-    if filename != 'README.rst':
-        update_links(filename, files, stdlabels)
+for filename in glob('../*/*.rst'):
+    if filename.startswith('../issues/'):
+        if filename != '../issues/README.rst':
+            update_links(filename, files, stdlabels, '')
+    else:
+        update_links(filename, files, stdlabels, '../issues/')

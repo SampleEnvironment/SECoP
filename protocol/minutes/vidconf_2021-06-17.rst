@@ -81,7 +81,9 @@ The case of standardizing access to p,i and d (or pid) is getting more urgent.
 
 Due to holiday season, the next meeting will be probably 18(th) or 27(th) of august (around 10:00).
 
+.. DO NOT TOUCH --- following links are automatically updated by issue/makeissuelist.py
 .. _`SECoP Issue 64: evaluating the need for reading multiple parameters simultaneously`: ../issues/064%20reading%20multiple%20parameters%20simultaneously.rst
 .. _`SECoP Issue 65: handling of coupled (sub)modules`: ../issues/065%20handling%20of%20coupled%20modules.rst
 .. _`SECoP Issue 66: force re-connect`: ../issues/066%20force%20re-connect.rst
 .. _`SECoP Issue 67: pid control parameters`: ../issues/067%20pid%20control%20parameters.rst
+.. DO NOT TOUCH --- above links are automatically updated by issue/makeissuelist.py

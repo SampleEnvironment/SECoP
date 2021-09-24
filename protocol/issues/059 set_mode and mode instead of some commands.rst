@@ -473,6 +473,7 @@ as predefined commands.  ``mode`` has a predefined meaning:
         {"enum",{"members":{"DISABLED": 0, "STANDBY": 30, "PREPARED": 50}}
 
     The meaning of the operation modes SHOULD be described in the description.
+
 .. DO NOT TOUCH --- following links are automatically updated by issue/makeissuelist.py
-.. _`SECoP Issue 56: Additional Busy States`: issues/056%20Additional%20Busy%20States.rst
+.. _`SECoP Issue 56: Additional Busy States`: 056%20Additional%20Busy%20States.rst
 .. DO NOT TOUCH --- above links are automatically updated by issue/makeissuelist.py

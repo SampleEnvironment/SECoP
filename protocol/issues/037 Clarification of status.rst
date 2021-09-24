@@ -287,5 +287,5 @@ Decision from vidconf_2019-01-16
 
 
 .. DO NOT TOUCH --- following links are automatically updated by issue/makeissuelist.py
-.. _`SECoP Issue 22: Enable Module instead of Shutdown Command`: issues/022%20Enable%20Module%20instead%20of%20Shutdown%20Command.rst
+.. _`SECoP Issue 22: Enable Module instead of Shutdown Command`: 022%20Enable%20Module%20instead%20of%20Shutdown%20Command.rst
 .. DO NOT TOUCH --- above links are automatically updated by issue/makeissuelist.py

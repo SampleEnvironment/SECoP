@@ -1,5 +1,5 @@
-SECoP Issue 65: handling of coupled modules (unspecified)
-=========================================================
+SECoP Issue 65: handling of coupled (sub)modules (unspecified)
+==============================================================
 
 Motivation
 ----------
