@@ -1,8 +1,5 @@
 .. image:: https://raw.githubusercontent.com/SampleEnvironment/SECoP/master/protocol/images/SECoP_logo_small.png
 
-SECoP
-#####
-
 Sample Environment Communication Protocol
 
 * `SECoP Motivation <protocol/motivation.rst>`_
