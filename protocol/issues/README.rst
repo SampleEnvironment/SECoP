@@ -112,6 +112,7 @@ Issues List
     u     `SECoP Issue 65: handling of coupled (sub)modules`_
     p     `SECoP Issue 66: force re-connect`_
     u     `SECoP Issue 67: pid control parameters`_
+    u     `SECoP Issue 68: transaction of multiple commands`_
     ===== =======
 
 .. _`SECoP Issue 1: About SECoP Issues`: 001%20About%20SECoP%20Issues.rst
@@ -180,3 +181,4 @@ Issues List
 .. _`SECoP Issue 65: handling of coupled (sub)modules`: 065%20handling%20of%20coupled%20modules.rst
 .. _`SECoP Issue 66: force re-connect`: 066%20force%20re-connect.rst
 .. _`SECoP Issue 67: pid control parameters`: 067%20pid%20control%20parameters.rst
+.. _`SECoP Issue 68: transaction of multiple commands`: 068%20transaction%20of%20multiple%20commands.rst
