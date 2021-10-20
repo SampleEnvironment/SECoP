@@ -14,7 +14,7 @@ In the latter case we would need:
 
 1. a way to 'mark' the corresponding' modules (or group of modules?)
 2. a defined way to 'switch over' the module in charge
-3. a way to inicate, which module is 'in charge'
+3. a way to indicate, which module is 'in charge'
 
 The only thing clear so far is that the content and meaning of the 'value' parameter should not be changed at runtime,
 i.e. if it is defined to repesent a temperature, it will never 'be switched' to resistance or heater_power or anything else.
