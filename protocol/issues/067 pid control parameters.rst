@@ -23,7 +23,7 @@ Proposal
 Based on Option 1:
 
 * predefined names ``pid_p``, ``pid_i``, ``pid_d``
-* predefined prefix ``pid_``for possible extensions.
+* predefined prefix ``pid_`` (or ``_pid_`` ?) for possible extensions.
 
 Discussion
 ----------
