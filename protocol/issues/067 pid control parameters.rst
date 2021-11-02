@@ -20,8 +20,10 @@ Furthermore a decision if this is implemented as a feature or an interface class
 Proposal
 --------
 
-Based on Option 1: predefined names ``pid_p``, ``pid_i``, ``pid_d``
-predefined prefix ``pid_``for possible extensions.
+Based on Option 1:
+
+* predefined names ``pid_p``, ``pid_i``, ``pid_d``
+* predefined prefix ``pid_``for possible extensions.
 
 Discussion
 ----------
