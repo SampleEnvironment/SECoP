@@ -1,5 +1,3 @@
-.. raw:: html
-
 SECoP: Sample Environment Communication Protocol
 ################################################
 
@@ -1344,6 +1342,11 @@ Optional Module Properties
      'sinq.psi.ch'. This may be achieved by including a domain name, but it does not need
      to be a registered name, and other means of assuring a global unique name are also possible.
 
+``"implementation"``:
+     A string indicating information about the implementation of the module, like a python class.
+
+     example: ``"secop_psi.ppms.Field"``
+
 
 Accessible Description
 ----------------------
@@ -2021,11 +2024,19 @@ Security and access control
 SECoP does not handle security of transferred data nor access control and relies on support by other means.
 
 
-
 Licences
 ========
 
 The above diagrams were generated using a modified copy of https://github.com/EnricoFaulhaber/railroad_dsl.
+
+
+Changes
+=======
+
+Draft
+-----
+
+* ``ìmplementation`` module property 
 
 
 .. _`Interface Classes and Features`: Interface%20Classes%20and%20Features.rst
