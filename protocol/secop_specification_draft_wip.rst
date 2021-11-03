@@ -263,8 +263,7 @@ The following parameters are predefined (this list will be extended):
 .. image:: images/status_diagram.svg
 
 
-``"pid_p"``, ``"pid_i"`` and``"pid_d"``
-
+``"pid_p"``, ``"pid_i"`` and ``"pid_d"``:
     Control parameters for closed loop control. The meaning is not exactly defined, especially
     ``pid_p`` might correspond to a gain or a proportianl band, ``pid_i`` might be a time or the
     reciprocal value of a time etc.
@@ -2045,7 +2044,7 @@ Draft
 -----
 
 * ``ìmplementation`` module property 
-* predefined parameters ``pid_p``, ``pid_i`` and``pid_d``
+* predefined parameters ``pid_p``, ``pid_i`` and ``pid_d``
 
 
 .. _`Interface Classes and Features`: Interface%20Classes%20and%20Features.rst
