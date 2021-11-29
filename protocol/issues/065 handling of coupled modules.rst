@@ -49,12 +49,12 @@ list will almost never match the needs of a SEC node implementor.
 
    b) Introduce a new flag ``"module_in_charge"`` (aside from ``"enable"``).
 
-    A change command to the proposed parameter, could deny a change to disable
-    the module in charge or deny to enable the module in charge, because of
-    it's internal state.
+   A change command to the proposed parameter, could deny a change to disable
+   the module in charge or deny to enable the module in charge, because of
+   it's internal state.
 
-    We should switch the module in charge by simply specifying is with a
-    ``"change"`` command. A dedicated ``"do"`` command has no advantage here.
+   We should switch the module in charge by simply specifying is with a
+   ``"change"`` command. A dedicated ``"do"`` command has no advantage here.
 
 2) *mode / status technique*
 
