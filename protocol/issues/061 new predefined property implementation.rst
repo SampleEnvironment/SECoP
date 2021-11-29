@@ -20,7 +20,7 @@ we add the following to the optional SEC node properties:
 Discussion
 ----------
 
-
+We should skip the The SEC node property "implementation" as it is already covered by "firmware".
 
 Decision
 --------
