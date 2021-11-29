@@ -1,5 +1,5 @@
-SECoP Issue 63: enumeration of floating point values (unspecified)
-==================================================================
+SECoP Issue 63: enumeration of floating point values (under discussion)
+=======================================================================
 
 Motivation
 ----------
@@ -14,21 +14,79 @@ We want to extend the data type specification for enumerations with simple
 which is described in ``"valuetype"``. Only ``"scaled"``, ``"double"`` and
 ``"bool"`` are allowed.
 
-example:
+- discussion in video conference 2021-11-03 - this example had not
+  enough supporters:
 
-``{"type":"enum", "members":{"auto":0,"300mW":1,"3W":2,"30W":3}, "values":{"auto":"nan","300mW":0.3,"3W":3,"30W":30}, "valuetype":{"type":"double"}}``
+  ``{"type":"enum", "members":{"auto":0,"300mW":1,"3W":2,"30W":3}, "values":{"auto":"nan","300mW":0.3,"3W":3,"30W":30}, "valuetype":{"type":"double"}}``
 
-This is backward compatible to existing implementations, additional data
-properties can be ignored by an ECS. One caveat is, that we have doubled
-keys. If we do not want this, we could use a json array as value for every
-option with enumeration value and numeric value as array parts. This
-might break existing implementations.
+  This is backward compatible to existing implementations, additional data
+  properties can be ignored by an ECS. One caveat is, that we have doubled
+  keys. If we do not want this, we could use a json array as value for every
+  option with enumeration value and numeric value as array parts. This
+  might break existing implementations.
+
+- unspecified example (see discussion below for 2):
+
+  a) Leave ``"enum"`` data type as it is. Add another readable or writable
+     parameter(s) of type ``"double"``, ``"scaled"`` or ``"bool"`` with the
+     actual equivalent value of the enumeration. Add a property ``"influences"``
+     to these parameters, which contains the other parameter name(s) as array
+     of strings. The ECS could use this in case of synchronized view of
+     parameters.
+
+  b) Leave ``"enum"`` data type as it is. Add another readable or writable
+     parameter(s) of type ``"double"``, ``"scaled"`` or ``"bool"`` with the
+     actual equivalent value of the enumeration. These parameter have to
+     have predefined name prefixes or suffixes and need no additional
+     property like example above (a).
+
+  If one parameter is changed with an asynchronous connection, the other
+  parameter(s) will be updated too. For a synchronous connection, the ECS
+  has to poll the influenced parameters by its own. The SEC node decides,
+  which value is chosen, if a client wants to change an influenced numeric
+  parameter to a value, which does not perfectly maps to an enumeration value.
+
+  Caveats are: the ECS has to interpret the keys (strings) of the enumeration
+  to check, what numeric values are allowed.
+
+  See also `SECoP Issue 62: naming convention for related parameters`_ and
+  `SECoP Issue 65: handling of coupled modules`_ .
 
 Discussion
 ----------
 
+vidconf 2021-11-03:
+  Enno points out a few surprising side-effects which may happen with sec-
+  nodes without float support. Discussion about the need of the "valuetype"
+  entry.
 
+  Counter usage example is if a user tries to set a value which is not
+  amongst the "values" mapping.
+
+  Enno has two thoughts about this:
+
+  1) Why not extend a "double" typed parameter with a property
+     "restricted_values" containing a list of all allowed values.
+     Markus mentions that this may be uncomfortable for the user, if the
+     parameter range spans several decades. This could be handled in the ECS,
+     though.
+
+  2) A set of two 'linked' parameters: one of "enum" type (as before) and a
+     "double" (or "scaled") which represents the wanted numeric representation
+     value of the selected enum value. Updating one of those linked parameters
+     will then have to also update the other parameter.
+     Open question: indication of this linkage via an additional property
+     "influences" (a list of parameter names being potentially changed by a
+     change of this parameter) or via a "common name prefix/suffix"?
+
+  Discussion continues and opinions seems to tend to favor proposal (2) with
+  the property. Discussion about depending parameters and use cases.
 
 Decision
 --------
 
+
+.. DO NOT TOUCH --- following links are automatically updated by issue/makeissuelist.py
+.. _`SECoP Issue 62: naming convention for related parameters`: 062%20naming%20convention%20for%20related%20parameters.rst
+.. _`SECoP Issue 65: handling of coupled modules`: 065%20handling%20of%20coupled%20modules.rst
+.. DO NOT TOUCH --- above links are automatically updated by issue/makeissuelist.py

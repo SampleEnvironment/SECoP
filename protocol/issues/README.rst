@@ -107,9 +107,9 @@ Issues List
     u     `SECoP Issue 60: enhancements to the documentation`_
     p     `SECoP Issue 61: new predefined property implementation`_
     u     `SECoP Issue 62: naming convention for related parameters`_
-    u     `SECoP Issue 63: enumeration of floating point values`_
+    d     `SECoP Issue 63: enumeration of floating point values`_
     u     `SECoP Issue 64: reading multiple parameters simultaneously`_
-    u     `SECoP Issue 65: handling of coupled (sub)modules`_
+    p     `SECoP Issue 65: handling of coupled (sub)modules`_
     p     `SECoP Issue 66: force re-connect`_
     u     `SECoP Issue 67: pid control parameters`_
     u     `SECoP Issue 68: transaction of multiple commands`_
