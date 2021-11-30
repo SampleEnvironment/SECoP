@@ -25,21 +25,16 @@ which is described in ``"valuetype"``. Only ``"scaled"``, ``"double"`` and
   option with enumeration value and numeric value as array parts. This
   might break existing implementations.
 
-- unspecified example (see discussion below for 2):
+- discussion in video conference 2021-11-30: (see also discussion below):
+  Leave ``"enum"`` data type as it is and add another readable or writable
+  parameter(s) of type ``"double"``, ``"scaled"`` or ``"bool"`` with the actual
+  equivalent value of the enumeration. We add a property ``"influences"`` to
+  all of the linked parameters, which contains the other parameter name(s) as
+  array of strings. You might omit the module name and colon of an entry and
+  this means a parameter of the same module. Anyway, you are also allowed to
+  use full SECoP specifier(s).
 
-  a) Leave ``"enum"`` data type as it is. Add another readable or writable
-     parameter(s) of type ``"double"``, ``"scaled"`` or ``"bool"`` with the
-     actual equivalent value of the enumeration. Add a property ``"influences"``
-     to these parameters, which contains the other parameter name(s) as array
-     of strings. The ECS could use this in case of synchronized view of
-     parameters.
-
-  b) Leave ``"enum"`` data type as it is. Add another readable or writable
-     parameter(s) of type ``"double"``, ``"scaled"`` or ``"bool"`` with the
-     actual equivalent value of the enumeration. These parameter have to
-     have predefined name prefixes or suffixes and need no additional
-     property like example above (a).
-
+  The ECS could use this in case of synchronized view of parameters.
   If one parameter is changed with an asynchronous connection, the other
   parameter(s) will be updated too. For a synchronous connection, the ECS
   has to poll the influenced parameters by its own. The SEC node decides,
@@ -81,6 +76,18 @@ vidconf 2021-11-03:
 
   Discussion continues and opinions seems to tend to favor proposal (2) with
   the property. Discussion about depending parameters and use cases.
+
+vidconf 2021-11-30:
+  Markus wants to have a link between enumeration entries and a numerical value
+  for saving in data files. Setting a numeric value, the secnode should handle
+  non-listed values (rounding up or down). A gui would continue to use the
+  enumeration values.
+
+  This link can be done via a ``influences`` property, instead of adding extra
+  ``values`` parameter. Using two 'linked' parameters is agreed upon.
+
+  side-topic: ``influences`` entries *may* have contain a *SINGLE* colon (':')
+  to indicate 'module:parameter' style references to parameters of other modules.
 
 Decision
 --------
