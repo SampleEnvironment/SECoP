@@ -25,3 +25,11 @@ We should skip the The SEC node property "implementation" as it is already cover
 Decision
 --------
 
+At vidconf from 2021-11-30:
+
+We add the following to the optional module properties:
+
+``"implementation"``:
+     A string indicating information about the implementation of the module, like a python class.
+
+     example: ``"secop_psi.ppms.Field"``

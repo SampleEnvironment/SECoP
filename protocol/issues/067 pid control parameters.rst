@@ -29,8 +29,16 @@ Discussion
 ----------
 
 Often, pid parameters are individual items on the hardware. Also for the client, simple datatypes are is easier to handle.
-On the other hand, PID parameters always belong together. This first reasons are considered more imporant than the latter one.
+On the other hand, PID parameters always belong together.
 
 Decision
 --------
+
+To be added to the list of predefined parameters:
+
+``"ctrlpars"``:
+    A struct containing control parameters for closed loop control. The members names
+    ``p``, ``i``, ``d`` are reserved for the three items in PID.
+    The meaning is not exactly defined, especially ``p`` might correspond to a gain
+    or a proportional band, ``i`` might be a time or the reciprocal value of a time etc.
 
