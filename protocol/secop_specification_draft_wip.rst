@@ -1443,11 +1443,11 @@ the possible values of parameters and how they are serialized.
 They may also impose restrictions on the useable values or amount of data.
 The data info structure consists of the name of the datatype augmented by data-properties to pinpoint the exact meaning of the data to be described.
 
-SECoP defines some basic data types for numeric quantities, like ``Double``_ and ``Integer``_.
-An ``Enum``_ is defined for convenience of not having to remember the meaning of values from a reduced set.
-A ``Bool``_ datatype is similiar to a predefined Enum, but uses the JSON-values true and false.
+SECoP defines some basic data types for numeric quantities, like Double_ and Integer_.
+An Enum_ is defined for convenience of not having to remember the meaning of values from a reduced set.
+A Bool_ datatype is similiar to a predefined Enum, but uses the JSON-values true and false.
 (Of course 0 should be treated as False and 1 as True if a bool value isn't using the JSON literals.)
-For non-numeric types, a ``String``_ and a ``Blob``_ are defined as well.
+For non-numeric types, a String_ and a Blob_ are defined as well.
 
 Furthermore, SECoP not only defines basic data types but also structured datatypes.
 Tuples allow to combine a fixed amount of values with different datatypes in an ordered way to be used as one.
