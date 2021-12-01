@@ -1,7 +1,7 @@
-SECoP Issue 71: accessing sub items of parameters
-=================================================
+SECoP Issue 71: accessing sub items of parameters (proposed)
+============================================================
 
-Motivated by recent discussions as well as `Issue 20`_ a way needs to be found to be able
+Motivated by recent discussions as well as `SECoP Issue 20`_ a way needs to be found to be able
 to access sub-items of structured data types and not always the full type.
 
 
@@ -45,10 +45,21 @@ requests:
 Discussion
 ----------
 
-to be done
+Remark by MZ:
+
+    The question arises, if this feature should be mandatory or optional. I think it
+    should be mandatory for the change command, else a client would need to implement
+    a workaround when the feature is lacking. For the read command, the feature
+    is not really needed. A SEC node with no writable complex datatypes would
+    then not need to implement the feature, as the mandatory status parameter is readonly.
+    The updates are anyway on the full parameter, and as a consequence, the 'changed'
+    reply should also contain the full value of the parameter.
+
 
 side-topic: as the size of an array-parameter can not (well, should not) be changed using accesses to subitems,
 it is worth thinking about making this a parameter of itself, if the arraylength is intended to be changeable.
 
 
-.. _`Issue 020`: 067%20PID%20tables.rst
+.. DO NOT TOUCH --- following links are automatically updated by issue/makeissuelist.py
+.. _`SECoP Issue 20`: 020%20PID%20tables.rst
+.. DO NOT TOUCH --- above links are automatically updated by issue/makeissuelist.py

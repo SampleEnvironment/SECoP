@@ -35,8 +35,8 @@ for filename in sorted(glob('*.rst')):
         assert tnum == num
         assert content[1].startswith("===")
         assert state in STATES
-    except TimeoutError:
-        print('non standard title:\n%s\n%s' % tuple(content[0:2]))
+    except Exception:
+        print('non standard title in "%s":\n%s\n%s\n' % (filename, content[0], content[1]))
         continue
     ttitle = ttitle.strip()
     if shortfilename != stitle:
@@ -62,7 +62,7 @@ for filename in sorted(glob('*.rst')):
     os.remove(filename)
     with open(newfilename, 'w') as fil:
         fil.write('\n'.join(content))
-    
+
 
 def find_links_labels(link):
     global label
@@ -72,8 +72,8 @@ def find_links_labels(link):
 def update_links(filename, files, stdlabels, basepath):
     with io.open(filename, encoding='utf-8') as fil:
         content = fil.read()
-    pat = re.compile(r'`(SECoP Issue \d+:[^\n`]*)`_')
-    numpat = re.compile(r'SECoP Issue (\d+):[^\n`]*')
+    pat = re.compile(r'`(SECoP Issue \d+[^\n`]*)`_')
+    numpat = re.compile(r'SECoP Issue (\d+)[^\n`]*')
     links = {}
     labels = {}
     for label in re.findall(pat, content):

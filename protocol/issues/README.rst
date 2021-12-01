@@ -115,6 +115,7 @@ Issues List
     u     `SECoP Issue 68: transaction of multiple commands`_
     d     `SECoP Issue 69: optional structs by default`_
     u     `SECoP Issue 70: message is a JSON object`_
+    p     `SECoP Issue 71: accessing sub items of parameters`_
     ===== =======
 
 .. _`SECoP Issue 1: About SECoP Issues`: 001%20About%20SECoP%20Issues.rst
@@ -186,3 +187,4 @@ Issues List
 .. _`SECoP Issue 68: transaction of multiple commands`: 068%20transaction%20of%20multiple%20commands.rst
 .. _`SECoP Issue 69: optional structs by default`: 069%20optional%20structs%20by%20default.rst
 .. _`SECoP Issue 70: message is a JSON object`: 070%20message%20is%20a%20JSON%20object.rst
+.. _`SECoP Issue 71: accessing sub items of parameters`: 071%20accessing%20sub%20items%20of%20parameters.rst
