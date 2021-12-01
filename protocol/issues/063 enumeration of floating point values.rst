@@ -17,7 +17,12 @@ which is described in ``"valuetype"``. Only ``"scaled"``, ``"double"`` and
   discussion in video conference 2021-11-03 - this example had not
   enough supporters:
 
-  ``{"type":"enum", "members":{"auto":0,"300mW":1,"3W":2,"30W":3}, "values":{"auto":"nan","300mW":0.3,"3W":3,"30W":30}, "valuetype":{"type":"double"}}``
+.. code::
+    {"type":"enum",
+     "members":{"auto":0,"300mW":1,"3W":2,"30W":3},
+     "values":{"auto":"nan","300mW":0.3,"3W":3,"30W":30},
+     "valuetype":{"type":"double"}
+    }
 
   This is backward compatible to existing implementations, additional data
   properties can be ignored by an ECS. One caveat is, that we have doubled

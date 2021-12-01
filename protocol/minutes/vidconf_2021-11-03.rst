@@ -45,7 +45,7 @@ location:
 topics:
     all open issues, interface classes, parameter namings, etc...
 
-Issue 61: new predefined "property" implementation
+Issue 61: new predefined property `implementation`
 ++++++++++++++++++++++++++++++++++++++++++++++++++
 
 Klaus emphasises the need for a clear definition of the content of the properties.
@@ -59,33 +59,38 @@ listing the changes (and adding a few examples in the relevant (sub-)section(s))
 Issue 67: names pid control parameters
 ++++++++++++++++++++++++++++++++++++++
 
-Enno proposes to have a predefined group name ("regulation"?) for all parameters concerning
-a regulation functionality. having the p,i and d parameters named as proposed is fine, though.
+Enno proposes to have a predefined group name ("regulation"?) for all parameters
+concerning a regulation functionality. having the p,i and d parameters named as
+proposed is fine, though.
 
-Conclusion of a small discussion: proposal accepted (3 individual parameters called "pid_p",
-"pid_i" and "pid_d".) predefined group name proposed to next meeting.
+Conclusion of a small discussion: proposal accepted (3 individual parameters called
+"pid_p", "pid_i" and "pid_d".) predefined group name proposed to next meeting.
 
 Issue 63 enumeration of floating point values
 +++++++++++++++++++++++++++++++++++++++++++++
 
-Enno points out a few surprising side-effects which may happen with sec-nodes without float support.
+Enno points out a few surprising side-effects which may happen with sec-nodes
+without float support.
+
 Discussion about the need of the "valuetype" entry.
 
-Counter usage example is if a user tries to set a value which is not amongst the "values" mapping.
+Counter usage example is if a user tries to set a value which is not amongst the
+"values" mapping.
 
 Enno has two thoughts about this:
 
 1) why not extend a "double" typed parameter with a property "restricted_values"
     containing a list of all allowed values.
-    Markus mentions that this may be uncomfortable for the user, if the parameter range spans
-    several decades. This could be handled in the ecs, though.
+    Markus mentions that this may be uncomfortable for the user, if the parameter
+    range spans several decades. This could be handled in the ecs, though.
 
 2) a set of two 'linked' parameters: one of "enum" type (as before) and a "double"
-   (or "scaled") which represents the wanted numeric representation value of the selected
-   enum value. updating one of those linked parameters will then have to also update the
-   other parameter. Open question: indication of this linkage via an additional property
-   "influences" (a list of parameter names being potentially changed by a change of this
-   parameter) or via a "common name prefix/suffix"?
+   (or "scaled") which represents the wanted numeric representation value of the
+   selected enum value. updating one of those linked parameters will then have
+   to also update the other parameter. Open question: indication of this linkage
+   via an additional property "influences" (a list of parameter names being
+   potentially changed by a change of this parameter) or via a
+   "common name prefix/suffix"?
 
 Discussion continues....
 
@@ -106,8 +111,8 @@ These are essentially two points:
 2) the secnode may want to signal to the ecs that the description has changed a
    needs to be re-read.
 
-Point 1) can be solved by defining that ``*IDN?`` always clears the connection state.
-A client should issue a ``*IDN?`` anyway as the first request.
+Point 1) can be solved by defining that ``*IDN?`` always clears the connection
+state. A client should issue a ``*IDN?`` anyway as the first request.
 Lutz points out, that an 'activated' serial line may send out 'garbage' bytes
 before the reply, which were already in-flight. The change in the specification
 therefore needs to be worded carefully.
@@ -121,15 +126,17 @@ An additional error message could be defined to signal this.
 The error message should be returned to any request (and as async 'update' error):
 "error_closed".
 An ecs need to re-open (and re-init) the connection and re-read the description.
-If the sec node issues an "error_closed" message, the ecs needs to issue the ``*IDN?`` /
-``describe`` commands (on order) to re-init the connection.
+If the sec node issues an "error_closed" message, the ecs needs to issue the
+``*IDN?`` / ``describe`` commands (on order) to re-init the connection.
 
-discussion goes on about when to to clear the 'this connection needs to re-read
-the description' and whether the sec-node should enforce a certain sequence of
+The discussion goes on about *when* to to clear the 'this connection needs to re-read
+the description' error flag and whether the sec-node should enforce a certain sequence of
 requests upon opening a new connection.
+
+discussion ended without a conclusion due to time running out.
 
 Issue 64 / 68: multiple read / change commands
 ++++++++++++++++++++++++++++++++++++++++++++++
 
-postponed to next meeting.
+postponed to next meeting due to time running out.
 

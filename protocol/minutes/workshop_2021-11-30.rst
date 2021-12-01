@@ -1,0 +1,238 @@
+3-days meeting 2021-11-30 - 2021-12-02 (ZOOM)
+=============================================
+
+.. sidebar:: participants
+
+     * Enrico Faulhaber
+     * Lutz Rossa
+     * Klaus Kiefer
+     * Bastian Klemke
+     * Niklas Eckström
+     * Markus Zolliker
+     * Bastian Klemke
+     * Anders Pettersson
+
+
+.. contents:: Contents
+    :local:
+    :depth: 2
+
+
+Agenda
+------
+Day one.
+
+- two reports about equipment with SECoP moved to an other facility
+- Issue 61: new predefined property ``implementation``
+- Issue 67: pid control parameters
+- Issue 66: force re-connect
+- Issue 63 enumeration of floating point values
+
+Day two.
+
+- SECoP Issue 65: handling of coupled (sub)modules
+- Issue 67: pid control parameters (part 2)
+
+Day three.
+
+- Issues 64, 68 (my preferred order, to be discussed)
+- any other items? what is going on with SECoP in your facilities?
+- check all issues, if there is need for discussion.
+
+2021-11-30
+----------
+
+Markus reports about two cases of equipment with SECoP moved to an other facility
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Uniaxial pressure stick, travelling from PSI to DESY.
+Only SECoP is spoken between instrument control and control rack of the stick.
+The pressure stick setup seems a good example for Issue 65.
+Markus also explained some of the integration issues they had at DESY.
+
+The second example was a power supply setup from FRMII to PSI.
+Apart from minor issues caused by hardware issues and applying too much power to the sample stick,
+the setup worked out-of-the box.
+
+Issue 61: new predefined property `implementation`
+++++++++++++++++++++++++++++++++++++++++++++++++++
+Markus found, that we already have a comparable SEC node property ``firmware``.
+Only the new module property ``implementation`` will be introduced, but not
+the new SEC node property, as its meaning would be the same as the already
+existing ``firmware`` property.
+
+agreement on Issue 61, close it.
+
+
+Issue 67: pid control parameters
+++++++++++++++++++++++++++++++++
+Enno makes a connection between the set of pid-control parameters and the
+line of an interpolation table (different issue...).
+Discussion about using individual values vs. using a struct continues.
+Enno and Klaus favour using a struct, Markus find using individual parameters easier.
+
+Markus opens the point of use cases for non-optional structs.
+(lets re-think this later)
+
+Agreement on using a ``ctrlpars`` struct with all items optional.
+Naming of the struct needs a re-think, ``p``, ``i`` and ``d`` are agreed names for p,i and d.
+Names of (allowed) additional items are to be discussed.
+
+Side-topic: specifying no ``optional`` part of a struct means *ALL* items are optional.
+To have all items mandatory, specify an empty list.
+
+
+Issue 66: force re-connect
+++++++++++++++++++++++++++
+
+Agreement, Issue closed.
+
+
+Issue 63 enumeration of floating point values
++++++++++++++++++++++++++++++++++++++++++++++
+Markus wants to have a link between enumeration entries and a numerical value for saving in data files.
+Setting a numeric value, the secnode should handle non-listed values (rounding up or down).
+A gui would continue to use the enumeration values.
+
+This link can be done via a ``influences`` property, instead of adding extra ``values`` parameter.
+Using two 'linked' parameters is agreed upon.
+
+Side-topic: ``influences`` entries *may* contain a *SINGLE* colon (':')
+to indicate 'module:parameter' style references to parameters of other modules.
+
+time is running out. remaining topics are saved for tomorrow.
+
+2021-12-01
+----------
+.. sidebar:: participants
+
+     * Enrico Faulhaber (joined later)
+     * Lutz Rossa
+     * Klaus Kiefer
+     * Bastian Klemke
+     * Niklas Eckström
+     * Markus Zolliker
+     * Bastian Klemke
+     * Anders Pettersson
+
+Timing and time synchronisation
++++++++++++++++++++++++++++++++
+Anders brought up the topic, on how modules figure out their timestamp time.
+An Issue will be written and discussed later.
+
+
+SECoP Issue 65: handling of coupled (sub)modules
+++++++++++++++++++++++++++++++++++++++++++++++++
+Markus presented some ideas about distributed control/coupling of modules.
+Enno points out that you can't reliably couple modules of different (pre-configured)
+sec-nodes.
+Agreement on having an optional, read-only parameter ``controlled_by`` (on Drivables/Writables)
+solves the issue, if all participants are defined within one secnode.
+If that parameter is not an empty string, the module is to be treated like a Readable
+module. Otherwise it must name a module of the same sec-node.
+
+After discussing the consequences, an enum instead of a string is preferred, with a default value
+of 0:'self' meaning the module is not controlled by some other module. Other values should
+'name' the potential controllers of this module.
+
+
+Issue 67: pid control parameters (part2)
+++++++++++++++++++++++++++++++++++++++++
+Markus points out, that using structs has the disadvantage of loosing properties like 'readonly' and 'description'.
+Klaus states that this happens with all structs, which still is no reason to avoid it.
+
+All agree that the control parameters will be a struct.
+In addition a new Issue will be written to add properties to struct items.
+Another new Issue about changing a single element of an array or tuple is also needed.
+
+related: Issue 20: PID tables
+
+2021-12-01
+----------
+.. sidebar:: participants
+
+     * Enrico Faulhaber
+     * Lutz Rossa
+     * Klaus Kiefer
+     * Bastian Klemke (joined later)
+     * Niklas Eckström
+     * Markus Zolliker
+     * Bastian Klemke
+     * Anders Pettersson
+
+
+Issue 71: accessing sub items of parameters
++++++++++++++++++++++++++++++++++++++++++++
+
+Discussion jump starts about how not to blow up the specification and what features
+are actually required.
+Key point of discussion is the question if accessing subitems is mandatory or optional.
+Also if accessing subitems is better done with custom commands or as a feature of the protocol.
+Agreement on having the `read`` and ``change`` requests/replies to support accessing
+subitems with the proposed syntax. the reply should only refer to the request'ed value., i.e.
+the change of a table cell will reply with tha changed cell only.
+updates, however, only sent the full value.
+An intense discussion about the last point takes place.
+
+Agreement seems possible about sending sub-item updates after a change.
+However, if a polling-triggered update is sent, it must be a full update.
+Markus points out, that so far timestamps are defined for the parameter, and not individual
+timestamps for the sub-items.
+
+Discussion about sending updates due to side-effects and if they only contain the changed
+elements, but are multiple updates, or if they send out the full parameter or just the
+'structure-layer' containing all the changes.
+
+SEC-node programmers should decide, what kind of updates they send out upon side-effects.
+All clients just need to be informed about the changed data set, if this is done by sending
+out the whole parameter, or by sending individual sub-item updates, is up to the sec-node
+programmer.
+
+Clarification: array lengths can ONLY be changed be resetting the full array and accessing
+invalid/undefined array indices is always an error.
+(**no** dynamic resize upon accessing previously undefined elements)
+
+Markus re-raises the question if accessing the sub-elements of a tuple is allowed.
+after short discussion, agreement on this as well is reached.
+
+
+Issue 64: reading of multiple parameters simultaneously
++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Markus raise the question of the use cases. Enno does not see the need.
+Klaus states that, after having ``influences`` property, the issue needs to be re-thought.
+Markus points out that bundling of information is already possible und should be used in
+such cases. Enno figured out that data duplication could be avoid in many cases, as we
+have access to individual elements on structured data types already.
+
+Agreement on this: new SECoP rule:
+
+- if multiple items need to be accessed simultaneously, put them into a structure data type.
+- if a write triggers side-effects, use the ``influences`` property to point this out.
+
+
+Issue 68: transaction of multiple commands
+++++++++++++++++++++++++++++++++++++++++++
+
+See above.
+
+
+Issue 70 message is a JSON object
++++++++++++++++++++++++++++++++++
+
+postponed until a new major version is to be released.
+
+
+Issue 69: optional structs by default
++++++++++++++++++++++++++++++++++++++
+
+reject as no longer needed. Solved by Issue 71.
+
+
+next meeting
+++++++++++++
+
+2022-01-25 10:30-12:00 and 2022-01-26 10:00-12:00.
+
+
+Session closed.
+

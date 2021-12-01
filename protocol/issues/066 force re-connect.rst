@@ -15,13 +15,18 @@ This can be done by closing the network connection already, but has two problems
 Proposal
 --------
 
-An additional reply should be defined (for now called 'error_closed').
-Upon reception of this, a client should dump it's internal information about the connection and
-re-init the connection from its side, as if it was freshly initiated, including reading the description.
-The client *MAY* also just close the network connection and re-open it.
+An additional reply should be defined (for now called 'close').
+Upon reception of this, a client should dump it's internal information about the
+connection and re-init the connection from its side, as if it was freshly initiated,
+including reading the description. The client *MAY* also just close the network
+connection and re-open it.
 
-Also, if a client initiates a connection, the identification message (``*IDN?``)
-assures that the state of the connection is reset (= all subscriptions deactivated).
+Also, if a client initiate a connection, it *MUST* first check the identity of
+the secnode (via '*IDN?'), then fetch the description and only after this start
+interacting with the SEC-node using the other defined messages.
+A SEC-node, however, shall upon reception of '*IDN?' drop its internal state
+about the connection, effectively 'deactivate'-ing all subscriptions
+(essential for serial lines).
 
 Discussion
 ----------
@@ -70,5 +75,3 @@ The following message is to be added to the specification:
       < ISSE&SINE2020,SECoP,V2019-09-16,v1.0
       > read t1:value
       < reply t1:value [295.13,{"t":1505396348.188}]
-
-
