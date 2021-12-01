@@ -1,5 +1,5 @@
-SECoP Issue 50: Reserved Names (proposed)
-=========================================
+SECoP Issue 50: Reserved Names (closed)
+=======================================
 
 Motivation
 ----------
