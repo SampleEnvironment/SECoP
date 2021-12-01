@@ -80,6 +80,82 @@ If the SEC node supports transactions, the specifiers could be:
   < transaction committed
 
 
+Alternative Proposal by MZ
+--------------------------
+
+A transaction should be handled in one command, so that the SEC node does not
+need to build a structure for remembering all the actions to be performed.
+
+In this approach, a transaction is composed by a list of actions to be performed
+'at once' meaning that no other messages are handled in between.
+
+In addition, this approach allows to check that a parameter value has not changed
+since the last read to the client.
+
+In the following examples, the messages should be on one line, the line breaks
+are for readability only.
+
+.. code::
+
+    transaction . [
+      ["get", "mod1:target", [3.5, 4.5]],
+      ["change", "mod1:ramp": 5],
+      ["change", "mod1:target": [3.5, 5.5]],
+      ["read", "mod1:value"],
+      ["read", "mod1:status"],
+      ["read", "mod1:_raw_value"]
+    ]
+
+    result . {
+      "mod1:target": [[3.5, 5.5], {"t": 123142456.7}],
+      "mod1:value": [[3.401, 4.51], {"t": 123142456.1}],
+      "mod1:status": [[300, "ramping"], {"t": 123142456.7}],
+      "mod1:_raw_value": [null, ["HardwareError", "no raw value available", {}]]
+    }
+
+
+Rules:
+
+- during handling of a transaction, no other messages are handled.
+- first all "change" actions are checked for validity. if this fails
+  a transaction_error of the first form is returned and the handling
+  of actions is skipped
+- the individual actions are executed in order
+- a read action reads the value of the given parameter from hardware and
+  stores it including qualifiers in the result object
+- a get action stores the cached value including qualifiers in the result object
+- if a get or read action contains three items, instead of storing the value, it
+  is checked against the given last item of the action. if these values do not match
+  a transaction_error of the seconds form is returned and the handling of further
+  actions is skipped
+- a change action changes the given parameter and saves the replied
+  value including qualifiers in the result object. if this fails a
+  transaction_error of the second form is returned and the handling of further
+  actions is skipped
+- if a read or get action fails, [null, <error report>] is stored in the result object
+- finally the result is returned in the result reply
+
+First form of transaction error, summarising all range checks:
+
+.. code::
+
+    transaction_error . {
+      "mod1:target": ["RangeError", "5.5 is not within 0..5", {}]
+      "mod1:ramp": ["RangeError", "5 is not within 0..3", {}]
+    }
+
+Second form of transaction error, for the first action failing
+
+.. code::
+
+   transaction_error "mod1:target" ["CheckFailed", "[3, 4.5] does not match [3.5, 4.5]", {}]
+
+   transaction_error "mod1:ramp" ["CommunicationFailed", "no reply", {}]
+
+
+
+
+
 Discussion
 ----------
 
