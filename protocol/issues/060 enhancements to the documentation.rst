@@ -9,7 +9,7 @@ Here we collect these issues.
 
 Proposal
 --------
-
+* we should make an explicit table of predefined parameters and predefined properties 
 
 
 Discussion
