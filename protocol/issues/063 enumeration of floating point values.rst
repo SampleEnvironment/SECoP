@@ -14,7 +14,7 @@ We want to extend the data type specification for enumerations with simple
 which is described in ``"valuetype"``. Only ``"scaled"``, ``"double"`` and
 ``"bool"`` are allowed.
 
-- discussion in video conference 2021-11-03 - this example had not
+  discussion in video conference 2021-11-03 - this example had not
   enough supporters:
 
   ``{"type":"enum", "members":{"auto":0,"300mW":1,"3W":2,"30W":3}, "values":{"auto":"nan","300mW":0.3,"3W":3,"30W":30}, "valuetype":{"type":"double"}}``
@@ -25,32 +25,33 @@ which is described in ``"valuetype"``. Only ``"scaled"``, ``"double"`` and
   option with enumeration value and numeric value as array parts. This
   might break existing implementations.
 
-- discussion in video conference 2021-11-30: (see also discussion below):
-  Leave ``"enum"`` data type as it is and add another readable or writable
-  parameter(s) of type ``"double"``, ``"scaled"`` or ``"bool"`` with the actual
-  equivalent value of the enumeration. We add a property ``"influences"`` to
-  all of the linked parameters, which contains the other parameter name(s) as
-  array of strings. You might omit the module name and colon of an entry and
-  this means a parameter of the same module. Anyway, you are also allowed to
-  use full SECoP specifier(s).
+Leave ``"enum"`` data type as it is and add another readable or writable
+parameter(s) of type ``"double"``, ``"scaled"`` or ``"bool"`` with the actual
+equivalent value of the enumeration.
 
-  The ECS could use this in case of synchronized view of parameters.
-  If one parameter is changed with an asynchronous connection, the other
-  parameter(s) will be updated too. For a synchronous connection, the ECS
-  has to poll the influenced parameters by its own. The SEC node decides,
-  which value is chosen, if a client wants to change an influenced numeric
-  parameter to a value, which does not perfectly maps to an enumeration value.
+We add a property ``"influences"`` to all of the linked parameters, which
+contains the other parameter name(s) as ``array of strings``. You might omit
+the module name and *single* colon of an entry and this means a parameter of
+the same module. Anyway, you are also allowed to use full SECoP specifier(s).
 
-  Caveats are: the ECS has to interpret the keys (strings) of the enumeration
-  to check, what numeric values are allowed.
+The ECS could use this in case of synchronized view of parameters.
+If one parameter is changed with an asynchronous connection, the other
+parameter(s) will be updated too. For a synchronous connection, the ECS
+has to poll the influenced parameters by its own. The SEC node decides,
+which value is chosen, if a client wants to change an influenced numeric
+parameter to a value, which does not perfectly maps to an enumeration value.
 
-  See also `SECoP Issue 62: naming convention for related parameters`_ and
-  `SECoP Issue 65: handling of coupled modules`_ .
+Caveats are: the ECS has to interpret the keys (strings) of the enumeration
+to check, what numeric values are allowed.
+
+See also `SECoP Issue 62: naming convention for related parameters`_ and
+`SECoP Issue 65: handling of coupled modules`_ .
 
 Discussion
 ----------
 
 vidconf 2021-11-03:
+
   Enno points out a few surprising side-effects which may happen with sec-
   nodes without float support. Discussion about the need of the "valuetype"
   entry.
@@ -78,6 +79,7 @@ vidconf 2021-11-03:
   the property. Discussion about depending parameters and use cases.
 
 vidconf 2021-11-30:
+
   Markus wants to have a link between enumeration entries and a numerical value
   for saving in data files. Setting a numeric value, the secnode should handle
   non-listed values (rounding up or down). A gui would continue to use the
