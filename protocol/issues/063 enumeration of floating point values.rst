@@ -1,5 +1,5 @@
-SECoP Issue 63: enumeration of floating point values (under discussion)
-=======================================================================
+SECoP Issue 63: enumeration of floating point values (closed)
+=============================================================
 
 Motivation
 ----------
@@ -94,6 +94,8 @@ vidconf 2021-11-30:
 Decision
 --------
 
+We keep the existing data type definition.
+We add an additional property ``"influences"`` as described above.
 
 .. DO NOT TOUCH --- following links are automatically updated by issue/makeissuelist.py
 .. _`SECoP Issue 62: naming convention for related parameters`: 062%20naming%20convention%20for%20related%20parameters.rst

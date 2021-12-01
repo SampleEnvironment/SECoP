@@ -95,7 +95,7 @@ Issues List
     \     `SECoP Issue 47: Error classes`_
     \     `SECoP Issue 48: mode parameter`_
     \     `SECoP Issue 49: Precision of Floating Point Values`_
-    p     `SECoP Issue 50: Reserved Names`_
+    \     `SECoP Issue 50: Reserved Names`_
     \     `SECoP Issue 51: No Restrictions on Datatype Nesting`_
     \     `SECoP Issue 52: Include Some Properties into Datatype`_
     \     `SECoP Issue 53: Custom Status Values`_
@@ -107,7 +107,7 @@ Issues List
     u     `SECoP Issue 60: enhancements to the documentation`_
     p     `SECoP Issue 61: new predefined property implementation`_
     u     `SECoP Issue 62: naming convention for related parameters`_
-    d     `SECoP Issue 63: enumeration of floating point values`_
+    \     `SECoP Issue 63: enumeration of floating point values`_
     u     `SECoP Issue 64: reading multiple parameters simultaneously`_
     p     `SECoP Issue 65: handling of coupled (sub)modules`_
     p     `SECoP Issue 66: force re-connect`_
