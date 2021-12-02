@@ -1,5 +1,5 @@
-SECoP Issue 64: reading multiple parameters simultaneously (unspecified)
-========================================================================
+SECoP Issue 64: reading multiple parameters simultaneously (closed)
+===================================================================
 
 Motivation
 ----------
@@ -41,8 +41,22 @@ There are more than one solution to have this.
 Discussion
 ----------
 
+Markus raised the question of the use cases. Enno did not see the need. Klaus
+statet that, after having ``influences`` property, the issue needs to be re-
+thought. Markus pointed out that bundling of information is already possible and
+should be used in such cases. Enno figured out that data duplication could be
+avoided in many cases, as we have access to individual elements on structured
+data types already.
+
 Decision
 --------
+
+Agreement on this: new SECoP rule:
+
+- If multiple items need to be accessed simultaneously, put them into a
+  structure data type.
+- If a write triggers side-effects, use the ``influences`` property
+  to point this out.
 
 .. DO NOT TOUCH --- following links are automatically updated by issue/makeissuelist.py
 .. _`SECoP Issue 68: transaction of multiple commands`: 068%20transaction%20of%20multiple%20commands.rst

@@ -108,11 +108,11 @@ Issues List
     p     `SECoP Issue 61: new predefined property implementation`_
     u     `SECoP Issue 62: naming convention for related parameters`_
     \     `SECoP Issue 63: enumeration of floating point values`_
-    u     `SECoP Issue 64: reading multiple parameters simultaneously`_
+    \     `SECoP Issue 64: reading multiple parameters simultaneously`_
     p     `SECoP Issue 65: handling of coupled (sub)modules`_
     p     `SECoP Issue 66: force re-connect`_
     u     `SECoP Issue 67: pid control parameters`_
-    u     `SECoP Issue 68: transaction of multiple commands`_
+    \     `SECoP Issue 68: transaction of multiple commands`_
     d     `SECoP Issue 69: optional structs by default`_
     u     `SECoP Issue 70: message is a JSON object`_
     p     `SECoP Issue 71: accessing sub items of parameters`_
