@@ -1804,7 +1804,9 @@ mandatory data property
 optional data property
 ~~~~~~~~~~~~~~~~~~~~~~
 ``"optional"``:
-    the names of optional struct elements is given)
+    The names of optional struct elements is given). When "optional" is omitted,
+    all struct elements are optional. This means that a SEC node not implementing
+    partial structs has to specify ``optional=[]`` in all structs.
 
     In 'change' and 'do' commands, the ECS might omit these elements, all other
     elements must be given.

@@ -67,11 +67,36 @@ list will almost never match the needs of a SEC node implementor.
    This is the very complex and leads to incompatible implementations,
    which should be avoided.
 
+
 Discussion
 ----------
+Having an optional, read-only parameter ``controlled_by`` (on Drivables/Writables)
+solves the issue, if all participants are defined within one secnode.
+On distributed systems, proxy modules for the controlled module must be generated
+on the SEC-Node of the controlling module.
+If that parameter is not an empty string, the module is to be treated like a Readable
+module. Otherwise it must name a module of the same sec-node.
+
+After discussing the consequences, an enum instead of a string is preferred, with a default value
+of 0:'self' meaning the module is not controlled by some other module. Other values should
+'name' the potential controllers of this module.
+
 
 Decision
 --------
+
+Add "controlled_by" under "predefined parameters".
+
+``"controlled_by"``:
+
+   A drivable module indicates with this parameter, that it can be switched to be
+   controlled from an other module. The datatype of such a parameter must be an
+   enum. The keys must be names of modules or 'self'. 'self' indicates that the module
+   is controlled by its own, and the value of slef must be 0.
+   
+   The recommended mechanism is, that by changing the target of the controlling module or
+   by calling its 'go' method, the module takes over control and sets the controlled_by
+   parameter to its own name.
 
 
 .. DO NOT TOUCH --- following links are automatically updated by issue/makeissuelist.py
