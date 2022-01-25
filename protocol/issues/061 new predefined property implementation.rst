@@ -1,5 +1,5 @@
-SECoP Issue 61: new predefined property implementation (proposed)
-=================================================================
+SECoP Issue 61: new predefined property implementation (closed)
+===============================================================
 
 Proposal
 --------

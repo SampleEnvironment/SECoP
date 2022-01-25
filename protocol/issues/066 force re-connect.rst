@@ -1,5 +1,5 @@
-SECoP Issue 66: force re-connect (proposed)
-===========================================
+SECoP Issue 66: force re-connect (closed)
+=========================================
 
 Motivation
 ----------

@@ -105,12 +105,12 @@ Issues List
     \     `SECoP Issue 58: use JSON key, value for describe message`_
     \     `SECoP Issue 59: set_mode and mode instead of some commands`_
     u     `SECoP Issue 60: enhancements to the documentation`_
-    p     `SECoP Issue 61: new predefined property implementation`_
+    \     `SECoP Issue 61: new predefined property implementation`_
     u     `SECoP Issue 62: naming convention for related parameters`_
     \     `SECoP Issue 63: enumeration of floating point values`_
     \     `SECoP Issue 64: reading multiple parameters simultaneously`_
     p     `SECoP Issue 65: handling of coupled (sub)modules`_
-    p     `SECoP Issue 66: force re-connect`_
+    \     `SECoP Issue 66: force re-connect`_
     u     `SECoP Issue 67: pid control parameters`_
     \     `SECoP Issue 68: transaction of multiple commands`_
     d     `SECoP Issue 69: optional structs by default`_
