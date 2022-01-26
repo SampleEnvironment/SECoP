@@ -1,5 +1,5 @@
-SECoP Issue 69: optional structs by default (under discussion)
-==============================================================
+SECoP Issue 69: optional structs by default (finalizing)
+========================================================
 
 Motivation
 ----------

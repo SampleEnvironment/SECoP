@@ -9,7 +9,7 @@ import os
 from urllib.parse import quote
 import io
 
-STATES = {'closed': '\\', 'under discussion':'d', 'unspecified':'u', 'proposed':'p'}
+STATES = {'closed': '\\', 'under discussion':'d', 'unspecified':'u', 'proposed':'p', 'finalizing': 'f'}
 filepat  = re.compile(r'(\d\d\d) (.*).rst')
 titlepat = re.compile(r'SECoP Issue (\d*): (.*)\(([^\)]*)\)?$')
 propername = re.compile(r'[^\w \-\_]+')

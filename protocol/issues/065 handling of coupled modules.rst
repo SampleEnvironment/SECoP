@@ -1,5 +1,5 @@
-SECoP Issue 65: handling of coupled (sub)modules (proposed)
-===========================================================
+SECoP Issue 65: handling of coupled (sub)modules (finalizing)
+=============================================================
 
 Motivation
 ----------
@@ -91,8 +91,8 @@ Add "controlled_by" under "predefined parameters".
 
    A drivable module indicates with this parameter, that it can be switched to be
    controlled from an other module. The datatype of such a parameter must be an
-   enum. The keys must be names of modules or 'self'. 'self' indicates that the module
-   is controlled by its own, and the value of slef must be 0.
+   enum. The enum keys must be names of modules or 'self'. 'self' indicates that
+   the module is controlled by its own, and the value of self must be 0.
    
    The recommended mechanism is, that by changing the target of the controlling module or
    by calling its 'go' method, the module takes over control and sets the controlled_by
