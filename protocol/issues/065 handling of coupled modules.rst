@@ -81,6 +81,103 @@ After discussing the consequences, an enum instead of a string is preferred, wit
 of 0:'self' meaning the module is not controlled by some other module. Other values should
 'name' the potential controllers of this module.
 
+Example by Markus
+-----------------
+
+This should explain how the mechanism should work from his point of view.
+
+Consider the following fictive, but not unrealistic example:
+
+Our system has 5 Modules:
+
+T_reg, T_sample (both Drivable):
+   Regulation and sample T, both with a control loop driving P_heater and p_nv
+   and a boolean parameter '_auto_nv' telling if the needle valve pressure should
+   be changed based on the difference of target and value of T_reg or T_sample.
+   Only one of the control loops might be active.
+
+P_heater (Writable):
+   the heater power
+
+p_nv (Drivable):
+   needle valve pressure, with a control mechanism driving pos_nv
+
+pos_nv (Drivable):
+   the needle valve motor
+
+
+If the parameter ``output_active`` is false, it has the meaning:
+The output (= the target of the controlled module) is not changed anymore. 
+For a temperature: the control loop is disabled, the heater power and the
+needle valve pressure target is not touched by the temperature module.
+For the pressure regulating needle valve: the control mechanism is disabled,
+the needle valve motor is not moved by ``p_nv``.
+
+
+.. table:: Here a table of possible situations:
+
+    ========================= ===== ===== ===== ======== ======== ======== ===== =====
+    situation                 1a    1b    1c    2a       2b       2c       3b    3c
+    ========================= ===== ===== ===== ======== ======== ======== ===== =====
+    T_reg:output_active       true  true  true  false    false    false    false false
+    T_sample:output_active    false false false true     true     true     false false
+    P_heater:output_active    true  true  true  true     true     true     true  true
+    p_nv:output_active        true  true  false true     true     false    true  false
+    pos_nv:output_active      true  true  true  true     true     true     true  true
+    T_reg:_auto_nv            true  false false x        x        x        x     x
+    T_sample:_auto_nv         x     x     x     true     false    false    x     x
+    P_heater:controlled_by    T_reg T_reg T_reg T_sample T_sample T_sample self  self
+    p_nv:controlled_by        T_reg self  self  T_sample self     self     self  self
+    pos_nv:controlled_by      p_nv  p_nv  self  p_nv     p_nv     self     p_nv  self
+    ========================= ===== ===== ===== ======== ======== ======== ===== =====
+
+``x`` indicates: does not matter
+
+* 1a) regulation on T_reg with automatic n.v. control (dependent on T)
+* 1b) regulation on T_reg with n.v. pressure regulated on a given pressure
+* 1c) regulation on T_reg with manual n.v. position
+* 2abc) regulation on T_sample, else as above
+* 3b) manual heater power, n.v. pressure regulated on a given pressure
+* 3c) manual heater power, manual n.v. position
+
+
+.. table:: The following table describes what happens when the target of a module is changed:
+
+    ========================= ========= ========= ========= ========= =========
+    target changed on         T_reg     T_sample  P_heater  p_nv      pos_nv
+    ========================= ========= ========= ========= ========= =========
+    P_heater:controlled_by    T_reg     T_sample  self
+    p_nv:controlled_by        T_reg*    T_sample*           self
+    pos_nv:controlled_by                                    p_nv      self
+    T_reg:output_active       true      false     false
+    T_sample:output_active    false     true      false
+    P_heater:output_active    true      true      true
+    p_nv:output_active        true*     true*
+    pos_nv:output_active      true*     true*
+    T_reg:_auto_nv                                          false     false
+    T_sample:_auto_nv                                       false     false
+    situation afterwards      1x        2x        3y        nb        nc
+    ========================= ========= ========= ========= ========= =========
+
+| ``x`` indicates: switch to ``a`` when _auto_nv is true, else keep ``a``, ``b`` or ``c`` as before
+| ``y`` indicates: keep ``b`` or ``c`` as before
+| ``n`` indicates: keep  ``1``, ``2`` or ``3`` as before
+| ``*`` indicates: value is changed only when _auto_nv is true
+
+
+Conclusion 1:
+   As we can see, there is no situation where ``P_heater:output_active`` or
+   ``pos_nv:output_active`` has to be false. Which means that this parameter is
+   not really needed here.
+
+Conclusion 2:
+   If inner mechanics of the system is known, the situation can be determined by the
+   ``output_active`` and ``_auto_nv`` parameters only. The ``controlled_by`` parameter
+   is not needed! However, the description (enum member names) gives a quite good picture
+   about the inner mechanics. If this is the case in all thinkable systems, it to be
+   evaluated.
+
+
 
 Decision
 --------
