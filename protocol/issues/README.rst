@@ -109,7 +109,7 @@ Issues List
     u     `SECoP Issue 62: naming convention for related parameters`_
     \     `SECoP Issue 63: enumeration of floating point values`_
     \     `SECoP Issue 64: reading multiple parameters simultaneously`_
-    f     `SECoP Issue 65: handling of coupled (sub)modules`_
+    d     `SECoP Issue 65: handling of coupled (sub)modules`_
     \     `SECoP Issue 66: force re-connect`_
     u     `SECoP Issue 67: pid control parameters`_
     \     `SECoP Issue 68: transaction of multiple commands`_
