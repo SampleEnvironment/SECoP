@@ -81,96 +81,92 @@ After discussing the consequences, an enum instead of a string is preferred, wit
 of 0:'self' meaning the module is not controlled by some other module. Other values should
 'name' the potential controllers of this module.
 
-Example by Markus
------------------
+Thoughts after the viodo meeting 2022-01-26
+-------------------------------------------
+by Markus
 
-This should explain how the mechanism should work from his point of view.
+1) what is the goal of issue 65?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Consider the following fictive, but not unrealistic example:
+- standardise the mechanism to switch between interlinked modules
 
-Our system has 5 Modules:
+more precise:
 
-T_reg, T_sample (both Drivable):
-   Regulation and sample T, both with a control loop driving P_heater and p_nv
-   and a boolean parameter '_auto_nv' telling if the needle valve pressure should
-   be changed based on the difference of target and value of T_reg or T_sample.
-   Only one of the control loops might be active.
+we have a group of interlinked module, only one of them could take over control.
 
-P_heater (Writable):
-   the heater power
+* we want to define a mechanism to switch modules
+* we want to define how this is indicated
 
-p_nv (Drivable):
-   needle valve pressure, with a control mechanism driving pos_nv
+2) proposed solution
+~~~~~~~~~~~~~~~~~~~~
 
-pos_nv (Drivable):
-   the needle valve motor
+* setting the target of a module switches to this module
+* the 'controlled_by' parameter indicates which one
 
+3) ambiguousness
+~~~~~~~~~~~~~~~~
 
-If the parameter ``output_active`` is false, it has the meaning:
-The output (= the target of the controlled module) is not changed anymore. 
-For a temperature: the control loop is disabled, the heater power and the
-needle valve pressure target is not touched by the temperature module.
-For the pressure regulating needle valve: the control mechanism is disabled,
-the needle valve motor is not moved by ``p_nv``.
+We have two possible interpretation of the proposed issue. The question is:
+To which modules belongs the controlled_by parameter?
 
+  a) Each module of the group has a controlled_by parameter and each of these parameters
+     contains an enum value corresponding to the module in charge.
+     This is as far as I understand, Klaus interpretation.
 
-.. table:: Here a table of possible situations:
+  b) From the inner logic, it can be seen, which modules is controlling (e.g. the
+     one keeping a PID controller) and which module is controlled. The 'controlled_by'
+     parameter should be on the module potentially controlled by the other(s).
 
-    ========================= ===== ===== ===== ======== ======== ======== ===== =====
-    situation                 1a    1b    1c    2a       2b       2c       3b    3c
-    ========================= ===== ===== ===== ======== ======== ======== ===== =====
-    T_reg:output_active       true  true  true  false    false    false    false false
-    T_sample:output_active    false false false true     true     true     false false
-    P_heater:output_active    true  true  true  true     true     true     true  true
-    p_nv:output_active        true  true  false true     true     false    true  false
-    pos_nv:output_active      true  true  true  true     true     true     true  true
-    T_reg:_auto_nv            true  false false x        x        x        x     x
-    T_sample:_auto_nv         x     x     x     true     false    false    x     x
-    P_heater:controlled_by    T_reg T_reg T_reg T_sample T_sample T_sample self  self
-    p_nv:controlled_by        T_reg self  self  T_sample self     self     self  self
-    pos_nv:controlled_by      p_nv  p_nv  self  p_nv     p_nv     self     p_nv  self
-    ========================= ===== ===== ===== ======== ======== ======== ===== =====
+Both interpretations have disadvantages. Let us start with (b).
 
-``x`` indicates: does not matter
+What should we do, when a hierarchy (controlling - controlled) is missing,
+i.e. in a symmetric case? Example: V and I on a laboratory power supply,
+where setting the target of V or I makes the other to act like a Readable.
+As this case is symmetric, we do not know where to put the 'controlled_by'
+parameter. We might specify that in this case it is allowed to put this
+parameter to both modules, accepting the cost of redundancy, or we might
+let the implementor choose an arbitrary module. Not a big problem.
 
-* 1a) regulation on T_reg with automatic n.v. control (dependent on T)
-* 1b) regulation on T_reg with n.v. pressure regulated on a given pressure
-* 1c) regulation on T_reg with manual n.v. position
-* 2abc) regulation on T_sample, else as above
-* 3b) manual heater power, n.v. pressure regulated on a given pressure
-* 3c) manual heater power, manual n.v. position
+Now to the disadvantages of interpretation (a):
 
+Redundancy:
 
-.. table:: The following table describes what happens when the target of a module is changed:
+   It is not needed to carry the information on all modules. For example
+   with 3 modules T_sample, T_reg and P_heater, where one may choose to
+   regulate on one of the temperatures, or use manual power. We have 3
+   states, and this information can be taken from only one of the 'controlled_by'
+   parameters, the others are redundant.
 
-    ========================= ========= ========= ========= ========= =========
-    target changed on         T_reg     T_sample  P_heater  p_nv      pos_nv
-    ========================= ========= ========= ========= ========= =========
-    P_heater:controlled_by    T_reg     T_sample  self
-    p_nv:controlled_by        T_reg*    T_sample*           self
-    pos_nv:controlled_by                                    p_nv      self
-    T_reg:output_active       true      false     false
-    T_sample:output_active    false     true      false
-    P_heater:output_active    true      true      true
-    p_nv:output_active        true*     true*
-    pos_nv:output_active      true*     true*
-    T_reg:_auto_nv                                          false     false
-    T_sample:_auto_nv                                       false     false
-    situation afterwards      1x        2x        3y        nb        nc
-    ========================= ========= ========= ========= ========= =========
+More complex cases:
 
-| ``x`` indicates: switch to ``a`` when _auto_nv is true, else keep ``a``, ``b`` or ``c`` as before
-| ``y`` indicates: keep ``b`` or ``c`` as before
-| ``n`` indicates: keep  ``1``, ``2`` or ``3`` as before
-| ``*`` indicates: value is changed only when _auto_nv is true
+   T_reg is controlling 2 modules: P_heater and pressure_nv. We have two overlapping
+   interlinked groups: (T_reg, P_heater) and (T_reg, pressure_nv). 
 
+   Each group needs an information about the controlling module.
 
-Remark:
-   As we can see, there is no situation where ``P_heater:output_active`` or
-   ``pos_nv:output_active`` has to be false. Which means that the parameter is
-   not really needed on these modules.
+   If we place the 'controlled_by' Parameter only on P_heater and pressure_nv,
+   the case is clear. But as T_reg is part of two groups of interlinked
+   modules, it is not clear which information exactly T_reg:controlled_by
+   should carry. It is better to omit this parameter, it can deliver only
+   redundant information possibly hard to interpret.
 
+A good question is, if such a case is too complex for the feature.
+What should be done when the control is on T_reg, and then
+pressure_nv:target is set? pressure_nv:controlled_by must switch to 'self',
+but the other behaviour will be implementation dependent - a sensible way
+would be that a flag T_reg:_auto_nv is set to false, and T_reg continues
+controlling the heater power. On the other hand, changing P_power:target
+will not only set P_power:controlled_by but also pressure_nv:controlled_by
+to 'self', as it is not foreseen in this system to control the
+temperature solely by the needle valve.
 
+We could see that even with this implemented dependent behaviour,
+the principles of the feature are followed: by setting <module>:target,
+<module> takes over control within its group, and all information
+about the control dependency is present. 'output_active' as a parameter
+is only needed, when we want to deactivate control. I realise now, that
+this might be done with an additional enum value for 'NONE', as Klaus
+proposed.
 
 
 Decision
