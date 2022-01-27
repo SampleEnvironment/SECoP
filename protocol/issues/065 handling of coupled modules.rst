@@ -1,5 +1,5 @@
-SECoP Issue 65: handling of coupled (sub)modules (finalizing)
-=============================================================
+SECoP Issue 65: handling of coupled (sub)modules (under discussion)
+===================================================================
 
 Motivation
 ----------
@@ -81,7 +81,7 @@ After discussing the consequences, an enum instead of a string is preferred, wit
 of 0:'self' meaning the module is not controlled by some other module. Other values should
 'name' the potential controllers of this module.
 
-Thoughts after the viodo meeting 2022-01-26
+Thoughts after the video meeting 2022-01-26
 -------------------------------------------
 by Markus
 
@@ -106,18 +106,19 @@ we have a group of interlinked module, only one of them could take over control.
 3) ambiguousness
 ~~~~~~~~~~~~~~~~
 
-We have two possible interpretation of the proposed issue. The question is:
-To which modules belongs the controlled_by parameter?
+The question is: To which modules belongs the controlled_by parameter?
+There are two possible interpretations of the proposed issue: 
 
-  a) Each module of the group has a controlled_by parameter and each of these parameters
-     contains an enum value corresponding to the module in charge.
-     This is as far as I understand, Klaus interpretation.
+1. Each module of the group has a controlled_by parameter and each of these parameters
+   contains an enum value corresponding to the module in charge.
+   This is as far as I understand, Klaus interpretation.
 
-  b) From the inner logic, it can be seen, which modules is controlling (e.g. the
-     one keeping a PID controller) and which module is controlled. The 'controlled_by'
-     parameter should be on the module potentially controlled by the other(s).
+2. From the inner logic, it can be seen, which modules is controlling (e.g. the
+   one keeping a PID controller) and which module is controlled. The 'controlled_by'
+   parameter should be on the module potentially controlled by the other(s). This
+   is the point of view of Markus and Enno.
 
-Both interpretations have disadvantages. Let us start with (b).
+Both interpretations have disadvantages. Let us start with (2).
 
 What should we do, when a hierarchy (controlling - controlled) is missing,
 i.e. in a symmetric case? Example: V and I on a laboratory power supply,
@@ -127,7 +128,7 @@ parameter. We might specify that in this case it is allowed to put this
 parameter to both modules, accepting the cost of redundancy, or we might
 let the implementor choose an arbitrary module. Not a big problem.
 
-Now to the disadvantages of interpretation (a):
+Now to the disadvantages of interpretation (1):
 
 Redundancy:
 
@@ -148,25 +149,71 @@ More complex cases:
    the case is clear. But as T_reg is part of two groups of interlinked
    modules, it is not clear which information exactly T_reg:controlled_by
    should carry. It is better to omit this parameter, it can deliver only
-   redundant information possibly hard to interpret.
+   redundant information and its content is not well defined.
 
 A good question is, if such a case is too complex for the feature.
-What should be done when the control is on T_reg, and then
-pressure_nv:target is set? pressure_nv:controlled_by must switch to 'self',
-but the other behaviour will be implementation dependent - a sensible way
-would be that a flag T_reg:_auto_nv is set to false, and T_reg continues
-controlling the heater power. On the other hand, changing P_power:target
-will not only set P_power:controlled_by but also pressure_nv:controlled_by
-to 'self', as it is not foreseen in this system to control the
-temperature solely by the needle valve.
+What exactly should be done when T_reg takes over control or when control
+is taken from T_reg? In this system, a solution might be that there is a
+boolean parameter T_reg:_auto_nv deciding whether pressure_nv is used for
+control or not. Setting a target on a module is always grabbing control,
+but there might be side effects. For example:
+
+* setting T_reg:target leads to: P_heater.controlled_by := 'T_reg'; if T_reg._auto_nv: pressure_nv.controlled_by := 'T_reg'
+* setting P_heater:target leads to: P_heater.controlled_by := 'self'; pressure_nv.controlled_by := 'self'
+* setting pressure_nv:target leads to: pressure_nv.controlled_by := 'T_reg'; T_read:_auto_nv := False
+
+This behaviour is driven by fact, that this implementation has not foreseen
+to control the temperature solely by the needle valve.
 
 We could see that even with this implemented dependent behaviour,
-the principles of the feature are followed: by setting <module>:target,
-<module> takes over control within its group, and all information
-about the control dependency is present. 'output_active' as a parameter
-is only needed, when we want to deactivate control. I realise now, that
-this might be done with an additional enum value for 'NONE', as Klaus
-proposed.
+the goals are followed: by setting <module>:target, <module> takes
+over control within its group, and all information about the control
+dependency is present. 'output_active' as a parameter
+is only needed, when we want to deactivate control completely.
+I realise now, that this might be done with an additional enum member
+'NONE', as Klaus proposed.
+
+4) an other proposition
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Thinking about it, I consider changing again completely the behaviour
+respecting the principle of least surprise. Let us assume above system
+in the mode where T_reg is in auto nv mode, controlling the pressure_nv.
+What might the user expect when setting pressure_nv:target?
+With the current proposal, the automatic needle valve control is switched
+off automagically. Is this really what he expects? We should also avoid that
+changing the target would only temporarely changing the needle valve setpoint
+and the control loop would overwrite it shortly afterwards.
+An good solution would be: raise an error, telling that pressure_nv is
+controlled by T_reg and can not be changed manually. This seems
+to be the least surprise, when a sensible error text is shown.
+In this case we would need another mechanism to select the
+controller -> output relation. Either by making controlled_by writable
+or by doing it the other way: having two writable boolean parameters
+T_reg:control_P_heater and T_reg:control_pressure_nv for this, named
+after the output modules.
+
+5) naming
+~~~~~~~~~
+
+'controlled_by' seems to be misleading. A PID loop may control a temperature
+using power as the output variable. Here the temperature is controlled by the
+PID loop, and not the heatoer power by the temperature. Other propositions:
+
+* 'output_of' - not applicable for the mentioned V/I power supply example
+* 'locked_by' - meaning is: changing the target is locked, because the
+  mentioned module is using it. Again an enum, with names of realted modules,
+  but with the special value 'unlocked' instead of 'self'.
+
+Using the meaning 'locked_by', we still might allow side effects of changing
+target. In the example we might have a parameter 'locked_by' only on P_heater
+and pressure_nv, and changing T_reg:target may switch to controlled mode, which
+is probably intended, while changing P_heater:target might be prohibited
+because it is locked. With this model, the implementor can choose the
+behaviour adapted best to the use case. For the above mentioned V/I power
+supply, automatic switching might also be expected. In this example
+an 'active' parameter might be more suitable.
+
 
 
 Decision
@@ -184,6 +231,8 @@ Add "controlled_by" under "predefined parameters".
    The recommended mechanism is, that by changing the target of the controlling module or
    by calling its 'go' method, the module takes over control and sets the controlled_by
    parameter to its own name.
+   
+To be rediscussed.
 
 
 .. DO NOT TOUCH --- following links are automatically updated by issue/makeissuelist.py
