@@ -165,17 +165,11 @@ the needle valve motor is not moved by ``p_nv``.
 | ``*`` indicates: value is changed only when _auto_nv is true
 
 
-Conclusion 1:
+Remark:
    As we can see, there is no situation where ``P_heater:output_active`` or
    ``pos_nv:output_active`` has to be false. Which means that the parameter is
    not really needed on these modules.
 
-Conclusion 2:
-   If the inner mechanics of the system is known, the situation can be determined by the
-   ``output_active`` and ``_auto_nv`` parameters only. The ``controlled_by`` parameter
-   is not needed! However, the description (enum member names) gives a quite good picture
-   about the inner mechanics. If this is the case in all thinkable systems, has to be
-   evaluated.
 
 
 
