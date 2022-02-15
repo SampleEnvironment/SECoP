@@ -111,7 +111,6 @@ time is running out. remaining topics are saved for tomorrow.
      * Bastian Klemke
      * Niklas Eckström
      * Markus Zolliker
-     * Bastian Klemke
      * Anders Pettersson
 
 Timing and time synchronisation
@@ -156,7 +155,6 @@ related: Issue 20: PID tables
      * Bastian Klemke (joined later)
      * Niklas Eckström
      * Markus Zolliker
-     * Bastian Klemke
      * Anders Pettersson
 
 
@@ -235,4 +233,3 @@ next meeting
 
 
 Session closed.
-
