@@ -177,6 +177,7 @@ Also the information which modules are potentially controlling a module, is desi
 it also seemed naturally to use an enum listing the possible values.
 
 Open questions:
+
 - What about the startup condition (no target changes were made already).
 - Is that information needed also on the potential 'controllers'
 - is controller a classical controller (see wikipedia), using 1-N Actuators to
@@ -186,6 +187,6 @@ Open questions:
 
 next meeting
 ++++++++++++
-2022-02-28 10:00-12:00 and 2022-03-02 10:00-12:00.
+2022-02-28 10:00-12:00 and 2022-03-01 10:00-12:00.
 
 Session closed.
