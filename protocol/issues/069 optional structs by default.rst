@@ -26,8 +26,13 @@ Previous specification was:
 - all members optional: optional=[... listing all members ...]
 
 Proposal:
+
 - all members mandatory: optional=[]
 - all members optional: no optional entry in the datainfo JSON object
+
+As this is breaking backwards compatibility, it was decided to keep
+the existing semantics, but add in addition to indicate all members
+optional by ``optional=true``
 
 Decision
 --------
