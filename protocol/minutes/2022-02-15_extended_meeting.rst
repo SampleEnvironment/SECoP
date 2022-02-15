@@ -3,8 +3,8 @@ ISSE SECoP extended video meeting 2022-02-15
 
 .. sidebar:: participants
 
-     * Markus Zolliker (PSI)
-     * Enrico Faulhaber (MLZ)
+     * Markus Zolliker (PSI) (chair)
+     * Enrico Faulhaber (MLZ) (minutes)
      * Kathryn Baker (STFC UKRI)
      * Klaus Kiefer (HZB)
      * Koji Kaneko (J-PARC)
