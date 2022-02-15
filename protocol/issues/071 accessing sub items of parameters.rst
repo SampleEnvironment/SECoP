@@ -1,5 +1,5 @@
-SECoP Issue 71: accessing sub items of parameters (proposed)
-============================================================
+SECoP Issue 71: accessing sub items of parameters (closed)
+==========================================================
 
 Motivated by recent discussions as well as `SECoP Issue 20`_ a way needs to be found to be able
 to access sub-items of structured data types and not always the full type.
@@ -58,6 +58,12 @@ Remark by MZ:
 
 side-topic: as the size of an array-parameter can not (well, should not) be changed using accesses to subitems,
 it is worth thinking about making this a parameter of itself, if the arraylength is intended to be changeable.
+
+
+At the vidconf 2022-01-25 Markus opens again the discussion, as he does not want to implement
+more complexity on the server side as needed, before a use case shows up.
+
+Decision to close for now. If the issue raises again, no more discussion on 'how' should be needed.
 
 
 .. DO NOT TOUCH --- following links are automatically updated by issue/makeissuelist.py
