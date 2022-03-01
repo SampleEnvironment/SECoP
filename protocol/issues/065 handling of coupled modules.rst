@@ -215,6 +215,73 @@ supply, automatic switching might also be expected. In this example
 an 'active' parameter might be more suitable.
 
 
+Propositions of vidconf 2022-03-01
+----------------------------------
+
+We identified two different things the ECS wants to be informed about:
+
+a) a module might be in a state, where the value of the target is inactive,
+   i.e. has no more influence on the behaviour of any module
+
+b) the target of a module might be the output of an other module
+
+In addition, we want to describe, how the coupling between modules may
+be changed.
+
+We agree that both should be possible:
+
+1) changing the target of a module might switch to make its target active,
+   by uncoupling its target from the output of a leader module, or by
+   coupling its own output to the target of a follower module.
+   (wording 'leader/follower' as alternative to 'master/slave' by Markus
+   when writing down this issue)
+
+2) changing the target of a module might complain when its target is not
+   active or when its target is the output of a leader module.
+
+The ESS should be informed whether (1) or (2) is implemented.
+
+
+predefined behaviour / naming in SECoP
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In the discussion we thought about a parameter 'linked_outputs',
+being a struct with member names being modules, and member values
+are a boolean indicating whether the module is linked or not.
+
+Further evaluation discovered, that coming back to a parameter like
+'controlled_by' is better, because no ambiguity is possible:
+as it is not allowed to link outputs of two leader modules to
+a follower at the same time. However, a better name is to be
+searched, the proposition is 'linked_input'.
+
+Even outside a leader - follower relation, it is possible that
+a target is getting inactive. For this reason it is proposed to
+have an additional 'control_active' boolean parameter for this.
+
+Example: a power supply with 2 modules voltage and current.
+Setting the target of one of them would set its own control_active
+parameter to 'true' and the other to 'false'.
+
+Instead of an additional 'control_active' parameter, it might be
+an alternative to add an addition item "CONTROL_INACTIVE" to the 'mode'
+parameter. However, the mode parameter is a writable, and the current
+state is reflected by the status, so we would need an additional
+predefined value for the status code. As a consequence, we would need to
+add an other status 'CONTROL_INACTIVE' which could either be part of
+
+1) 'IDLE' (reasoning: behaviour like a Readable)
+2) or 'WARN'(reasoning: it is a somehow broken Drivable)
+
+An indication, whether changing target has the effect of changing coupling
+of modules, is given by the presence of 'control_active' in the 'influences'
+property of 'target'. If this is not present, the coupling may be changed
+only by setting the 'control_active' or 'linked_input' parameter.
+
+Instead of 'linked_input' Markus proposes 'leader_module' or simply 'leader'
+(not discussed in the meeting).
+
+
 
 Decision
 --------
