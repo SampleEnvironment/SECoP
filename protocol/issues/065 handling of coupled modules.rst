@@ -268,7 +268,7 @@ an alternative to add an addition item "CONTROL_INACTIVE" to the 'mode'
 parameter. However, the mode parameter is a writable, and the current
 state is reflected by the status, so we would need an additional
 predefined value for the status code. As a consequence, we would need to
-add an other status 'CONTROL_INACTIVE' which could either be part of
+add an other status 'CONTROL_INACTIVE' which could either be a substate of
 
 1) 'IDLE' (reasoning: behaviour like a Readable)
 2) or 'WARN'(reasoning: it is a somehow broken Drivable)

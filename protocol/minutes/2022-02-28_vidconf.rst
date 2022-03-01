@@ -23,10 +23,10 @@ The HZB people explain about their discussions and deeper thoughts about
 issue 65. They identified two different things the ECS wants to be informed
 about:
 
-a) a module might be in a state, where the value of the target is inactive,
-   i.e. has no more influence on the behaviour of any module
+* a module might be in a state, where the value of the target is inactive,
+  i.e. has no more influence on the behaviour of any module
 
-b) a modules target might be the output of an other module
+* a modules target might be the output of an other module
 
 In addition, we want to describe, how the coupling between modules may
 be changed.
