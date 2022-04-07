@@ -1,5 +1,5 @@
-SECoP Issue 65: handling of coupled (sub)modules (under discussion)
-===================================================================
+SECoP Issue 65: handling of coupled (sub)modules (finalizing)
+=============================================================
 
 Motivation
 ----------
@@ -288,7 +288,6 @@ Decision
 Add ``controlled_by`` and ``control_active`` under the list of "predefined parameters".
 
 ``"controlled_by"``:
-
    Module might be coupled by a leader - follower relation. A follower module
    (Drivable or Writable) might be controlled by a leader module, linking an output
    of the lead module to the target of the follower module.
