@@ -107,7 +107,7 @@ we have a group of interlinked module, only one of them could take over control.
 ~~~~~~~~~~~~~~~~
 
 The question is: To which modules belongs the controlled_by parameter?
-There are two possible interpretations of the proposed issue: 
+There are two possible interpretations of the proposed issue:
 
 1. Each module of the group has a controlled_by parameter and each of these parameters
    contains an enum value corresponding to the module in charge.
@@ -141,7 +141,7 @@ Redundancy:
 More complex cases:
 
    T_reg is controlling 2 modules: P_heater and pressure_nv. We have two overlapping
-   interlinked groups: (T_reg, P_heater) and (T_reg, pressure_nv). 
+   interlinked groups: (T_reg, P_heater) and (T_reg, pressure_nv).
 
    Each group needs an information about the controlling module.
 
@@ -278,28 +278,38 @@ of modules, is given by the presence of 'control_active' in the 'influences'
 property of 'target'. If this is not present, the coupling may be changed
 only by setting the 'control_active' or 'linked_input' parameter.
 
-Instead of 'linked_input' Markus proposes 'leader_module' or simply 'leader'
-(not discussed in the meeting).
+Finally instead of 'linked_input' Markus proposes coming back to 'controlled_by'.
 
 
 
 Decision
 --------
 
-Add "controlled_by" under "predefined parameters".
+Add ``controlled_by`` and ``control_active`` under the list of "predefined parameters".
 
 ``"controlled_by"``:
 
-   A drivable module indicates with this parameter, that it can be switched to be
-   controlled from an other module. The datatype of such a parameter must be an
-   enum. The enum keys must be names of modules or 'self'. 'self' indicates that
-   the module is controlled by its own, and the value of self must be 0.
-   
-   The recommended mechanism is, that by changing the target of the controlling module or
-   by calling its 'go' method, the module takes over control and sets the controlled_by
-   parameter to its own name.
-   
-To be rediscussed.
+   Module might be coupled by a leader - follower relation. A follower module
+   (Drivable or Writable) might be controlled by a leader module, linking an output
+   of the lead module to the target of the follower module.
+   The datatype of the ``controlled_by`` parameter must be an enum, with the names being
+   module names or ``self``. The enum value of 'self' must be 0.
+   A module with such a parameter indicates, that it may be a follower of the named modules.
+
+   The recommended mechanism is, that a module takes over control by sending a target
+   change or a ``go`` command. Before receiving the reply, the ``controlled_by`` parameter
+   of the follower module is set to the controlling leader module, or to ``self``, if the
+   target of the follower module ist set.
+   In case a module may have several follower modules, additional parameters may be
+   needed for switching on and off control of individual followers.
+
+``"control_active"``:
+   A flag indicating whether a drivable or writable module module is currently active,
+   i.e. its behaviour is depending on the target value or not.
+   For example a leaders module ``control_active`` parameter is false, when the follower
+   modules ``controlled_by`` parameter is set to ``self`` (or to an other module).
+   But  ``controlled_by`` might also be needed when two Writable modules depend on each
+   other in a system where not both may be active at the same time.
 
 
 .. DO NOT TOUCH --- following links are automatically updated by issue/makeissuelist.py
