@@ -298,7 +298,7 @@ Add ``controlled_by`` and ``control_active`` under the list of "predefined param
    The recommended mechanism is, that a module takes over control by sending a target
    change or a ``go`` command. Before receiving the reply, the ``controlled_by`` parameter
    of the follower module is set to the controlling leader module, or to ``self``, if the
-   target of the follower modules target itself is set.
+   target of the follower modules itself is set.
    In case a module may have several follower modules, additional parameters may be
    needed for switching on and off control of individual followers.
 
