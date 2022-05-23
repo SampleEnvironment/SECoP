@@ -191,4 +191,4 @@ Issues List
 .. _`SECoP Issue 70: message is a JSON object`: 070%20message%20is%20a%20JSON%20object.rst
 .. _`SECoP Issue 71: accessing sub items of parameters`: 071%20accessing%20sub%20items%20of%20parameters.rst
 .. _`SECoP Issue 72: features`: 072%20features.rst
-.. _`SECoP Issue 73: HasLimits and HasOffset`: 073%20HasLimits.rst
+.. _`SECoP Issue 73: HasLimits and HasOffset`: 073%20HasLimits%20and%20HasOffset.rst
