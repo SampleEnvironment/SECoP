@@ -16,4 +16,4 @@ A module property *features* lists the supported features of a module. Example:
 Example
 -------
 
-'features': ['HasOffset', 'HasLimits]
+'features': ['HasOffset', 'HasLimits']
