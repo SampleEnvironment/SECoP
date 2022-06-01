@@ -37,7 +37,9 @@ optional by ``optional=true``
 Decision
 --------
 
-Decided as above on the 2022-01-25 meeting. Proposed change:
+Decided as above on the 2022-01-25 meeting.
+
+Proposed change in the standard:
 
 optional data property
 ~~~~~~~~~~~~~~~~~~~~~~
