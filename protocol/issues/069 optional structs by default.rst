@@ -37,4 +37,19 @@ optional by ``optional=true``
 Decision
 --------
 
-Decided as above on the 2022-01-25 meeting.
+Decided as above on the 2022-01-25 meeting. Proposed change:
+
+optional data property
+~~~~~~~~~~~~~~~~~~~~~~
+``"optional"``:
+    The names of optional struct elements. When "optional" is omitted, all struct elements are mandatory.
+    ``optional=[]`` indicates that all elements are mandatory, the special value ``optional=true`` indicates
+    that all members are optional.
+
+    In 'change' and 'do' commands, the ECS might omit these elements,
+    all other elements must be given.
+    The effect of a 'change' action with omitted elements should be the same
+    as if the current values of these elements would have been sent with it.
+    The effect of a 'do' action with omitted elements is defined by the implementation.
+
+    In all other messages (i.e. in replies and updates), all elements have to be given.
