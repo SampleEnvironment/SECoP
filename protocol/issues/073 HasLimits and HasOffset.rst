@@ -19,7 +19,7 @@ linear error of the main value. Typically the following applies:
 
    physical value = raw value + offset
 
-In some cases, the correction formal might differ, however, it is guaranteed, that
+In some cases, the correction formula might differ, however, it is guaranteed, that
 the same offset always leads to the same correction.
 
 
@@ -33,7 +33,7 @@ It has a struct argument with the following datainfo:
 
 When this command is called the offset correction is done in a way, that the
 old value given is corresponding to the new value after the correction.
-If the old member is not given, the current main value is used for it.
+If the ``old`` member is not given, the current main value is used for it.
 
 <numeric> is typically of type ``double`` or ``scaled``, but it might also be structured in
 the same way as the main value, e.g. as a tuple of ``double``.
@@ -53,7 +53,7 @@ predefined parameter ``abslimits``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The ``abslimits`` parameter is a tuple of two numeric members indicating the lower and
-upper end of a valid interval for the setting the limits parameter. This is corresponds
+upper end of a valid interval for the setting the limits parameter. This corresponds
 to the corrected values. The SEC node must make sure that the limits are always within
 abslimits.
 
