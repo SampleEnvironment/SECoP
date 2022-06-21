@@ -48,6 +48,8 @@ upper end of a valid interval for the setting the target parameter.
 The SEC node must raise an error in case a given target value does not fit into the interval.
 It is recommended that an offset correction updates also the current limits.
 
+Alternative names: userlimits, softlimits
+
 
 predefined parameter ``hardlimits``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
