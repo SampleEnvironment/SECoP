@@ -49,13 +49,23 @@ The SEC node must raise an error in case a given target value does not fit into 
 It is recommended that an offset correction updates also the current limits.
 
 
-predefined parameter ``abslimits``
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+predefined parameter ``hardlimits``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The ``hardlimits`` parameter is a tuple of two numeric members indicating the lower and
+upper end of a valid interval for the values of the ``limits`` parameter.
+If there is no ``offset`` parameter, ``hardlimits`` is not needed, as the datainfo
+range of the ``target`` gives this information.
+``hardlimits`` might also be omitted in case the ``target`` range is infinite, for example
+with an endless rotating stick motor.
+
+
+predefined property ``abslimits``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The ``abslimits`` parameter is a tuple of two numeric members indicating the lower and
-upper end of a valid interval for the setting the limits parameter. This corresponds
-to the corrected values. The SEC node must make sure that the limits are always within
-abslimits.
+upper end of uncorrected hardware values. This is useful only in case when there is an
+``offset`` using the standard formula.
 
 
 feature HasOffset
@@ -71,6 +81,7 @@ A module with this feature has an ``offset`` parameter using the standard
 formula ``physical value = raw value + offset``. The adjust command is optional,
 as it may be done on the ECS. A module can not have both features HasOffset and
 HasStandardOffset.
+The property 'abslimits' is also optional.
 
 Remark: this is a case, where a feature is needed in addition to the predefined
 parameter, as the semantics of the ``offset`` parameter is narrowed.
@@ -79,9 +90,8 @@ parameter, as the semantics of the ``offset`` parameter is narrowed.
 feature HasLimits
 ~~~~~~~~~~~~~~~~~
 
-A module with this feature has a ``limits`` parameter. If the module also has an offset
-parameter, it should have an ``abslimits`` parameter. (example with no ``abslimits``:
-an endless turning stick motor).
+A module with this feature has a ``limits`` parameter, and optionally a
+``hardlimits`` parameter.
 
 
 necessity of features over predefined parameters
