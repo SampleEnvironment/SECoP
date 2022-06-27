@@ -286,19 +286,19 @@ Decision
 Add ``controlled_by`` and ``control_active`` under the list of "predefined parameters".
 
 ``"controlled_by"``:
-   Module might be coupled by a controller - controlled relation. A controlled module
-   (Drivable or Writable) might be controlled by a controller module, linking an output
-   of the lead module to the target of the controlled module.
+   Module might be coupled by a input - output relation. A input module
+   (Drivable or Writable) might be controlled by an module, linking an output
+   of the module to the target of the input module.
    The datatype of the ``controlled_by`` parameter must be an enum, with the names being
    module names or ``self``. The enum value of 'self' must be 0.
-   A module with such a parameter indicates, that it may be controlled by one of the named modules.
+   A module with such a parameter indicates, that it may be the input of one of the named modules.
 
    The recommended mechanism is, that a module takes over control by sending a target
    change or a ``go`` command. Before receiving the reply, the ``controlled_by`` parameter
-   of the controlled module is set to the controlling leader module, or to ``self``, if the
+   of the input module is set to the controlling module, or to ``self``, if the
    target of the controller module itself is set.
-   In case a module may have several controlled modules, additional parameters may be
-   needed for switching on and off control of individual controlled modules.
+   In case a module may have several outputs, additional parameters may be
+   needed for switching on and off control of individual input modules.
 
 ``"control_active"``:
    A flag indicating whether a drivable or writable module module is currently active,
