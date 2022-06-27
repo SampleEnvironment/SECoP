@@ -232,9 +232,7 @@ We agree that both should be possible:
 
 1) changing the target of a module might switch to make its target active,
    by uncoupling its target from the output of a leader module, or by
-   coupling its own output to the target of a follower module.
-   (wording 'leader/follower' as alternative to 'master/slave' by Markus
-   when writing down this issue)
+   coupling its own output to the target of a controlled module.
 
 2) changing the target of a module might complain when its target is not
    active or when its target is the output of a leader module.
@@ -251,12 +249,12 @@ are a boolean indicating whether the module is linked or not.
 
 Further evaluation discovered, that coming back to a parameter like
 'controlled_by' is better, because no ambiguity is possible:
-as it is not allowed to link outputs of two leader modules to
-a follower at the same time. However, a better name is to be
-searched, the proposition is 'linked_input'.
+as it is not allowed to link outputs of two controller modules to
+one controlled module at the same time. Instead of 'controlled_by'
+'linked_input' is also proposed as name.
 
-Even outside a leader - follower relation, it is possible that
-a target is getting inactive. For this reason it is proposed to
+Even outside a controller - controlled module relation, it is possible
+that a target is getting inactive. For this reason it is proposed to
 have an additional 'control_active' boolean parameter for this.
 
 Example: a power supply with 2 modules voltage and current.
@@ -288,24 +286,24 @@ Decision
 Add ``controlled_by`` and ``control_active`` under the list of "predefined parameters".
 
 ``"controlled_by"``:
-   Module might be coupled by a leader - follower relation. A follower module
-   (Drivable or Writable) might be controlled by a leader module, linking an output
-   of the lead module to the target of the follower module.
+   Module might be coupled by a controller - controlled relation. A controlled module
+   (Drivable or Writable) might be controlled by a controller module, linking an output
+   of the lead module to the target of the controlled module.
    The datatype of the ``controlled_by`` parameter must be an enum, with the names being
    module names or ``self``. The enum value of 'self' must be 0.
-   A module with such a parameter indicates, that it may be a follower of the named modules.
+   A module with such a parameter indicates, that it may be controlled by one of the named modules.
 
    The recommended mechanism is, that a module takes over control by sending a target
    change or a ``go`` command. Before receiving the reply, the ``controlled_by`` parameter
-   of the follower module is set to the controlling leader module, or to ``self``, if the
-   target of the follower modules itself is set.
-   In case a module may have several follower modules, additional parameters may be
-   needed for switching on and off control of individual followers.
+   of the controlled module is set to the controlling leader module, or to ``self``, if the
+   target of the controller module itself is set.
+   In case a module may have several controlled modules, additional parameters may be
+   needed for switching on and off control of individual controlled modules.
 
 ``"control_active"``:
    A flag indicating whether a drivable or writable module module is currently active,
    i.e. its behaviour is depending on the target value or not.
-   For example a leaders module ``control_active`` parameter is false, when the follower
+   For example a leaders module ``control_active`` parameter is false, when the controlled
    modules ``controlled_by`` parameter is set to ``self`` (or to an other module).
    But  ``controlled_by`` might also be needed when two Writable modules depend on each
    other in a system where not both may be active at the same time.
