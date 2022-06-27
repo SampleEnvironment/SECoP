@@ -301,7 +301,7 @@ Add ``controlled_by`` and ``control_active`` under the list of "predefined param
    needed for switching on and off control of individual input modules.
 
 ``"control_active"``:
-   A flag indicating whether a drivable or writable module module is currently active,
+   A flag indicating whether a drivable or writable module is currently active,
    i.e. its behaviour is depending on the target value or not.
    For example a leaders module ``control_active`` parameter is false, when the controlled
    modules ``controlled_by`` parameter is set to ``self`` (or to an other module).
