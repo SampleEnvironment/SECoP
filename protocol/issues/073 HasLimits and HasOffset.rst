@@ -103,10 +103,16 @@ It is not strictly needed to specify the features HasOffset and HasLimits,
 as the meaning of the predefined parameters are sufficient. The feature
 HasStandardOffset however narrows the semantics of the ``offset`` parameter, so the
 presence of the ``offset`` parameter alone is not sufficient to detect this behaviour.
+If we do not want to introduce features, we may also define two predefined parameters
+'offset' and 'zero' (or an other name), one of them reserved for the behaviour with a
+standard formula.
 
 
 Discussion
 ----------
+
+Basics to be discussed before defining combination of offset and limits
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 As fixed limits are already given in the datainfo, the interplay with user changeable
 limits has to be considered.
@@ -155,3 +161,4 @@ Questions
 
 8)  For another parameter than ``target``, when its limits may vary, is it better to
     indicate no limits, or lower/upper bounds of the limits?
+    
