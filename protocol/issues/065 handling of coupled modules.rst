@@ -287,7 +287,7 @@ Add ``controlled_by`` and ``control_active`` under the list of "predefined param
 
 ``"controlled_by"``:
    Module might be coupled by a input - output relation. A input module
-   (Drivable or Writable) might be controlled by an module, linking an output
+   (Drivable or Writable) might be controlled by an other module, linking an output
    of the module to the target of the input module.
    The datatype of the ``controlled_by`` parameter must be an enum, with the names being
    module names or ``self``. The enum value of 'self' must be 0.
