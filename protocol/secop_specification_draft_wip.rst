@@ -330,7 +330,7 @@ The following commands are predefined (extensible):
 :Note:
     Going to the DISABLED state, may also be triggered by changing the mode to DISABLED.
     If the implementor for security reason wants to prohibit any action after a shutdown,
-    this should only be achieved by a shutdown command, as siabling the module should be
+    this should only be achieved by a shutdown command, as disabling the module should be
     reversible.
 
 
