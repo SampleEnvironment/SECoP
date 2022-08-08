@@ -301,18 +301,33 @@ Add ``controlled_by`` and ``control_active`` under the list of "predefined param
    needed for switching on and off control of individual input modules.
 
 ``"control_active"``:
-   A flag indicating whether a drivable or writable module is currently active,
-   i.e. its behaviour is depending on the target value or not.
+   A flag indicating whether a drivable or writable module is currently active.
+   On a drivable without control_active parameter of with
+   control_active=True, the system is trying to bring the value to the target.
+   When control_active=False, this control mechanism is switched off, and the target value
+   is not considered any more.
    For example a controlling module ``control_active`` parameter is false, when the controlled
    modules ``controlled_by`` parameter is set to ``self`` (or to an other module).
    But ``control_active`` might also be needed when two Writable modules depend on each
-   other in a system where not both may be active at the same time.
-
-   Better wording for control_active: On a drivable without control_active parameter of with
-   control_active=True, the system is trying to bring the value to the target. When control_active=False,
-   this control mechanism is switched off, and the target value is not considered any more.
+   other in a system where not both may be active at the same time. An example would be
+   a power supply with two writable modules 'current' and 'voltage': On the controlling
+   module control_active=true and the target parameter is used for the control quantity.
+   The other module (control_active=false) acts like a Readable, its target parameter is
+   ignored. Changing the target value of the latter would switch control from one module
+   to the other, toggling the control_active parameter of both modules.
    
-   In addition, we should try to make sections for the predefined parameters.
+   In addition, we should try to make sections for the predefined parameters (and parameters).
+
+   But how? parameters and commands together?
+
+   - readable basics: value, status
+   - drivable: target, status (BUSY), go(), stop()
+   - modes: mode, hold()m shutdown()
+   - error handling: reset(), clear_error()
+   - polling: pollinterval
+   - ramping: ramp, setpoint, time_to_target
+   - communication: communicate
+   - coupled modules: controlled_by, control_active
 
 .. DO NOT TOUCH --- following links are automatically updated by issue/makeissuelist.py
 .. _`SECoP Issue 22: Enable Module instead of Shutdown Command`: 022%20Enable%20Module%20instead%20of%20Shutdown%20Command.rst
