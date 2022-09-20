@@ -62,10 +62,11 @@ changeable limits has to be considered.
 At the meeting on 2022-06-01, a discussion about the exact meaning of the
 ``min`` and ``max`` datainfo properties raise up.
 
-Finally, we agree that is it acceptable, that changing the target parameter
+In principle, it is it acceptable, that changing the target parameter
 might raise an error, even if the value is inside the specified range
-in datainfo. This would be the case when the target parameter is set to a value
-outside target_limits, but inside the targets datainfo limits.
-Also changing the target_limits might raise an error when the values are
-outside internal absolute limits, which are typically configured before
-offset correction.
+in datainfo. However, it is highly preferrable to know the exact allowed
+range, for example for setting ``target_limits`` to the maximium
+allowed interval. Enno proposes to introduce a command ``reset_limits`` for this.
+Introducing ``target_hardlimits`` instead is advantageous, as this allows
+to know the maximum range without changing the ``target_limits`` parameter.
+
