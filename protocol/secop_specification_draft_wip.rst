@@ -114,9 +114,6 @@ Module and accessible names should be in english (incl. acronyms), using
 only ASCII letters + digits and some additional characters (see section `Protocol`_).
 The maximum name length is 63 characters.
 
-Parameters
-~~~~~~~~~~
-
 Parameter:
     The main parameter of a module is its value. Writable parameters may influence the
     measurement (like PIDs). Additional parameters may give more information about its
@@ -126,17 +123,32 @@ Parameter:
     implementation of the SEC node, the ECS can use them only in a general way, as their
     meaning is not known.
 
+Command:
+    Commands are provided to initiate specified actions of the module.
+    They should generate an appropriate reply immediately after that action is initiated,
+    i.e. should not wait until some other state is reached.
+    However, if the command triggers side-effects, they MUST be communicated before the reply is sent.
+    Commands may use an possibly structured argument and may return a possibly structured result.
+    Commands with a predefined meaning are listed in the standard,
+    they must always be used in the same way. Custom commands are defined by the implementation of
+    the SEC node, the ECS can use them only in a general way, as their meaning is not known.
 
-The following parameters are predefined (this list will be extended):
+The following section describes the currently predefined accessibles, this list will
+be extended continuously.
 
-``"value"``:
-    represents the *main* value of a module.
+
+
+basic parameters
+~~~~~~~~~~~~~~~~
+
+parameter ``"value"``:
+    a parameter representing the *main* value of a readable module.
 
 .. _BUSY:
 
-``"status"``:
+parameter ``"status"``:
     (a tuple of two elements: a status with predefined values
-    from an Enum_ as "idle","busy","error", and a describing text).
+    from an Enum_ as "IDLE","BUSY","ERROR", and a describing text).
 
     .. table:: assignment of status code groups
 
@@ -149,6 +161,62 @@ The following parameters are predefined (this list will be extended):
           3XX           BUSY          Module is performing some action
           4XX           ERROR         Module is in an error state, something turned out to be a problem.
          ============ ============== =========================================
+
+parameter ``"pollinterval"``:
+    a hint to the module for the polling interval in seconds, type is always an double.
+
+parameter ``"target"``:
+    present, if the modules main value is to be changeable remotely, i.e. it is at least a Writable
+
+command ``"stop"``:
+     mandatory command on a drivable.
+     When a modules target is changed (or, if present, when the ``go`` command is sent),
+     it is 'driving' to a new value until the target is reached or until its stop command
+     is sent.
+     When the ``stop`` command is sent, the SEC node SHOULD set the target parameter
+     to a value close to the present one. Then it SHOULD act as if this value would have
+     been the initial target.
+
+command ``"go"``:
+     optional command for starting an action. If the ``go`` command is present,
+     changing any parameter (especially the 'target' parameter) does not yet initiate any
+     action leading to a BUSY state.
+     In contrast, if no 'go' command is present, changing the target will start an action
+     trying to change the value to get closer to the target, which usually leads to a BUSY
+     state. Changing any parameter, which has an impact on measured values, should
+     be executed immediately.
+
+
+Ramping
+~~~~~~~
+
+parameter ``"ramp"``:
+    (writable parameter, desired ramp. Units: main units/min)
+
+parameter ``"setpoint"``:
+    (ramping setpoint, read only)
+
+parameter ``"time_to_target"``:
+    (read only double, expected time to reach target in seconds)
+
+
+Modes
+~~~~~
+
+parameter ``"mode"``:
+    A parameter of datatype enum, for selecting the operation mode of a module.
+    The available operation modes can not be predefined in the specification, since
+    they depend on the specific module.
+
+    Maximum set of allowed modes:
+
+    .. code::
+
+        {"enum",{"members":{"DISABLED": 0, "STANDBY": 30, "PREPARED": 50}}
+
+
+additional codes for parameter ``"status"``:
+    The meaning of the operation modes SHOULD be described in the description.
 
     .. table:: assignment of sub status (state within the generic state machine)
 
@@ -229,100 +297,18 @@ The following parameters are predefined (this list will be extended):
         a module only need to declare the status values which it implements. i.e. an Readable module
         does not need a BUSY status.
 
-``"target"``:
-    present, if the modules main value is to be changeable remotely, i.e. it is at least a Writable
-
-``"pollinterval"``:
-    a hint to the module for the polling interval in seconds, type is always an double.
-
-``"ramp"``:
-    (writable parameter, desired ramp. Units: main units/min)
-
-``"setpoint"``:
-    (ramping setpoint, read only)
-
-``"time_to_target"``:
-    (read only double, expected time to reach target in seconds)
-
-``"mode"``:
-    A parameter of datatype enum, for selecting the operation mode of a module.
-    The available operation modes can not be predefined in the specification, since
-    they depend on the specific module.
-
-    Maximum set of allowed modes:
-
-    .. code::
-
-        {"enum",{"members":{"DISABLED": 0, "STANDBY": 30, "PREPARED": 50}}
-
-    The meaning of the operation modes SHOULD be described in the description.
-
     The interplay between the ``mode`` parameter and the status codes can be visualized
     in the following graph:
 
 .. image:: images/status_diagram.svg
 
-
-
-Commands
-~~~~~~~~
-
-Command:
-    Commands are provided to initiate specified actions of the module.
-    They should generate an appropriate reply immediately after that action is initiated,
-    i.e. should not wait until some other state is reached.
-    However, if the command triggers side-effects, they MUST be communicated before the reply is sent.
-    Commands may use an possibly structured argument and may return a possibly structured result.
-    Commands with a predefined meaning are listed in the standard,
-    they must always be used in the same way.
-
-Custom commands are defined by the implementation of the SEC node, the
-ECS can use them only in a general way, as their meaning is not known.
-
-
-The following commands are predefined (extensible):
-
-``"stop"``:
-     mandatory command on a drivable.
-     When a modules target is changed (or, if present, when the ``go`` command is sent),
-     it is 'driving' to a new value until the target is reached or until its stop command
-     is sent.
-     When the ``stop`` command is sent, the SEC node SHOULD set the target parameter
-     to a value close to the present one. Then it SHOULD act as if this value would have
-     been the initial target.
-
-``"communicate"``:
-     Used for direct communication with hardware, with proprietary commands. It is useful
-     for debugging purposes, or if the implementor wants to give access to parameters not
-     supported by the driver. The datatype might be string, or any other datatype suitable
-     to the protocol of the device. The ``communicate`` command  is meant to be used in
-     module with the ``Communicator`` interface class.
-
-``"reset"``
-     optional command for putting the module to a state predefined by the implementation.
-
-``"clear_error"``:
-     This command tries to clear an error state. It may be called when status is ERROR,
-     and the command will try to transfrom status to IDLE or WARN. If it can not
-     do it, the status should not change or change to an other ERROR state before
-     returning ``done <module>:clear_errors``
-
-``"go"``:
-     optional command for starting an action. If the ``go`` command is present,
-     changing any parameter (especially the 'target' parameter) does not yet initiate any
-     action leading to a BUSY state.
-     In contrast, if no 'go' command is present, changing the target will start an action
-     trying to change the value to get closer to the target, which usually leads to a BUSY
-     state. Changing any parameter, which has an impact on measured values, should
-     be executed immediately.
-
-``"hold"``:
+command ``"hold"``:
      optional command on a drivable. Stay more or less where you are, cease
      movement, be ready to continue soon, target value is kept. Continuation can be
      trigger with ``go``, or if not present, by putting the target parameter to its
      present value.
 
-``"shutdown"``
+command ``"shutdown"``
      optional command for shuting down the hardware.
      When this command is sent, and the status is DISABLED,
      it is safe to switch off the related device.
@@ -332,6 +318,33 @@ The following commands are predefined (extensible):
     If the implementor for security reason wants to prohibit any action after a shutdown,
     this should only be achieved by a shutdown command, as disabling the module should be
     reversible.
+
+
+
+Error handling
+~~~~~~~~~~~~~~
+
+command ``"reset"``
+     optional command for putting the module to a state predefined by the implementation.
+
+command ``"clear_error"``:
+     This command tries to clear an error state. It may be called when status is ERROR,
+     and the command will try to transfrom status to IDLE or WARN. If it can not
+     do it, the status should not change or change to an other ERROR state before
+     returning ``done <module>:clear_errors``
+
+
+Communication
+~~~~~~~~~~~~~
+
+
+command ``"communicate"``:
+     Used for direct communication with hardware, with proprietary commands. It is useful
+     for debugging purposes, or if the implementor wants to give access to parameters not
+     supported by the driver. The datatype might be string, or any other datatype suitable
+     to the protocol of the device. The ``communicate`` command  is meant to be used in
+     module with the ``Communicator`` interface class.
+
 
 
 Properties
