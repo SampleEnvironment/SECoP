@@ -47,7 +47,7 @@ predefined parameter ``target_hardlimits``
 
 In case a module has an ``offset``, typically the allowed range of ``target_limits``
 depends on the there ``offset`` and can therefore not be given with the ``datainfo`` property.
-The parameter ``target_hardlimits`` indicates in this case the possible range for ``target_limits``.
+The (read only) parameter ``target_hardlimits`` indicates in this case the possible range for ``target_limits``.
 
 
 Discussion
