@@ -42,6 +42,14 @@ parameters, and as only one parameter is involved with a propsed features,
 the definition of predefined parameters is sufficient.
 
 
+predefined parameter ``target_hardlimits``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In case a module has an ``offset``, typically the allowed range of ``target_limits``
+depends on the there ``offset`` and can therefore not be given with the ``datainfo`` property.
+The parameter ``target_hardlimits`` indicates in this case the possible range for ``target_limits``.
+
+
 Discussion
 ----------
 
@@ -60,4 +68,4 @@ in datainfo. This would be the case when the target parameter is set to a value
 outside target_limits, but inside the targets datainfo limits.
 Also changing the target_limits might raise an error when the values are
 outside internal absolute limits, which are typically configured before
-offset correction. 
+offset correction.
