@@ -6,7 +6,7 @@ Example of a wet liquid helium cooled cryostat for SECoP
     Bastian Klemke;
     Lutz Rossa
 
-:Version: 0.12 of 2022-07-20
+:Version: 0.13 of 2022-08-10
 
 Introduction
 ------------
@@ -195,7 +195,7 @@ of `SECoP Issue 65`_).
 
 The ``control_active`` parameter (``bool``) indicates, if the value (e.g.
 temperature) will be influenced (within the physical limit) by the target.
-If ``control_active = true`` in best case the target will be reached.
+If ``control_active = True`` in best case the target will be reached.
 
 How this mechanism works can be seen in an illustrated example at the end
 of this document.
@@ -380,35 +380,35 @@ Control flow
 | ``temperature_reg:_automatic_nv_pressure_mode`` is ``False`` or
 | previously ``pressure_vti:target`` was set to a valid new value.
 
-**to be discussed**:
+The control connection ``temperature_reg:control_active`` to
+``power_reg:controlled_by`` (or ``pressure_vti:controlled_by``) disappears.
+The parameter ``temperature_reg:control_active`` goes to ``False``.
 
-   Question:
-      Does ``???:controlled_by`` change automatically to ``self``, if the
-      previous control module does not control anymore
-      (``control_active = False``)?
-
-   The control connection ``temperature_reg:control_active`` to
-   ``power_reg:controlled_by`` (or ``pressure_vti:controlled_by``) disappears.
-   The parameter ``temperature_reg:control_active`` goes to ``False``.
-
-   1. The parameters ``power_reg:controlled_by`` and
-      ``pressure_vti:controlled_by`` keep unchanged until next target is
-      set; then they go to ``???:controlled_by = self``.
-
-   2. The parameters ``power_reg:controlled_by`` and
-      ``pressure_vti:controlled_by`` go automatically to ``self``.
+The parameters ``power_reg:controlled_by`` and ``pressure_vti:controlled_by``
+go automatically to ``self``. If any ``???:target`` parameter changed, the
+value updates have to be sent before the reply of the change command.
 
     .. image:: orange_control3.png
 
-only ``power_reg`` and ``position_nv`` are in charge:
+Only ``power_reg`` and ``position_nv`` are in charge:
 #####################################################
 
 ``position_nv:target`` was set to a valid new value.
 
-**to be discussed**:
+The module ``pressure_vti`` is no longer controlling ``position_nv``,
+``pressure_vti:control_active`` goes to ``False`` and
+``position_nv:controlled_by`` goes to ``self``. This also propagates the
+break of a possible control connection of ``temperature_reg`` to
+``pressure_vti`` (see above).
 
-   Same as setting ``power_reg:target`` or ``pressure_vti:target`` above
-   with consequences in a chain to ``pressure_vti`` to ``temperature_reg`` to ``power_reg``.
+Additionally and depending if the parameter
+``temperature_reg:_automatic_nv_pressure_mode`` is ``True``, the
+``temperature_reg:control_active`` has to go to ``False`` too and this
+also breaks any control connection to ``power_reg`` (see above).
+
+Same happens, setting ``power_reg:target`` or ``pressure_vti:target`` above
+with consequences in a chain to ``pressure_vti`` to ``temperature_reg`` to
+``power_reg``.
 
     .. image:: orange_control4.png
 
