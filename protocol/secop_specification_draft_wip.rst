@@ -155,11 +155,13 @@ parameter ``"status"``:
           statuscode   variant name   Meaning
          ============ ============== =========================================
             0           DISABLED      Module is not enabled
-          1XX           IDLE          Module is not performing any action
-          2XX           WARN          The same as IDLE, but something may not be alright, though it is not a problem (yet)
-          3XX           BUSY          Module is performing some action
-          4XX           ERROR         Module is in an error state, something turned out to be a problem.
+          1YZ           IDLE          Module is not performing any action
+          2YZ           WARN          The same as IDLE, but something may not be alright, though it is not a problem (yet)
+          3YZ           BUSY          Module is performing some action
+          4YZ           ERROR         Module is in an error state, something turned out to be a problem.
          ============ ============== =========================================
+   
+    where YZ might be any combination of digits, in simple cases typically 00.
 
 parameter ``"pollinterval"``:
     a hint to the module for the polling interval in seconds, type is always an double.
@@ -222,22 +224,22 @@ additional codes for parameter ``"status"``:
          ============ ============== =========================================
            subcode     variant name   Meaning
          ============ ============== =========================================
-           X0Y         Generic       used for generic modules not having a state machine
-           X1Y         Disabling     intermediate state: Standby -> **Disabling** -> Disabled
-           X2Y         Initializing  intermediate state: Disabled -> **Initializing** -> Standby
-           X3Y         Standby       stable, steady state, needs some preparation steps,
+           X0Z         Generic       used for generic modules not having a state machine
+           X1Z         Disabling     intermediate state: Standby -> **Disabling** -> Disabled
+           X2Z         Initializing  intermediate state: Disabled -> **Initializing** -> Standby
+           X3Z         Standby       stable, steady state, needs some preparation steps,
                                      before a target change is effective
-           X4Y         Preparing     intermediate state: Standby -> **Preparing** -> Prepared
-           X5Y         Prepared      Ready for immediate target change
-           X6Y         Starting      Target has changed, but continuous change has not yet started
-           X7Y         Ramping       Continuous change, which might be used for measuring
-           X8Y         Stabilizing   Continuous change has ended, but target value is not yet reached
-           X9Y         Finalizing    Value has reached the target and any leftover cleanup operation
+           X4Z         Preparing     intermediate state: Standby -> **Preparing** -> Prepared
+           X5Z         Prepared      Ready for immediate target change
+           X6Z         Starting      Target has changed, but continuous change has not yet started
+           X7Z         Ramping       Continuous change, which might be used for measuring
+           X8Z         Stabilizing   Continuous change has ended, but target value is not yet reached
+           X9Z         Finalizing    Value has reached the target and any leftover cleanup operation
                                      is in progress. If the ECS is waiting for the value of this module
                                      beeing stable at target, it can continue.
          ============ ============== =========================================
 
-    with ``Y=0`` for now. Future extensions may use different values for Y.
+    ``X=1,2,3 or 4`` as in `Basic Parameters`_ and ``Z=0`` for now. Future extensions may use different values for Y.
 
     Since not all combinations are sensible, the following list shows the so far defined codes:
 
