@@ -360,18 +360,24 @@ parameter ``"control_active"``:
    In a typical example we have a module ``A`` controlling module ``B`` and with two possible
    states, as in the following example:
    
-   ======== ======================= ========================
-    module   A controlling B         B self controlled
-   ======== ======================= ========================
-    A        control_active=True     control_active=False
-    B        controlled_by="A"       controlled_by="self"
-   ======== ======================= ========================
+   =================== ====================== ======================
+    state               module A               module B
+   =================== ====================== ======================
+    A controlling B     control_active=True    controlled_by="A"
+    B self controlled   control_active=False   controlled_by="self"
+   =================== ====================== ======================
 
-   ``control_active`` might also be needed when two Writable modules depend on each
-   other in a system where not both may be active at the same time. An example would be
-   a power supply with two writable modules ``current`` and ``voltage``: On the controlling
-   module ``control_active=true`` and the target parameter is used for the control quantity.
-   The other module (``control_active=false``) acts like a Readable, its target parameter is
+   In another example we have two Writable modules (for example 'I' and 'V' in a power supply),
+   which depend on each other in a system where not both may be active at the same time.
+ 
+   =================== ====================== ======================
+    state               module I               module V
+   =================== ====================== ======================
+    constant current    control_active=True    control_active=False 
+    constant voltage    control_active=False   control_active=True 
+   =================== ====================== ======================
+
+   The module with ``control_active=false`` acts like a Readable, its target parameter is
    ignored. Changing the target value of the latter would switch control from one module
    to the other, toggling the control_active parameter of both modules.
 
