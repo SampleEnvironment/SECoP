@@ -337,33 +337,41 @@ Coupled Modules
 ~~~~~~~~~~~~~~~
 
 parameter ``"controlled_by"``:
-   Module might be coupled by a input - output relation. A input module
-   (Drivable or Writable) might be controlled by an other module, linking an output
+   Modules might be coupled by a input - output relation. A input module B
+   (Drivable or Writable) might be controlled by an other module A, linking an output
    of the module to the target of the input module.
    The datatype of the ``controlled_by`` parameter must be an enum, with the names being
    module names or ``self``. The enum value of 'self' must be 0.
    A module with such a parameter indicates, that it may be the input of one of the named modules.
-
+   
    The recommended mechanism is, that a module takes over control by sending a target
    change or a ``go`` command. Before receiving the reply, the ``controlled_by`` parameter
-   of the input module is set to the controlling module, or to ``self``, if the
+   of the input module (B) is set to the controlling module (A), or to ``self``, if the
    target of the controller module itself is set.
    In case a module may have several outputs, additional parameters may be
    needed for switching on and off control of individual input modules.
 
 parameter ``"control_active"``:
-   A flag indicating whether a drivable or writable module is currently active.
-   On a drivable without control_active parameter of with
+   A flag indicating whether a drivable or writable module is currently actively controlling.
+   On a drivable without control_active parameter or with
    control_active=True, the system is trying to bring the value to the target.
    When control_active=False, this control mechanism is switched off, and the target value
    is not considered any more.
-   For example a controlling module ``control_active`` parameter is false, when the controlled
-   modules ``controlled_by`` parameter is set to ``self`` (or to an other module).
-   But ``control_active`` might also be needed when two Writable modules depend on each
+   In a typical example we have a module ``A`` controlling module ``B`` and with two possible
+   states, as in the following example:
+   
+   ======== ======================= ========================
+    module   A controlling B         B self controlled
+   ======== ======================= ========================
+    A        control_active=True     control_active=False
+    B        controlled_by="A"       controlled_by="self"
+   ======== ======================= ========================
+
+   ``control_active`` might also be needed when two Writable modules depend on each
    other in a system where not both may be active at the same time. An example would be
-   a power supply with two writable modules 'current' and 'voltage': On the controlling
-   module control_active=true and the target parameter is used for the control quantity.
-   The other module (control_active=false) acts like a Readable, its target parameter is
+   a power supply with two writable modules ``current`` and ``voltage``: On the controlling
+   module ``control_active=true`` and the target parameter is used for the control quantity.
+   The other module (``control_active=false``) acts like a Readable, its target parameter is
    ignored. Changing the target value of the latter would switch control from one module
    to the other, toggling the control_active parameter of both modules.
 
