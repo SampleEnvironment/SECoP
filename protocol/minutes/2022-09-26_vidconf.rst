@@ -95,13 +95,16 @@ For example for a power supply in current control mode module might have limits
 for the target, and limits for the voltage, which, when reached, will prevent
 the current value to go to the target.
 
-Despite Klaus has to leave at 15:10, we start a very short discussion about the
-cryomagnet power supply example. Klaus thinks, that the coil current should be
-a seperate module with a value proportional to the field, while Markus does not
-see the point to make a seperate module for it.
+Despite Klaus has to leave at 15:10, we start a very short discussion at 15:00
+about the cryomagnet power supply example. Klaus thinks, that the coil current
+should be a seperate module with a value proportional to the field, while Markus
+does not see the point to make a seperate module for it.
 Also wheter it makes sense to make the persistent switch a seperate module is
 questionable.
 
 
 
-Next meeting: 2022-10-18 13:30, if agreed by Enno
+8) Next meeting
++++++++++++++++
+
+2022-10-18 13:30, if agreed by Enno
