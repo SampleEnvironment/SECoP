@@ -45,7 +45,7 @@ during the meeting, we add a new item (7: how to represent Measurables in SECoP)
 6) finalizing orange example
 ++++++++++++++++++++++++++++
 
-general agreement, however the redundat wording "wet" and "liquid helium cooled" shoule be removed.
+general agreement, however the redundant wording "wet" and "liquid helium cooled" should be removed.
 
 
 3) put issue 65 into specs and reorganize predefined accessibles
