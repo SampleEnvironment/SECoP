@@ -1,5 +1,5 @@
-DRAFT for meeting 2022-09-22 (ZOOM)
-===================================
+meeting 2022-09-22 (ZOOM)
+=========================
 
 .. sidebar:: participants
 
@@ -18,7 +18,6 @@ DRAFT for meeting 2022-09-22 (ZOOM)
 
 Agenda
 ------
-Agenda:
 
 1) approval of the minutes
 
