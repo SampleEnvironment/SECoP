@@ -1,21 +1,22 @@
-Example of a wet (liquid helium cooled) cryostat for SECoP
-==========================================================
+Example of a liquid helium cooled cryostat for SECoP
+====================================================
 
 :authors:
     Klaus Kiefer;
     Bastian Klemke;
     Lutz Rossa
 
-:Version: 0.14 of 2022-09-26
+:Version: 0.15 of 2022-10-19
 
 Introduction
 ------------
 
 | The following draft is demonstrating an example SECoP implementation of a
-  wet cryostat. An "Orange Cryostat" is a good example, for details of working
-  principle and history we refer to ILL_ and AS_ .
+  wet cryostat cooled with liquid helium. An "Orange Cryostat" is a good
+  example, for details of working principle and history we refer to ILL_
+  and AS_ .
 
-This SECoP interface of a wet cryostat is equipped with a variable temperature
+This SECoP interface of a cryostat is equipped with a variable temperature
 insert (VTI) and a corresponding cold valve (here named: needle valve or
 simply "NV").
 
