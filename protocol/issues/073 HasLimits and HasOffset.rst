@@ -11,14 +11,14 @@ typically used in many ECS. Defining this in a standardised way will be benefici
 Proposal
 --------
 
-predefined parameter ``offset``
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+feature ``HasOffset``
+~~~~~~~~~~~~~~~~~~~~~
 
-The offset parameter contains a value with the purpose to correct for a nearly
-linear error of the main value. The following applies:
+This feature is indicating, that the value and target parameters are raw values, which might need to
+be corrected by an offset. A module with the feature HasOffset must have a parameter offset, which
+indicates to all clients, that the logical value may be obtained by the following formula
 
-   physical value = raw value + offset
-
+  logical value = raw value + offset
 
 
 predefined parameter ``target_limits``
@@ -29,44 +29,22 @@ the lower and upper end of a valid interval for the setting the target
 parameter.
 
 The SEC node must raise an error in case a given target value does not fit
-into the interval. It is recommended that an offset correction updates also
-the current limits.
+into the interval. 
 
 The name is choosen in a way for a possible extension to have dynamic limits
 an any parameter, in case the use case would pop up.
 
 
-in the initial proposal, above parameters were part of proposed features
-'HasOffset' and 'HasLimits'. However, as already with other predefined
-parameters, and as only one parameter is involved with a propsed features,
-the definition of predefined parameters is sufficient.
-
-
-predefined parameter ``target_hardlimits``
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-In case a module has an ``offset``, typically the allowed range of ``target_limits``
-depends on the there ``offset`` and can therefore not be given with the ``datainfo`` property.
-The (read only) parameter ``target_hardlimits`` indicates in this case the possible range for ``target_limits``.
-
-
 Discussion
 ----------
 
-Basics to be discussed before defining combination of offset and limits
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+A member of the committee dislike that the limits in the datainfo, and therefore the
+descriptive data might be changed by a client, needing a rebuild of the structures on
+the ECS side. An other member of the committee does not agree that the datainfo min and max of the
+target_limits parameter have to be omitted or set to a bigger range than the currently valid ones.
 
-As fixed limits are already given in the datainfo, the interplay with user
-changeable limits has to be considered.
+As a consequence, if we try to respect these two positions, SECoP must always handle raw values,
+and the offset correction has to be shifted to the client side.
 
-At the meeting on 2022-06-01, a discussion about the exact meaning of the
-``min`` and ``max`` datainfo properties raise up.
 
-In principle, it is it acceptable, that changing the target parameter
-might raise an error, even if the value is inside the specified range
-in datainfo. However, it is highly preferrable to know the exact allowed
-range, for example for setting ``target_limits`` to the maximium
-allowed interval. Enno proposes to introduce a command ``reset_limits`` for this.
-Introducing ``target_hardlimits`` instead is advantageous, as this allows
-to know the maximum range without changing the ``target_limits`` parameter.
 
