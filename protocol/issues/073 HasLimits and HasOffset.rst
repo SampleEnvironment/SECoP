@@ -15,8 +15,8 @@ feature ``HasOffset``
 ~~~~~~~~~~~~~~~~~~~~~
 
 This feature is indicating, that the value and target parameters are raw values, which might need to
-be corrected by an offset. A module with the feature HasOffset must have a parameter offset, which
-indicates to all clients, that the logical value may be obtained by the following formula
+be corrected by an offset. A module with the feature HasOffset must (or may?) have a parameter offset,
+which indicates to all clients, that the logical value may be obtained by the following formula
 
   logical value = raw value + offset
 
