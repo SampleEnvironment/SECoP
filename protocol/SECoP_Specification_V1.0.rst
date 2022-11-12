@@ -816,8 +816,8 @@ Another Example with a broken Sensor:
   < update t1:status [[400,"Sensor broken or disconnected"],{"t":1505396348.288388}]
   < active
 
-Here the current temperature can not be obtained. This is indicated by specifying ``null`` as value and
-the modified error report in the ``"error"`` qualifier.
+Here the current temperature can not be obtained. An ``error_update`` message is used
+instead of ``update``.
 
 Deactivate Updates
 ~~~~~~~~~~~~~~~~~~
