@@ -339,18 +339,30 @@ Coupled Modules
 ~~~~~~~~~~~~~~~
 
 parameter ``"controlled_by"``:
-   Modules might be coupled by a input - output relation. A input module B
-   (Drivable or Writable) might be controlled by an other module A, linking an output
-   of the module to the target of the input module.
-   The datatype of the ``controlled_by`` parameter must be an enum, with the names being
-   module names or ``self``. The enum value of 'self' must be 0.
-   A module with such a parameter indicates, that it may be the input of one of the named modules.
+   The control mechanisms of two or more modules (Drivable or Writable) might be coupled. 
+   This coupling influences in particular the behaviour of the parameters ``target`` and ``value``.
+   For example a module B (e.g. representing the power output of a temperature contoller) might be
+   controlled by an other module A (e.g. the temperature module related to the same temperature controller),
+   linking the behaviour of the ``value`` parameter of module B to the ``target`` of the module A. In this 
+   case the functional control of the ``target`` parameter of module B is switched off.  
+   This coupling is indicated by the ``controlled_by`` parameter and the ``control_active``
+   parameter (see next section).
    
-   The recommended mechanism is, that a module takes over control by sending a target
-   change or a ``go`` command. Before receiving the reply, the ``controlled_by`` parameter
-   of the input module (B) is set to the controlling module (A), or to ``self``, if the
-   target of the controller module itself is set.
-   In case a module may have several outputs, additional parameters may be
+   The datatype of the ``controlled_by`` parameter must be an enum, with the names being
+   module names or ``self``. The enum value of ``self`` must be 0.
+   A module with a ``controlled_by`` parameter indicates, that it may be controlled 
+   by one of the named modules.
+   
+   The recommended mechanism is, that the module A takes over control when a target
+   change or a ``go`` command is sent to the module A. Before sending the reply, 
+   the ``controlled_by`` parameter of the module B must be set to the controlling module A. 
+   However, when the target change or a ``go`` command is sent to module B, the control 
+   swiches over to module B and the ``controlled_by`` parameter of module B has to be set to ``self``.
+   Please notice that in addition, the ``control_active`` parameters of module A and module B have 
+   to be set correctly (see next section) before sending the reply to a target
+   change or a ``go`` command as stated before.    
+   
+   Comment KK: I think the next sentence is not correct:  In case a module may have several outputs, additional parameters may be
    needed for switching on and off control of individual input modules.
 
 parameter ``"control_active"``:
@@ -359,14 +371,16 @@ parameter ``"control_active"``:
    control_active=True, the system is trying to bring the value to the target.
    When control_active=False, this control mechanism is switched off, and the target value
    is not considered any more.
-   In a typical example we have a module ``A`` controlling module ``B`` and with two possible
+   In a typical example we have a module A controlling module B and with two possible
    states, as in the following example:
    
    =================== ====================== ======================
     state               module A               module B
    =================== ====================== ======================
-    A controlling B     control_active=True    controlled_by="A"
-    B self controlled   control_active=False   controlled_by="self"
+    A controlling B     control_active=True    controlled_by="A",
+                                               control_active=False
+    B self controlled   control_active=False   controlled_by="self",
+                                               control_active=True
    =================== ====================== ======================
 
    In another example we have two Writable modules (for example 'I' and 'V' in a power supply),
@@ -375,8 +389,10 @@ parameter ``"control_active"``:
    =================== ====================== ======================
     state               module I               module V
    =================== ====================== ======================
-    constant current    control_active=True    control_active=False 
-    constant voltage    control_active=False   control_active=True 
+    constant current    controlled_by="self",  controlled_by="I",
+                        control_active=True    control_active=False 
+    constant voltage    controlled_by="V",     controlled_by="self",
+                        control_active=False   control_active=True 
    =================== ====================== ======================
 
    The module with ``control_active=false`` acts like a Readable, its target parameter is
