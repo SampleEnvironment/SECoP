@@ -564,6 +564,19 @@ Base classes
     Also, the ``status`` parameter will indicate a `BUSY`_ state for a longer-lasting operations.
 
 
+Features
+========
+
+Features allow the ECS to detect if a SECoP module support a certain functionality. A feature typically needs some predefined accessibles and/or module properties to be present. However, it is not only a list of mandatory or optional accessibles, but indicates to the ECS that it may handle this functionality in a specific way.
+
+``"HasOffset"``:
+    This feature is indicating, that the value and target parameters are raw values, which might need to
+    be corrected by an offset. A module with the feature HasOffset must have a parameter offset,
+    which indicates to all clients, that the logical value may be obtained by the following formula
+
+          logical value = raw value + offset
+
+
 Protocol
 ========
 
@@ -1432,6 +1445,11 @@ Optional Module Properties
      A string indicating information about the implementation of the module, like a python class.
 
      example: ``"secop_psi.ppms.Field"``
+
+``"features"``:
+     A list of supported features of a module.
+     
+     example: ``["HasOffset"]``
 
 
 Accessible Description
