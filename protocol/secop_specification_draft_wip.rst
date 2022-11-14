@@ -406,9 +406,21 @@ parameter ``"control_active"``:
    to the other, toggling the control_active parameter of both modules.
 
 
+Limits and Offset
+~~~~~~~~~~~~~~~~~
+
+parameter ``target_limits``:
+    is structured as a tuple with two numeric members indicating
+    the lower and upper end of a valid interval for the setting the target
+    parameter. The SEC node must raise an error in case a given target value does not fit
+    into the interval.
+    
+parameter ``offset``:
+    see feature `HasOffset`_
+
+
 Communication
 ~~~~~~~~~~~~~
-
 
 command ``"communicate"``:
      Used for direct communication with hardware, with proprietary commands. It is useful
@@ -568,6 +580,8 @@ Features
 ========
 
 Features allow the ECS to detect if a SECoP module support a certain functionality. A feature typically needs some predefined accessibles and/or module properties to be present. However, it is not only a list of mandatory or optional accessibles, but indicates to the ECS that it may handle this functionality in a specific way.
+
+.. _HasOffset:
 
 ``"HasOffset"``:
     This feature is indicating, that the value and target parameters are raw values, which might need to
