@@ -1669,7 +1669,7 @@ Mandatory Data Property
 
 example
 ~~~~~~~
-``{"type":"enum", "members":{"IDLE":100,"WARN":200,"BUSY":300,"ERROR":400}}``
+``{"type": "enum", "members": {"IDLE": 100, "WARN": 200, "BUSY": 300, "ERROR": 400}}``
 
 transport
 ~~~~~~~~~
@@ -1703,7 +1703,7 @@ optional data properties
 
 example
 ~~~~~~~
-``{"type":"string", "maxchars": 80}``
+``{"type": "string", "maxchars": 80}``
 
 transport
 ~~~~~~~~~
@@ -1758,7 +1758,7 @@ optional data property
 
 example
 ~~~~~~~
-``{"type":"array", "min": 3, "max": 10, "members" : {"type": "int", "min": 0, "max": 9}}``
+``{"type": "array", "min": 3, "max": 10, "members": {"type": "int", "min": 0, "max": 9}}``
 
 transport
 ~~~~~~~~~
@@ -1812,7 +1812,7 @@ optional data property
 
 example
 ~~~~~~~
-``{"type":"struct", "members": {"y":{"type":"double"}, "x":{"type":"enum", "members":{"On":1, "Off":0}}}}}``
+``{"type": "struct", "members": {"y": {"type": "double"}, "x": {"type": "enum", "members": {"On": 1, "Off": 0}}}}``
 
 transport
 ~~~~~~~~~
@@ -1848,7 +1848,7 @@ optional Data Properties
 
 example
 ~~~~~~~
-``{"type":"command", "argument": {"type":"bool"}, "result": {"type":"bool"}}``
+``{"type": "command", "argument": {"type": "bool"}, "result": {"type": "bool"}}``
 
 
 transport example
