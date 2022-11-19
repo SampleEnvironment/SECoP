@@ -213,7 +213,7 @@ parameter ``"mode"``:
 
     .. code::
 
-        {"enum",{"members":{"DISABLED": 0, "STANDBY": 30, "PREPARED": 50}}
+        {"type": "enum", "members": {"DISABLED": 0, "STANDBY": 30, "PREPARED": 50}}
 
 
 additional codes for parameter ``"status"``:

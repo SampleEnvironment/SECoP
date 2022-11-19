@@ -255,7 +255,7 @@ The following parameters are predefined (this list will be extended):
 
     .. code::
 
-        {"enum",{"members":{"DISABLED": 0, "STANDBY": 30, "PREPARED": 50}}
+        {"type": "enum", "members": {"DISABLED": 0, "STANDBY": 30, "PREPARED": 50}}
 
     The meaning of the operation modes SHOULD be described in the description.
 
