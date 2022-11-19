@@ -110,7 +110,7 @@ addressed by the combination of module and accessible name. Module names
 have to be unique within an SEC node, accessible names have to be unique
 within a module. There are two basic types of accessibles: parameters and commands.
 
-Module and accessible names should be in english (incl. acronyms), using
+Module and accessible names should be in English (incl. acronyms), using
 only ASCII letters + digits and some additional characters (see section `Protocol`_).
 The maximum name length is 63 characters.
 
@@ -236,7 +236,7 @@ additional codes for parameter ``"status"``:
            X8Z         Stabilizing   Continuous change has ended, but target value is not yet reached
            X9Z         Finalizing    Value has reached the target and any leftover cleanup operation
                                      is in progress. If the ECS is waiting for the value of this module
-                                     beeing stable at target, it can continue.
+                                     being stable at target, it can continue.
          ============ ============== =========================================
 
     ``X=1,2,3 or 4`` as in `Basic Parameters`_ and ``Z=0`` for now. Future extensions may use different values for Y.
@@ -267,12 +267,12 @@ additional codes for parameter ``"status"``:
                                                             yet reached
            390   FINALIZING       BUSY       Finalizing     Value has reached the target and any leftover cleanup operation
                                                             is in progress. If the ECS is waiting for the value of this
-                                                            module beeing stable at target, it can continue.
-           400   ERROR            ERROR      Generic        An Error occured, Module is in an error state,
+                                                            module being stable at target, it can continue.
+           400   ERROR            ERROR      Generic        An Error occurred, Module is in an error state,
                                                             something turned out to be a problem.
-           430   ERROR_STANDBY    ERROR      Standby        An Error occured, Module is still in Standby state,
+           430   ERROR_STANDBY    ERROR      Standby        An Error occurred, Module is still in Standby state,
                                                             even after ``clear_errors``.
-           450   ERROR_PREPARED   ERROR      Prepared       An Error occured, Module is still in PREPARED state,
+           450   ERROR_PREPARED   ERROR      Prepared       An Error occurred, Module is still in PREPARED state,
                                                             even after ``clear_errors``.
          ====== ================ ========== ============== =========================================
 
@@ -292,7 +292,7 @@ additional codes for parameter ``"status"``:
         `SECoP Issue 59: set_mode and mode instead of some commands`_
 
     :Note:
-        the behaviour of a module in each of the predefined states is not yet 100% defined.
+        the behavior of a module in each of the predefined states is not yet 100% defined.
 
     :Note:
         a module only need to declare the status values which it implements. i.e. an Readable module
@@ -310,7 +310,7 @@ command ``"hold"``:
      present value.
 
 command ``"shutdown"``
-     optional command for shuting down the hardware.
+     optional command for shutting down the hardware.
      When this command is sent, and the status is DISABLED,
      it is safe to switch off the related device.
 
@@ -330,7 +330,7 @@ command ``"reset"``
 
 command ``"clear_error"``:
      This command tries to clear an error state. It may be called when status is ERROR,
-     and the command will try to transfrom status to IDLE or WARN. If it can not
+     and the command will try to transform status to IDLE or WARN. If it can not
      do it, the status should not change or change to an other ERROR state before
      returning ``done <module>:clear_errors``
 
@@ -346,25 +346,25 @@ parameter ``"controlled_by"``:
    A module with a ``controlled_by`` parameter indicates, that it may be controlled
    by one of the named modules.
 
-   This coupling of two modules influences in particular the behaviour of the parameters ``target`` and ``value``.
-   For example a module B (e.g. representing the power output of a temperature contoller) might be
+   This coupling of two modules influences in particular the behavior of the parameters ``target`` and ``value``.
+   For example a module B (e.g. representing the power output of a temperature controller) might be
    controlled by an other module A (e.g. the temperature module related to the same temperature controller),
-   linking the behaviour of the ``value`` parameter of module B to the ``target`` of the module A.
+   linking the behavior of the ``value`` parameter of module B to the ``target`` of the module A.
 
-   The coupling to the ``target`` parameter of module B can be realised in two ways:
+   The coupling to the ``target`` parameter of module B can be realized in two ways:
 
    1) Module A is (constantly) altering the ``target`` parameter of module B.
 
    2) The ``target`` parameter of module B is not updated and the functional control
       of the ``target`` parameter of module B is switched off.
 
-   This behaviour must be signaled by the ``control_active`` parameter (see next section).
+   This behavior must be signaled by the ``control_active`` parameter (see next section).
 
    Taking over control by a module is done by changing the ``target`` parameter or sending a ``go`` command to a module.
    I.e. module A takes over control when a ``target`` change or a ``go`` command is sent to the module A. Before sending the reply,
    the ``controlled_by`` parameter of the module B must be set to the controlling module A.
    However, when the ``target`` change or a ``go`` command is sent to module B, the control
-   swiches over to module B and the ``controlled_by`` parameter of module B has to be set to ``self``.
+   switches over to module B and the ``controlled_by`` parameter of module B has to be set to ``self``.
    Please notice that in addition, the ``control_active`` parameters of module A and module B have
    to be set correctly (see next section) before sending the reply to a ``target``
    change or a ``go`` command as stated before.
@@ -457,7 +457,7 @@ See also: `Data-report`_.
 Error report
 ------------
 An error report is used in a `error reply`_ indicating that the requested action could
-not be performed as request or that other problems occured.
+not be performed as request or that other problems occurred.
 The error report is a JSON-array containing the name of one of the `Error classes`_, a human readable string
 and as a third element a JSON-object containing extra error information,
 which may include the timestamp (as key "t") and possible additional
@@ -479,7 +479,7 @@ Values are transferred as a JSON-Value.
 
 :Programming Hint:
 
-    Some JSON libraries do not allow all JSON values in their (de-)serialisation functions.
+    Some JSON libraries do not allow all JSON values in their (de-)serialization functions.
     Whether or not a JSON value is a valid JSON text, is controversial,
     see this `stackoverflow issue <https://stackoverflow.com/questions/19569221>`_
     and :rfc:`8259`.
@@ -487,8 +487,8 @@ Values are transferred as a JSON-Value.
     (clarification: a *JSON document* is either a *JSON object* or a *JSON array*,
     a *JSON value* is any of a *JSON object*, *JSON array*, *JSON number* or *JSON string*.)
 
-    If an implementation uses a libray, which can not (de-)serialize all JSON values,
-    the implemetation can add angular brackets around a JSON value, decode it
+    If an implementation uses a library, which can not (de-)serialize all JSON values,
+    the implementation can add angular brackets around a JSON value, decode it
     and take the first element of the result. When encoding the reverse action might be
     used as a workaround. See also :RFC:`7493`
 
@@ -515,7 +515,7 @@ Currently 2 qualifiers are defined:
         (See also `heartbeat`_).
 
 ``"e"``:
-   the uncertainity of the quantity. MUST be in the same units
+   the uncertainty of the quantity. MUST be in the same units
    as the value. So far the interpretation of "e" is not fixed.
    (sigma vs. RMS difference vs. ....)
 
@@ -669,7 +669,7 @@ An ECS-client must ignore the extra data in such messages. See also section `Fut
 
 Essentially the connections between an ECS and a SEC node can operate in one of two modes:
 
-Synchroneous mode:
+Synchronous mode:
    where a strict request/reply pattern is used
 
 Async mode:
@@ -680,7 +680,7 @@ either indicating success of the request or flag an error.
 
 :Note:
     an ECS may try to send a request before it received the reply to an earlier request.
-    This has two implications: a SEC-node may serialize requests and fulfil them strictly in order.
+    This has two implications: a SEC-node may serialize requests and fulfill them strictly in order.
     In that case the ECS should not overflow the input buffer of the SEC-node.
     The second implication is that an ECS which sends multiple requests, before the replies arrive,
     MUST be able to handle the replies arriving out-of-order. Unfortunately there is currently no indication
@@ -783,9 +783,9 @@ Correct handling of side-effects:
 
      :Note:
         An error may be replied after the status was sent to BUSY:
-        if triggering the intented action failed (Communication problems?).
+        if triggering the intended action failed (Communication problems?).
 
-  5) when the action is finally finshed and the module no longer to be considered BUSY,
+  5) when the action is finally finished and the module no longer to be considered BUSY,
      an ``update`` status event MUST be sent, also subsequent status queries
      should reflect the now no longer BUSY state. Of course, all other parameters influenced by this should also
      communicate their new values.
@@ -871,7 +871,7 @@ is finished, the SEC node must send an "active" reply. (*global activation*)
     This initial update is to help the ECS establish a copy of the 'assumed-to-be-current' values.
 
 :Note:
-    An ECS MUST be able to handle the case of an extra update occuring during the initial phase, i.e.
+    An ECS MUST be able to handle the case of an extra update occurring during the initial phase, i.e.
     it must handle the case of receiving more than one update for any valid specifier.
 
 A SEC node might accept a module name as second item of the
@@ -914,7 +914,7 @@ After this two more updates on the ``t1:value`` show up after roughly 1s between
     (an ECS may rely on having gotten all values)
 
 :Note:
-    to speed up the activation process, polling + caching of all parameters on the SEC-node is adviced,
+    to speed up the activation process, polling + caching of all parameters on the SEC-node is advised,
     i.e. the parameters should not just be read from hardware for activation, as this may take a long time.
 
 
@@ -1004,7 +1004,7 @@ Until then, it will get regular updates on the current main value (see last upda
 Read Request
 ~~~~~~~~~~~~
 
-With the read request message the ECS may ask the SEC node about a reasonable recent value 'corrent' value.
+With the read request message the ECS may ask the SEC node about a reasonable recent value 'current' value.
 In most cases this means, that the hardware is read to give a fresh value.
 However, there are uses case where either an internal control loop is running anyway
 in which case it is perfectly fine to returned the internally cached value.
@@ -1045,7 +1045,7 @@ and communicated before sending the ``done`` message.
 
 
 .. important:: If a command does not require an argument, an argument MAY still be transferred as JSON-null.
- A SEC node MUST also accept the message, if the data part is emtpy and perform the same action.
+ A SEC node MUST also accept the message, if the data part is empty and perform the same action.
  More precisely, any SEC-node MUST treat the following two messages the same:
 
  - ``do <module>:<command>``
@@ -1090,7 +1090,7 @@ Example:
 
 _`Error Classes`:
     Error classes are divided into two groups: persisting errors and retryable errors.
-    Persisting errors will yield the exact same error messge if the exact same request is sent at any later time.
+    Persisting errors will yield the exact same error message if the exact same request is sent at any later time.
     A retryable error may give different results if the exact same message is sent at a later time, i.e.
     they depend on state information internal to either the SEC-node, the module or the connected hardware.
 
@@ -1112,7 +1112,7 @@ _`Error Classes`:
           - The specified command does not exist.
 
         * - ReadOnly
-          - The requested write can not be performed on a readonly value..
+          - The requested write can not be performed on a readonly value.
 
         * - WrongType
           - The requested parameter change or Command can not be performed as the argument has the wrong type.
@@ -1130,7 +1130,7 @@ _`Error Classes`:
           - The data part of the message can not be parsed, i.e. the JSON-data is no valid JSON.
 
         * - NotImplemented
-          - A (not yet) implemented action or combination of action and specifer was requested.
+          - A (not yet) implemented action or combination of action and specifier was requested.
             This should not be used in productive setups, but is very helpful during development.
 
         * - HardwareError
@@ -1200,7 +1200,7 @@ Logging is an optional message, i.e. a sec-node is not enforced to implement it.
   Otherwise it should mirror the request, which may be updated with the logging-level actually in use.
   i.e. if an SEC-node does not implement the "debug" level, but "error" and "info" and an ECS request "debug" logging, the
   reply should contain "info" (as this is 'closer' to the original request than "error") or ``false``).
-  Similiarly, if logging of a too specific item is requested, the SEC-node should activate the logging on the
+  Similarly, if logging of a too specific item is requested, the SEC-node should activate the logging on the
   least specific item where logging is supported. e.g. if logging for <module>:<param> is requested, but the SEC-node
   only support logging of the module, this should be reflected in the reply and the logging of the module is to be influenced.
 
@@ -1269,8 +1269,8 @@ Also there are several types of timeout: idle-timeout, reply-timeout, etc...
 Generally speaking: both ECS and SEC side needs to be aware that the other
 side may close the connection at any time!
 On reconnect, it is recommended, that the ECS does send a ``*IDN?`` and a ``describe`` message.
-If the reponses match the responses from the previous connection, the ECS should continue
-without any internal reconfiguring, as if no interruption happend.
+If the responses match the responses from the previous connection, the ECS should continue
+without any internal reconfiguring, as if no interruption happened.
 If the response of the description does not match, it is up to the ECS how to handle this.
 
 Naturally, if the previous connection was activated, an ``activate``
@@ -1301,7 +1301,7 @@ Format of Descriptive Data
 The format of the descriptive data is JSON, as all other data in SECoP.
 
 :note:
-    all names on each hirarchy level needs to unique (i.e. not repeated) when lowercased.
+    all names on each hierarchy level needs to unique (i.e. not repeated) when lowercased.
 
 SEC Node Description
 --------------------
@@ -1331,7 +1331,7 @@ Mandatory SEC Node Properties
         to use a JSON library which keeps the order of JSON object items.
 
 ``"equipment_id"``:
-     worldwide unqiue id of an equipment as string. Should contain the name of the
+     worldwide unique id of an equipment as string. Should contain the name of the
      owner institute or provider company as prefix in order to guarantee worldwide uniqueness.
 
      example: ``"MLZ_ccr12"`` or ``"HZB-vm4"``
@@ -1393,7 +1393,7 @@ Optional Module Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ``"visibility"``:
-     string indicating a hint for UI's for which user roles the module should be display or hidden.
+     string indicating a hint for UIs for which user roles the module should be display or hidden.
      MUST be one of "expert", "advanced" or "user" (default).
 
      :Note:
@@ -1437,7 +1437,7 @@ Optional Module Properties
     2.  a value describing the importance, with the following values:
 
         - 10 means the instrument/beamline (Example: room temperature sensor always present)
-        - 20 means the surrounding sample environemnt (Example: VTI temperature)
+        - 20 means the surrounding sample environment (Example: VTI temperature)
         - 30 means an insert (Example: sample stick of dilution insert)
         - 40 means an addon added to an insert (Example: a device mounted inside a dilution insert)
 
@@ -1512,7 +1512,7 @@ Optional Accessible Properties
         the module-property ``group`` is used for grouping of modules within a node.
 
 ``"visibility"``:
-    a string indication a hint for a gui about
+    a string indication a hint for a GUI about
     the visibility of the accessible. values and meaning as for module-visibility above.
 
     :Remark:
@@ -1558,18 +1558,18 @@ Data info
 
 SECoP defines a very flexible data typing system. Data info structures are used to describe
 the possible values of parameters and how they are serialized.
-They may also impose restrictions on the useable values or amount of data.
+They may also impose restrictions on the usable values or amount of data.
 The data info structure consists of the name of the datatype augmented by data-properties to pinpoint the exact meaning of the data to be described.
 
 SECoP defines some basic data types for numeric quantities, like Double_ and Integer_.
 An Enum_ is defined for convenience of not having to remember the meaning of values from a reduced set.
-A Bool_ datatype is similiar to a predefined Enum, but uses the JSON-values true and false.
+A Bool_ datatype is similar to a predefined Enum, but uses the JSON-values true and false.
 (Of course 0 should be treated as False and 1 as True if a bool value isn't using the JSON literals.)
 For non-numeric types, a String_ and a Blob_ are defined as well.
 
 Furthermore, SECoP not only defines basic data types but also structured datatypes.
 Tuples allow to combine a fixed amount of values with different datatypes in an ordered way to be used as one.
-Arrays store a given number of dataelements having the same datatype.
+Arrays store a given number of data elements having the same datatype.
 Structs are comparable to tuples, with the difference of using named entries whose order is irrelevant during transport.
 
 The limits, which have to be specified with the data info, are always inclusive,
@@ -1620,8 +1620,8 @@ Optional Data Properties
 ``"unit"``:
     string giving the unit of the parameter.
 
-    SHOULD be given, if meaningfull. Unitless if omitted or empty string.
-    Preferrably SI-units (including prefix) SHOULD be used.
+    SHOULD be given, if meaningful. Unitless if omitted or empty string.
+    Preferably SI-units (including prefix) SHOULD be used.
 
     :related: `SECoP Issue 43: Parameters and units`_
 
@@ -1736,7 +1736,7 @@ Integer: ``int``
 ----------------
 
 Datatype to be used for integer numbers.
-For any physical quantitiy ``double`` or ``scaled`` **SHOULD** be used.
+For any physical quantity ``double`` or ``scaled`` **SHOULD** be used.
 An integer SHOULD have no unit and it SHOULD be representable with signed 24 bits (i.e. all integers SHOULD fit
 inside -2\ :sup:`24` ... 2\ :sup:`24`), as some JSON libraries might parse JSON-numbers
 with 32bit float too.
@@ -1819,8 +1819,8 @@ Optional Data Properties
     the minimum length, default is 0
 
 ``"isUTF8"``:
-    boolean, if UTF8 characterset is allowed for values, or if the value is allowed only
-    to contain 7Bit ASCII characters (i.e. only codepoints < 128), each occupying a single byte.
+    boolean, if UTF8 character set is allowed for values, or if the value is allowed only
+    to contain 7Bit ASCII characters (i.e. only code points < 128), each occupying a single byte.
     defaults to **False** if not given.
 
 Example
@@ -1994,10 +1994,10 @@ notes for implementors of current specification
 -----------------------------------------------
 
 # As JSON can not handle non-numerical quantities like 'Inf' or 'NaN',
-  either an apropriate error message should be generated, or the closest representable
+  either an appropriate error message should be generated, or the closest representable
   numerical value (+/- double_max?) should be used.
 
-# all values transferred between ecs and sec-node should be validated on both sides.
+# all values transferred between ECS and sec-node should be validated on both sides.
   This may be relaxed in future specifications.
   Errors, which arise from the validation of SEC-node values on the ECS-side should not crash the ECS
   and should inform the user about this violation of specification along with the data, the validator and why validation failed.
@@ -2023,15 +2023,15 @@ The herein specified protocol has foreseen some extension mechanisms in its desi
 * add actions, keeping the 'triple' structure of action/specifier/data
 
   :Note:
-      Thats why custom actions MUST be prefixed with an underscore.
+      That is why custom actions MUST be prefixed with an underscore.
 
 * extent specifier with ':' separated identifiers, getting more and more specific
 
-  An empty string as specifier adresses the SEC-node, ``<module>`` adresses a module,
-  and ``<module>:<accessible>`` adresses an accessible of a module.
+  An empty string as specifier addresses the SEC-node, ``<module>`` addresses a module,
+  and ``<module>:<accessible>`` addresses an accessible of a module.
 
-  If there will ever by such things as node-accessibles, they will be adressed as ``:<accessible>``.
-  Also properties may be adressed like ``<module>:<accessible>:<property>``.
+  If there will ever be such things as node-accessibles, they will be addressed as ``:<accessible>``.
+  Also properties may be addressed like ``<module>:<accessible>:<property>``.
 
   In the same sense as an empty string selects the whole SEC-node, ``<module>:`` may select ALL parameters of a module.
 
@@ -2090,7 +2090,7 @@ In this case an argument of null is to be assumed.
 Also, an argumentless ping is to be handled as a ping request with an empty token string.
 The corresponding reply then contains a double space. This MUST also be parsed correctly.
 
-Similiarly, the reports need to be handled like this:
+Similarly, the reports need to be handled like this:
 
 
 .. _`data-report`:
@@ -2131,7 +2131,7 @@ Binary representations of the protocol
 --------------------------------------
 
 so far only the above described, textual protocol is defined.
-Since this is not optimal for bandwith limited connections (e.g. RS232), a shorter, binary representation
+Since this is not optimal for bandwidth limited connections (e.g. RS232), a shorter, binary representation
 may be developed. This will essentially keep the structure of the messages, but replace the components
 of a message with shorter, binary representations.
 
@@ -2144,7 +2144,7 @@ Security and access control
 SECoP does not handle security of transferred data nor access control and relies on support by other means.
 
 
-Licences
+Licenses
 ========
 
 The above diagrams were generated using a modified copy of https://github.com/EnricoFaulhaber/railroad_dsl.
