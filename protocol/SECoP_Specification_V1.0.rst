@@ -1439,11 +1439,11 @@ the possible values of parameters and how they are serialized.
 They may also impose restrictions on the useable values or amount of data.
 The data info structure consists of the name of the datatype augmented by data-properties to pinpoint the exact meaning of the data to be described.
 
-SECoP defines some basic data types for numeric quantities, like ``Double``_ and ``Integer``_.
-An ``Enum``_ is defined for convenience of not having to remember the meaning of values from a reduced set.
-A ``Bool``_ datatype is similiar to a predefined Enum, but uses the JSON-values true and false.
+SECoP defines some basic data types for numeric quantities, like Double_ and Integer_.
+An Enum_ is defined for convenience of not having to remember the meaning of values from a reduced set.
+A Bool_ datatype is similiar to a predefined Enum, but uses the JSON-values true and false.
 (Of course 0 should be treated as False and 1 as True if a bool value isn't using the JSON literals.)
-For non-numeric types, a ``String``_ and a ``Blob``_ are defined as well.
+For non-numeric types, a String_ and a Blob_ are defined as well.
 
 Furthermore, SECoP not only defines basic data types but also structured datatypes.
 Tuples allow to combine a fixed amount of values with different datatypes in an ordered way to be used as one.
@@ -1619,7 +1619,7 @@ An integer SHOULD have no unit and it SHOULD be representable with signed 24 bit
 inside -2\ :sup:`24` ... 2\ :sup:`24`), as some JSON libraries might parse JSON-numbers
 with 32bit float too.
 
-mandatory Data Properties
+Mandatory Data Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 ``"min"``, ``"max"``:
    integer limits, ``<min>`` <= ``<max>``
@@ -1630,11 +1630,11 @@ Optional Data Properties
 ``"unit"``:
     string giving the unit of the parameter. (see datatype Double_)
 
-example
+Example
 ~~~~~~~
 ``{"type": "int", "min": 0, "max": 100}``
 
-transport
+Transport
 ~~~~~~~~~
 as JSON-number
 
@@ -1646,11 +1646,11 @@ example: ``-55``
 Boolean: ``bool``
 -----------------
 
-syntax
+Syntax
 ~~~~~~
 ``{"type": "bool"}``
 
-transport
+Transport
 ~~~~~~~~~
 ``true`` or ``false``
 
@@ -1667,11 +1667,11 @@ Mandatory Data Property
 
     ``name``\ s are strings, ``value``\ s are (small) integers, both ``name``\ s and ``value``\ s MUST be unique
 
-example
+Example
 ~~~~~~~
 ``{"type": "enum", "members": {"IDLE": 100, "WARN": 200, "BUSY": 300, "ERROR": 400}}``
 
-transport
+Transport
 ~~~~~~~~~
 as JSON-number, the client may perform a mapping back to the name
 
@@ -1683,7 +1683,7 @@ example: ``200``
 String: ``string``
 ------------------
 
-optional data properties
+Optional data properties
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 ``"maxchars"``:
@@ -1701,11 +1701,11 @@ optional data properties
     to contain 7Bit ASCII characters (i.e. only codepoints < 128), each occupying a single byte.
     defaults to **False** if not given.
 
-example
+Example
 ~~~~~~~
 ``{"type": "string", "maxchars": 80}``
 
-transport
+Transport
 ~~~~~~~~~
 as JSON-string
 
@@ -1716,21 +1716,21 @@ example: ``"Hello\n\u2343World!"``
 Binary Large Object: ``blob``
 -----------------------------
 
-mandatory data property
+Mandatory Data Property
 ~~~~~~~~~~~~~~~~~~~~~~~
 ``"maxbytes"``:
     the maximum length, counting the number of bytes (**not** the size of the encoded string)
 
-optional data property
+Optional Data Property
 ~~~~~~~~~~~~~~~~~~~~~~
 ``"minbytes"``:
    the minimum length, default is 0
 
-example
+Example
 ~~~~~~~
 ``{"type": "blob", "min": 1, "max": 64}``
 
-transport
+Transport
 ~~~~~~~~~
 as single-line base64 (see :RFC:`4648`) encoded JSON-string
 
@@ -1741,26 +1741,26 @@ example: ``"AA=="`` (a single, zero valued byte)
 Sequence of Equally Typed Items : ``array``
 -------------------------------------------
 
-mandatory Data Properties
+Mandatory Data Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ``"members"``:
-    the datatype of the elements.
+    the datatype of the elements
 
 ``"maxlen"``:
     the maximum length, counting the number of elements
 
-optional data property
+Optional Data Property
 ~~~~~~~~~~~~~~~~~~~~~~
 
 ``"minlen"``:
     the minimum length, default is 0
 
-example
+Example
 ~~~~~~~
 ``{"type": "array", "min": 3, "max": 10, "members": {"type": "int", "min": 0, "max": 9}}``
 
-transport
+Transport
 ~~~~~~~~~
 as JSON-array
 
@@ -1771,16 +1771,16 @@ example: ``[3,4,7,2,1]``
 Finite Sequence of Items with Individually Defined Type: ``tuple``
 ------------------------------------------------------------------
 
-mandatory data property
+Mandatory data property
 ~~~~~~~~~~~~~~~~~~~~~~~
 ``"members"``:
     a JSON array listing the datatypes of the members
 
-example
+Example
 ~~~~~~~
 ``{"type": "tuple", "members": [{"type": "int", "min": 0, "max": 999}, {"type": "string", "maxchars": 80}]}``
 
-transport
+Transport
 ~~~~~~~~~
 as JSON-array
 
@@ -1792,15 +1792,15 @@ as JSON-array
 Collection of Named Items: ``struct``
 -------------------------------------
 
-mandatory data property
+Mandatory data property
 ~~~~~~~~~~~~~~~~~~~~~~~
 ``"members"``:
     a JSON object containing the names and datatypes of the members
 
-optional data property
+Optional data property
 ~~~~~~~~~~~~~~~~~~~~~~
 ``"optional"``:
-    the names of optional struct elements is given)
+    the names of optional struct elements is given
 
     In 'change' and 'do' commands, the ECS might omit these elements, all other
     elements must be given.
@@ -1810,11 +1810,11 @@ optional data property
 
     In all other messages (i.e. in replies and updates), all elements have to be given.
 
-example
+Example
 ~~~~~~~
 ``{"type": "struct", "members": {"y": {"type": "double"}, "x": {"type": "enum", "members": {"On": 1, "Off": 0}}}}``
 
-transport
+Transport
 ~~~~~~~~~
 as JSON-object
 
@@ -1825,13 +1825,13 @@ example: ``{"x": 0.5, "y": 1}``
 
 .. _command:
 
-command-flag for accessibles
+Command-flag for Accessibles
 ----------------------------
 
 If an accessible is a command, its argument and result is described by the ``command`` datatype.
 
-optional Data Properties
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Optional Data Properties
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 ``"argument"``:
     the datatype of the single argument, or ``null``.
@@ -1846,14 +1846,14 @@ optional Data Properties
     In any case, the meaning of result and argument(s) SHOULD be written down
     in the description of the command.
 
-example
+Example
 ~~~~~~~
 ``{"type": "command", "argument": {"type": "bool"}, "result": {"type": "bool"}}``
 
 
-transport example
+Transport Example
 ~~~~~~~~~~~~~~~~~
-command values are not transported as such. But commands may be called (i.e. executed) by an ECS.
+Command values are not transported as such. But commands may be called (i.e. executed) by an ECS.
 Example:
 
 .. code::
