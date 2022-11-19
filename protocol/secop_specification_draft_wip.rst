@@ -160,7 +160,7 @@ parameter ``"status"``:
           3YZ           BUSY          Module is performing some action
           4YZ           ERROR         Module is in an error state, something turned out to be a problem.
          ============ ============== =========================================
-   
+
     where YZ might be any combination of digits, in simple cases typically 00.
 
 parameter ``"pollinterval"``:
@@ -339,36 +339,36 @@ Coupled Modules
 ~~~~~~~~~~~~~~~
 
 parameter ``"controlled_by"``:
-   The control mechanism of a module might be coupled to another module (both modules are Drivable or Writable). 
-   This coupling is indicated by the ``controlled_by`` parameter.   
+   The control mechanism of a module might be coupled to another module (both modules are Drivable or Writable).
+   This coupling is indicated by the ``controlled_by`` parameter.
    The datatype of the ``controlled_by`` parameter must be an enum, with the names being
    module names or ``self``. The enum value of ``self`` must be 0.
-   A module with a ``controlled_by`` parameter indicates, that it may be controlled 
+   A module with a ``controlled_by`` parameter indicates, that it may be controlled
    by one of the named modules.
-   
+
    This coupling of two modules influences in particular the behaviour of the parameters ``target`` and ``value``.
    For example a module B (e.g. representing the power output of a temperature contoller) might be
    controlled by an other module A (e.g. the temperature module related to the same temperature controller),
-   linking the behaviour of the ``value`` parameter of module B to the ``target`` of the module A. 
-   
-   The coupling to the ``target`` parameter of module B can be realised in two ways: 
-   
+   linking the behaviour of the ``value`` parameter of module B to the ``target`` of the module A.
+
+   The coupling to the ``target`` parameter of module B can be realised in two ways:
+
    1) Module A is (constantly) altering the ``target`` parameter of module B.
-   
-   2) The ``target`` parameter of module B is not updated and the functional control 
-      of the ``target`` parameter of module B is switched off. 
-      
+
+   2) The ``target`` parameter of module B is not updated and the functional control
+      of the ``target`` parameter of module B is switched off.
+
    This behaviour must be signaled by the ``control_active`` parameter (see next section).
-   
-   Taking over control by a module is done by changing the ``target`` parameter or sending a ``go`` command to a module. 
-   I.e. module A takes over control when a ``target`` change or a ``go`` command is sent to the module A. Before sending the reply, 
-   the ``controlled_by`` parameter of the module B must be set to the controlling module A. 
-   However, when the ``target`` change or a ``go`` command is sent to module B, the control 
+
+   Taking over control by a module is done by changing the ``target`` parameter or sending a ``go`` command to a module.
+   I.e. module A takes over control when a ``target`` change or a ``go`` command is sent to the module A. Before sending the reply,
+   the ``controlled_by`` parameter of the module B must be set to the controlling module A.
+   However, when the ``target`` change or a ``go`` command is sent to module B, the control
    swiches over to module B and the ``controlled_by`` parameter of module B has to be set to ``self``.
-   Please notice that in addition, the ``control_active`` parameters of module A and module B have 
+   Please notice that in addition, the ``control_active`` parameters of module A and module B have
    to be set correctly (see next section) before sending the reply to a ``target``
-   change or a ``go`` command as stated before.    
-   
+   change or a ``go`` command as stated before.
+
    :note: I think the next sentence is not correct:  In case a module may have several outputs, additional parameters may be needed for switching on and off control of individual input modules.
 
 parameter ``"control_active"``:
@@ -379,7 +379,7 @@ parameter ``"control_active"``:
    is not considered any more.
    In a typical example we have a module A controlling module B and with two possible
    states, as in the following example:
-   
+
    =================== ====================== ======================
     state               module A               module B
    =================== ====================== ======================
@@ -391,14 +391,14 @@ parameter ``"control_active"``:
 
    In another example we have two Writable modules (for example 'I' and 'V' in a power supply),
    which depend on each other in a system where not both may be active at the same time.
- 
+
    =================== ====================== ======================
     state               module I               module V
    =================== ====================== ======================
     constant current    controlled_by="self",  controlled_by="I",
-                        control_active=True    control_active=False 
+                        control_active=True    control_active=False
     constant voltage    controlled_by="V",     controlled_by="self",
-                        control_active=False   control_active=True 
+                        control_active=False   control_active=True
    =================== ====================== ======================
 
    The module with ``control_active=false`` acts like a Readable, its target parameter is
@@ -414,7 +414,7 @@ parameter ``target_limits``:
     the lower and upper end of a valid interval for the setting the target
     parameter. The SEC node must raise an error in case a given target value does not fit
     into the interval.
-    
+
 parameter ``offset``:
     see feature `HasOffset`_
 
@@ -1462,7 +1462,7 @@ Optional Module Properties
 
 ``"features"``:
      A list of supported features of a module.
-     
+
      example: ``["HasOffset"]``
 
 
@@ -2155,7 +2155,7 @@ Changes
 Draft
 -----
 
-* ``ìmplementation`` module property 
+* ``ìmplementation`` module property
 
 
 .. _`Interface Classes and Features`: Interface%20Classes%20and%20Features.rst
