@@ -369,7 +369,7 @@ parameter ``"controlled_by"``:
    to be set correctly (see next section) before sending the reply to a ``target``
    change or a ``go`` command as stated before.    
    
-   :note: I think the next sentence is not correct:  In case a module may have several outputs, additional parameters may be needed for switching on and off control of individual input modules.
+   :remark: In case a module A controlls several other modules, e.g. a temperature module of a liquid helium cryostat controlling the power output (module B) and the helium pressure for cooling (module C), additional parameters may be needed for selecting the control mode of module A. See for example the parameter ``"_automatic_nv_pressure_mode"`` in the example of a liquid helium cooled cryostat.
 
 parameter ``"control_active"``:
    A flag indicating whether a drivable or writable module is currently actively controlling.
@@ -377,7 +377,7 @@ parameter ``"control_active"``:
    control_active=True, the system is trying to bring the value to the target.
    When control_active=False, this control mechanism is switched off, and the target value
    is not considered any more.
-   In a typical example we have a module A controlling module B and with two possible
+   In a typical example we have a module A controlling module B (e.g. temperature (A) and power output (B) as stated above) and with two possible
    states, as in the following example:
    
    =================== ====================== ======================
