@@ -1616,6 +1616,17 @@ Optional Data Properties
 ``"max"``:
     upper limit. if max is omitted, there is no upper limit
 
+:Note:
+    When SEC Node receives a ``"change"`` or ``"do"`` message with a value outside
+    the allowed range [``"min"``, ``"max"``], it MUST reply with an error message.
+    Values very close to the limits might be rounded to the limit,
+    returning the rounded value in the ``"changed"`` reply.
+    For readonly parameters, [``"min"``, ``"max"``] indicate a trusted range.
+    A SEC-Node might send ``"update"`` or ``"reply"`` messages with values outside
+    the trusted range, for example when the value is an extrapolation of the
+    calibrated range. It is not recommended for a SEC-Node does to clamp values
+    received from the hardware to the given trusted range.
+
 ``"unit"``:
     string giving the unit of the parameter.
 
@@ -1682,6 +1693,7 @@ Mandatory Data Properties
 ``"min"``, ``"max"``:
     The limits of the transported integer. ``<min>`` <= ``<max>``.
     The limits of the represented floating point value are ``<min>*<scale>, <max>*<scale>``
+    See also the note on the ``"min"`` and ``"max"`` properties of the Double_ datatype.
 
 Optional Data Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~
