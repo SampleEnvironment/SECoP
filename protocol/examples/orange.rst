@@ -419,9 +419,6 @@ with consequences in a chain to ``pressure_vti`` to ``temperature_reg`` to
 .. _ControlTheory: https://en.wikipedia.org/wiki/Control_theory
 .. _PIDcontroller: https://en.wikipedia.org/wiki/PID_controller
 .. _LS: https://www.lakeshore.com/docs/default-source/temperature-catalog/lstc_appendixf_l.pdf
-.. _`SECoP Issue 63`: https://github.com/SampleEnvironment/SECoP/blob/master/protocol/issues/063%20enumeration%20of%20floating%20point%20values.rst
-.. _`SECoP Issue 65`: https://github.com/SampleEnvironment/SECoP/blob/master/protocol/issues/065%20handling%20of%20coupled%20modules.rst
-.. _`SECoP Issue 67`: https://github.com/SampleEnvironment/SECoP/blob/master/protocol/issues/067%20pid%20control%20parameters.rst
 .. DO NOT TOUCH --- following links are automatically updated by issue/makeissuelist.py
 .. _`SECoP Issue 63`: ../issues/063%20enumeration%20of%20floating%20point%20values.rst
 .. _`SECoP Issue 65`: ../issues/065%20handling%20of%20coupled%20modules.rst
