@@ -594,9 +594,6 @@ indicates to the ECS that it may handle this functionality in a specific way.
 .. _HasOffset:
 
 ``"HasOffset"``:
-
-    mandatory parameter: offset_
-
     This feature is indicating that the value and target parameters are raw values, which
     need to be corrected by an offset. A module with the feature ``"HasOffset"`` must have
     a parameter ``offset``, which indicates to all clients that values are to be converted
@@ -605,6 +602,9 @@ indicates to the ECS that it may handle this functionality in a specific way.
           ECS value = SECoP value + offset
 
           SECoP target = ECS target - offset
+
+    mandatory parameter: offset_
+
 
 
 Protocol
