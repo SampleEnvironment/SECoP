@@ -369,7 +369,7 @@ parameter ``"controlled_by"``:
    to be set correctly (see next section) before sending the reply to a ``target``
    change or a ``go`` command as stated before.    
    
-   :remark: In case a module A controlls several other modules, e.g. a temperature module of a liquid helium cryostat controlling the power output (module B) and the helium pressure for cooling (module C), additional parameters may be needed for selecting the control mode of module A. See for example the parameter ``"_automatic_nv_pressure_mode"`` in the example of a liquid helium cooled cryostat.
+   :remark: In case a module A controls several other modules, e.g. a temperature module of a liquid helium cryostat controlling the power output (module B) and the helium pressure for cooling (module C), additional parameters may be needed for selecting the control mode of module A. See for example the parameter ``"_automatic_nv_pressure_mode"`` in the example of a liquid helium cooled cryostat.
 
 parameter ``"control_active"``:
    A readonly flag indicating whether a drivable or writable module is currently actively controlling.
