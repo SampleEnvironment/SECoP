@@ -410,13 +410,20 @@ Limits and Offset
 ~~~~~~~~~~~~~~~~~
 
 parameter ``target_limits``:
-    is structured as a tuple with two numeric members indicating
-    the lower and upper end of a valid interval for the setting the target
-    parameter. The SEC node must raise an error in case a given target value does not fit
+    In addition to the range given in the ``datainfo`` property of the ``target`` parameter,
+    a SEC-Node might offer changeable limits restricting the allowed range even more.
+    ``target_limits`` is structured as a tuple with two numeric members indicating
+    the lower and upper end of a valid interval for the setting the ``target`` parameter.
+    The ``datainfo`` property of the ``target`` parameter must match the members of the
+    ``datainfo`` property of ``target_limits``.
+    The SEC node must reply with an error in case a given target value does not fit
     into the interval.
-    
+
+.. _offset:
+
 parameter ``offset``:
-    see feature `HasOffset`_
+    A storage for an offset to be applied when converting SECoP values to ECS values.
+    See feature `HasOffset`_
 
 
 Communication
@@ -579,16 +586,25 @@ Base classes
 Features
 ========
 
-Features allow the ECS to detect if a SECoP module support a certain functionality. A feature typically needs some predefined accessibles and/or module properties to be present. However, it is not only a list of mandatory or optional accessibles, but indicates to the ECS that it may handle this functionality in a specific way.
+Features allow the ECS to detect if a SECoP module support a certain functionality.
+A feature typically needs some predefined accessibles and/or module properties to be present.
+However, it is not only a list of mandatory or optional accessibles, but
+indicates to the ECS that it may handle this functionality in a specific way.
 
 .. _HasOffset:
 
 ``"HasOffset"``:
-    This feature is indicating, that the value and target parameters are raw values, which might need to
-    be corrected by an offset. A module with the feature HasOffset must have a parameter offset,
-    which indicates to all clients, that the logical value may be obtained by the following formula
 
-          logical value = raw value + offset
+    mandatory parameter: offset_
+
+    This feature is indicating that the value and target parameters are raw values, which
+    need to be corrected by an offset. A module with the feature ``"HasOffset"`` must have
+    a parameter ``offset``, which indicates to all clients that values are to be converted
+    by the following formulas:
+
+          ECS value = SECoP value + offset
+
+          SECoP target = ECS target - offset
 
 
 Protocol
@@ -1562,8 +1578,8 @@ The data info structure consists of the name of the datatype augmented by data-p
 
 SECoP defines some basic data types for numeric quantities, like Double_ and Integer_.
 An Enum_ is defined for convenience of not having to remember the meaning of values from a reduced set.
-A Bool_ datatype is similiar to a predefined Enum, but uses the JSON-values true and false.
-(Of course 0 should be treated as False and 1 as True if a bool value isn't using the JSON literals.)
+A Bool_ datatype is similiar to a predefined Enum, but uses the JSON-values ``true`` and ``false``.
+(Of course 0 should be treated as ``false`` and 1 as ``true`` if a bool value isn't using the JSON literals.)
 For non-numeric types, a String_ and a Blob_ are defined as well.
 
 Furthermore, SECoP not only defines basic data types but also structured datatypes.
@@ -1619,13 +1635,13 @@ Optional Data Properties
 :Note:
     When SEC Node receives a ``"change"`` or ``"do"`` message with a value outside
     the allowed range [``"min"``, ``"max"``], it MUST reply with an error message.
-    Values very close to the limits might be rounded to the limit,
-    returning the rounded value in the ``"changed"`` reply.
     For readonly parameters, [``"min"``, ``"max"``] indicate a trusted range.
     A SEC-Node might send ``"update"`` or ``"reply"`` messages with values outside
     the trusted range, for example when the value is an extrapolation of the
-    calibrated range. It is not recommended for a SEC-Node does to clamp values
-    received from the hardware to the given trusted range.
+    calibrated range. The idea behind this relaxed rule is, that it is better
+    for a SEC-node to send an acquired value outside the range as it is rather
+    than change its value just to comply with the specified range.
+    The decision, how to treat such values is left to the ECS.
 
 ``"unit"``:
     string giving the unit of the parameter.
@@ -1832,7 +1848,7 @@ optional data properties
 ``"isUTF8"``:
     boolean, if UTF8 characterset is allowed for values, or if the value is allowed only
     to contain 7Bit ASCII characters (i.e. only codepoints < 128), each occupying a single byte.
-    defaults to **False** if not given.
+    defaults to **false** if not given.
 
 example
 ~~~~~~~
