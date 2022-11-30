@@ -367,26 +367,29 @@ parameter ``"controlled_by"``:
    switches over to module B and the ``controlled_by`` parameter of module B has to be set to ``self``.
    Please notice that in addition, the ``control_active`` parameters of module A and module B have
    to be set correctly (see next section) before sending the reply to a ``target``
-   change or a ``go`` command as stated before.
-
-   :note: I think the next sentence is not correct:  In case a module may have several outputs, additional parameters may be needed for switching on and off control of individual input modules.
+   change or a ``go`` command as stated before.    
+   
+   :remark: In case a module A controls several other modules, e.g. a temperature module of a liquid helium cryostat
+            controlling the power output (module B) and the helium pressure for cooling (module C), additional parameters
+            may be needed for selecting the control mode of module A. See for example the parameter
+            ``"_automatic_nv_pressure_mode"`` in the example of a liquid helium cooled cryostat.
 
 parameter ``"control_active"``:
-   A flag indicating whether a drivable or writable module is currently actively controlling.
+   A readonly flag indicating whether a drivable or writable module is currently actively controlling.
    On a drivable without control_active parameter or with
-   control_active=True, the system is trying to bring the value to the target.
-   When control_active=False, this control mechanism is switched off, and the target value
+   control_active=true, the system is trying to bring the value to the target.
+   When control_active=false, this control mechanism is switched off, and the target value
    is not considered any more.
-   In a typical example we have a module A controlling module B and with two possible
+   In a typical example we have a module A controlling module B (e.g. temperature (A) and power output (B) as stated above) and with two possible
    states, as in the following example:
 
    =================== ====================== ======================
     state               module A               module B
    =================== ====================== ======================
-    A controlling B     control_active=True    controlled_by="A",
-                                               control_active=False
-    B self controlled   control_active=False   controlled_by="self",
-                                               control_active=True
+    A controlling B     control_active=true    controlled_by="A",
+                                               control_active=false
+    B self controlled   control_active=false   controlled_by="self",
+                                               control_active=true
    =================== ====================== ======================
 
    In another example we have two Writable modules (for example 'I' and 'V' in a power supply),
@@ -396,9 +399,9 @@ parameter ``"control_active"``:
     state               module I               module V
    =================== ====================== ======================
     constant current    controlled_by="self",  controlled_by="I",
-                        control_active=True    control_active=False
+                        control_active=true    control_active=false
     constant voltage    controlled_by="V",     controlled_by="self",
-                        control_active=False   control_active=True
+                        control_active=false   control_active=true
    =================== ====================== ======================
 
    The module with ``control_active=false`` acts like a Readable, its target parameter is
@@ -410,13 +413,20 @@ Limits and Offset
 ~~~~~~~~~~~~~~~~~
 
 parameter ``target_limits``:
-    is structured as a tuple with two numeric members indicating
-    the lower and upper end of a valid interval for the setting the target
-    parameter. The SEC node must raise an error in case a given target value does not fit
+    In addition to the range given in the ``datainfo`` property of the ``target`` parameter,
+    a SEC-Node might offer changeable limits restricting the allowed range even more.
+    ``target_limits`` is structured as a tuple with two numeric members indicating
+    the lower and upper end of a valid interval for the setting the ``target`` parameter.
+    The ``datainfo`` property of the ``target`` parameter must match the members of the
+    ``datainfo`` property of ``target_limits``.
+    The SEC node must reply with an error in case a given target value does not fit
     into the interval.
 
+.. _offset:
+
 parameter ``offset``:
-    see feature `HasOffset`_
+    A storage for an offset to be applied when converting SECoP values to ECS values.
+    See feature `HasOffset`_.
 
 
 Communication
@@ -579,16 +589,25 @@ Base classes
 Features
 ========
 
-Features allow the ECS to detect if a SECoP module support a certain functionality. A feature typically needs some predefined accessibles and/or module properties to be present. However, it is not only a list of mandatory or optional accessibles, but indicates to the ECS that it may handle this functionality in a specific way.
+Features allow the ECS to detect if a SECoP module support a certain functionality.
+A feature typically needs some predefined accessibles and/or module properties to be present.
+However, it is not only a list of mandatory or optional accessibles, but
+indicates to the ECS that it may handle this functionality in a specific way.
 
 .. _HasOffset:
 
 ``"HasOffset"``:
-    This feature is indicating, that the value and target parameters are raw values, which might need to
-    be corrected by an offset. A module with the feature HasOffset must have a parameter offset,
-    which indicates to all clients, that the logical value may be obtained by the following formula
+    This feature is indicating that the value and target parameters are raw values, which
+    need to be corrected by an offset. A module with the feature ``"HasOffset"`` must have
+    a parameter ``offset``, which indicates to all clients that values are to be converted
+    by the following formulas:
 
-          logical value = raw value + offset
+          ECS value = SECoP value + offset
+
+          SECoP target = ECS target - offset
+
+    mandatory parameter: offset_
+
 
 
 Protocol
@@ -1563,8 +1582,8 @@ The data info structure consists of the name of the datatype augmented by data-p
 
 SECoP defines some basic data types for numeric quantities, like Double_ and Integer_.
 An Enum_ is defined for convenience of not having to remember the meaning of values from a reduced set.
-A Bool_ datatype is similar to a predefined Enum, but uses the JSON-values true and false.
-(Of course 0 should be treated as False and 1 as True if a bool value isn't using the JSON literals.)
+A Bool_ datatype is similar to a predefined Enum, but uses the JSON-values ``true`` and ``false``.
+(Of course 0 should be treated as ``false`` and 1 as ``true`` if a bool value isn't using the JSON literals.)
 For non-numeric types, a String_ and a Blob_ are defined as well.
 
 Furthermore, SECoP not only defines basic data types but also structured datatypes.
@@ -1616,6 +1635,17 @@ Optional Data Properties
 
 ``"max"``:
     upper limit. if max is omitted, there is no upper limit
+
+:Note:
+    When SEC Node receives a ``"change"`` or ``"do"`` message with a value outside
+    the allowed range [``"min"``, ``"max"``], it MUST reply with an error message.
+    For readonly parameters, [``"min"``, ``"max"``] indicate a trusted range.
+    A SEC-Node might send ``"update"`` or ``"reply"`` messages with values outside
+    the trusted range, for example when the value is an extrapolation of the
+    calibrated range. The idea behind this relaxed rule is, that it is better
+    for a SEC-node to send an acquired value outside the range as it is rather
+    than change its value just to comply with the specified range.
+    The decision, how to treat such values is left to the ECS.
 
 ``"unit"``:
     string giving the unit of the parameter.
@@ -1683,6 +1713,7 @@ Mandatory Data Properties
 ``"min"``, ``"max"``:
     The limits of the transported integer. ``<min>`` <= ``<max>``.
     The limits of the represented floating point value are ``<min>*<scale>, <max>*<scale>``
+    See also the note on the ``"min"`` and ``"max"`` properties of the Double_ datatype.
 
 Optional Data Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1820,8 +1851,8 @@ Optional Data Properties
 
 ``"isUTF8"``:
     boolean, if UTF8 character set is allowed for values, or if the value is allowed only
-    to contain 7Bit ASCII characters (i.e. only code points < 128), each occupying a single byte.
-    defaults to **False** if not given.
+    to contain 7-bit ASCII characters (i.e. only code points < 128), each occupying a single byte.
+    Defaults to **false** if not given.
 
 Example
 ~~~~~~~

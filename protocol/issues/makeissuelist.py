@@ -69,6 +69,7 @@ def find_links_labels(link):
     print(link.group(1))
     return link.group(1)
 
+
 def update_links(filename, files, stdlabels, basepath):
     with io.open(filename, encoding='utf-8') as fil:
         content = fil.read()
@@ -103,7 +104,6 @@ def update_links(filename, files, stdlabels, basepath):
         print('update links in %s' %filename)
         with io.open(filename, 'w', encoding='utf-8') as fil:
             fil.write(newcontent)
-
 
 
 with open('001 About SECoP Issues.rst', 'r') as fil:
