@@ -119,6 +119,7 @@ Issues List
     p     `SECoP Issue 72: features`_
     p     `SECoP Issue 73: HasLimits and HasOffset`_
     u     `SECoP Issue 74: Standardization of units`_
+    p     `SECoP Issue 75: New messages check and checked`_
     ===== =======
 
 .. _`SECoP Issue 1: About SECoP Issues`: 001%20About%20SECoP%20Issues.rst
@@ -194,3 +195,4 @@ Issues List
 .. _`SECoP Issue 72: features`: 072%20features.rst
 .. _`SECoP Issue 73: HasLimits and HasOffset`: 073%20HasLimits%20and%20HasOffset.rst
 .. _`SECoP Issue 74: Standardization of units`: 074%20Standardization%20of%20units.rst
+.. _`SECoP Issue 75: New messages check and checked`: 075%20New%20messages%20check%20and%20checked.rst
