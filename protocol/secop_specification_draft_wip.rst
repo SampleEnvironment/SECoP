@@ -372,10 +372,10 @@ parameter ``"controlled_by"``:
    :remark: In case a module A controlls several other modules, e.g. a temperature module of a liquid helium cryostat controlling the power output (module B) and the helium pressure for cooling (module C), additional parameters may be needed for selecting the control mode of module A. See for example the parameter ``"_automatic_nv_pressure_mode"`` in the example of a liquid helium cooled cryostat.
 
 parameter ``"control_active"``:
-   A flag indicating whether a drivable or writable module is currently actively controlling.
+   A readonly flag indicating whether a drivable or writable module is currently actively controlling.
    On a drivable without control_active parameter or with
-   control_active=True, the system is trying to bring the value to the target.
-   When control_active=False, this control mechanism is switched off, and the target value
+   control_active=true, the system is trying to bring the value to the target.
+   When control_active=false, this control mechanism is switched off, and the target value
    is not considered any more.
    In a typical example we have a module A controlling module B (e.g. temperature (A) and power output (B) as stated above) and with two possible
    states, as in the following example:
@@ -383,10 +383,10 @@ parameter ``"control_active"``:
    =================== ====================== ======================
     state               module A               module B
    =================== ====================== ======================
-    A controlling B     control_active=True    controlled_by="A",
-                                               control_active=False
-    B self controlled   control_active=False   controlled_by="self",
-                                               control_active=True
+    A controlling B     control_active=true    controlled_by="A",
+                                               control_active=false
+    B self controlled   control_active=false   controlled_by="self",
+                                               control_active=true
    =================== ====================== ======================
 
    In another example we have two Writable modules (for example 'I' and 'V' in a power supply),
@@ -396,9 +396,9 @@ parameter ``"control_active"``:
     state               module I               module V
    =================== ====================== ======================
     constant current    controlled_by="self",  controlled_by="I",
-                        control_active=True    control_active=False 
+                        control_active=true    control_active=false 
     constant voltage    controlled_by="V",     controlled_by="self",
-                        control_active=False   control_active=True 
+                        control_active=false   control_active=true 
    =================== ====================== ======================
 
    The module with ``control_active=false`` acts like a Readable, its target parameter is
