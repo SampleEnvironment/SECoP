@@ -118,6 +118,7 @@ Issues List
     \     `SECoP Issue 71: accessing sub items of parameters`_
     p     `SECoP Issue 72: features`_
     p     `SECoP Issue 73: HasLimits and HasOffset`_
+    u     `SECoP Issue 74: Standardization of units`_
     ===== =======
 
 .. _`SECoP Issue 1: About SECoP Issues`: 001%20About%20SECoP%20Issues.rst
@@ -192,3 +193,4 @@ Issues List
 .. _`SECoP Issue 71: accessing sub items of parameters`: 071%20accessing%20sub%20items%20of%20parameters.rst
 .. _`SECoP Issue 72: features`: 072%20features.rst
 .. _`SECoP Issue 73: HasLimits and HasOffset`: 073%20HasLimits%20and%20HasOffset.rst
+.. _`SECoP Issue 74: Standardization of units`: 074%20Standardization%20of%20units.rst
