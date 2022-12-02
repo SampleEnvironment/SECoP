@@ -1,0 +1,108 @@
+meeting 2022-11-30 (ZOOM)
+=========================
+
+.. sidebar:: participants
+
+     * Markus Zolliker
+     * Klaus Kiefer
+     * Bastian Klemke
+     * Lutz Rossa
+     * Niklas Eckström
+     * Georg Brandl
+     * Alexander Zaft
+     * Enrico Faulhaber
+
+.. contents:: Contents
+    :local:
+    :depth: 3
+
+
+Agenda
+------
+Agenda:
+
+1) approval of the minutes from 14th November
+
+2) refinement of specs (please read carefully):
+
+  a) add note about datainfo min/max
+  b) target_limits
+  c) HasOffset
+  d) controlled_by
+
+  see protocol/secop_specification_draft_wip.rst
+
+
+3) best practice examples:
+
+   a) Ennos templates
+
+   b) Cryomagnet example:
+
+      https://github.com/SampleEnvironment/SECoP/blob/master/protocol/examples/cryomagnet_draft.rst
+
+
+4) various
+
+5) next meeting
+
+1) approval of the minutes
+==========================
+
+Previous minutes approved.
+
+2a) note about datainfo min/max
+===============================
+
+Markus presents his rewording. A Minor discussion revolves around the possible clamping
+of written and or read values.
+As a result the part about rounding target values is to be removed.
+After another, minor, discussion it became clear that the min/max clarifications are meant
+for 'double' and 'scaled' datatypes.
+
+2b) target_limits
+=================
+
+General agreement. After a discussion about vector magnets two new messages
+are to be proposed: 'check' and 'checked'. They essentially siblings to 'change'/'changed',
+but don't do anything, i.e. they only check if the desired change would be Ok or not.
+A seperate Issue about this is about to be written by Markus.
+
+2c) HasOffset
+=============
+
+minor discussion about what piece of description should go where.
+Markus will reword the 'offset' parameter description and the feature 'HasOffset' accordingly.
+
+2d) controlled_by
+=================
+
+Enno want to explicitly state that 'controlled_by' is a readonly as otherwise strange side effects are to be expected.
+
+3a) Ennos templates
+===================
+
+Discussing comments from Anders and Niklas.
+Some resulting clarifications:
+
+- A Sensor without a Calibration is not Sensor, but a Readable.
+- An Actuator driving a coil (valve), is not an Actuator, but a Drivable.
+  (it just switches between two states.)
+- parameters which influence functionalities which can be switched on/off
+  ('ramp','i','d',...) have a accompanying boolean parameter with the same name,
+  but prefixed with 'use_'.
+- The proposed powersupply is a simplified version of the previously discussed ones
+  optimized for singular use as a 'current source' only. 
+  It should, however, be possible to combine them into the previously discussed scheme.
+- Klaus asks Enno about more examples.
+
+
+4) various
+==========
+
+skipped due to timeout.
+
+5) next meeting
+===============
+
+2022-12-13 10:00.
