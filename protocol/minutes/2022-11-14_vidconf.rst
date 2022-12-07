@@ -1,0 +1,224 @@
+meeting 2022-09-22 (ZOOM)
+=========================
+
+.. sidebar:: participants
+
+     * Lutz Rossa
+     * Niklas Eckström
+     * Alexander Zaft
+     * Klaus Kiefer
+     * Bastian Klemke
+     * Markus Zolliker
+     * Enrico Faulhaber
+
+
+.. contents:: Contents
+    :local:
+    :depth: 3
+
+Agenda
+------
+
+1) approval of the minutes from 18th October
+   Remark: Point 3: it is not Markus, but Klaus who should reword the section about 'controlled_by'
+
+2) next meeting
+   Enno is blocked on the 16(th), so next meeting ist at
+   A second meeting is announced for Wednesday 30th November 10:00
+
+2) refinement of specs (rewording of controlled_by)
+
+3) Issue 73 (HasOffset, target_limits), see the next proposal:
+
+https://github.com/SampleEnvironment/SECoP/blob/master/protocol/issues/073%20HasLimits%20and%20HasOffset.rst
+
+If we agree on this, the idea to indicate partial changes of the descriptive data may be obsolete.
+I propose to postpone the discussion until the need arises.
+
+4) best practice examples:
+
+   a) Cryomagnet example:
+      https://github.com/SampleEnvironment/SECoP/blob/master/protocol/examples/cryomagnet_draft.rst
+   b) templates from Enrico (see attachment)
+
+5) datainfo limits
+
+Regarding the Sensor module in the attached document from Enricos, the following might be considered:
+
+When a value in a change message is outside min/max in datainfo, the SEC Node MUST reply with an error message.
+However, a SECoP conforming server is allowed in read or update messages to return values out of range.
+
+If we agree, this should be mentioned in the specs.
+
+6) Measurable
+
+1) approval of the minutes from 18th October
+++++++++++++++++++++++++++++++++++++++++++++
+
+approved.
+
+2) refinement of specs (rewording of controlled_by)
++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Klaus presents his rewording of `controlled_by` in the spec.
+A few minor points seem to need a slight improvement.
+All should re-read the spec-wording carefully to find possible misunderstandings.
+
+3) Issue 73 (HasOffset, target_limits), see the next proposal
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+A short discussion if the existence of the offset parameter is sufficient results in 'no',
+as 'guessing' Features or Interface classes from existence or types of parameters is not good.
+The 'offset' parameter *must* exist for the HasOffset Feature, though.
+General agreement.
+
+4) best practice examples
++++++++++++++++++++++++++
+
+b) Ennos template
+.................
+
+- Sensor:
+  After some discussion, Klaus points out that it makes more sense to define a feature
+  HasCalibration. Everybody agrees.
+  Also, it should be put into the specification, that it is perfectly for a sec-node to return
+  values outside of the limits given in the datainfo.
+  Sending values outside the limits of the datainfo, however, ist still forbidden
+  and a sec-node *MUST* reject thoses requests with an error reply.
+
+  Enno will write an issue about introduction of the HasCalibration feature.
+  The template proposal will be accordingly reworded to use Features instead.
+
+  The Sensor is then a Readable with HasCalibration.
+
+- Actuator:
+  Markus would like to allow either 'speed' or 'ramp'
+  Klaus points out there are already some parameters ('time_to_target', 'setpoint', 'ramp')
+  defined which are already defined.
+
+  It seems to make sense to define two new features:
+
+  HasRamp:
+    mandatory parameters: 'ramp', unit is unit of value per minute.
+    optional parameters:
+    'time_to_target', 'setpoint', 'use_ramp'
+
+  HasSpeed:
+    mandatory parameters: 'speed', unit is unit of value per second
+    optional parameters:
+    'time_to_target', 'acceleration'
+
+  An Actuator can than be a Drivable with eiter HasSpeed or HasRamp and may also include HasCalibration.
+
+
+Meeting is concluded here, remaining topics are shifted to next meeting.
+
+Appendix
+--------
+
+Enno's template proposal as discussed
++++++++++++++++++++++++++++++++++++++
+
+Thoughts about templates
+========================
+
+My last proposal was too fine grained by pressing everything in full detail in the same hirarchy.
+So this won't work in the end.
+
+Lets try to build it bottom up and find a descriptive structure for this later.
+
+Sensor: a Readable Module with additional calibration information
+    (for meta-data storage) in the readonly parameter `calibration`.
+    (curve number, ...)
+    It may contain extra commands to update the configuration (load a new curve, ...).
+    It may have a parameter or command to initiate a self-calibration,
+    in which case the need for doing (or the succesfully execution of) a
+    self-calibration needs to be reflected in the status parameter.
+    It has no other means of modifying the read value, unless those modifications are
+    properly reflected in the `calibration` parameter.
+    The datainfo property of the `value` MUST reflect the trustworthy range of
+    the calibration. i.e. any value returned outside this interval is
+    considered 'uncalibrated'.
+    Also, if there is a calibration active, the raw sensoric value (from which the actual value is
+    derived) may also be included as an qualifier in the read/update messages.
+
+Actuator: an Actuator Module is a Drivable which has a `ramp` and a `speed` property
+    which defines the speed of movement.
+
+PIDController: a PIDController Module is an Actuator which additionally has a readonly
+    parameter `setpoint` indicating the currently active setpoint
+    (which is ramped according to the `ramp` setting).
+    The `ramp` parameter gives the rate of change of the `setpoint`
+    in `target.unit` per minute. The parameter `use_ramp` indicate whether
+    the setpoint is ramped or jumps upon a target change.
+    The PID part operates on the actual (sensoric) `value` using control
+    parameters from the `ctrl_pars` struct parameter containing optional `p`,
+    `i`, `d`, `base_output` and `max_output` paramters.
+    The generated output value of the PID control is reflected in the readable
+    parameter `output`.
+
+    If open-loop operation is desired, an additional Writable Module should be
+    implemented which reflects the physical output value.
+    Control should then be switch via the `controlled_by` mechanism to that additional module for open-loop operation.
+    Setting a target in the PIDController then reclaims the control over the output module.
+
+
+PowerSupply: a Actuator Module
+    must have an enum mode parameter indicating the type of quantity which is
+    controlled (current/voltage/power/...)
+
+    may contain 'max_<quantity name here>' parameters to indicate the maximum
+    value for the not controlled quantities.
+
+    a 'full' power supply implementation has a PowerSupply module for each
+    quantity, switch to the active one via the 'controlled_by' mechanism.
+
+
+Cryostat:
+    A physical construct, allowing to temperate a sample to a selectable
+    temperature within limits given by the secnode.
+    Needs at least a PIDController for the role of 'regulation' and a
+    Sensor for the role/meaning of 'sample_temperature'.
+
+    May contain:
+
+    - a Heater output Module indicating the output value from the PIDController.
+    - an indicator for the amount of (liquid) cooling reservoir (LN2/LHe/...)
+    - a Switch for activating a dry cooling apparatus
+      (may also have several cooling power settings...)
+    - further (Temperature/Pressure/...) Sensor's distrubuted inside for
+      monitoring purposes
+
+Magnet: an physical apparatus which can appy an selectable magnetic field
+    to a sample.
+
+    must have an Actuator Module for the magnetic field (linear or as vector)
+    (having the role of the `magnetic field at sample`)
+    (The 'ramp' parameter indicates the wanted ramp rate. In cases where the actual
+    ramp rate may have to deviate, it is advised to have a readonly
+    'actual_ramp' parameter indicating the actual ramp.)
+
+    may have one (or several in the case of vector fields)  PowerSupply Module(s)
+    reflecting the current through some coils creating the magnetic field.
+
+    may also have a Sensor (linear or vector) for indicating the field at the
+    sample position (typically by measuring it around it in selected places)
+
+
+Measurable: is a Readable for which a process need to started to get an updated value.
+    There are cases where the process can be paused (and resumed).
+
+    it must have a `start` command to initiate the process,
+    indicate the process running via the status (indicating a BUSY state).
+
+    it may have a `preset` parameter (to indicate a target process value).
+
+    several Measurables using the same process should by grouped via the `group`
+    module property, the first one reaching the set preset value should the stop
+    the process for all.
+
+    note: the value may be an array, in whcih case further parameters/properties
+          are needed to correctly describe the content.
+
+    note: proper meanings are not yet defined
+
