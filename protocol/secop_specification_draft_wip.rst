@@ -1588,7 +1588,7 @@ For non-numeric types, a string_ and a blob_ are defined as well.
 
 Furthermore, SECoP not only defines basic data types but also structured datatypes.
 A tuple_ allows to combine a fixed amount of values with different datatypes in an ordered way to be used as one.
-An arrays stores a given number of data elements having the same datatype.
+An array_ stores a given number of data elements having the same datatype.
 A struct_ is comparable to a tuple_, with the difference of using named entries whose order is irrelevant during transport.
 
 The limits, which have to be specified with the data info, are always inclusive,
@@ -1919,7 +1919,7 @@ as JSON-array
 
 example: ``[3,4,7,2,1]``
 
-.. _tuple: #finite-sequence-of-items-with-individually-defined-types
+.. _tuple: #finite-sequence-of-items-with-individually-defined-type-tuple
 
 Finite Sequence of Items with Individually Defined Type: ``tuple``
 ------------------------------------------------------------------
@@ -1940,7 +1940,7 @@ as JSON-array
 ``[300,"accelerating"]``
 
 
-.. _Struct: #collection-of-names-items-struct
+.. _Struct: #collection-of-named-items-struct
 
 Collection of Named Items: ``struct``
 -------------------------------------
