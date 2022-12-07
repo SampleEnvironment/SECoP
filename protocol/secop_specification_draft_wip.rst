@@ -146,8 +146,8 @@ parameter ``"value"``:
 .. _BUSY:
 
 parameter ``"status"``:
-    (a tuple of two elements: a status with predefined values
-    from an Enum_ as "IDLE","BUSY","ERROR", and a describing text).
+    (a tuple_ of two elements: a status with predefined values
+    from an enum_ as "IDLE","BUSY","ERROR", and a describing text).
 
     .. table:: assignment of status code groups
 
@@ -164,7 +164,7 @@ parameter ``"status"``:
     where YZ might be any combination of digits, in simple cases typically 00.
 
 parameter ``"pollinterval"``:
-    a hint to the module for the polling interval in seconds, type is always an double.
+    a hint to the module for the polling interval in seconds, type is always a double_.
 
 parameter ``"target"``:
     present, if the modules main value is to be changeable remotely, i.e. it is at least a Writable
@@ -198,14 +198,14 @@ parameter ``"setpoint"``:
     (ramping setpoint, read only)
 
 parameter ``"time_to_target"``:
-    (read only double, expected time to reach target in seconds)
+    (read only double_, expected time to reach target in seconds)
 
 
 Modes
 ~~~~~
 
 parameter ``"mode"``:
-    A parameter of datatype enum, for selecting the operation mode of a module.
+    A parameter of datatype enum_, for selecting the operation mode of a module.
     The available operation modes can not be predefined in the specification, since
     they depend on the specific module.
 
@@ -276,8 +276,8 @@ additional codes for parameter ``"status"``:
                                                             even after ``clear_errors``.
          ====== ================ ========== ============== =========================================
 
-    For the SEC node, it is recommended to use above names (second column) for the status enum type.
-    For the ECS, the codes (and not the names) of the status enum are relevant for the meaning.
+    For the SEC node, it is recommended to use above names (second column) for the status enum_ type.
+    For the ECS, the codes (and not the names) of the status enum_ are relevant for the meaning.
 
     The distinction between the status value 360 - 380 is important, if during a target change
     there is a period, where the value changes in a continuous way and measurements might be
@@ -341,8 +341,8 @@ Coupled Modules
 parameter ``"controlled_by"``:
    The control mechanism of a module might be coupled to another module (both modules are Drivable or Writable).
    This coupling is indicated by the ``controlled_by`` parameter.
-   The datatype of the ``controlled_by`` parameter must be an enum, with the names being
-   module names or ``self``. The enum value of ``self`` must be 0.
+   The datatype of the ``controlled_by`` parameter must be an enum_, with the names being
+   module names or ``self``. The enum_ value of ``self`` must be 0.
    A module with a ``controlled_by`` parameter indicates, that it may be controlled
    by one of the named modules.
 
@@ -415,7 +415,7 @@ Limits and Offset
 parameter ``target_limits``:
     In addition to the range given in the ``datainfo`` property of the ``target`` parameter,
     a SEC-Node might offer changeable limits restricting the allowed range even more.
-    ``target_limits`` is structured as a tuple with two numeric members indicating
+    ``target_limits`` is structured as a tuple_ with two numeric members indicating
     the lower and upper end of a valid interval for the setting the ``target`` parameter.
     The ``datainfo`` property of the ``target`` parameter must match the members of the
     ``datainfo`` property of ``target_limits``.
@@ -435,7 +435,7 @@ Communication
 command ``"communicate"``:
      Used for direct communication with hardware, with proprietary commands. It is useful
      for debugging purposes, or if the implementor wants to give access to parameters not
-     supported by the driver. The datatype might be string, or any other datatype suitable
+     supported by the driver. The datatype might be string_, or any other datatype suitable
      to the protocol of the device. The ``communicate`` command  is meant to be used in
      module with the ``Communicator`` interface class.
 
@@ -533,7 +533,7 @@ other qualifiers might be added later to the standard.
 If an unknown element is encountered, it is to be ignored.
 
 
-.. _`Interface class`:
+.. _`Interface class`: #interface-classes
 
 Interface Classes
 -----------------
@@ -669,8 +669,8 @@ identifier length is limited (<=63 characters).
     - module names on a SEC Node (including the group entries of those modules)
     - accessible names of a module (including the group entries of those parameters) (each module has its own scope)
     - properties
-    - names of elements in a struct (each struct has its own scope)
-    - names of variants in an enum (each enum has its own scope)
+    - names of elements in a struct_ (each struct has its own scope)
+    - names of variants in an enum_ (each enum has its own scope)
     - names of qualifiers
 
 SECoP defined names are usually lowercase, though that is not a restriction (esp. not for module names).
@@ -1052,7 +1052,7 @@ transferred via the ``status`` parameter.
 If a command is specified with an argument, the actual argument is given in
 the data part as a JSON-value. This may be also a JSON-object if the datatype of
 the argument specifies that
-(i.e. the type of the single argument can also be a struct, tuple or an array, see `data types`_).
+(i.e. the type of the single argument can also be a struct_ or tuple_, see `data types`_).
 The types of arguments must conform to the declared datatypes from the datatype of the command argument.
 
 A command may also have a return value, which may also be structured.
@@ -1105,7 +1105,7 @@ Example:
   > meas:volt?
   < error_meas:volt?  ["ProtocolError","unknown action", {}]
 
-.. _`error-class`:
+.. _`error-class`: #error-classes
 
 _`Error Classes`:
     Error classes are divided into two groups: persisting errors and retryable errors.
@@ -1142,7 +1142,7 @@ _`Error Classes`:
           - The requested parameter change or Command can not be performed as the argument value is not
             in the allowed range specified by the ``datainfo`` property.
             This also happens if an unspecified Enum variant is tried to be used, the size of a Blob or String
-            does not match the limits given in the descriptive data, or if the number of elements in an array
+            does not match the limits given in the descriptive data, or if the number of elements in an array_
             does not match the limits given in the descriptive data.
 
         * - BadJSON
@@ -1570,7 +1570,7 @@ an ECS should be prepared to handle anything here.
     must ignore it.
 
 
-.. _`Data Types`:
+.. _`Data Types`: #data-info
 
 Data info
 =========
@@ -1580,16 +1580,16 @@ the possible values of parameters and how they are serialized.
 They may also impose restrictions on the usable values or amount of data.
 The data info structure consists of the name of the datatype augmented by data-properties to pinpoint the exact meaning of the data to be described.
 
-SECoP defines some basic data types for numeric quantities, like Double_ and Integer_.
-An Enum_ is defined for convenience of not having to remember the meaning of values from a reduced set.
-A Bool_ datatype is similar to a predefined Enum, but uses the JSON-values ``true`` and ``false``.
+SECoP defines some basic data types for numeric quantities, like double_ and integer_.
+An enum_ is defined for convenience of not having to remember the meaning of values from a reduced set.
+A bool_ datatype is similar to a predefined enum_, but uses the JSON-values ``true`` and ``false``.
 (Of course 0 should be treated as ``false`` and 1 as ``true`` if a bool value isn't using the JSON literals.)
-For non-numeric types, a String_ and a Blob_ are defined as well.
+For non-numeric types, a string_ and a blob_ are defined as well.
 
 Furthermore, SECoP not only defines basic data types but also structured datatypes.
-Tuples allow to combine a fixed amount of values with different datatypes in an ordered way to be used as one.
-Arrays store a given number of data elements having the same datatype.
-Structs are comparable to tuples, with the difference of using named entries whose order is irrelevant during transport.
+A tuple_ allows to combine a fixed amount of values with different datatypes in an ordered way to be used as one.
+An arrays stores a given number of data elements having the same datatype.
+A struct_ is comparable to a tuple_, with the difference of using named entries whose order is irrelevant during transport.
 
 The limits, which have to be specified with the data info, are always inclusive,
 i.e. the value is allowed to have one of the values of the limits.
@@ -1610,7 +1610,7 @@ Here is an overview of all defined data types:
 
 Depending on the data type, there are different sets of data-properties available.
 
-.. _Double:
+.. _double: #floating-point-numbers-double
 
 Floating Point Numbers: ``double``
 ----------------------------------
@@ -1694,7 +1694,7 @@ as JSON-number
 
 example: ``3.14159265``
 
-.. _Scaled:
+.. _scaled: #scaled-integer-scaled
 
 Scaled Integer: ``scaled``
 --------------------------
@@ -1713,13 +1713,13 @@ Mandatory Data Properties
 ``"min"``, ``"max"``:
     The limits of the transported integer. ``<min>`` <= ``<max>``.
     The limits of the represented floating point value are ``<min>*<scale>, <max>*<scale>``
-    See also the note on the ``"min"`` and ``"max"`` properties of the Double_ datatype.
+    See also the note on the ``"min"`` and ``"max"`` properties of the  datatype.
 
 Optional Data Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 ``"unit"``:
-    string giving the unit of the parameter. (see datatype Double_)
+    string giving the unit of the parameter. (see datatype )
 
 ``"absolute_resolution"``:
     JSON-number specifying the smallest difference between distinct values.
@@ -1744,7 +1744,7 @@ Optional Data Properties
     string as a hint on how to format numeric parameters for the user.
     default value: "%.<n>f" where <n> = max(0,-floor(log10(scale)))
 
-    The string must obey the same syntax as above for Double_.
+    The string must obey the same syntax as above for .
 
 Example
 ~~~~~~~
@@ -1760,15 +1760,15 @@ for example ``1255`` meaning 125.5 in the above example.
 
 :related issue: `SECoP Issue 44: Scaled integers`_.
 
-.. _Int:
-.. _Integer:
+.. _int: #integer-int
+.. _integer: #integer-int
 
 Integer: ``int``
 ----------------
 
 Datatype to be used for integer numbers.
-For any physical quantity ``double`` or ``scaled`` **SHOULD** be used.
-An integer SHOULD have no unit and it SHOULD be representable with signed 24 bits (i.e. all integers SHOULD fit
+For any physical quantity double_ or scaled_ **SHOULD** be used.
+An int_ SHOULD have no unit and it SHOULD be representable with signed 24 bits (i.e. all integers SHOULD fit
 inside -2\ :sup:`24` ... 2\ :sup:`24`), as some JSON libraries might parse JSON-numbers
 with 32bit float too.
 
@@ -1793,8 +1793,8 @@ as JSON-number
 
 example: ``-55``
 
-.. _Bool:
-.. _Boolean:
+.. _bool: #boolean-bool
+.. _boolean: #boolean-bool
 
 Boolean: ``bool``
 -----------------
@@ -1808,7 +1808,7 @@ Transport
 ``true`` or ``false``
 
 
-.. _Enum:
+.. _enum: #enumerated-type-enum
 
 Enumerated Type: ``enum``
 -------------------------
@@ -1831,7 +1831,7 @@ as JSON-number, the client may perform a mapping back to the name
 example: ``200``
 
 
-.. _String:
+.. _string: #string-string
 
 String: ``string``
 ------------------
@@ -1864,7 +1864,7 @@ as JSON-string
 
 example: ``"Hello\n\u2343World!"``
 
-.. _Blob:
+.. _blob: #binary-large-object-blob
 
 Binary Large Object: ``blob``
 -----------------------------
@@ -1889,7 +1889,7 @@ as single-line base64 (see :RFC:`4648`) encoded JSON-string
 
 example: ``"AA=="`` (a single, zero valued byte)
 
-.. _array:
+.. _array: #sequence-of-equally-typed-items-array
 
 Sequence of Equally Typed Items : ``array``
 -------------------------------------------
@@ -1919,7 +1919,7 @@ as JSON-array
 
 example: ``[3,4,7,2,1]``
 
-.. _tuple:
+.. _tuple: #finite-sequence-of-items-with-individually-defined-types
 
 Finite Sequence of Items with Individually Defined Type: ``tuple``
 ------------------------------------------------------------------
@@ -1940,7 +1940,7 @@ as JSON-array
 ``[300,"accelerating"]``
 
 
-.. _Struct:
+.. _Struct: #collection-of-names-items-struct
 
 Collection of Named Items: ``struct``
 -------------------------------------
@@ -1977,7 +1977,7 @@ example: ``{"x": 0.5, "y": 1}``
 :related issue: `SECoP Issue 35: Partial structs`_
 
 
-.. _command:
+.. _command: #command-flag-for-accessibles
 
 Command-flag for Accessibles
 ----------------------------
@@ -1991,7 +1991,7 @@ Optional Data Properties
     the datatype of the single argument, or ``null``.
 
     only one argument is allowed, though several arguments may be used if
-    encapsulated in a structural datatype (struct, tuple or array).
+    encapsulated in a structural datatype (struct_ or tuple_).
     If such encapsulation or data grouping is needed, a struct SHOULD be used.
 
 ``"result"``:
@@ -2016,10 +2016,10 @@ Example:
     < done module:invert [false,{t:123456789.2}]
 
 
+.. _`future compatibility`: #future-compatibility-notes-for-implementors
 
 Future Compatibility - notes for implementors
 =============================================
-.. _`future compatibility`:
 
 notes for implementors of current specification
 -----------------------------------------------
@@ -2148,7 +2148,7 @@ Essentially this boils down to:
   #) if a specifier contains more ":" than you can handle, use the part you understand, ignore the rest.
      (i.e. treat ``activate module:parameter`` as ``activate module``, ignoring the ``:parameter`` part)
      (i.e. treat ``error BadValue:WrongType`` as ``error BadValue``, ignoring the ``:WrongType`` part)
-  #) upon parsing a value, when you know it should be one element from an Enum (which SHOULD be transported as integer),
+  #) upon parsing a value, when you know it should be one element from an enum_ (which SHOULD be transported as integer),
      if you find a string instead and that string is one of the names from the Enum, use that entry.
   #) check newer versions of the specification and check the issues as well, as the above may change.
 
