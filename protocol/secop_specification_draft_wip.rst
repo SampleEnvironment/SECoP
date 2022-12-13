@@ -724,7 +724,7 @@ either indicating success of the request or flag an error.
      message intent          message kind   message elements
     ======================= ============== ==================
      `identification`_       request        ``*IDN?``
-          \                  reply          ISSE&SINE2020\ **,SECoP,**\ *version,add.info*
+          \                  reply          ISSE\ **,SECoP,**\ *version,add.info*
      `description`_          request        ``describe``
           \                  reply          ``describing␣.␣``\ <`Structure Report`_>
      `activate updates`_     request        ``activate``
@@ -840,8 +840,11 @@ Example:
 .. code::
 
   > *IDN?
-  < ISSE&SINE2020,SECoP,V2019-09-16,v1.0
+  < ISSE,SECoP,V2019-09-16,v1.0
 
+As the first part of the message has changed, a SECoP client SHOULD allow also the previous
+form "ISSE&SINE2020" and an erroneously used form "SINE2020&ISSE", but can assume that
+the second part "SECoP" is given as defined.
 So far the SECoP version is given like "V2019-09-16", i.e. a capital "V" followed by a date in
 ``year-month-day`` format with 4 and 2 digits respectively.
 The ``add.info`` field was used to differentiate between draft, release candidates (rc1, rc2,...) and final.
