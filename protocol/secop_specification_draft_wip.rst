@@ -416,7 +416,7 @@ parameter ``target_limits``:
     In addition to the range given in the ``datainfo`` property of the ``target`` parameter,
     a SEC-Node might offer changeable limits restricting the allowed range even more.
     ``target_limits`` is structured as a tuple_ with two numeric members indicating
-    the lower and upper end of a valid interval for the setting the ``target`` parameter.
+    the lower and upper end of a valid interval for the setting of the ``target`` parameter.
     The ``datainfo`` property of the ``target`` parameter must match the members of the
     ``datainfo`` property of ``target_limits``.
     The SEC node must reply with an error in case a given target value does not fit
