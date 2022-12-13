@@ -1637,13 +1637,13 @@ Optional Data Properties
     upper limit. if max is omitted, there is no upper limit
 
 :Note:
-    When SEC Node receives a ``"change"`` or ``"do"`` message with a value outside
+    When a SEC Node receives a ``"change"`` or ``"do"`` message with a value outside
     the allowed range [``"min"``, ``"max"``], it MUST reply with an error message.
     For readonly parameters, [``"min"``, ``"max"``] indicate a trusted range.
     A SEC-Node might send ``"update"`` or ``"reply"`` messages with values outside
     the trusted range, for example when the value is an extrapolation of the
     calibrated range. The idea behind this relaxed rule is, that it is better
-    for a SEC-node to send an acquired value outside the range as it is rather
+    for a SEC-node to send an acquired value outside the range as it is - rather
     than change its value just to comply with the specified range.
     The decision, how to treat such values is left to the ECS.
 
