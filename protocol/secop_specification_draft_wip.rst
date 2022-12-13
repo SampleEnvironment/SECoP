@@ -340,7 +340,7 @@ Coupled Modules
 
 parameter ``"controlled_by"``:
    The control mechanism of a module might be coupled to another module (both modules are Drivable or Writable).
-   This coupling is indicated by the ``controlled_by`` parameter.
+   This coupling is indicated by the ``controlled_by`` parameter (readonly).
    The datatype of the ``controlled_by`` parameter must be an enum_, with the names being
    module names or ``self``. The enum_ value of ``self`` must be 0.
    A module with a ``controlled_by`` parameter indicates, that it may be controlled
