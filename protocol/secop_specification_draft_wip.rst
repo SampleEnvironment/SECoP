@@ -361,7 +361,7 @@ parameter ``"controlled_by"``:
    This behavior must be signaled by the ``control_active`` parameter (see next section).
 
    Taking over control by a module is done by changing the ``target`` parameter or sending a ``go`` command to a module.
-   I.e. module A takes over control when a ``target`` change or a ``go`` command is sent to the module A. Before sending the reply,
+   I.e. module A takes over control when a ``target`` change or a ``go`` command is sent to the module A. In this case, before sending the reply,
    the ``controlled_by`` parameter of the module B must be set to the controlling module A.
    However, when the ``target`` change or a ``go`` command is sent to module B, the control
    switches over to module B and the ``controlled_by`` parameter of module B has to be set to ``self``.
