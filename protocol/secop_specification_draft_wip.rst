@@ -1104,7 +1104,7 @@ Example:
   > change ts:target 12
   < error_change ts:target ["NoSuchParameter","ts has no parameter target", {}]
   > change t:target -9
-  < error_change t:target ["BadValue","requested value (-9) is outside limits (0..300)", {}]
+  < error_change t:target ["RangeError","requested value (-9) is outside limits (0..300)", {}]
   > meas:volt?
   < error_meas:volt?  ["ProtocolError","unknown action", {}]
 
@@ -1112,7 +1112,8 @@ Example:
 
 _`Error Classes`:
     Error classes are divided into two groups: persisting errors and retryable errors.
-    Persisting errors will yield the exact same error message if the exact same request is sent at any later time.
+    Persisting errors will yield the exact same error message if the exact same
+    request is sent at any later time without other interactions inbetween.
     A retryable error may give different results if the exact same message is sent at a later time, i.e.
     they depend on state information internal to either the SEC-node, the module or the connected hardware.
 
@@ -2148,9 +2149,11 @@ Essentially this boils down to:
   #) ignore extra keys in the qualifiers, structure report and error report mappings
   #) ignore message fields which are not used in the definition of the messages (i.e. for `describe`)
   #) treat needed, but missing data as null (or an empty string, depending on context)
-  #) if a specifier contains more ":" than you can handle, use the part you understand, ignore the rest.
-     (i.e. treat ``activate module:parameter`` as ``activate module``, ignoring the ``:parameter`` part)
-     (i.e. treat ``error BadValue:WrongType`` as ``error BadValue``, ignoring the ``:WrongType`` part)
+  #) if a specifier contains more ":" than you can handle, use the part you understand, ignore the rest
+     (i.e. treat ``activate module:parameter`` as ``activate module``, ignoring
+     the ``:parameter`` part)
+  #) same for error class
+     (i.e. treat ``WrongType:MustBeInt`` as ``WrongType``, ignoring the ``:MustBeInt`` part)
   #) upon parsing a value, when you know it should be one element from an enum_ (which SHOULD be transported as integer),
      if you find a string instead and that string is one of the names from the Enum, use that entry.
   #) check newer versions of the specification and check the issues as well, as the above may change.
