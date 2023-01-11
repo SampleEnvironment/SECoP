@@ -47,4 +47,20 @@ As a consequence, if we try to respect these two positions, SECoP must always ha
 and the offset correction has to be shifted to the client side.
 
 
+specification of the offset parameters datatype
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+The offset is a floating point number ('double' or possbily 'scaled'), and when
+there is an offset, the value must also be a floating point number. This is
+quite evident, and it is not needed to put this into the specs, because a
+precise wording is diffcult and lengthy.
+
+* is it allowed that 'offset' is 'double' and 'value' is 'scaled' ?
+* units should match, but from physics, when value has unit Celsius, 'offset' must have unit Kelvin
+* min, max do not need to match
+* are structured types allowed?
+* string, enum, bool, blob: not allowed as data type
+* is int allowed ?
+
+An implementor naturally should choose a reasonable datatype, and we do not need to
+calrify this in detail.
