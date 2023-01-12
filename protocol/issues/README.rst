@@ -120,6 +120,9 @@ Issues List
     p     `SECoP Issue 73: HasLimits and HasOffset`_
     u     `SECoP Issue 74: Standardization of units`_
     p     `SECoP Issue 75: New messages check and checked`_
+    p     `SECoP Issue 76: Interface for Measurable hardware`_
+    p     `SECoP Issue 77: predefined parameter name prefixes`_
+    p     `SECoP Issue 78: Interacting Modules - use case power supply`_
     ===== =======
 
 .. _`SECoP Issue 1: About SECoP Issues`: 001%20About%20SECoP%20Issues.rst
@@ -185,7 +188,7 @@ Issues List
 .. _`SECoP Issue 62: naming convention for related parameters`: 062%20naming%20convention%20for%20related%20parameters.rst
 .. _`SECoP Issue 63: enumeration of floating point values`: 063%20enumeration%20of%20floating%20point%20values.rst
 .. _`SECoP Issue 64: reading multiple parameters simultaneously`: 064%20reading%20multiple%20parameters%20simultaneously.rst
-.. _`SECoP Issue 65: handling of coupled (sub)modules`: 065%20handling%20of%20coupled%20modules.rst
+.. _`SECoP Issue 65: handling of coupled (sub)modules`: 065%20handling%20of%20coupled%20sub%20modules.rst
 .. _`SECoP Issue 66: force re-connect`: 066%20force%20re-connect.rst
 .. _`SECoP Issue 67: pid control parameters`: 067%20pid%20control%20parameters.rst
 .. _`SECoP Issue 68: transaction of multiple commands`: 068%20transaction%20of%20multiple%20commands.rst
@@ -196,3 +199,6 @@ Issues List
 .. _`SECoP Issue 73: HasLimits and HasOffset`: 073%20HasLimits%20and%20HasOffset.rst
 .. _`SECoP Issue 74: Standardization of units`: 074%20Standardization%20of%20units.rst
 .. _`SECoP Issue 75: New messages check and checked`: 075%20New%20messages%20check%20and%20checked.rst
+.. _`SECoP Issue 76: Interface for Measurable hardware`: 076%20Interface%20for%20Measurable%20hardware.rst
+.. _`SECoP Issue 77: predefined parameter name prefixes`: 077%20predefined%20parameter%20name%20prefixes.rst
+.. _`SECoP Issue 78: Interacting Modules - use case power supply`: 078%20Interacting%20Modules%20-%20use%20case%20power%20supply.rst

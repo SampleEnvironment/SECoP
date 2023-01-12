@@ -104,5 +104,5 @@ We add an additional property ``"influences"`` as described above.
 
 .. DO NOT TOUCH --- following links are automatically updated by issue/makeissuelist.py
 .. _`SECoP Issue 62: naming convention for related parameters`: 062%20naming%20convention%20for%20related%20parameters.rst
-.. _`SECoP Issue 65: handling of coupled modules`: 065%20handling%20of%20coupled%20modules.rst
+.. _`SECoP Issue 65: handling of coupled modules`: 065%20handling%20of%20coupled%20sub%20modules.rst
 .. DO NOT TOUCH --- above links are automatically updated by issue/makeissuelist.py
