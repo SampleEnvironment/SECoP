@@ -162,8 +162,8 @@ Remarks
 - In the case of simple measurables, which consist of a single channel only, the
   two interfaces can be implemented in a single module.
 
-- All modules belonging to one measurable SHOULD have a ``group`` parameter,
-  which is readonly and set to the same identifier.
+- All modules belonging to one measurable SHOULD have a ``group`` property,
+  which is set to the same identifier.
 
 
 Discussion
