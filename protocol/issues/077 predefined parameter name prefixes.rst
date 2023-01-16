@@ -52,6 +52,18 @@ prefixed parameters which are used instead of changeable parameter properties.
 :note: ``limit_<paramname>``, ``max_<paramname>`` and ``min_<paramname>``
   exclude each other, i.e. may not coexist at the same time at the same module.
 
+
 Discussion
 ----------
+
+In the discussion at the meeting from 2023-01-16 we found that it is probably better
+to use a postfix, as this would take related parameters together when sorted
+alphabetically.
+
+Possible candidates:
+
+* 'ramp_used' or 'ramp_enable' instead of 'use_ramp'
+* 'current_max' or 'current_limit' instead of 'max_current'
+* keep 'target_limits' (with 's' at end in contrast to '_limit')
+* 'target_max' / 'target_min' in case of single limits
 
