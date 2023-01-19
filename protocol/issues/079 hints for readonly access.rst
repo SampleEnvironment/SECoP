@@ -67,7 +67,7 @@ use "a" for full access.
 
 6) restriction oriented naming:
 
-* "": full access (write and read)
+* "": no restriction (full access: read and possibly write)
 * "r": read access only
 * "n": no access
 
