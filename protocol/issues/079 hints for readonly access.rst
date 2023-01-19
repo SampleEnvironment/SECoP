@@ -39,22 +39,52 @@ Compatibility for (3) and (4):
    * when the ECS is older than the SEC node, compatibility is lost, except we specify
      that the old 'visibility' must to be given anyway.
 
-    .. table:: possible combinations of access hints
+.. table:: possible combinations of access hints
 
-         ======== ========== ======== ============= ============= ======== ============ ==========
-          expert   advanced   user     visibility    writelevel    access   accessmode   readonly
-         ======== ========== ======== ============= ============= ======== ============ ==========
-          rd/wr    rd/wr      rd/wr    "user"                      "aaa"    "www"        false
-          rd/wr    rd/wr      rd       "user"        "advanced"    "aar"    "wwr"        false
-          rd/wr    rd/wr      no       "advanced"                  "aa"     "ww-"        false
-          rd/wr    rd         rd       "user"        "expert"      "arr"    "wrr"        false
-          rd/wr    rd         no       "advanced"    "expert"      "ar"     "wr-"        false
-          rd/wr    no         no       "expert"                    "a"      "w--"        false
-          rd       rd         rd       "user"                      "aaa"    "rrr"        true
-          rd       rd         no       "advanced"                  "aa"     "rr-"        true
-          rd       no         no       "expert"                    "a"      "r--"        true
-         ======== ========== ======== ============= ============= ======== ============ ==========
+     ======== ========== ======== ============= ============= ======== ============ ==========
+      expert   advanced   user     visibility    writelevel    access   accessmode   readonly
+     ======== ========== ======== ============= ============= ======== ============ ==========
+      rd/wr    rd/wr      rd/wr    "user"                      "aaa"    "www"        false
+      rd/wr    rd/wr      rd       "user"        "advanced"    "aar"    "wwr"        false
+      rd/wr    rd/wr      no       "advanced"                  "aa"     "ww-"        false
+      rd/wr    rd         rd       "user"        "expert"      "arr"    "wrr"        false
+      rd/wr    rd         no       "advanced"    "expert"      "ar"     "wr-"        false
+      rd/wr    no         no       "expert"                    "a"      "w--"        false
+      rd       rd         rd       "user"                      "aaa"    "rrr"        true
+      rd       rd         no       "advanced"                  "aa"     "rr-"        true
+      rd       no         no       "expert"                    "a"      "r--"        true
+     ======== ========== ======== ============= ============= ======== ============ ==========
 
+access oriented naming:
+   * "w": full access (write and read)
+   * "r": read access only
+   * "": no access
+
+For readonly parameters, "w" and "r" would be the same, so there is an ambiguity
+whether to choose "w" or "r". For that reason it might be more clear to
+use "a" for full access.
+
+restriction oriented naming:
+   * "": full access (write and read)
+   * "r": read access only
+   * "n": no access
+
+As a visibility specification is a restriction, we might use the empty string
+for no restriction.
+
+
+.. table:: options with JSON array visibility
+
+     ======== ========== ======== ============= ================================ ================================
+      expert   advanced   user     old specs     access oriented                  restriction oriented
+     ======== ========== ======== ============= ================================ ================================
+      rd/wr    rd/wr      rd/wr    "user"        {"advanced": "w", "user": "w"}   {"advanced": "" , "user": "" }
+      rd/wr    rd/wr      rd                     {"advanced": "w", "user": "r"}   {"advanced": "" , "user": "r"}
+      rd/wr    rd/wr      no       "advanced"    {"advanced": "w", "user": "" }   {"advanced": "" , "user": "n"}
+      rd/wr    rd         rd                     {"advanced": "r", "user": "r"}   {"advanced": "r", "user": "r"}
+      rd/wr    rd         no                     {"advanced": "r", "user": "" }   {"advanced": "r", "user": "n"}
+      rd/wr    no         no       "expert"      {"advanced": "" , "user": "" }   {"advanced": "x", "user": "n"}
+     ======== ========== ======== ============= ================================ ================================
 
 The property on the module level should be taken as a default for all of its parameters.
 Especially, the properties of a parameter might override a readonly access specified
