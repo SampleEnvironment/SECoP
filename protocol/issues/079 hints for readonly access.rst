@@ -77,7 +77,7 @@ for no restriction.
 The key "expert" is not needed, as on the expert level always full access should
 be possible.
 
-.. table:: options with JSON array for "visibility" property
+.. table:: options with JSON object for "visibility" property
 
      ======== ========== ======== ============= ================================ ================================
       expert   advanced   user     old specs     access oriented                  restriction oriented
@@ -90,7 +90,7 @@ be possible.
       rd/wr    no         no       "expert"      {"advanced": "" , "user": "" }   {"advanced": "n", "user": "n"}
      ======== ========== ======== ============= ================================ ================================
 
-New servers must use a JSON array for the "visibility" property, client should be ready
+New servers must use a JSON object for the "visibility" property, client should be ready
 to accept the string and treat is as given in above table.
 
 The property on the module level should be taken as a default for all of its parameters.
@@ -102,7 +102,10 @@ visible for a certain access level, its parameters should not be accessible at a
 Discussion
 ==========
 
-Version (1) has the best compatibility behaviour. Version (4) is the most self
+Version (1) has better compatibility than 2..4. Version (4) is more self
 explaining way to describe access, because its gives the access mode explicitly
-for each level seperately. (5) and (6) were added after the meeting 2023-01-17.
-Here the comaptibility is even better,
+for each level separately.
+On the meeting of 2023-01-17 it was decidied that a JSON object should be used
+as this is most self describing (version 5 and 6).
+Here the compatibility is even better, as a new client easily can just replace the
+given string by the corresponding JSON object.
