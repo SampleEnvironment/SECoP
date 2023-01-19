@@ -55,19 +55,21 @@ Compatibility for (3) and (4):
       rd       no         no       "expert"                    "a"      "r--"        true
      ======== ========== ======== ============= ============= ======== ============ ==========
 
-access oriented naming:
-   * "w": full access (write and read)
-   * "r": read access only
-   * "": no access
+5) access oriented naming:
+
+* "w": full access (write and read)
+* "r": read access only
+* "": no access
 
 For readonly parameters, "w" and "r" would be the same, so there is an ambiguity
 whether to choose "w" or "r". For that reason it might be more clear to
 use "a" for full access.
 
-restriction oriented naming:
-   * "": full access (write and read)
-   * "r": read access only
-   * "n": no access
+6) restriction oriented naming:
+
+* "": full access (write and read)
+* "r": read access only
+* "n": no access
 
 As a visibility specification is a restriction, we might use the empty string
 for no restriction.
@@ -75,7 +77,7 @@ for no restriction.
 The key "expert" is not needed, as on the expert level always full access should
 be possible.
 
-.. table:: options with JSON array visibility
+.. table:: options with JSON array for "visibility" property
 
      ======== ========== ======== ============= ================================ ================================
       expert   advanced   user     old specs     access oriented                  restriction oriented
@@ -88,6 +90,9 @@ be possible.
       rd/wr    no         no       "expert"      {"advanced": "" , "user": "" }   {"advanced": "n", "user": "n"}
      ======== ========== ======== ============= ================================ ================================
 
+New servers must use a JSON array for the "visibility" property, client should be ready
+to accept the string and treat is as given in above table.
+
 The property on the module level should be taken as a default for all of its parameters.
 Especially, the properties of a parameter might override a readonly access specified
 by the properties of a module. However, when the module property describes it as not
@@ -99,4 +104,5 @@ Discussion
 
 Version (1) has the best compatibility behaviour. Version (4) is the most self
 explaining way to describe access, because its gives the access mode explicitly
-for each level seperately.
+for each level seperately. (5) and (6) were added after the meeting 2023-01-17.
+Here the comaptibility is even better,
