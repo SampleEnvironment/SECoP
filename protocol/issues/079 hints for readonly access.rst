@@ -72,6 +72,8 @@ restriction oriented naming:
 As a visibility specification is a restriction, we might use the empty string
 for no restriction.
 
+The key "expert" is not needed, as on the expert level always full access should
+be possible.
 
 .. table:: options with JSON array visibility
 
@@ -83,7 +85,7 @@ for no restriction.
       rd/wr    rd/wr      no       "advanced"    {"advanced": "w", "user": "" }   {"advanced": "" , "user": "n"}
       rd/wr    rd         rd                     {"advanced": "r", "user": "r"}   {"advanced": "r", "user": "r"}
       rd/wr    rd         no                     {"advanced": "r", "user": "" }   {"advanced": "r", "user": "n"}
-      rd/wr    no         no       "expert"      {"advanced": "" , "user": "" }   {"advanced": "x", "user": "n"}
+      rd/wr    no         no       "expert"      {"advanced": "" , "user": "" }   {"advanced": "n", "user": "n"}
      ======== ========== ======== ============= ================================ ================================
 
 The property on the module level should be taken as a default for all of its parameters.
