@@ -19,7 +19,7 @@ Interlinked modules as for a power supply should be implemented in the following
   identifier
 * each of the modules must have a 'quantity' string property describing the
   physical quantity. example values: 'current', 'voltage', 'power', 'resistance'
-* such modules might have one or more "max_<quantity>" parameters representing
+* such modules might have one or more "<quantity>_limit" parameters representing
   a limit, the hardware tries to respect. <quantity> is one of the other
   quantities the hardware supports, but is distinct from 'quantity' property
   of the module itself.
@@ -34,7 +34,7 @@ Discussion
 
 * this proposal interferes with `SECoP Issue 77: predefined parameter name prefixes`_.
   It might be desirable to choose different prefixes for max_<quantity> and max_<parameter>
-* is it necessary to add a list of standardized quantity names into the standard?
+* is it necessary to add a list of standardized quantity names into the standard? (meeting 2023-01-16: no)
 
 .. DO NOT TOUCH --- following links are automatically updated by issue/makeissuelist.py
 .. _`SECoP Issue 77: predefined parameter name prefixes`: 077%20predefined%20parameter%20name%20prefixes.rst
