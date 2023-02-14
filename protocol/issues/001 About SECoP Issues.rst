@@ -22,6 +22,11 @@ joins into a discussion, the state remains *proposed*
 
 This state is kept until there is a decision taken.
 
+(f) finalizing
+--------------
+
+This state is kept until the specification change is agreed.
+
 ( ) closed
 ----------
 
