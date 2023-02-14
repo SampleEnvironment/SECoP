@@ -367,8 +367,8 @@ parameter ``"controlled_by"``:
    switches over to module B and the ``controlled_by`` parameter of module B has to be set to ``self``.
    Please notice that in addition, the ``control_active`` parameters of module A and module B have
    to be set correctly (see next section) before sending the reply to a ``target``
-   change or a ``go`` command as stated before.    
-   
+   change or a ``go`` command as stated before.
+
    :remark: In case a module A controls several other modules, e.g. a temperature module of a liquid helium cryostat
             controlling the power output (module B) and the helium pressure for cooling (module C), additional parameters
             may be needed for selecting the control mode of module A. See for example the parameter
@@ -1416,14 +1416,40 @@ Optional Module Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ``"visibility"``:
-     string indicating a hint for UIs for which user roles the module should be display or hidden.
-     MUST be one of "expert", "advanced" or "user" (default).
+     string indicating a hint for UIs for which user roles the module should be
+     displayed, hidden or allow read access only.
+     MUST be one of the values on the two visibility columns. The default is "www".
+
+     .. table:: possible combinations of access hints
+
+         ================ ========== ======== ============ =============
+          expert access    advanced   user     visibility   visibility
+                           access     access   new style    old style
+         ================ ========== ======== ============ =============
+          rd/wr            rd/wr      rd/wr    "www"        "user"
+          rd/wr            rd/wr      rd       "wwr"
+          rd/wr            rd/wr      no       "ww-"        "advanced"
+          rd/wr            rd         rd       "wrr"
+          rd/wr            rd         no       "wr-"
+          rd/wr            no         no       "w--"        "expert"
+          rd               rd         rd       "rrr"
+          rd               rd         no       "rr-"
+          rd               no         no       "r--"
+         ================ ========== ======== ============ =============
+
+     The 3 characters in new style form indicate the access on the levels
+     "expert", "advanced" and "user", in this order.
+     "w" means full (read and write) access, "r" means restricted read only access on
+     any parameter of the module and "-" means, the module should be hidden.
+     The old style notion must also be accepted by new SECoP clients.
+
+     A SECoP client SHOULD ignore any value not listed in the last two columns of
+     above table.
 
      :Note:
          this does not imply that the access is controlled. It is just a
-         hint to the UI for the amount of exposed modules. A visibility of "advanced" means
-         that the UI should hide the module for users, but show it for experts and
-         advanced users.
+         hint to the UI for the amount of exposed modules and whether write
+         access would be allowed.
 
 ``"group"``:
      identifier, may contain ":" which may be interpreted as path separator between path components.
@@ -1535,16 +1561,43 @@ Optional Accessible Properties
         the module-property ``group`` is used for grouping of modules within a node.
 
 ``"visibility"``:
-    a string indication a hint for a GUI about
-    the visibility of the accessible. values and meaning as for module-visibility above.
+    A string indication a hint for a GUI about the accessibility of the accessible.
+    MUST be one of the values on the two visibility columns. The default is "www".
+
+    .. table::
+
+         ================ ========== ======== ========== ============ =============
+          expert access    advanced   user                visibility   visibility
+                           access     access   readonly   new style    old style
+         ================ ========== ======== ========== ============ =============
+          rd/wr            rd/wr      rd/wr    false      "www"        "user"
+          rd/wr            rd/wr      rd       false      "wwr"
+          rd/wr            rd/wr      no       false      "ww-"        "advanced"
+          rd/wr            rd         rd       false      "wrr"
+          rd/wr            rd         no       false      "wr-"
+          rd/wr            no         no       false      "w--"        "expert"
+          rd               rd         rd       true       "rrr"        "user"
+          rd               rd         no       true       "rr-"        "advanced"
+          rd               no         no       true       "r--"        "expert"
+         ================ ========== ======== ========== ============ =============
+
+    The access for a parameter on a certain access level is determined by the strongest
+    restriction for the combination of module visibility, parameter visibility at the
+    given access level and the readonly flag.
+    The old style notion must also be accepted by new SECoP clients.
+
+    A SECoP client SHOULD ignore any value not listed in the last two columns of the above
+    table.
 
     :Remark:
 
-        Setting an accessibles visibility equal or higher than its modules
-        visibility has the same effect as omitting the visibility.
-        For example a client respecting visibility in 'user' mode, will not show modules
-        with 'advanced' visibility, and therefore also not their accessibles.
+        There are redundant possibilities for expressing the same access levels,
+        best practice for a SEC node is:
 
+        - avoid explicit "w" on parameters with readonly=true
+        - omit the parameter visibility, when it does not influence the result
+        - it is recommended to consistently use the same style for all
+          "visibility" properties
 
 
 Optional Parameter Properties

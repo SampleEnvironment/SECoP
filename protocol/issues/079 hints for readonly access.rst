@@ -98,7 +98,6 @@ Especially, the properties of a parameter might override a readonly access speci
 by the properties of a module. However, when the module property describes it as not
 visible for a certain access level, its parameters should not be accessible at all.
 
-
 Discussion
 ==========
 
@@ -109,3 +108,5 @@ On the meeting of 2023-01-17 it was decidied that a JSON object should be used
 as this is most self describing (version 5 and 6).
 Here the compatibility is even better, as a new client easily can just replace the
 given string by the corresponding JSON object.
+
+On the meeting of 2023-02-14 we redecided to go for option 4, but keep the name "visibility".
