@@ -123,7 +123,7 @@ Issues List
     p     `SECoP Issue 76: Interface for Measurable hardware`_
     p     `SECoP Issue 77: predefined parameter name prefixes`_
     p     `SECoP Issue 78: Interacting Modules - use case power supply`_
-    p     `SECoP Issue 79: Hints for readonly access`_
+    f     `SECoP Issue 79: Hints for readonly access`_
     ===== =======
 
 .. _`SECoP Issue 1: About SECoP Issues`: 001%20About%20SECoP%20Issues.rst

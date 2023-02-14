@@ -1,5 +1,5 @@
-SECoP Issue 79: Hints for readonly access (proposed)
-====================================================
+SECoP Issue 79: Hints for readonly access (finalizing)
+======================================================
 
 Motivation
 ----------
