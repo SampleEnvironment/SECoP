@@ -1,4 +1,4 @@
-.. image:: https://raw.githubusercontent.com/SampleEnvironment/SECoP/master/protocol/images/SECoP_logo_small.png
+.. image:: https://raw.githubusercontent.com/SampleEnvironment/SECoP/master/protocol/images/SECoP.svg
 
 Sample Environment Communication Protocol
 
