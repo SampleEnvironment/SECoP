@@ -1561,7 +1561,7 @@ Optional Accessible Properties
         the module-property ``group`` is used for grouping of modules within a node.
 
 ``"visibility"``:
-    A string indication a hint for a GUI about the accessibility of the accessible.
+    A string indicating a hint for a GUI about the accessibility of the accessible.
     MUST be one of the values on the two visibility columns. The default is "www".
 
     .. table::
