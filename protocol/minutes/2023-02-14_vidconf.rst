@@ -1,0 +1,130 @@
+meeting 2022-02-14 (ZOOM)
+@@@@@@@@@@@@@@@@@@@@@@@@@
+
+.. sidebar:: participants
+
+     * Markus Zolliker
+     * Enrico Faulhaber
+     * Peter Wegmann
+     * Klaus Kiefer
+     * Alexander Zaft
+     * Lutz Rossa
+     * Bastian Klemke
+     * Niklas Ekström
+
+.. contents:: Contents
+    :local:
+    :depth: 3
+
+
+Agenda
+------
+
+Agenda:
+
+1) approval of the minutes (16th/17th January 2023)
+
+2) contribution to WP1 of the SECoP@HMC project
+   - what should we present
+   - any issues to discuss with other workpackages?
+
+3) SECoP issues https://github.com/SampleEnvironment/SECoP/tree/master/protocol/issues
+
+   - issue 76: Interface for Measurable hardware (are we ready for an agreement?)
+   - issue 77: predefined parameter name prefixes (change to postfix - further discussion needed?)
+   - issue 78: Interacting Modules - use case power supply ('_limit' postfix instead of 'max_' prefix)
+   - issue 79: hints for readonly access (refined proposal)
+
+4) best practice examples
+
+5) aob
+
+6) next meeting
+
+
+1a) approval of the minutes
+==========================
+
+Previous minutes approved.
+
+1b) workshop next week @HZB
+===========================
+
+Klaus addresses some points for preparation.
+
+1c) meeting this week @DESY
+===========================
+
+Markus queries the focus of the meeting. Klaus gives a few hints.
+
+2) contribution to WP1 of the SECoP@HMC project
+===============================================
+
+Klaus elaborate about the expectations: what does SECoP already offer and
+what is still missing from the point of view of the HMC folks.
+Klaus is going to prepare some presentation
+
+3a) SECoP issue 76: Interface for Measurable hardware
+=====================================================
+
+Klaus sees no real problem. Details are going to be discussed later, as Georg is not present.
+
+3b) SECoP issue 77: predefined parameter name prefixes
+======================================================
+
+Enno likes the prefix version more. Klaus prefers the postfix version.
+Markus too. Klaus propose to use '_enable' instead of '_enabled'.
+
+Minor discussion about meaning und useage of '_limit', '_max' and '_min' for the power supply case.
+Klaus strongly prefers a strong coupling of postfix and meaning and
+doesn't want to re-use a postfix for a distinct, yet similar meaning.
+
+Markus ponders, how an ECS may behave if it finds a 'current_max', but no 'current' parameter.
+Enno suggests that an ECS should not complain about this, but just display 'current_max' as yet another parameter.
+Klaus points out that we need a clearer definition of what an underscored parameter name means.
+Markus thinks that these are rather 'patterns', which are to be used in a more general way.
+Markus elaborates about the distinction between 'limits' (giving both lower and upper limit) and
+'limit', which limits the absolute value.
+Enno sugests to not use both 'limit' and 'limits' as they are too close linguistically.
+Klaus and Markus, after some discussion, seem to agree to drop 'limits' and instead prefer
+'min' + 'max', i. e. 2 parameters.
+
+Klaus sums it up:
+- we go for postfix (suffix) notation
+- we use '_enable' instead of '_use'/'_used'/'_enabled' to en-/disable functionalities
+- restricting values works with '_min' and '_max'
+
+Power supply examples need to be rewritten to include above agreements.
+
+3c) SECoP issue 78: Interacting Modules
+=======================================
+
+postponed due
+
+3d) SECoP issue 79: hints for readonly access
+=============================================
+
+Markus points out that the current proposal might indicate a write accerss on a readonly parameter.
+A discussions starts on how to treat the situation.
+Ennos suggests to define it like the file access-rights on linux.
+Markus would like to leave out the expert setting, as they should always have full access.
+Enno disagrees on these.
+After more discussion, Klaus proposes to use a string analog to linux, i.e. '[-rw][-rw][-rw]'
+where each position stands for one of the 'expert'/'advanced'/'user' roles and
+'-' means no access (i.e. invisible), 'r' means readonly access, 'w' means full (read+write) access.
+Of course, the visibility can not allow writes on a readonly parameter, i.e. the access rights need
+to be consistend with the readonly property, which should be made sure by the framework.
+
+Markus discusses about the best practice. The SEC-node should only declare consistent settings.
+Enno points out that in case of inheriting access levels, the stronger restriction should always win.
+
+4) best practice examples
+=========================
+
+postponed due to time running out
+
+
+5) next meeting
+===============
+
+to be defined in the berlin meeting. will be updated here later.

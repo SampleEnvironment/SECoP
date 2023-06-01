@@ -1,0 +1,119 @@
+meeting 2022-05-02 (ZOOM)
+@@@@@@@@@@@@@@@@@@@@@@@@@
+
+.. sidebar:: participants
+
+     * Markus Zolliker
+     * Peter Wegmann
+     * Georg Brandl
+     * Klaus Kiefer
+     * Alexander Zaft
+     * Lutz Rossa
+     * Niklas Ekström
+     * Anders Petersson
+     * Bastian Klemke
+     * Enrico Faulhaber
+
+.. contents:: Contents
+    :local:
+    :depth: 3
+
+
+Agenda
+------
+
+1) approval of the minutes 14. Feb. 2023
+
+2) split specification in a core part (protocol + other basic things) and a 'best practice' part
+   and discuss a possible adaption the approval process for the specification
+
+3) SECoP Issues: https://github.com/SampleEnvironment/SECoP/tree/master/protocol/issues
+   - issue 79: hints for readonly access. decide about the proposal in the draft ("visibility" in modules and accessible)
+   - issue 76: Interface for Measurable hardware (are we ready for an agreement?)
+   - issue 77: prefixes / postfixes: a precise specification test has to be written
+
+4) aob
+
+5) next meeting
+
+Minutes
+-------
+
+1)  approval of the minutes 14. Feb. 2023
+=========================================
+
+The minutes were approved.
+
+2) spec and approval process
+============================
+
+Markus Zolliker presents suggestions for next steps.
+
+   - key aspects of secop and their relevance to ecs and human operators
+   - splitting specification into 3:
+      1. protocol (on-wire messages)
+      2. core: predefined props/params
+      3. meaning/best-pracices etc.
+   - change approval process
+     - public input (issues under discussion, use as "unstable" features before acceptance)
+
+Klaus Kiefer notes that machine readability would have to be important to consider within the context of unstable features
+discussion about central repository for machine readable best practices
+general agreement for splitting specification in different parts, specifics differ
+
+discussion points:
+
+   - question about the difference between accepted templates and collections of modules per-convention
+   - open suggestion list, awaiting approval of committee
+   - leaving in-progress suggestions after standardisation invites fracturing of device definitions
+   - standardized way of naming things
+   - do not have it completely open
+   - rfc processes -> have a look into it, query with HMC/NEXUS
+
+3a) issue 79
+============
+
+- omit implicitly defined visibility (e.g. inherit from module)
+- final approval set for the next meeting
+
+3b) issue 76
+============
+
+- postponed to wait for more feedback from implementors
+
+3c) issue 77
+============
+
+- Enrico Faulhaber joined
+
+- precise specification needed before approval
+- general idea:
+   - postfix and prefix differ on parameter
+   - param_postfix is reference to param
+
+4) aob
+======
+
+discussion about secnode with parameter that changes unit
+
+   - application: "Zugbrücke"/stress-rig
+   - different modes regulating by different parameters,
+   - disagreement about the solution
+   - case which may have the same problem: multimeter
+   - compatibility to nexus etc. would no longer be guaranteed
+   - partial updates of structs raised as a possiblity, is rejected
+
+discussion is closed for the day
+proposal to move this issue to best-practice disscussion
+Anders notes risk of best-practice discussion dissolving into core-team discussions
+
+a dedicated best-practice discussion may be needed
+
+5) next meeting
+===============
+
+- present findings about standardized rfc-like processes (Klaus, Georg, Alexander)
+- final approval of issue 79
+- The next meeting will take place on 07.06.2023 14:00
+
+The meeting concluded at 15:16.

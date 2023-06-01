@@ -1,0 +1,209 @@
+meeting 2022-11-30 (ZOOM)
+@@@@@@@@@@@@@@@@@@@@@@@@@
+
+.. sidebar:: participants
+
+     * Markus Zolliker
+     * Enrico Faulhaber
+     * Georg Brandl
+     * Alexander Zaft
+     * Lutz Rossa
+     * Anders Petterson
+     * Bastian Klemke
+     * Niklas Ekström
+
+.. contents:: Contents
+    :local:
+    :depth: 3
+
+
+Agenda
+------
+
+Agenda:
+
+1) Approval of the minutes from 13th December
+
+2) refinement of specs (please no lengthy discussions)
+   - *IDN? message (change inserted to spec draft)
+   - offset datatype: I can not find a concise and helpful wording for this. See last section of issue 73:
+     https://github.com/SampleEnvironment/SECoP/blob/master/protocol/issues/073%20HasLimits%20and%20HasOffset.rst
+
+3) issues (discussion only if new proposals are available):
+
+ - issue 75: check/checked message
+   https://github.com/SampleEnvironment/SECoP/blob/master/protocol/issues/075%20New%20messages%20check%20and%20checked.rst
+ - 'use_' prefix
+ - 'quantity' module property, 'max_' prefix (I have not yet found the time to work on it)
+ - Measurable
+ - who writes an issue about enhancing visibility or adding accesslevel
+
+4) a little issue about the control_active parameter:
+
+   After a motor is stopped, typically the value does not match the target value.
+   When it is stopped close to the target, is it possible to detect whether the
+   difference between target and value is caused by a stop or just by imprecise
+   driving?
+   This is a situation which could be described with the control_active parameter
+   which would be false after stopping a running motor or just after
+   initialisation, when the target parameter was not yet used.
+
+5) best practice examples:
+  - Magnet from Ennos templates
+  - examples/cryomagnet_draft
+
+6) next meeting
+
+7) various (we might discuss issue 79 here)
+
+1) approval of the minutes
+==========================
+
+Previous minutes approved.
+
+2) refinement of specs
+======================
+
+postponed, as Klaus is not there.
+
+3a) issue 75: check/checked message
+===================================
+
+Markus wonders if this message should be mandatory or optional.
+Lutz points out, that the support for this could be put in the description.
+Enno thinks that this is a good candidate for an 'extended' version of a
+'core' secop.
+
+3b) 'use_' prefix
+=================
+
+:note: see issue 77
+
+Postfix or prefix is debatable.
+datatype should be boolean instead.
+postfix version could be '_used' or '_enabled'
+limits should be kept together, not split up.
+Important part is the connection name <-> meaning,
+so for the power supply case, 'max_current'/'current_max' should also be allowed,
+even if there is no 'current'....
+Georg votes for the postfix version as it sorts nicer.
+The issue 77 should be updated.
+Further discussion postponed.
+
+3c) 'quantity' module property, 'max_' prefix
+=============================================
+
+:note: see issue 78
+
+Minor discussion about the meaning of 'quantity'.
+Markus will reword the issue and adopt to the postfix notation.
+
+As a side topic Georg wonders if it would make sense to split the specification
+into a 'on-the-wire' part and a semantic part, building on top of first.
+
+3d) Measurable
+==============
+
+:note: see issue 76
+
+A minor discussion about the use cases results in plenty of use cases, even
+universal ones (i.e. no neutrons, but traveling around).
+Some minor discussion about the new datainfo type results
+in Markus beeing convinced that it makes sense, as there is both
+additional constant metadata (names of dimensions) as well as
+extra live data (sizes of the dimensions).
+Also, for big data amounts, we may need a binary on-the-wire protocol.
+
+:reminder: If defining a binary on-the-wire protocol, use a length prefixed one.
+
+General agreement on including the proposed Measurables (with minor rewordings).
+Final Agreement postponed to next meeting.
+
+3e) issue about enhancing visibility or adding accesslevel
+==========================================================
+
+Enno proposes to use a system similar to how file-rights work on linux,
+listing the rights (-/r/w) for the several roles (user, admin, expert).
+Any way it will be only a hint to an ECS.
+After some discussion, Markus will write an issue about a new 'accesslevel'
+property, which is ment to replace the visibility used so far.
+
+:note: due to run-out of time, the remaining topics are shifted to the next day.
+
+2023-01-17
+----------
+
+.. sidebar:: participants
+
+     * Markus Zolliker
+     * Enrico Faulhaber
+     * Lutz Rossa
+     * Peter Wegmann
+     * Niklas Ekström
+     * Georg Brandl
+     * Bastian Klemke
+     * Alexander Zaft
+
+     * Anders Petterson
+
+
+4) a little issue about the control_active parameter
+====================================================
+
+Markus and Enno discuss about the usefulness of knowing wheter the motor was
+stopped before reaching the target or if it reached the target within its precision.
+(Error cases should be clearly marked via the module's status.)
+Georg proposes to use the status for this distinction.
+Bastian agrees on this.
+There seems to be an agreement of putting this information into the status.
+Enno proposes to use (optional) states 'target_reached' and 'stopped' as substates of IDLE.
+
+According to the current meaning, if 'control_active' is false, the module does
+not try to reach the target, but not the other way round, i.e. if the target is
+not actively tried to be reached (module got stopped or there was an error),
+this does not automatically mean that 'control_active' should be false.
+
+Maybe that wording needs to be refined.
+
+5a) best practice examples - Magnet
+===================================
+
+It seems best to keep the split between a magnet module (corresponding to the
+field at the sample) and 1..N power supply modules, handling persistency, if needed.
+Also, persistence support should be a feature, and should be worded in a generic
+way to be also applicable to other (non superconducting) use cases.
+Bastian and Enno would prefer to have the 'heat_switch' as an extra module,
+as this would also follow the 'secop' way (of having a module for independent
+physical quantities).
+As a result, the HasPersistence feature needs a way to indicate the intended mode
+(driven vs. persistent mode), and a parameter to reflected the persistent value.
+(as the feature should not change the semantics of the modules value, that one needs
+to reflect the actual value of the 'driving' component (i.e. the current in the leads))
+The reference to the switching device is to be reflected by the switch's 'controlled_by'
+parameter.
+Discussion does not progress further, as Klaus is not present.
+
+
+5b) best practice examples - Cryomagnet
+=======================================
+
+postponed
+
+5c) issue 79 - hints for readonly access
+========================================
+
+Markus proposes an overhaul of the visibility property.
+A more detailed granularity is desired. Also the explanation of visibility
+seems to have nened improvement.
+Markus proposes several ways of how to improve the situation.
+Georg proposes to use a struct instead, listing the access levels for each role.
+Enno points out that the components of this struct could be optional, as we have an
+inheritance mechanics for visibility.
+After some more discussion, more details got worked out.
+Markus is going to reword this issue.
+
+
+6) next meeting
+===============
+
+2023-02-14 9:00
