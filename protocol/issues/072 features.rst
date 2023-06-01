@@ -1,5 +1,5 @@
-SECoP Issue 72: features (proposed)
-===================================
+SECoP Issue 72: features (finalizing)
+=====================================
 
 Motivation
 ----------

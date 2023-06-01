@@ -116,19 +116,19 @@ Issues List
     \     `SECoP Issue 64: reading multiple parameters simultaneously`_
     f     `SECoP Issue 65: handling of coupled (sub)modules`_
     \     `SECoP Issue 66: force re-connect`_
-    u     `SECoP Issue 67: pid control parameters`_
+    f     `SECoP Issue 67: pid control parameters`_
     \     `SECoP Issue 68: transaction of multiple commands`_
     f     `SECoP Issue 69: optional structs by default`_
     u     `SECoP Issue 70: message is a JSON object`_
     \     `SECoP Issue 71: accessing sub items of parameters`_
-    p     `SECoP Issue 72: features`_
+    f     `SECoP Issue 72: features`_
     p     `SECoP Issue 73: HasLimits and HasOffset`_
     u     `SECoP Issue 74: Standardization of units`_
     p     `SECoP Issue 75: New messages check and checked`_
     p     `SECoP Issue 76: Interface for Measurable hardware`_
     p     `SECoP Issue 77: predefined parameter name prefixes`_
     p     `SECoP Issue 78: Interacting Modules - use case power supply`_
-    f     `SECoP Issue 79: Hints for readonly access`_
+    f     `SECoP Issue 79: hints for readonly access`_
     ===== =======
 
 .. _`SECoP Issue 1: About SECoP Issues`: 001%20About%20SECoP%20Issues.rst
@@ -208,4 +208,4 @@ Issues List
 .. _`SECoP Issue 76: Interface for Measurable hardware`: 076%20Interface%20for%20Measurable%20hardware.rst
 .. _`SECoP Issue 77: predefined parameter name prefixes`: 077%20predefined%20parameter%20name%20prefixes.rst
 .. _`SECoP Issue 78: Interacting Modules - use case power supply`: 078%20Interacting%20Modules%20-%20use%20case%20power%20supply.rst
-.. _`SECoP Issue 79: Hints for readonly access`: 079%20hints%20for%20readonly%20access.rst
+.. _`SECoP Issue 79: hints for readonly access`: 079%20hints%20for%20readonly%20access.rst

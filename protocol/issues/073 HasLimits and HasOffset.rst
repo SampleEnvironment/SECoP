@@ -63,4 +63,5 @@ precise wording is diffcult and lengthy.
 * is int allowed ?
 
 An implementor naturally should choose a reasonable datatype, and we do not need to
-calrify this in detail.
+clarify this in detail.
+

@@ -1,5 +1,5 @@
-SECoP Issue 67: pid control parameters (unspecified)
-====================================================
+SECoP Issue 67: pid control parameters (finalizing)
+===================================================
 
 Motivation
 ----------
