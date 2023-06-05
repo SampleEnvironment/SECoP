@@ -1,0 +1,206 @@
+meeting 2023-06-07 (ZOOM)
+@@@@@@@@@@@@@@@@@@@@@@@@@
+
+.. sidebar:: participants
+
+     * Markus Zolliker
+     * Lutz Rossa
+     * Anders Petterson
+     * Niklas Eckström
+     * Peter Wegmann
+     * Klaus Kiefer
+     * Alexander Zaft
+     * Enrico Faulhaber
+     * Bastian Klemke
+
+.. contents:: Contents
+    :local:
+    :depth: 3
+
+
+Agenda
+======
+
+1) approval of the minutes 2023-05-02 (already on github)
+
+2) if ready: present findings about standardized rfc-like processes
+   (Klaus, Georg, Alexander)
+
+3) pending issues. We do not need to handle all of them, this is just a todo list:
+
+   Issues in finalizing state waiting for approval, already in the draft spec:
+
+   - Issue 065: handling of coupled submodules
+     (MZ wants to make a change: control_active may be readonly=True, see Issue 65, Appendix)
+   - Issue 072: features
+   - Issue 073: HasOffset
+   - Issue 079: hints for readonly access
+
+
+   Issues in finalizing state, waiting for a precise wording:
+
+   - Issue 067: ctrlpars
+     (MZ wants to drop it or change to a predefined group 'ctrlpars')
+     If we keep it: somebody (not MZ) has to do the precise wording
+   - Issue 069: optional structs (wording done in issue, but not yet updated draft spec)
+     (MZ: optional structs should only be allowed as command argument)
+
+
+   Issues in proposed state:
+
+   - Issue 075: 'check' and 'checked' messages
+     (MZ: no priority)
+   - Issue 076: Mesurable (needs implementation test)
+   - Issue 077: predefined parameter name pre-/postfixes
+   - Issue 078: Interacting Modules - use case power supply (interferes with 077)
+
+
+   New Issue 080: issues with software ramp (by MZ)
+
+4) in persona meeting
+
+5) date for next video meeting
+
+1) approval of the minutes
+==========================
+
+Previous minutes approved.
+
+2) present findings about standardized rfc-like processes
+=========================================================
+
+Peter found no principal problems integrating SECoP into Orphid.
+Structs, however, seem to be not directly supported in Orphid.
+
+Alexander presents the current understanding of rfc-like processes.
+We need to adopt our understanding and handling of our issues.
+Main points seems the limited time for discussion and
+write access for others (to comment or create new entries).
+Also we need to formalise the process and document it better!
+Alexander also proposes a template for new issues.
+
+(Lutz has to leave.)
+
+Klaus agrees on the need of a more formalised process for new issues.
+Markus agrees on this as well. Nobody objects.
+
+A minor discussion about the details of the proposed pull-requests and github-issues
+seems to solves many open questions.
+
+Klaus reminds all that a reworked process should not have a too big barrier
+for non-developers.
+Alexander points out that it will be difficult anyway to motivate people
+to file issues if they don't use github at all.
+Markus and Klaus agree on having contact email adressess prominently visible,
+so that any one can easily write an email.
+
+3) pending issues in finalizing state waiting for approval, already in the draft spec
+=====================================================================================
+
+Issue 065: handling of coupled submodules
++++++++++++++++++++++++++++++++++++++++++
+
+Markus has stumbled upon a case where a Temperature controller would need to
+be able to deactivate its control over the heater, but the hardware doesn't even
+allow to read the actual heater value, so setting a new target to the heater is
+not possible. Markus therefore proposes to optionally allow
+`control_active' to be writable to disable the temperature controller.
+
+Enno strongly dislikes the idea of making an indicative parameter writable.
+The use case is clear, however, a different way needs to be found.
+
+(Anders has to leave.)
+(Peter has to leave as well.)
+
+Enno points out, that a similiar mechanism may be needed to en-/disable the
+output drivers of an motor driver.
+
+Issue 072: features
++++++++++++++++++++
+
+postponed
+
+Issue 073: HasOffset
+++++++++++++++++++++
+
+postponed
+
+Issue 079: hints for readonly access
+++++++++++++++++++++++++++++++++++++
+
+postponed
+
+
+3) pending issues in finalizing state, waiting for a precise wording
+====================================================================
+
+Issue 067: ctrlpars
++++++++++++++++++++
+
+Markus presents the case of a bath thermostat which actually
+has two sets of pid parameters: one for cooling, one for heating.
+Klaus proposes to use p_heat, p_cool, d_heat and so on in the ctrlpars struct.
+
+Issue 069: optional structs
++++++++++++++++++++++++++++
+
+postponed
+
+3) pending issues in proposed state
+===================================
+
+Issue 075: 'check' and 'checked' messages
++++++++++++++++++++++++++++++++++++++++++
+
+postponed
+
+Issue 076: Mesurable (needs implementation test)
+++++++++++++++++++++++++++++++++++++++++++++++++
+
+postponed
+
+Issue 077: predefined parameter name pre-/postfixes
++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+postponed
+
+Issue 078: Interacting Modules - use case power supply (interferes with 077)
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+postponed
+
+3) New Issues
+=============
+
+081: dynamic descriptive data
++++++++++++++++++++++++++++++
+
+Enno thinks that the idea is elegant, but may need more thinking to get the
+corner cases right.
+Klaus questions the distinction to the naming convention with '_max'.
+Markus points out that e.g. several limits or units could be set with one
+additional parameter in a synchronised way.
+Enno points out that, especially for the unit case, more thinking about the implications needs to done,
+as the unit is not literally the same for all parameters (think of 'speed' for example).
+
+080: issues with software ramp (by MZ)
+++++++++++++++++++++++++++++++++++++++
+
+Markus presents his use case. The main problem seems to infer if the
+temperature aoutput was actively regulating or not.
+Enno proposes to use the 'control_active' indicator and if this is not present,
+you have to assume, that control is always active.
+As a result of a longer discussion, a temperature controller which can be inactive
+must have a 'control_active' indicator.
+Klaus points out that this is implicitly already in the spec.
+All agree to have this more explicit.
+
+4) in persona meeting
+=====================
+
+Markus will send a doodle around
+
+5) date for next video meeting
+==============================
+
+next zoom-meeting: 2023-07-05 (5(th) of July) at 14:00
