@@ -329,6 +329,15 @@ Add ``controlled_by`` and ``control_active`` under the list of "predefined param
    - communication: communicate
    - coupled modules: controlled_by, control_active
 
+
+Appendix (MZ 2023-06-01)
+------------------------
+
+In the current draft spec (as of May 2023), control_active is a readonly parameter.
+For the case, where the 'output module' is not present or hidden, it should at least
+be allowed to set control_active=False.
+
+
 .. DO NOT TOUCH --- following links are automatically updated by issue/makeissuelist.py
 .. _`SECoP Issue 22: Enable Module instead of Shutdown Command`: 022%20Enable%20Module%20instead%20of%20Shutdown%20Command.rst
 .. _`SECoP Issue 48: mode parameter`: 048%20mode%20parameter.rst
