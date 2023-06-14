@@ -328,7 +328,7 @@ Error handling
 command ``"reset"``
      optional command for putting the module to a state predefined by the implementation.
 
-command ``"clear_error"``:
+command ``"clear_errors"``:
      This command tries to clear an error state. It may be called when status is ERROR,
      and the command will try to transform status to IDLE or WARN. If it can not
      do it, the status should not change or change to an other ERROR state before
