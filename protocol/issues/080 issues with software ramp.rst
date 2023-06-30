@@ -45,3 +45,11 @@ change T:setpoint <A>   # changing the setpoint immediately to <A>
 change T:target <B>   # starting the ramp from <A> to <B>
 
 This would need to change the predefined 'setpoint' parameter to be readonly=True.
+
+
+Disucssion
+----------
+
+At the vidconf 2023-06-07 it was decided to go with i) for 1).
+
+(2) was not yet discussed
