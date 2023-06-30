@@ -330,12 +330,19 @@ Add ``controlled_by`` and ``control_active`` under the list of "predefined param
    - coupled modules: controlled_by, control_active
 
 
-Appendix (MZ 2023-06-01)
+Appendix (MZ 2023-06-30)
 ------------------------
 
-In the current draft spec (as of May 2023), control_active is a readonly parameter.
-For the case, where the 'output module' is not present or hidden, it should at least
-be allowed to set control_active=False.
+In the current draft spec (as of May 2023), it is not clear what to do for
+switch off control when a controller module has no output module.
+
+In this case it is proposed to habe a command control_off to switch off control.
+For consitency, this may also be offered when an output module is present,
+the behaviour is module dependent.
+
+control_off is typically setting the controller to a mode which is 'saving energy':
+e.g. active heating and cooling off, or in the case of a motor switching the motor
+current off.
 
 
 .. DO NOT TOUCH --- following links are automatically updated by issue/makeissuelist.py
