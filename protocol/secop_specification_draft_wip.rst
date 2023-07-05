@@ -1447,9 +1447,9 @@ Optional Module Properties
      above table.
 
      :Note:
-         this does not imply that the access is controlled. It is just a
-         hint to the UI for the amount of exposed modules and whether write
-         access would be allowed.
+         The access is NOT controlled on the SECnode side! The visibility property is just a
+         hint to the UI (client) what should be exposed to (or better hidden from) the users having different levels of expertise. 
+         The UI (client) should implement the different access levels.
 
 ``"group"``:
      identifier, may contain ":" which may be interpreted as path separator between path components.
