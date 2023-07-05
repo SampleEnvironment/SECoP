@@ -1,0 +1,161 @@
+meeting 2022-12-13 (ZOOM)
++++++++++++++++++++++++++
+
+.. sidebar:: participants
+
+     * Markus Zolliker
+     * Klaus Kiefer
+     * Lutz Rossa
+     * Niklas Eckström
+     * Georg Brandl
+     * Alexander Zaft
+     * Enrico Faulhaber
+     * Anders Petterson
+
+.. contents:: Contents
+    :local:
+    :depth: 3
+
+
+Agenda
+======
+1) Approval of the minutes from 30th November
+
+2) refinement of specs
+
+3) items resulting from last best practice discussions
+
+  - proposal for check/checked message (see issue 75)
+    https://github.com/SampleEnvironment/SECoP/blob/master/protocol/issues/075%20New%20messages%20check%20and%20checked.rst
+
+  Who writes issues about:
+  - 'use_' prefix
+  - from power supply example: 'quantity' module property, 'max_' prefix
+  - Measurable
+
+4) *IDN? message: although we have defined it as "ISSE&SINE2020,SECoP,..."
+   I think it was a mistake to include a sponsor in the IDN.
+   We might specify, that a client must be more tolerant, e.g. just checking
+   for <anything except ,>,SECoP,*
+
+5) more best practice examples:
+   - Magnet from Ennos templates
+   - examples/cryomagnet_draft
+
+6) next meeting
+
+7) various
+
+   - SECoP@X-MAS
+
+1) Approval of the minutes from 30th November
+=============================================
+
+approved
+
+2) refinement of specs
+======================
+
+Discussion about the wording of changes.
+General agreement, though a minor rewording ssems neccessary for the datatype of the offset.
+
+3) items resulting from last best practice discussions
+======================================================
+
+check/checked messages
+----------------------
+
+General agreement on the proposal. A 'checked'/'error_checked' message *should*
+only be sent to the ECS which sent the 'check' message
+A minor discussion, essentially re-iterating the use case, resulted in
+an addition to the 'error_changed' message to include the 'closest_valid' qualifier as well
+in case a 'check' requested would have returned an 'error_check' with that qualifier.
+Enno raises the question, whether 'check' only checks the (current) range, or if
+also state-dependent checks are included.
+After a minor discussion about use cases, agreement resultet in having the check
+beeing stateless, i.e. only checking the (current) range(s).
+i.e. if the valid range of a module A depends on the value of module B,
+a check on the target on the module A shouldn't consider a possible restriction due to
+a changed value of module B.
+A lively discussion results in the insight, that we have actually 3 possible answers to
+a 'check' message: either unconditional success (*should* always work),
+conditional success (may work or not, depending on other conditions),
+or unconditional failue (will never work).
+As a result, a qualifier 'condition' is proposed to indicate the conditional success.
+The content should be a human readable, but machine parseable format.
+
+New Issues
+----------
+
+- 'use_' prefix
+    Enno
+
+- from power supply example: 'quantity' module property, 'max_' prefix:
+    Markus
+
+- Measurable:
+    Georg
+
+
+4) *IDN? message
+================
+
+Markus and Enno propose to change the 'ISSE&SIne2020' part to just 'ISSE'.
+general agreement, though interoparibility issues should be addressed.
+(proposal: clients maus accept both the old and the new *IDN reply, SEC-nodes
+are only allowed to send the new version)
+
+A minor discussion about versioning and breakage resulted in:
+'we are going to release v1.1 of the spec after the chang/changed message and the changed IDN
+are included'.
+
+5) more best practice examples:
+===============================
+
+Magnet from Ennos templates
+---------------------------
+Should be put into the examples directory on github.
+
+Proposed Magnet class does not work for vektor magnets, which should be master module on top.
+Magnet should include (optional) persistent stuff.
+If a magnetic component is also wanted as current, this needed to be an extra module.
+
+examples/cryomagnet_draft
+-------------------------
+
+General agreement.
+Discussion about the 'switch heater' module, which would be nice to have as a Readable
+in user level und as a Drivable in expert level.
+Currently we only have visibility, so we can only 'remove' the module in user level.
+Either visibility gets modified, or an extra 'accesslevel' property gets added
+to give the minimum level for beeing able to write.
+
+An intense discussion results.
+Further discussion seems needed.
+However, a few points seems to be clear:
+
+- the main module represents the magnetic field (in Tesla) *at* *the* *sample* and is the
+  relevant module for an ordinary user. It may, however, have a way to indicate
+  the current in the coil (as 'raw' qualifier or extra RO parameter).
+- other modules are mainly important for SE people and/or debugging/troubleshooting.
+- handling the persistence stuff is important, including 'coil_current' and 'lead_current'.
+- A Feature 'Has_persistence' seems sensible.
+- Since the main module is the relevant module for the user, everything needed during an
+  experiment (including switching between persistent/non-persisten mode),
+  needs to be accessible through that module.
+
+
+Times run out, so we stop here.
+
+
+
+6) next meeting
+===============
+
+2023-01-16 10:30 and 2023-01-17 9:00.
+
+
+7) various
+==========
+
+Markus shows a nice SECoP related X-MAS video.
