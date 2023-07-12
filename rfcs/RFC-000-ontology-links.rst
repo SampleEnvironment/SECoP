@@ -1,6 +1,8 @@
 - Feature: Linking to Ontologies
 - Status: Open
-- Submit Date: < your date >
+- Submit Date: <your date>
+- Authors: Alexander Zaft <a.zaft@fz-juelich.de>, Enrico Faulhaber
+  <enrico.faulhaber@frm2.tum.de>, Georg Brandl <g.brandl@fz-juelich.de>
 - Type: Protocol
 - PR: <link to the pull-request>
 - Implementation Tracking: -
