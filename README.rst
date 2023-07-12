@@ -9,4 +9,5 @@ Quick links to other relevant documents:
 
 * `SECoP Motivation <protocol/motivation.rst>`_
 * `SECoP Specification V1.0 <protocol/SECoP_Specification_V1.0.rst>`_
-* `SECoP Issues <protocol/issues/>`_
+* `SECoP RFCs <rfcs/>`_
+* `SECoP Issues <protocol/issues/>`_ (before RFCs)
