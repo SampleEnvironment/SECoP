@@ -120,7 +120,9 @@ Disadvantages, Alternatives
 Disadvantages
 -------------
 
-Is there a reason not to include this feature?
+The definition files must have a stable URL. URLs to a GitHub repository
+should fulfill this condition, but one could think about a more generic
+"stable URL" registry such as DOI if wanted.
 
 Alternatives
 ------------
