@@ -1547,9 +1547,9 @@ Mandatory Parameter Properties
 Optional Accessible Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-``"group"``: XXX
+``"group"``:
     identifier, may contain ":" which may be interpreted as path separator between path components.
-    The ECS may group the modules according to this property.
+    The ECS may group the accessibles according to this property.
     The lowercase version of a path component must not match the lowercase version of any module name or accessible on
     the same SEC node.
 
@@ -1557,7 +1557,7 @@ Optional Accessible Properties
 
     :Remark:
 
-        the accessible-property ``group`` is used for grouping of accessibles within a module,
+        The accessible-property ``group`` is used for grouping of accessibles within a module,
         the module-property ``group`` is used for grouping of modules within a node.
 
 ``"visibility"``:
