@@ -13,7 +13,7 @@ Summary
 This Feature introduces a way to include links to definitions about protocol elements
 in the descriptive data of a SECNode.
 This is achieved by linking to the append-only ontology definitions introduced in
-RFC-XXX.
+RFC-xxx.
 
 
 Goal
@@ -54,7 +54,7 @@ Example:
 
     "cryo1_T": {
         ...
-        "xxx": ["url1", "url2"],
+        "definitions": ["url1", "url2"],
         ...
     },
     "systems": {

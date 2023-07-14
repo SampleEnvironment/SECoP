@@ -30,9 +30,8 @@ form, while not losing human readability and too much flexibility.
 
 These elements are:
 
-- Interface classes
-- Features
-- Parameters
+- Interface classes and features
+- Parameters, commands and properties
 - Systems (to be specified!)
 
 The definitions for standard elements should be accessible in a central
@@ -56,7 +55,7 @@ Each element has a few common fields:
 
 ``kind``
   The kind of element, one of ``System``, ``Interface``, ``Feature``,
-  ``Parameter``, ``Command``.
+  ``Parameter``, ``Command``, ``Property``.
 ``name``
   The element's unique name.
 ``version``
@@ -66,18 +65,53 @@ Each element has a few common fields:
 
 Then, depending on the ``kind``, different keys can be present:
 
-``datatype``
-  On parameters, human readable explanation of the datatype.
-``arguments``
-  On commands, human readable explanation of the arguments.
-``return``
-  On commands, human readable explanation of the return value.
-``parameters``, ``commands``
-  On interfaces/features, the accessibles that are required on this element.
-``base``
-  On interfaces/features, the base interface/feature this one is derived from.
+**For interface classes and features:**
 
-As an example, the YAML for the Writable interface class would look like this:
+``base``
+  The base interface/feature this one is derived from.
+``properties``
+  The properties that are required on this element.
+``parameters``, ``commands``
+  The accessibles that are required on this element.
+
+**For parameters:**
+
+``readonly``
+  If the parameter should be readonly.
+``datainfo``
+  Human readable explanation of the parameter's datainfo.
+
+**For commands:**
+
+``arguments``
+  Human readable explanation of the arguments including datainfos.
+``return``
+  Human readable explanation of the return value and its datainfo.
+
+**For properties:**
+
+``applies_to``
+  List of Kinds to which this property can be applied.
+``datainfo``
+  Human readable explanation of the property's datainfo.
+
+**For systems:**
+
+``modules``
+  A dictionary of module names and their definitions. Each item is
+  either a reference to an interface/feature definition
+
+When a new element is proposed, the ``version`` starts at 0.  A version of 0
+does not give a stability guarantee, unlike versions larger than 0.  If an
+element is accepted and introduced into the specification, the version is
+defined as 1. Changes to the interface afterwards bump the version number.
+
+**XXX**
+
+``optional``
+  If present and true, this element is optional.
+
+As an example, a YAML description for some standard elements would look like this:
 
 .. code:: yaml
 
@@ -85,11 +119,20 @@ As an example, the YAML for the Writable interface class would look like this:
     kind: Parameter
     name: target
     version: 1
-    datatype: numeric
+    datainfo: numeric
+    readonly: false
     description: |
       The target value for the module. By setting this parameter, a move
       operation is started.
-    readonly: false
+
+    ---
+    kind: Command
+    name: stop
+    version: 1
+    arguments: none
+    return: none
+    description: |
+      Stop the current value-changing operation. If not driving, no effect.
 
     ---
     kind: Interface
@@ -108,10 +151,98 @@ As an example, the YAML for the Writable interface class would look like this:
         # provided in the "target" element above.
         description: ...
 
-When a new element is proposed, the ``version`` starts at 0.  A version of 0
-does not give a stability guarantee, unlike versions larger than 0.  If an
-element is accepted and introduced into the specification, the version is
-defined as 1. Changes to the interface afterwards bump the version number.
+    ---
+    kind: Interface
+    name: Drivable
+    version: 1
+    base: Writable:1
+    description: |
+      A base SECoP interface class for modules whose values changes "slowly",
+      so that the change can be stopped.
+    commands:
+      stop:
+        definition: stop:1
+
+    ---
+    kind: Feature
+    name: HasOffset
+    version: 1
+    description: |
+      This feature is indicating that the value and target parameters are raw values, which
+      need to be corrected by an offset. A module with the feature `HasOffset` must have
+      a parameter `offset`, which indicates to all clients that values are to be converted
+      by the following formulas:
+
+        ECS value = SECoP value + offset
+
+        SECoP target = ECS target - offset
+    parameters:
+      offset:
+        definition: offset:1
+
+Example for a complete system that describes a simple power supply inspired by
+issue 78:
+
+.. code:: yaml
+
+    ---
+    kind: Property
+    name: quantity
+    version: 1
+    datainfo: string
+    applies_to: [Parameter]
+    description: |
+      A hint of the physical quantity represented by this parameter.
+
+    ---
+    kind: System
+    name: PowerSupply
+    version: 1
+    description: |
+      A power supply consisting of current and voltage regulation modules.
+      The active module can be switched with the parameter `control_active`.
+    modules:
+      current:
+        definition: Drivable:1
+        description: Controls the current.
+        properties:
+          # This property has a general definition, but here the description
+          # defines a required value.
+          quantity:
+            definition: quantity:1
+            description: Must be set to "current".
+        parameters:
+          # This parameter is already defined by Drivable, but the required
+          # datainfo is made more concrete by this definition.
+          value:
+            datainfo: numeric, has unit Ampere
+          # This parameter is completely specific to this module.
+          voltage_limit:
+            description: |
+              Compliance voltage applied when supply is in current mode.
+            datainfo: numeric, has unit Volts
+            optional: true
+          power_limit:
+            description: |
+              Power limit applied when supply is in current mode.
+            datainfo: numeric, has unit Watts
+            optional: true
+          control_active:
+            definition: control_active:1
+            description: |
+              If true, power supply is in current mode.
+              Setting `voltage:control_active` resets this to false.
+      # similar for power, voltage
+      resistance:
+        definition: Readable:1
+        description: Readback for the measured resistance.
+        optional: true
+        parameters:
+          value:
+            datainfo: numeric, has unit Ohms.
+          quantity:
+            definition: quantity:1
+            description: Must be set to "resistance".
 
 
 Disadvantages, Alternatives
