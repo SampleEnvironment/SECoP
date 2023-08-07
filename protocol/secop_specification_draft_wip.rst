@@ -587,7 +587,7 @@ Base classes
 
 
 Features
-~~~~~~~~
+--------
 
 Features allow the ECS to detect if a SECoP module support a certain functionality.
 A feature typically needs some predefined accessibles and/or module properties to be present.
