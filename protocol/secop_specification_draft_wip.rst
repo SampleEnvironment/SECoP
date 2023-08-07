@@ -587,7 +587,7 @@ Base classes
 
 
 Features
-========
+~~~~~~~~
 
 Features allow the ECS to detect if a SECoP module support a certain functionality.
 A feature typically needs some predefined accessibles and/or module properties to be present.
@@ -602,9 +602,9 @@ indicates to the ECS that it may handle this functionality in a specific way.
     a parameter ``offset``, which indicates to all clients that values are to be converted
     by the following formulas:
 
-          ECS value = SECoP value + offset
+          ECS value = transmitted value + offset
 
-          SECoP target = ECS target - offset
+          transmitted target = ECS target - offset
 
     mandatory parameter: offset_
 
