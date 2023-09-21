@@ -409,7 +409,6 @@ parameter ``"control_active"``:
    to the other, toggling the control_active parameter of both modules.
 
 command ``"control_off"``:
-
    A command to turn off active control. This command is needed for turning off control,
    when there is no controlled module, e.g. when there is no heater module for a temperature
    loop, or when the heater module is not a Writable.
