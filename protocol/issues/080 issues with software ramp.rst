@@ -29,25 +29,25 @@ Proposal
       a data type. Also a candidate for replacing the control_active parameter.
       
 
-2) A user which wants explicitly doing a ramp from A to B can do:
+2) A user which wants explicitly initiate a ramp from A to B can do:
 
-change T:ramp_enable False
-change T:target <A>
-change T:ramp_enable True
-change T:target <B>
+  - change T:ramp_enable False
+  - change T:target <A>
+  - change T:ramp_enable True
+  - change T:target <B>
 
 In order for this to work, the implementation must be able to handle correctly
 the two latter messages while the module is busy.
 
 It would be much nicer to do:
 
-change T:setpoint <A>   # changing the setpoint immediately to <A>
-change T:target <B>   # starting the ramp from <A> to <B>
+  - change T:setpoint <A>   # changing the setpoint immediately to <A>
+  - change T:target <B>   # starting the ramp from <A> to <B>
 
-This would need to change the predefined 'setpoint' parameter to be readonly=True.
+For this the predefined 'setpoint' parameter must be to be readonly=True.
 
 
-Disucssion
+Discussion
 ----------
 
 At the vidconf 2023-06-07 it was decided to go with i) for 1).
