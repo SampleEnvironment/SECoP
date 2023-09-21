@@ -408,6 +408,20 @@ parameter ``"control_active"``:
    ignored. Changing the target value of the latter would switch control from one module
    to the other, toggling the control_active parameter of both modules.
 
+command ``"control_off"``:
+
+   A command to turn off active control. This command is needed for turning off control,
+   when there is no controlled module, e.g. when there is no heater module for a temperature
+   loop, or when the heater module is not a Writable.
+
+   In a more general way, ``"control_off"`` puts the module into an 'enenergy saving state',
+   switching off active heating and cooling for a temperature loop or in case of a motor
+   switching current off.
+
+   Setting the target of a module always turns on active control. It is explicitly allowed
+   for a module to have a ``"control_off"`` command when a controlled module is available
+   (i.e. a module with a ``"controlled_by"`` parameter with the name of the controlling module).
+
 
 Limits and Offset
 ~~~~~~~~~~~~~~~~~
