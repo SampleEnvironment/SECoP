@@ -129,6 +129,8 @@ Issues List
     p     `SECoP Issue 77: predefined parameter name prefixes`_
     p     `SECoP Issue 78: Interacting Modules - use case power supply`_
     f     `SECoP Issue 79: hints for readonly access`_
+    p     `SECoP Issue 80: issues with software ramp`_
+    p     `SECoP Issue 81: dynamic descriptive data`_
     ===== =======
 
 .. _`SECoP Issue 1: About SECoP Issues`: 001%20About%20SECoP%20Issues.rst
@@ -209,3 +211,5 @@ Issues List
 .. _`SECoP Issue 77: predefined parameter name prefixes`: 077%20predefined%20parameter%20name%20prefixes.rst
 .. _`SECoP Issue 78: Interacting Modules - use case power supply`: 078%20Interacting%20Modules%20-%20use%20case%20power%20supply.rst
 .. _`SECoP Issue 79: hints for readonly access`: 079%20hints%20for%20readonly%20access.rst
+.. _`SECoP Issue 80: issues with software ramp`: 080%20issues%20with%20software%20ramp.rst
+.. _`SECoP Issue 81: dynamic descriptive data`: 081%20dynamic%20descriptive%20data.rst
