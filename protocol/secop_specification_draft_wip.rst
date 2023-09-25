@@ -377,7 +377,7 @@ parameter ``"controlled_by"``:
 parameter ``"control_active"``:
    A readonly flag indicating whether a drivable or writable module is currently actively controlling.
    On a drivable without ``control_active`` parameter or with
-   ``control_active`` =true, the system is trying to bring the ``value`` parameter to the ``target``.
+   ``control_active`` =true, the system is trying to bring the ``value`` parameter to the ``target`` value.
    When ``control_active`` =false, this control mechanism is switched off, and the ``target`` value
    is not considered any more.
    In a typical example we have a module A controlling module B (e.g. temperature (A) and power output (B) as stated above) and with two possible
@@ -451,7 +451,7 @@ command ``"communicate"``:
      for debugging purposes, or if the implementor wants to give access to parameters not
      supported by the driver. The datatype might be string_, or any other datatype suitable
      to the protocol of the device. The ``communicate`` command  is meant to be used in
-     module with the ``Communicator`` interface class.
+     modules with the ``Communicator`` interface class.
 
 
 
