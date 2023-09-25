@@ -377,8 +377,8 @@ parameter ``"controlled_by"``:
 parameter ``"control_active"``:
    A readonly flag indicating whether a drivable or writable module is currently actively controlling.
    On a drivable without ``control_active`` parameter or with
-   control_active=true, the system is trying to bring the value to the target.
-   When control_active=false, this control mechanism is switched off, and the ``target`` value
+   ``control_active``=true, the system is trying to bring the ``value`` parameter to the ``target``.
+   When ``control_active``=false, this control mechanism is switched off, and the ``target`` value
    is not considered any more.
    In a typical example we have a module A controlling module B (e.g. temperature (A) and power output (B) as stated above) and with two possible
    states, as in the following example:
@@ -404,7 +404,7 @@ parameter ``"control_active"``:
                         control_active=false   control_active=true
    =================== ====================== ======================
 
-   The module with ``control_active=false`` acts like a Readable, its ``target`` parameter is
+   The module with ``control_active``=false acts like a Readable, its ``target`` parameter is
    ignored. Changing the ``target`` value of the latter would switch control from one module
    to the other, toggling the ``control_active`` parameter of both modules.
 
