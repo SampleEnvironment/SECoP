@@ -616,11 +616,13 @@ indicates to the ECS that it may handle this functionality in a specific way.
     parameters ``value`` and ``target`` are to be converted to corrected values (at the client side)
     by the following formulas:
 
+    for reading the parameters ``value`` and ``target``:
+
           corrected value (client) = value (transmitted) + offset
 
           corrected target (client) = target (transmitted) + offset
 
-    respectively for changing the target:
+    for changing the parameter ``target``:
 
           target (transmitted) = corrected target (client) - offset
 
