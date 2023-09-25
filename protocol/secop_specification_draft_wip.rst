@@ -610,18 +610,19 @@ indicates to the ECS that it may handle this functionality in a specific way.
 .. _HasOffset:
 
 ``"HasOffset"``:
-    This feature is indicating that the ``value`` and ``target`` parameters at the SEC-node represent raw values, which
+    This feature is indicating that the ``value`` and ``target`` parameters of a module represent raw values, which
     need to be corrected by an offset. A module with the feature ``"HasOffset"`` must have
     a parameter ``offset``, which indicates to all clients that the transmitted raw values for the 
     parameters ``value`` and ``target`` are to be converted to corrected values (at the client side)
     by the following formulas:
 
-          corrected value (client) = raw value (SEC-node) + offset
-          corrected target(client) = raw target (SEC-node) + offset
+          corrected value (client) = value (transmitted) + offset
+
+          corrected target (client) = target (transmitted) + offset
 
     respectively for changing the target:
 
-          raw target (SEC-node) = corrected target(client) - offset
+          target (transmitted) = corrected target (client) - offset
 
     mandatory parameter: offset_
 
