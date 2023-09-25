@@ -426,7 +426,7 @@ command ``"control_off"``:
 Limits and Offset
 ~~~~~~~~~~~~~~~~~
 
-parameter ``target_limits``:
+parameter ``"target_limits"``:
     In addition to the range given in the ``datainfo`` property of the ``target`` parameter,
     a SEC-Node might offer changeable limits restricting the allowed range even more.
     ``target_limits`` is structured as a tuple_ with two numeric members indicating
@@ -438,7 +438,7 @@ parameter ``target_limits``:
 
 .. _offset:
 
-parameter ``offset``:
+parameter ``"offset"``:
     A storage for an offset to be applied when converting SECoP values to ECS values.
     See feature `HasOffset`_.
 
