@@ -58,14 +58,7 @@ Other requirements
    **compatibility**: Newer and older versions of the syntax should
    be compatible
 
--  **OLD**: the protocol should be defined in a way, which allows a maximum
-   **flexibility**: A simple (= with minimal functionality) ECS
-   implementation should be able to communicate with a complex SEC
-   node (with a lot of features), and an ECS with a rich number of
-   features should be able to cope with a simple SEC node,
-   implementing only a minimum functionality
-
--  **NEW**: the protocol should be defined in such a way that it allows maximum 
+-  the protocol should be defined in such a way that it allows maximum 
    **flexibility**: A simple (= equipped with minimal functionality) ECS 
    implementation should be able to communicate with a complex SEC node 
    (with wide-ranging functionality), and an ECS with extensive 
@@ -584,7 +577,7 @@ Base classes
     It may have none of the predefined parameters of the other classes.
 
     The ``communicate`` command is used mainly for debugging reasons, or as a workaround
-    for using hardware features not implemented in the SEC node.
+    for using hardware functionalities not implemented in the SEC node.
 
 .. _Readable:
 
