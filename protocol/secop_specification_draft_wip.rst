@@ -358,7 +358,7 @@ parameter ``"controlled_by"``:
    2) The ``target`` parameter of module B is not updated and the functional control
       of the ``target`` parameter of module B is switched off.
 
-   This behavior must be signaled by the ``control_active`` parameter (see next section).
+   Any coupling of this kind must be signaled by the ``control_active`` parameter (see next section).
 
    Taking over control by a module is done by changing the ``target`` parameter or sending a ``go`` command to a module.
    I.e. module A takes over control when a ``target`` change or a ``go`` command is sent to the module A. In this case, before sending the reply,
