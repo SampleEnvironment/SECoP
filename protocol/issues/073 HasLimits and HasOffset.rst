@@ -65,3 +65,11 @@ precise wording is diffcult and lengthy.
 An implementor naturally should choose a reasonable datatype, and we do not need to
 clarify this in detail.
 
+
+Current State
+-------------
+
+HasOffset: finalized
+
+HasLimits (or how to handle limits at all): under discussion or at least not yet finalized.
+On the meeting 2023-09-26 it was decided to use postfixes '_min' and '_max' for changeable limits of parameters.

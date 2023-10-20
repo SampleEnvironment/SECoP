@@ -114,21 +114,21 @@ Issues List
     u     `SECoP Issue 62: naming convention for related parameters`_
     \     `SECoP Issue 63: enumeration of floating point values`_
     \     `SECoP Issue 64: reading multiple parameters simultaneously`_
-    f     `SECoP Issue 65: handling of coupled (sub)modules`_
+    \     `SECoP Issue 65: handling of coupled (sub)modules`_
     \     `SECoP Issue 66: force re-connect`_
     f     `SECoP Issue 67: pid control parameters`_
     \     `SECoP Issue 68: transaction of multiple commands`_
     f     `SECoP Issue 69: optional structs by default`_
     u     `SECoP Issue 70: message is a JSON object`_
     \     `SECoP Issue 71: accessing sub items of parameters`_
-    f     `SECoP Issue 72: features`_
+    \     `SECoP Issue 72: features`_
     p     `SECoP Issue 73: HasLimits and HasOffset`_
     u     `SECoP Issue 74: Standardization of units`_
     p     `SECoP Issue 75: New messages check and checked`_
     p     `SECoP Issue 76: Interface for Measurable hardware`_
     p     `SECoP Issue 77: predefined parameter name prefixes`_
     p     `SECoP Issue 78: Interacting Modules - use case power supply`_
-    f     `SECoP Issue 79: hints for readonly access`_
+    \     `SECoP Issue 79: hints for readonly access`_
     p     `SECoP Issue 80: issues with software ramp`_
     p     `SECoP Issue 81: dynamic descriptive data`_
     ===== =======

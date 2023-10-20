@@ -1,5 +1,5 @@
-SECoP Issue 72: features (finalizing)
-=====================================
+SECoP Issue 72: features (closed)
+=================================
 
 Motivation
 ----------

@@ -414,7 +414,7 @@ command ``"control_off"``:
    when there is no controlled module, e.g. when there is no heater module for a temperature
    loop, or when the heater module is not a Writable.
 
-   In a more general way, ``"control_off"`` puts the module into an 'enenergy saving state',
+   In a more general way, ``"control_off"`` puts the module into an 'energy saving state',
    switching off active heating and cooling for a temperature loop or in case of a motor
    switching current off.
 

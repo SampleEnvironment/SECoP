@@ -1,5 +1,5 @@
-SECoP Issue 65: handling of coupled (sub)modules (finalizing)
-=============================================================
+SECoP Issue 65: handling of coupled (sub)modules (closed)
+=========================================================
 
 Motivation
 ----------
@@ -337,7 +337,7 @@ In the current draft spec (as of May 2023), it is not clear what to do for
 switch off control when a controller module has no output module.
 
 In this case it is proposed to habe a command control_off to switch off control.
-For consitency, this may also be offered when an output module is present,
+For consistency, this may also be offered when an output module is present,
 the behaviour is module dependent.
 
 control_off is typically setting the controller to a mode which is 'saving energy':
