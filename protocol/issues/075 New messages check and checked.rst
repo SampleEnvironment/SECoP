@@ -103,6 +103,7 @@ A vector field magnet with 3 components may have a ``value``/``target`` paramete
 complying to the datainfo of
 
 .. code::
+
     {"type": "array",
      "min": 3,
      "max": 3,
@@ -118,6 +119,7 @@ i.e. ``target`` = [1.0, 0.0, 0.0] works, while [1.0, 1.0, 0] won't work as the m
 a check function ``target_check`` may then have the following datainfo:
 
 .. code::
+
     {"type": "command",
      "argument": {"type": "array",
                   "min": 3,
