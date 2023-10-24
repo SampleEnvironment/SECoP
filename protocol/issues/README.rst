@@ -131,6 +131,7 @@ Issues List
     \     `SECoP Issue 79: hints for readonly access`_
     p     `SECoP Issue 80: issues with software ramp`_
     p     `SECoP Issue 81: dynamic descriptive data`_
+    p     `SECoP Issue 82: Feature HasRamp`_
     ===== =======
 
 .. _`SECoP Issue 1: About SECoP Issues`: 001%20About%20SECoP%20Issues.rst
@@ -213,3 +214,4 @@ Issues List
 .. _`SECoP Issue 79: hints for readonly access`: 079%20hints%20for%20readonly%20access.rst
 .. _`SECoP Issue 80: issues with software ramp`: 080%20issues%20with%20software%20ramp.rst
 .. _`SECoP Issue 81: dynamic descriptive data`: 081%20dynamic%20descriptive%20data.rst
+.. _`SECoP Issue 82: Feature HasRamp`: 082%20Feature%20HasRamp.rst
