@@ -2,6 +2,7 @@
 Task                                           Who
 ============================================== =============
 restructure spec for v1.1                      Alexander, Peter
+standardized rfc process                       Alexander
 write proposal for checks (issue 75)           Enno
 rewrite issue 77 (parameter postfixes)         Enno
 write proposal for HasRamp feature
