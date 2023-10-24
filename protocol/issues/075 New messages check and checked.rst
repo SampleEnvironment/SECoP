@@ -7,11 +7,8 @@ Motivation
 For simulation purposes, an ECS might want to get parameters checked for validity,
 in case the validity can not be taken from the datainfo alone.
 
-Proposal
---------
-
-Check Value
-~~~~~~~~~~~
+Proposal 1: Check value messages
+--------------------------------
 
 The check value message contains the name of the module or parameter
 and the value to be checked. The value is JSON formatted.
@@ -60,7 +57,7 @@ in case the closest valid value can not be determined from the datainfo min or m
 
 
 Discussion
-----------
+~~~~~~~~~~
 
 Markus:
     With the additional information ``closest_valid`` in the error report the problem about
@@ -74,3 +71,96 @@ Note:
     But I can imagine that a use case will raise up later, where an interaction from a client
     might change the valid range of a parameter. This feature might help to solve it without
     need of changing the descriptive data.
+
+In 2023-09-26_vidconf It was decided to drop the extra messages (as they put a lot of implementation burden
+on ALL SECnodes). Instead, additional commands should be implemented, which check the given value.
+
+Details need to be discussed, but a first rough draft could as follows:
+
+
+Proposal 2: check value method
+------------------------------
+
+For every parameter ``<paramname>`` which should support the client-side checking of values to be *set*,
+(before they are actually set) an accompanying command ``<paramname_check>`` is to be defined.
+The single argument of such a function is of the same datainfo as the parameter to be checked.
+
+The result is an optional struct with the following members:
+
+- ``result``: an mandatory enum with the following members:
+  - ``Ok<0>``: The value is acceptable and will be accepted if set by the ECS.
+  - ``limited<1>``: The value is outside (currently) acceptable limits, i.e. may work under other circumstances.
+  - ``Out of range<2>``: The value is outside datainfo limits, may never work
+- ``closest_valid``: an optional value according to the datainfo of ``<paramname>``, giving the closest acceptable value which could be used instead. Actual value is implementation specific.
+
+
+.. note:: the ``result`` member ``limited`` is meant for cases where the actual limits depend on other modules.
+
+Example
+~~~~~~~
+
+A vector field magnet with 3 components may have a ``value``/``target`` parameter
+complying to the datainfo of
+
+.. code::
+    {"type": "array",
+     "min": 3,
+     "max": 3,
+     "members": {"type": "float",
+                 "min": -1.0,
+                 "max": 1.0,
+                 "unit": "T"}
+    }
+
+whilst only beeing capable of providing a field magnitude of 1.2T in total.
+i.e. ``target`` = [1.0, 0.0, 0.0] works, while [1.0, 1.0, 0] won't work as the magnitude would be 1.4T and hence > 1.2T.
+
+a check function ``target_check`` may then have the following datainfo:
+
+.. code::
+    {"type": "command",
+     "argument": {"type": "array",
+                  "min": 3,
+                  "max": 3,
+                  "members": {"type": "float",
+                              "min": -1.0,
+                              "max": 1.0,
+                              "unit": "T"}
+                  },
+     "result": {"type": "struct",
+                "members": {"result": {"type": "enum",
+                                       "members": {"Ok": 0,
+                                                   "limited": 1,
+                                                   "Out of range": 2}
+                                      },
+                            "closest_valid": {"type":"array",
+                                              "min": 3,
+                                              "max": 3,
+                                              "members": {"type": "float",
+                                                          "min": -1.0,
+                                                          "max": 1.0,
+                                                          "unit": "T"}
+                                             },
+                            "optional": ["closest_valid"]}
+                }
+    }
+
+upon issuing a command request to this function, the SECnode could then reply like this:
+
+.. code::
+
+  > do mf:target_check [1.0, 0.0, 0.0]
+  < done mf:target_check [{"result": 0}, {"t":1505396348.876}]
+
+  > do mf:target_check [1.0, 1.0, 0.0]
+  < done mf:target_check [{"result": 2, "closest_valid": [0.84, 0.84, 0]}, {"t":1505396348.876}]
+
+
+
+
+.. note:: It makes no sence to define a check funtion for a readonly parameter or a function!
+
+Discussion
+~~~~~~~~~~
+
+None yet.

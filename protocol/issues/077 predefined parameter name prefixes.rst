@@ -67,3 +67,8 @@ Possible candidates:
 * keep 'target_limits' (with 's' at end in contrast to '_limit')
 * 'target_max' / 'target_min' in case of single limits
 
+No decision on the actual values yet.
+
+In 2023-09-26_vidconf it was proposed to include ``<paramname>_check`` as a registed postfix
+for checking the validity of parameter ``<paramname>``.
+(Details see Issue 75)
