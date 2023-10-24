@@ -1,0 +1,84 @@
+meeting 2023-09-26 (ZOOM)
+@@@@@@@@@@@@@@@@@@@@@@@@@
+
+.. sidebar:: participants
+
+     * Markus Zolliker
+     * Georg Brandl
+     * Peter Wegmann
+     * Klaus Kiefer
+     * Alexander Zaft
+     * Enrico Faulhaber
+     * Niklas Eckström
+     * Anders Pettersson
+
+.. contents:: Agenda
+    :local:
+    :depth: 3
+
+1) approval of the minutes 2023-09-26
+=====================================
+
+Previous minutes approved.
+
+
+2) collect subjects to be discussed for the in persona meeting
+==============================================================
+(selected from  https://github.com/SampleEnvironment/SECoP/blob/master/protocol/minutes/pending_tasks.rst )
+Alexander presented a tentative schedule.
+Klaus proposes several things to be discussed there.
+incomplete proposed list:
+- the RFC process
+- splitting of the spec, webpage
+- sample changer, other examples
+- how are SECoP structures/values are stored in nexus
+- definitions/vocabularies (input may come from FairMAT/LEAPS/LENS/....)
+- templates/interface classes/systems/....
+- proposed Features/interface classes (HasRamp, HasPID, Measureable, ...)
+- naming scheme/Postfixes
+
+Georg proposes to also discuss the proposed definitions of systems/interfaces/...
+via yaml files as proposed earlier.
+
+Klaus wants to focus on the Features and Vocabularies (and maybe a little into the interfaces).
+Enno shall prepare some part about the postfixes.
+Peter will have a look into the rocket sample changer and the orphid compatibility
+(which DESY is interested in).
+
+Agreement on the need of having this meeting prepared well, as the last meeting has been a long while ago.
+
+sub-discussion about the need of having a interface class.
+Markus dont see the point in having more interface classes, as a collection of Features together with one the
+already defined interface classes seems to match all use cases.
+Reducing this to a (preferable) small set of additional interface classes seems difficult, if you want to cover 100%
+of all devices.
+
+Klaus points out that interface classes are strongly needed for the machine readable/understandable part.
+After some discussion, it got was emphasised, that we need to discuss this in the in person meeting.
+
+Markus will recompile the above information and propose an agenda for the meeting which will be distributed via e-mail.
+
+Klaus points out that the template/systems/.. topic id more import then the RFC for daily work with SEcoP.
+
+
+3) clarification about the `offset` parameter
+=============================================
+
+Markus has the question:
+   I have a question regarding the HasOffset feature: in an implementation
+   at SINQ, a motor has in addition to the value an 'encoder' parameter. This parameter
+   might deviate a little from value, as value is derived from the motor steps, which
+   has a higher precision than the encoder. How does the ECS know, that the encoder
+   parameter needs an offset correction?
+
+Enno proposes to use a second module for the encoder and sync the `offsets`.
+Klaus thinks that this combination could also be pointed out by a special interface class.
+Markus and Enno essentially agree on having an extra module in this use case.
+
+
+4) in persona meeting
+---------------------
+
+lunch-to-lunch@MLZ-Garching 2023-11-15 to 2023-11-17 with SECoP core focus on the second half
+
+.. note: Anders won't be able join.
