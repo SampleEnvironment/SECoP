@@ -23,7 +23,7 @@ datainfo unit
 .............
 
 The use case of the power supply showed that there is a nice way to avoid chaning
-units, namely creating seperate modules per physical unit, and then instead of changing
+units, namely creating separate modules per physical unit, and then instead of changing
 the unit of one central module activate the module with the used unit and deactivate
 the others.
 
@@ -52,7 +52,7 @@ the unit, and refer to this in the module description:
 
 A client might be aware of this mechanism and correctly take the value unit from
 the unit parameter. A client which is not aware of this, will just treat the value
-as unitless, but the user still might guess that the meaning unit parameter is
+as unit less, but the user still might guess that the meaning unit parameter is
 the unit of the value.
 
 Remark: the name of the parameter may be choosen freely, however, it makes sense
@@ -87,4 +87,3 @@ rule explicit via the "max@" datainfo 'property'.
     }
 
 We might or might not impose naming rules for these parameters.
-

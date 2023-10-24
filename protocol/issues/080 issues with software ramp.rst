@@ -27,7 +27,7 @@ Proposal
 
    c) add an 'allow_null' property to datainfo adding JSON null to the allowed values of
       a data type. Also a candidate for replacing the control_active parameter.
-      
+
 
 2) A user which wants explicitly initiate a ramp from A to B can do:
 
@@ -50,6 +50,6 @@ For this the predefined 'setpoint' parameter must be to be readonly=True.
 Discussion
 ----------
 
-At the vidconf 2023-06-07 it was decided to go with i) for 1).
+At the vidconf 2023-06-07 it was decided to go with a) for 1).
 
 (2) was not yet discussed
