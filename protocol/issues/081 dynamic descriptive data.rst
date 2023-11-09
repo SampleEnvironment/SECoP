@@ -5,8 +5,8 @@ Motivation
 ----------
 
 There are some edge cases, where some elements of descriptive data may change
-during a SEC node is running. When this changing data is not crucial for
-running the experiement, there should be a a way that these changes are reported
+during the time a SEC node is running. Even if this changing data is not crucial for
+running the experiment, there should be a way that these changes are reported
 via SECoP, without the need of closing the connection and reading the description
 again.
 
@@ -30,7 +30,7 @@ the others.
 However, if for any reason this is not wanted, we may create a parameter carrying
 the unit, and refer to this in the module description:
 
-.. code:
+.. code:: json
 
     ....
     "parameters": {
@@ -65,7 +65,7 @@ datainfo min / max
 Instead of the postfix rule ("_max" postfix) for user limits, we make the
 rule explicit via the "max@" datainfo 'property'.
 
-.. code:
+.. code:: json
 
     ....
     "parameters": {
