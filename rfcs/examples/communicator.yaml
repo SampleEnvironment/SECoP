@@ -1,0 +1,17 @@
+kind: Interface
+name: Communicator
+version: 1
+# All accessibles from the base are "inherited".
+base: Module:1
+description: |
+       A base SECoP interface class for modules who communicate directly with
+       the hardware.
+commands:
+  communicate:
+      kind: Command
+      name: communicate
+      version: 1
+      arguments: none
+      return: none
+      description: |
+        Communicate with the hardware directly.

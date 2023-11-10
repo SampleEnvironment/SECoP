@@ -1,0 +1,151 @@
+---
+kind: Property
+name: description
+version: 1
+datainfo: string
+applies_to: [SECNode, Interface, Parameter, Command, Property]
+description: |
+  Human readable description.
+
+---
+kind: Property
+name: modules
+version: 1
+datainfo: JSON-object
+applies_to: [SECNode]
+description: |
+  JSON-object with modulenames as key and JSON-objects as values.
+
+---
+kind: Property
+name: equipment_id
+version: 1
+datainfo: string
+applies_to: [SECNode]
+description: |
+  Worldwide unique identification string.
+
+---
+kind: Property
+  name: firmware
+version: 1
+datainfo: string
+applies_to: [SECNode]
+optional: true
+description: |
+  short string naming the version of the SEC node software.
+
+---
+kind: Property
+name: implementor
+version: 1
+datainfo: string
+applies_to: [SECNode, Interface]
+optional: true
+description: |
+  Globally unique name of the implementor of this SECNode.
+
+---
+kind: Property
+name: timeout
+version: 1
+datainfo: numeric
+applies_to: [SECNode]
+description: |
+  Timeout in seconds for the SECNode to send an answer.
+
+---
+kind: Property
+name: accessibles
+version: 1
+datainfo: JSON-object
+applies_to: [Interface]
+description: |
+  Contains all accessibles of the module.
+
+
+---
+kind: Property
+name: interface_classes
+version: 1
+datainfo: list of strings
+applies_to: [Interface]
+description: |
+  List of the defined interface classes which are implemented for the Module.
+
+---
+kind: Property
+name: visibility
+version: 1
+datainfo: string
+applies_to: [Interface, Parameter]
+optional: true
+description: |
+  Hint for clients to use for access control and filtering.
+
+---
+kind: Property
+name: group
+version: 1
+datainfo: string
+applies_to: [Interface, Parameter]
+optional: true
+description: |
+  Grouping hint for multiple modules.
+
+---
+kind: Property
+name: meaning
+version: 1
+datainfo: tuple string, integer
+applies_to: [Interface]
+optional: true
+description: |
+  Tuple describing one of the predefined meanings and a importance value.
+
+---
+kind: Property
+name: implementation
+version: 1
+datainfo: string
+applies_to: [Interface]
+description: |
+  A string indicating information about the implementation of the module, like a python class name.
+
+---
+kind: Property
+name: features
+version: 1
+datainfo: list of string
+applies_to: [Interface]
+description: |
+  List of supported features.
+
+---
+kind: Property
+name: readonly
+version: 1
+datainfo: boolean
+applies_to: [Parameter]
+description: |
+  indicates whether the parameter can be written by the ECS.
+  In this yaml-specification, it is shortened with a field
+
+---
+kind: Property
+name: datainfo
+version: 1
+datainfo: JSON-object
+applies_to: [Parameter]
+description: |
+  Datatype of the accessible.
+
+---
+kind: Property
+name: constant
+version: 1
+datainfo: like the Parameter which has this property
+applies_to: [Parameter]
+description: |
+  indicates a constant value that will not be included in updates, and does
+  not change.
