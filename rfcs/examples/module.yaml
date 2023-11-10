@@ -1,0 +1,5 @@
+kind: Interface
+name: Module
+version: 1
+description: |
+  Base class for modules.

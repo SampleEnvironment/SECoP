@@ -91,7 +91,7 @@ Then, depending on the ``kind``, different keys can be present:
 **For properties:**
 
 ``applies_to``
-  List of Kinds to which this property can be applied.
+  List of Kinds to which this property can be applied or ``SECNode``.
 ``datainfo``
   Human readable explanation of the property's datainfo.
 
