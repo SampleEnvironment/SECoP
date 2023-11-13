@@ -32,7 +32,7 @@ These elements are:
 
 - Interface classes and features
 - Parameters, commands and properties
-- Systems (to be specified!)
+- Systems (see RFC 4)
 
 The definitions for standard elements should be accessible in a central
 repository.  SECNodes should link to their respective specifications in order to
@@ -99,7 +99,7 @@ Then, depending on the ``kind``, different keys can be present:
 
 ``modules``
   A dictionary of module names and their definitions. Each item is
-  either a reference to an interface/feature definition
+  either a reference to an interface/feature definition.
 
 When a new element is proposed, the ``version`` starts at 0.  A version of 0
 does not give a stability guarantee, unlike versions larger than 0.  If an
