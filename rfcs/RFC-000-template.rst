@@ -21,8 +21,12 @@ Technical explanation
 =====================
 
 The content of the RFC should be explained here in technical detail.
-The changes which would have to be made to the specification and a general idea on how to implement this feathre should be made apparent.
-If the feature interacts with other features of the protocol, this should be dissected here.
+
+The changes which would have to be made to the specification and a general
+idea on how to implement this feathre should be made apparent.
+If the feature interacts with other features of the protocol, this should
+be dissected here.
+
 
 Disadvantages, Alternatives
 ===========================
@@ -35,10 +39,11 @@ Is there a reason not to include this feature?
 Alternatives
 ------------
 
-If there are alternative methods to acheive the same goal, what are they?
+If there are alternative methods to achieve the same goal, what are they?
 
 
 Open Questions
 ==============
 
-If there are points that you know have to be discussed/solved, describe them here, maybe with an example.
+If there are points that you know have to be discussed/solved, describe them
+here, maybe with an example.
