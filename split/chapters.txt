@@ -1,0 +1,20 @@
+0 Intro
+
+1 Wire:
+  - message structure
+  - description structure
+
+2 Meaning/Syntax:
+  - Datatypes
+  - properties, parameters
+
+3 higher level
+  - Modules/Params
+
+
+Wire
+"Building Blocks"
+Data info
+Modules
+"Systems" <- tbd
+security, future
