@@ -1,0 +1,5 @@
+(`MUST generate` 'error-report' `as:`)
+[["[" 'errorclass' "," 'error-message' "," 'error-info' "]"]#`a json-array with 3 elements`]
+!!!
+(`MUST accept` 'error-report' `like:`)
+[["[" ['errorclass'#`may contain :subclasses` "," 'error-message' "," 'error-info' ]  ['ignored-value'*","]? "]" ]#`a json-array with >= 3 elements`]
