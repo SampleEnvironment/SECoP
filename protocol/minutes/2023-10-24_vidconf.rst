@@ -81,4 +81,4 @@ Markus and Enno essentially agree on having an extra module in this use case.
 
 lunch-to-lunch@MLZ-Garching 2023-11-15 to 2023-11-17 with SECoP core focus on the second half
 
-.. note: Anders won't be able join.
+.. note: Anders won't be able join in person.
