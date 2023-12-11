@@ -1,3 +1,5 @@
+.. _modules:
+
 Modules
 =======
 
@@ -17,6 +19,8 @@ temperature sensors in one apparatus are to be seen as different modules.
 An SEC node controls a set of named modules. Modules also have
 some descriptive data (type, list-of-parameters, list-of-commands, ...).
 
+.. _accessibles:
+
 Accessibles
 -----------
 
@@ -26,7 +30,7 @@ have to be unique within an SEC node, accessible names have to be unique
 within a module. There are two basic types of accessibles: parameters and commands.
 
 Module and accessible names should be in English (incl. acronyms), using
-only ASCII letters + digits and some additional characters (see :ref:`messages`).
+only ASCII letters + digits and some additional characters (see :ref:`messagefmt`).
 The maximum name length is 63 characters.
 
 Parameter:
@@ -368,6 +372,7 @@ command ``"communicate"``:
      modules with the ``Communicator`` interface class.
 
 
+.. _properties:
 
 Properties
 ----------
@@ -376,16 +381,16 @@ Definition: Properties
     The static information about parameters, modules and SEC nodes is
     constructed from properties with predefined names and meanings.
 
-For a list of pre-defined properties see :ref:`descriptive--dta`.
+For a list of pre-defined properties see :ref:`descriptive-data`.
 
-.. _data-report:
+.. _prop-data-report:
 
 Data report
 -----------
 A JSON array with the value of a parameter as its first element,
 and an JSON object containing the Qualifiers_ for this value as its second element.
 
-See also: `Data-report`_.
+See also: :ref:`data-report`_.
 
 :Remark:
 
@@ -456,7 +461,7 @@ Currently 2 qualifiers are defined:
 
     :Note:
         To check if a SEC node supports time stamping, a `ping` request can be sent.
-        (See also :ref:`heartbeat`).
+        (See also :ref:`message-heartbeat`).
 
 ``"e"``:
    the uncertainty of the quantity. MUST be in the same units
@@ -493,6 +498,8 @@ The last one in the list must be one of the base classes listed below.
 Base classes
 ~~~~~~~~~~~~
 
+.. _Communicator:
+
 ``"Communicator"``:
     The main purpose of the module is communication.
     It may have none of the predefined parameters of the other classes.
@@ -518,6 +525,8 @@ Base classes
     The main purpose is to represent slow settable values (i.e. a temperature or a motorized needle valve).
     It must have a ``stop`` command in addition to what a `Writable`_ has.
     Also, the ``status`` parameter will indicate a `BUSY`_ state for a longer-lasting operations.
+
+.. _features:
 
 Features
 ~~~~~~~~

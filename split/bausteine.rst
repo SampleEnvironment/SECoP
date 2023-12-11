@@ -1,6 +1,8 @@
 Building Blocks
 ===============
 
+.. _messages:
+
 Messages
 --------
 
@@ -50,14 +52,14 @@ either indicating success of the request or flag an error.
      `deactivate updates`_   request        ``deactivate``
           \                  reply          ``inactive``
      `heartbeat`_            request        ``ping␣<identifier>``
-          \                  reply          ``pong␣<identifier>␣``\ <:ref:`data-report`>
+          \                  reply          ``pong␣<identifier>␣``\ <`data-report`>
      `change value`_         request        ``change␣<module>:<parameter>␣``\ <:ref:`value`>
-          \                  reply          ``changed␣<module>:<parameter>␣``\ <:ref:`data-report`>
+          \                  reply          ``changed␣<module>:<parameter>␣``\ <`data-report`>
      `execute command`_      request        ``do␣<module>:<command>`` (**argumentless commands only**)
-          \                  reply          ``done␣<module>:<command>␣``\ <:ref:`data-report`> (with null as value)
+          \                  reply          ``done␣<module>:<command>␣``\ <`data-report`> (with null as value)
      `read request`_         request        ``read␣<module>:<parameter>``
-        \                    reply          ``reply␣<module>:<parameter>␣``\ <:ref:`data-report`>
-     value update_  event    event          ``update␣<module>:<parameter>␣``\ <:ref:`data-report`>
+        \                    reply          ``reply␣<module>:<parameter>␣``\ <`data-report`>
+     value update_  event    event          ``update␣<module>:<parameter>␣``\ <`data-report`>
      `error reply`_          reply          ``error_<action>␣<specifier>␣``\ <:ref:`error-report`>
     ======================= ============== ==================
 
@@ -79,9 +81,9 @@ either indicating success of the request or flag an error.
      `deactivate updates`_   request        ``deactivate␣<module>``
        module-wise           reply          ``inactive␣<module>``
      `heartbeat`_            request        ``ping``
-      with empty identifier  reply          ``pong␣␣``\ <:ref:`data-report`>
+      with empty identifier  reply          ``pong␣␣``\ <`data-report`>
      `execute command`_      request        ``do␣<module>:<command>␣``\ (\ :ref`value` | ``null``)
-          \                  reply          ``done␣<module>:<command>␣``\ <:ref:`data-report`>
+          \                  reply          ``done␣<module>:<command>␣``\ <`data-report`>
     ======================= ============== ==================
 
 
@@ -139,6 +141,8 @@ Correct handling of side-effects:
 Message intents
 ---------------
 
+.. _message-identification:
+
 Identification
 ~~~~~~~~~~~~~~
 
@@ -163,6 +167,7 @@ So far the SECoP version is given like "V2019-09-16", i.e. a capital "V" followe
 The ``add.info`` field was used to differentiate between draft, release candidates (rc1, rc2,...) and final.
 It is now used to indicate a release name.
 
+.. _message-describe:
 
 Description
 ~~~~~~~~~~~
@@ -192,6 +197,8 @@ A client implementing the current specification MUST ignore it.
     SEC-node. It may be changed in a later revision. ECS-clients are advised to ignore the specifier part
     of the describing message. A SEC-node SHOULD use a dot for the specifier.
 
+.. _message-activate:
+
 Activate Updates
 ~~~~~~~~~~~~~~~~
 
@@ -217,11 +224,13 @@ A SEC Node not implementing module-wise activation MUST NOT sent the module
 name in its reply to an module-wise activation request,
 and MUST activate all modules (*fallback mode*).
 
+.. _message-update:
+
 Update
 ~~~~~~
 
 When activated, update messages are delivered without explicit request
-from the client. The value is a :ref:`data-report`, i.e. a JSON array with the value as its first
+from the client. The value is a `data-report`, i.e. a JSON array with the value as its first
 element, and an JSON object containing the :ref:`qualifiers` as its second element.
 
 If an error occurs while determining a parameter, an ``error_update`` message has to be sent,
@@ -265,6 +274,8 @@ Another Example with a broken Sensor:
 Here the current temperature can not be obtained. An ``error_update`` message is used
 instead of ``update``.
 
+.. _message-deactivate:
+
 Deactivate Updates
 ~~~~~~~~~~~~~~~~~~
 
@@ -298,6 +309,8 @@ This requires the ECS being able to handle update events at any time!
     supporting module-wise activation does not necessarily need to support module-wise
     deactivation.
 
+.. _message-change:
+
 Change Value
 ~~~~~~~~~~~~
 
@@ -306,7 +319,7 @@ and the value to be set. The value is JSON formatted.
 As soon as the set-value is read back from the hardware, all clients,
 having activated the parameter/module in question, get an "update" message.
 After all side-effects are communicated, a "changed" reply is then send, containing a
-:ref:`data-report` of the read-back value.
+`data-report` of the read-back value.
 
 .. admonition:: Remarks
 
@@ -335,6 +348,7 @@ Until then, it will get regular updates on the current main value (see last upda
 .. note::
     It is vital that all 'side-effects' are realized (i.e. stored in internal variables) and be communicated, **before** the 'changed' reply is sent!
 
+.. _message-read:
 
 Read Request
 ~~~~~~~~~~~~
@@ -356,6 +370,7 @@ Example:
   > read t1:status
   > reply t1:status [[100,"OK"],{"t":1505396348.548}]
 
+.. _message-do:
 
 Execute Command
 ~~~~~~~~~~~~~~~
@@ -372,7 +387,7 @@ the argument specifies that
 The types of arguments must conform to the declared datatypes from the datatype of the command argument.
 
 A command may also have a return value, which may also be structured.
-The "done" reply always contains a :ref:`data-report` with the return value.
+The "done" reply always contains a `data-report` with the return value.
 If no value is returned, the data part is set to "null".
 The "done" message should be returned quickly, the time scale should be in the
 order of the time needed for communications. Still, all side-effects need to be realized
@@ -512,6 +527,8 @@ _`Error Classes`:
 
 .. Zwischenüberschrift: extended messages? optionale messages?
 
+.. _message-log:
+
 Logging
 ~~~~~~~
 
@@ -570,7 +587,7 @@ another example::
   < logging mod1 false
 
 
-.. _heartbeat:
+.. _message-heartbeat:
 
 Heartbeat
 ~~~~~~~~~
@@ -580,7 +597,7 @@ a heartbeat may be sent. The second part of the message (the id) must
 not contain a space and should be short and not be re-used.
 It may be omitted. The reply will contain exactly the same id.
 
-A SEC node replies with a ``pong`` message with a :ref:`data-report` of a null value.
+A SEC node replies with a ``pong`` message with a `data-report` of a null value.
 The :ref:`qualifiers` part SHOULD only contain the timestamp (as member "t") if the
 SEC node supports timestamping.
 This can be used to synchronize the time between ECS and SEC node.
@@ -872,6 +889,8 @@ Mandatory Accessible Properties
 
 Mandatory Parameter Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. _prop-readonly:
 
 ``"readonly"``
     mandatory boolean value.

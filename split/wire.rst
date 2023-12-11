@@ -15,7 +15,7 @@ If several connections are needed, a 'multiplexer' is needed.
 This should offer multiple TCP connections and contain the necessary logic to map requests/replies from/to those
 network connections onto/from the serial connection to the actual SEC-node.
 
-.. _messages:
+.. _messagefmt:
 
 Messages
 --------

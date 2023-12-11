@@ -14,6 +14,7 @@ It represents the version 1.0 of the SECoP specification (file ``SECoP_Specifica
     :maxdepth: 1
     :numbered:
 
+    overview
     intro
     wire
     datainfo
