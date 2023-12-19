@@ -21,7 +21,7 @@ Parameters can in turn have their own Properties.
 Examples of properties would be the datatype of the Parameter or the :ref:`readonly <prop-readonly>` flag that shows whether a parameter may be written to or not.
 To initiate actions that may not necessarily be tied to a parameter, modules can also have `Commands`, like stopping the current movement or running a calibration.
 To give show which capabilities a Module supports, there are :ref:`interface-classes` and :ref:`features`.
-The four interface classes currently existing are :ref:`Communicator`, which is intended for bare request-response communication, and three that represent values that can be interacted with: :ref:`Readable`, :ref:`Writable` and :ref:`Drivable`.
+The four interface classes currently existing are :ref:`Communicator <Communicator>`, which is intended for bare request-response communication, and three that represent values that can be interacted with: :ref:`Readable <Readable>`, :ref:`Writable <Writable>` and :ref:`Drivable <Drivable>`.
 Readable modules have a main ``value`` and a ``status``, which shows the current error state of the module.
 As the name implies, their main value can only be read.
 Writable and Drivable modules allow to influence their value by writing to a ``target`` parameter.
@@ -38,15 +38,15 @@ Messages
 As an first look, we will see the general message structure, and the messages :ref:`*IND? <message-identification>`, :ref:`describe <message-describe>`, :ref:`read <message-read>`, and :ref:`change <message-change>`.
 For an overview of all available messages, including calling commands and remote logging, etc., see :ref:`messages`.
 
-There are three parts a message can have: "action", "identifier" and "data". Of these, depending on the action, "identifier" and "data" may not be needed.
-The first part, "action", specifies the kind of message we want to send.
-The middle part, "identifier", points to the module/parameter/property or command we want to operate on.
-Finally, "data" is the data that may be needed for the specified action, like the new value when writing to a parameter, or the argument of a command.
+There are three parts a message can have: ``action``, ``identifier`` and ``data``. Of these, depending on the action, ``identifier`` and ``data`` may not be needed.
+The first part, ``action``, specifies the kind of message we want to send.
+The middle part, ``identifier``, points to the module/parameter/property or command we want to operate on.
+Finally, ``data`` is the data that may be needed for the specified action, like the new value when writing to a parameter, or the argument of a command.
 
 The default mode for communicating between SECNode and client is a classic request-response mode, where the client initiates an exchange.
 However, if the SECNode implementation supports it, the client may choose to move to the asynchronous mode, where the SECNode will send updates asynchronously when they occur. For more details on this, see the :ref:`activate <message-activate>` message.
 
-As an example, writing the 'target' parameter of a module we will name 'Temp':
+As an example, writing the ``target`` parameter of a module we will name ``Temp``:
 
     change Temp:target 11.5
 
@@ -77,15 +77,15 @@ Datatypes
 A variety of datatypes are covered in SECoP:
 
 There are simple datatypes, for example:
-- :ref:`IntRange <int>`
-- :ref:`ScaledInteger <scaled>`
-- :ref:`FloatRange <double>`
+- :ref:`Integer <int>`
+- :ref:`Scaled Integer <scaled>`
+- :ref:`Floating Point <double>`
 - :ref:`Boolean <bool>`
 - :ref:`Enum <enum>`
 - :ref:`String <string>`
 - :ref:`Blob <blob>`
 
-For more complicated values, there are three structured datatypes: :ref:`ArrayOf <array>`, :ref:`TupleOf <tuple>`, and :ref:`StructOf <struct>`.
+For more complicated values, there are three structured datatypes: :ref:`Array <array>`, :ref:`Tuple <tuple>`, and :ref:`Struct <struct>`.
 
 
 ``ArrayOf`` is an array of uniform values, ``TupleOf`` a fixed sequence of items that can be of non-uniform types, and ``StructOf``, a collection of named members, each of which can have their own types.
