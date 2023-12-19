@@ -30,8 +30,7 @@ Here we will lay out the steps to follow to change the specification.
 - If you do not have a concrete idea, come talk to us to flesh it out.
 - Copy the RFC-000-template.rst file and fill in the details. You can add
   sections freely, but try to fill out all the provided ones.
-- Make a pull request on the SECoP repository and use the number assigned
-  to that pull request to rename your file.
+- take the next free number and add it to the template file.
 - The RFC gets discussed - this should mostly happen under the rfc-pull
   request. If not, please add a summary if possible. Optimally, an
   implementation will already be done at this stage in one or more of the
@@ -51,6 +50,7 @@ Here we will lay out the steps to follow to change the specification.
 If you never used GitHub/Need Help
 ==================================
 
-This process is mostly intended for the core team, if you e.g. don't know how to
-use GitHub, but have an awesome idea for SECoP, just contact us at EMAIL-HERE
-and one of us will get back to you to help you with this process.
+The process involving GitHub is mostly intended for the core team, if you e.g.
+don't know how to use it, but have an awesome idea for SECoP, just make your
+proposal using the template and contact us at EMAIL-HERE.
+One of the core team will get back to you to help you with this process.

@@ -4,7 +4,6 @@
 - Authors: < Your Name(s)>
 - Type: < which place it touches: Wire, Protocol, Modules >
 - PR: <link to the pull-request>
-- Implementation Tracking: <If some implementations of SECoP have a tracking issue for implementing this rfc, add a link here, otherwise, just place a '-'>
 
 Summary
 =======
