@@ -31,9 +31,7 @@ Definitions
 Proposal
 --------
 
-It is proposed to add two new interface classes.
-
-:note: All names are provisional subject to finding better ones.
+It is proposed to add three new interface classes.
 
 
 ``MeasurableController`` (no base interface)
@@ -44,18 +42,28 @@ Accessibles:
 ``status``
     Mandatory: Standard SECoP status.
     The module is in ``BUSY`` state while the measurable is acquiring.
+    The module is in ``PREPARED`` state after ``prepare()`` is called or data
+    acquisition is paused by ``hold()``.
+
+``prepare()``
+    Optional command: prepares a data acquisition so that triggering with ``go``
+    is immediate.  No-op if already prepared.  Cannot be called when busy.
 
 ``go()``
-    Mandatory command: starts a data acquisition.  No-op if running.
+    Mandatory command: starts a data acquisition.  No-op if busy.
     Data acquisition runs until one of the channels' active presets is hit or
-    ``stop`` is called explicitly.
+    ``stop`` is called explicitly.  Runs the ``prepare()`` sequence first if
+    module is not already prepared.
+
+``hold()``
+    Optional command: pauses a data acquisition.  No-op if not busy.
+    Subsequent ``go()`` continues the acquisition without clearing currently
+    acquired data.
 
 ``stop()``
-    Mandatory command: stops a data acquisition.  No-op if not running.
-
-``clear()``
-    Mandatory command: clears/resets accumulated data on all channels.
-    If the hardware allows, this can be called during an acquisition.
+    Optional command: stops a data acquisition.  No-op if not busy.
+    Subsequent ``go()`` starts a new acquisition with clearing currently
+    acquired data.
 
 
 ``MeasurableChannel`` (derived from ``Readable``)
@@ -76,10 +84,6 @@ Accessibles:
     Mandatory: Standard SECoP status.
     The module is in ``BUSY`` state while the measurable is acquiring.
 
-``clear()``
-    Mandatory command: clears/resets accumulated data on this channel.
-    If the hardware allows, this can be called during an acquisition.
-
 ``preset``
     Optional: a value that, when reached, stops the data acquisition.
     In most cases, this will exist, and at least one channel MUST have
@@ -92,6 +96,13 @@ Accessibles:
 ``use_preset``
     Optional (but must be there when ``preset`` is): a Boolean, if false, the
     preset is ignored and the acquisition does not stop due to this channel.
+
+
+``Measurable``
+~~~~~~~~~~~~~~
+
+Combines both MeasurableController and MeasurableChannel accessibles into one
+interface, for simple devices where only one channel is ever needed.
 
 
 "Matrix" type channels
@@ -127,40 +138,37 @@ data is considered for this reduction.
 The return value of ``get_data()``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Since the returned data matrix can get pretty large, it is not clear how to best
-marshal it in the SECoP protocol, and correspondingly which data-type to use.
-Candidates are:
+Since the returned data matrix can get pretty large, it is not efficient to
+encode it as nested ``Array``\s.  Instead, the data is kept in Blob form
+(base64-encoded for JSON transmission).
 
-- Use nested ``Array``\s.
+The return value is a struct, where the following members are currently
+specified:
 
-  Disadvantages: For >=2 dimensions, subarrays could be of inconsistent
-  lengths, and the JSON marshaling is very inefficient, since the data
-  is usually available in contiguous form in memory (e.g. Numpy arrays)
-  and is usually wanted in the same form again on the client side.
+- ``data``: The data as a ``Blob``, whose datainfo must have these additional
+  properties:
 
-  Furthermore, no name is possible to define for the dimensions unless the
-  Array data info is amended with such an entry.
+  - ``elementtype``: The type (and size, and byte order) of each matrix element,
+    a string in Numpy convention (e.g. ``"<u4"``).
+  - ``names``: A list of names for each dimension
+  - ``maxlengths``: A list of maximum lengths for each dimension
 
-  Advantages: The size per dimension is self-describing.
+- ``dims``: An array containing the actual lengths of each dimension.
 
-- Create a separate new data info type, which defines the N dimensions of a
-  matrix with name, maximum size and type of each element.  The data can be
-  transferred directly from contiguous memory in binary form (base64-encoded for
-  JSON transmission).
+The order of the matrix elements is defined so that the dimension with the
+fastest running index comes first in ``dims``, ``names`` and ``maxlengths``.
 
-  Disadvantages: The size per dimension must be somehow added to the data, since
-  it can change.
+Example: ``data`` is ``[1, 2, 3, 4, 5, 6]``, ``dims`` is ``[2, 3]`` and
+``names`` is ``["x", "y"]``.  Then the matrix looks as follows::
 
-  Advantages: Data can be further transformed (e.g. using compression).
-
-- The same, but use ``Blob`` and define additional data properties.
+  .     x=0 x=1
+  y=0   1   2
+  y=1   3   4
+  y=2   5   6
 
 
 Remarks
 ~~~~~~~
-
-- In the case of simple measurables, which consist of a single channel only, the
-  two interfaces can be implemented in a single module.
 
 - All modules belonging to one measurable SHOULD have a ``group`` property,
   which is set to the same identifier.
