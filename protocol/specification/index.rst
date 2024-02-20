@@ -18,7 +18,7 @@ It represents the version 1.0 of the SECoP specification (file ``SECoP_Specifica
     intro
     wire
     datainfo
-    bausteine
+    buildingblocks
     modules
     future
     security
