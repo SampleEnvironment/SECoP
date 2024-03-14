@@ -2,6 +2,8 @@
 
 Sample Environment Communication Protocol
 
+Have a look at the official SECoP Website: http://sampleenvironment.org/secop
+
 * `SECoP Motivation <protocol/motivation.rst>`_
 * `SECoP Specification V1.0 <protocol/SECoP_Specification_V1.0.rst>`_
 * `SECoP Specification Current Draft <protocol/secop_specification_draft_wip.rst>`_
