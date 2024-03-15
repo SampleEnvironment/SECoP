@@ -166,3 +166,33 @@ Discussion
 ~~~~~~~~~~
 
 None yet.
+
+
+Proposal 3: Check value messages v.1.1
+--------------------------------------
+
+Proposal 2 has the problem that if a module contains many parameters that should be checkable, its module description becomes very bloated with commands that contain redundant information. Also, command names have to be parsed on the ECS side to infer whether a parameter is checkable or not.
+
+With the addition of a  Boolean parameter property ``checkable``, the shortcomings of Proposal 1 can be overcome. The check message must only answered for parameters with `checkable` set to `True`. It can ONLY be present on parameters, where ``readonly == False`` i.e. settable parameters. If the ``checkable`` property is not present on a parameter, it is implicitly assumed to be ``False``. This ensures backward compatibility.
+
+Analogous to how the value of the  ``readonly`` property defines if  ``change`` messages are accepted by a SEC Node for a given parameter, the ``chackable`` property decides if a ``check`` message is accepted. This means that additional routines only need to be implemented for checkable parameters. All parameters where ``checkable`` equals ``False`` cannot be checked and when ``check <module>:<param> <value>`` would be received an error is returned. The answer might be something like:
+
+.. code::
+
+	not checkable: Parameter <module>:<param> cannot be checked
+
+
+In principle the functionality would remain as described in Proposal 1, with some minor changes. New qualifiers such as ``condition``, or ``closest_valid`` are NOT introduced. If need be they can be added later, but for now they are not specified. Additiionaly the answer to a successful ``check`` message shuld echo the checked value, analougus to a successful ``change`` message.  
+
+Example
+~~~~~~~
+.. code::
+
+  > check mf:target [1.0, 1.0, 2.0]
+  < checked mf:target [[1.0, 1.0, 2.0], {}]
+  > check mf:target [1.0, 2.0, 2.5]
+  < error_check mf:target ["Impossible", "value outside allowed sphere", {}]
+
+
+Messages, where the check fails, should indicate whether the checked parameter value is outside the range of the ``datainfo`` limits (``RangeError``), or simply not possible due to the current configuration. An ``Impossible`` error message might be used here, or a more verbose error class can be defined for these cases. 
+
