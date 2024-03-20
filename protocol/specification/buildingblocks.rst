@@ -55,6 +55,8 @@ either indicating success of the request or flag an error.
           \                  reply          ``pong␣<identifier>␣``\ <`data-report`>
      `change value`_         request        ``change␣<module>:<parameter>␣``\ <:ref:`value`>
           \                  reply          ``changed␣<module>:<parameter>␣``\ <`data-report`>
+     `check value`_         request         ``check␣<module>:<parameter>␣``\ <:ref:`value`>
+          \                  reply          ``checked␣<module>:<parameter>␣``\ <`data-report`>
      `execute command`_      request        ``do␣<module>:<command>`` (**argumentless commands only**)
           \                  reply          ``done␣<module>:<command>␣``\ <`data-report`> (with null as value)
      `read request`_         request        ``read␣<module>:<parameter>``
@@ -64,9 +66,10 @@ either indicating success of the request or flag an error.
     ======================= ============== ==================
 
 .. note::
-    This means that ``change`` needs to be implemented, even if only readonly accessibles are present.
-    In this case, a ``change`` message will naturally be replied with an ``error_change``
-    message with an :ref:`Error class <error-classes>` of "ReadOnly" and not with an "ProtocolError".
+    This means that ``change`` and ``check`` need to be implemented, even if only readonly or non-checkable accessibles are present.
+    In this regard, a ``change`` message will naturally be replied with an ``error_change`` message with an 
+    :ref:`Error class <error-classes>` of "ReadOnly" and not with an "ProtocolError". Analougus to that a ``check`` message will be 
+    replied with an ``error_check`` message with an :ref:`Error class <error-classes>` of "NotCheckable". 
 
 .. table:: extended messages (implementation is optional)
 
@@ -82,7 +85,7 @@ either indicating success of the request or flag an error.
        module-wise           reply          ``inactive␣<module>``
      `heartbeat`_            request        ``ping``
       with empty identifier  reply          ``pong␣␣``\ <`data-report`>
-     `execute command`_      request        ``do␣<module>:<command>␣``\ (\ :ref`value` | ``null``)
+     `execute command`_      request        ``do␣<module>:<command>␣``\ (\ :ref:`value` | ``null``)
           \                  reply          ``done␣<module>:<command>␣``\ <`data-report`>
     ======================= ============== ==================
 
@@ -325,7 +328,7 @@ After all side-effects are communicated, a "changed" reply is then send, contain
 
     * If the value is not stored in hardware, the "update" message can be sent immediately.
     * The read-back value should always reflect the value actually used.
-    * an client having activated updates may get an ``update`` message before the ``changed`` message, both containing the same data report.
+    * A client having activated updates may get an ``update`` message before the ``changed`` message, both containing the same data report.
 
 
 Example on a connection with activated updates. Qualifiers are replaced by {...} for brevity here.
@@ -347,6 +350,35 @@ Until then, it will get regular updates on the current main value (see last upda
 
 .. note::
     It is vital that all 'side-effects' are realized (i.e. stored in internal variables) and be communicated, **before** the 'changed' reply is sent!
+
+
+
+.. _message-check:
+
+Check Value
+~~~~~~~~~~~
+
+The check value message allows an ECS to verify if a value can be set on a specific parameter without actually changing it. This verification goes beyond a simple validity check based on the parameter's datainfo and may depend on the current configuration of the entire SEC node.
+The check value message follows the same format as the change value message and includes the module name, parameter name, and a JSON formatted value. Upon successful completion of the check, a ``checked`` response is sent, which includes a `data-report` of the verified value.
+
+
+.. admonition:: Remarks
+  
+  * The response to a ``check`` message must not depend on the current status of the module.
+  * A ``check`` message must not change anything, neither on the hardware nor on any parameter.
+  * The ``checked`` and ``check_error`` messages are only sent in response to the ``check`` message on the same connection, and not to other clients with an activat connection.
+  * If the check fails, the error report should indicate whether this is due to the current configuration of the SEC node (:ref:`error-classes <Impossible>`), or because the checked value is outside the range (:ref:`error-classes <RangeError>`) specified by the ``datainfo`` property . 
+
+
+Example:
+
+.. code::
+
+  > check mf:target [1.0, 1.0, 2.0]
+  < checked mf:target [[1.0, 1.0, 2.0], {}]  
+
+
+:related issue: :issue:`075 New messages check and checked`
 
 .. _message-read:
 
@@ -464,6 +496,10 @@ _`Error Classes`:
 
         * - ReadOnly
           - The requested write can not be performed on a readonly value..
+
+        * - NotCheckable
+          - The requested check can not be performed on the specified parameter.
+            (i.e. on parameters, where no :ref:`checkable <prop-checkable>` property is present, or if it is set to false.)
 
         * - WrongType
           - The requested parameter change or Command can not be performed as the argument has the wrong type.
@@ -932,7 +968,6 @@ Optional Accessible Properties
         with 'advanced' visibility, and therefore also not their accessibles.
 
 
-
 Optional Parameter Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -943,6 +978,14 @@ Optional Parameter Properties
     after the activate command.
 
     The value given here must conform to the Datatype of the accessible.
+
+.. _prop-checkable:
+
+``"checkable"``
+    A boolean value, indicating whether the accessible can be checked with a ``check`` message.
+    If not given, the accessible is assumed to be not checkable (``checkable == False``), and the SEC node should reply with an :ref:`error-report` (``NotCheckable``) error if a ``check`` message is sent.
+
+    :related issue: :issue:`075 New messages check and checked`
 
 
 Custom Properties
