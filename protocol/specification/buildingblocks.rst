@@ -55,8 +55,6 @@ either indicating success of the request or flag an error.
           \                  reply          ``pong␣<identifier>␣``\ <`data-report`>
      `change value`_         request        ``change␣<module>:<parameter>␣``\ <:ref:`value`>
           \                  reply          ``changed␣<module>:<parameter>␣``\ <`data-report`>
-     `check value`_         request         ``check␣<module>:<parameter>␣``\ <:ref:`value`>
-          \                  reply          ``checked␣<module>:<parameter>␣``\ <`data-report`>
      `execute command`_      request        ``do␣<module>:<command>`` (**argumentless commands only**)
           \                  reply          ``done␣<module>:<command>␣``\ <`data-report`> (with null as value)
      `read request`_         request        ``read␣<module>:<parameter>``
@@ -66,10 +64,9 @@ either indicating success of the request or flag an error.
     ======================= ============== ==================
 
 .. note::
-    This means that ``change`` and ``check`` need to be implemented, even if only readonly or non-checkable accessibles are present.
-    In this regard, a ``change`` message will naturally be replied with an ``error_change`` message with an 
-    :ref:`Error class <error-classes>` of "ReadOnly" and not with an "ProtocolError". Analougus to that a ``check`` message will be 
-    replied with an ``error_check`` message with an :ref:`Error class <error-classes>` of "NotCheckable". 
+    This means that ``change`` needs to be implemented, even if only readonly accessibles are present.
+    In this case, a ``change`` message will naturally be replied with an ``error_change``
+    message with an :ref:`Error class <error-classes>` of "ReadOnly" and not with an "ProtocolError".
 
 .. table:: extended messages (implementation is optional)
 
@@ -87,6 +84,8 @@ either indicating success of the request or flag an error.
       with empty identifier  reply          ``pong␣␣``\ <`data-report`>
      `execute command`_      request        ``do␣<module>:<command>␣``\ (\ :ref:`value` | ``null``)
           \                  reply          ``done␣<module>:<command>␣``\ <`data-report`>
+      `check value`_         request        ``check␣<module>:<parameter>␣``\ <:ref:`value`>
+          \                  reply          ``checked␣<module>:<parameter>␣``\ <`data-report`>
     ======================= ============== ==================
 
 
@@ -359,7 +358,7 @@ Check Value
 ~~~~~~~~~~~
 
 The check value message allows an ECS to verify if a value can be set on a specific parameter without actually changing it. This verification goes beyond a simple validity check based on the parameter's datainfo and may depend on the current configuration of the entire SEC node.
-The check value message follows the same format as the change value message and includes the module name, parameter name, and a JSON formatted value. Upon successful completion of the check, a ``checked`` response is sent, which includes a `data-report` of the verified value.
+Upon successful completion of the check, a ``checked`` response is sent, which includes a `data-report` of the verified value.
 
 
 .. admonition:: Remarks
