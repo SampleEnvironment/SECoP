@@ -8,6 +8,7 @@ jobs:
       - name: Repository Dispatch
         uses: peter-evans/repository-dispatch@v3
         with:
+          token: ${{ secrets.DISPATCHTOKEN }}
           repository: sampleenvironment/secop-site
           event-type: spec-update
 
