@@ -12,8 +12,8 @@ It represents the most recent in-progress version of the SECoP specification.
     :maxdepth: 1
     :numbered:
 
-    overview
     intro
+    overview
     wire
     datainfo
     buildingblocks
