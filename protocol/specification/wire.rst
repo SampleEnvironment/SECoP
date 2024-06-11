@@ -8,12 +8,12 @@ Data transfer
 -------------
 
 SECoP relies on a stream transport of 8-bit bytes. Most often this will be TCP.
-In those cases the SEC-node SHOULD support several simultaneous connections.
+In those cases the SEC node SHOULD support several simultaneous connections.
 
 RS232 style connections may also be used. Here, only a single connection can be used.
 If several connections are needed, a 'multiplexer' is needed.
 This should offer multiple TCP connections and contain the necessary logic to map requests/replies from/to those
-network connections onto/from the serial connection to the actual SEC-node.
+network connections onto/from the serial connection to the actual SEC node.
 
 .. _messagefmt:
 
@@ -62,7 +62,7 @@ identifier length is limited (<=63 characters).
     Albeit names MUST be compared/stored case sensitive, names in each scope need to be unique when lowercased.
     The scopes are:
 
-    - module names on a SEC Node (including the group entries of those modules)
+    - module names on a SEC node (including the group entries of those modules)
     - accessible names of a module (including the group entries of those parameters) (each module has its own scope)
     - properties
     - names of elements in a :ref:`struct` (each struct has its own scope)
