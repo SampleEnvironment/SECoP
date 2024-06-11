@@ -19,11 +19,11 @@ either indicating success of the request or flag an error.
 
 .. note::
     An ECS may try to send a request before it received the reply to an earlier request.
-    This has two implications: a SEC-node may serialize requests and fulfill them strictly in order.
-    In that case the ECS should not overflow the input buffer of the SEC-node.
+    This has two implications: a SEC node may serialize requests and fulfill them strictly in order.
+    In that case the ECS should not overflow the input buffer of the SEC node.
     The second implication is that an ECS which sends multiple requests, before the replies arrive,
     MUST be able to handle the replies arriving out-of-order. Unfortunately there is currently no indication
-    if a SEC-node is operating strictly in order or if it can work on multiple requests simultaneously.
+    if a SEC node is operating strictly in order or if it can work on multiple requests simultaneously.
 
 .. note::
     To improve compatibility, any ECS client SHOULD be aware of `update`_ messages at any time.
@@ -104,18 +104,18 @@ Correct handling of side-effects:
 
   1) ECS sends the initiating message request (either ``change`` target or ``do`` go) and awaits the response.
 
-  2) SEC-node checks the request and if it can be performed. If not, SEC-node sends an error-reply (sequence done).
+  2) SEC node checks the request and if it can be performed. If not, SEC node sends an error-reply (sequence done).
      If nothing is actually to be done, continue to point 4)
 
   3) If the action is fast finishing, it should be performed and the sequence should continue to point 4.
-     Otherwise the SEC-node 'sets' the status-code to BUSY and instructs the hardware to execute
+     Otherwise the SEC node 'sets' the status-code to BUSY and instructs the hardware to execute
      the requested action.
      Also an ``update`` status event (with the new BUSY status-code) MUST be sent
      to **ALL** activated clients (if any).
      From now on all read requests will also reveal a BUSY status-code.
      If additional parameters are influenced, their updated values should be communicated as well.
 
-  4) SEC-node sends the reply to the request of point 2) indicating the success of the request.
+  4) SEC node sends the reply to the request of point 2) indicating the success of the request.
 
      .. note::
          This may also be an error. In that case point 3) was likely not fully performed.
@@ -130,7 +130,7 @@ Correct handling of side-effects:
      communicate their new values.
 
 .. note::
-     An ECS establishing more than one connection to the same sec-node and
+     An ECS establishing more than one connection to the same SEC node and
      which **may** process the ``update`` event message from point 3)
      after the reply of point 4) MUST query the status parameter synchronously
      to avoid the race-condition of missing the (possible) BUSY status-code.
@@ -152,7 +152,7 @@ request "\ **\*IDN?**\ " is meant to be sent as the first message after
 establishing a connection. The reply consists of 4 comma separated
 fields, where the second and third field determine the used protocol.
 
-In this and in the following examples, messages sent to the SEC-node are marked with "> ",
+In this and in the following examples, messages sent to the SEC node are marked with "> ",
 and messages sent to the ECS are marked with "< "
 
 Example:
@@ -194,8 +194,8 @@ A client implementing the current specification MUST ignore it.
 
 .. note::
     The use of a single dot for the specifier is a little contrary to the other messages addressing the
-    SEC-node. It may be changed in a later revision. ECS-clients are advised to ignore the specifier part
-    of the describing message. A SEC-node SHOULD use a dot for the specifier.
+    SEC node. It may be changed in a later revision. ECS-clients are advised to ignore the specifier part
+    of the describing message. A SEC node SHOULD use a dot for the specifier.
 
 .. _message-activate:
 
@@ -220,7 +220,7 @@ A SEC node might accept a module name as second item of the
 message (*module-wise activation*), activating only updates on the parameters of the selected module.
 In this case, the "active" reply also contains the module name.
 
-A SEC Node not implementing module-wise activation MUST NOT sent the module
+A SEC node not implementing module-wise activation MUST NOT sent the module
 name in its reply to an module-wise activation request,
 and MUST activate all modules (*fallback mode*).
 
@@ -258,7 +258,7 @@ After this two more updates on the ``t1:value`` show up after roughly 1s between
     (an ECS may rely on having gotten all values)
 
 .. note::
-    To speed up the activation process, polling + caching of all parameters on the SEC-node is advised,
+    To speed up the activation process, polling + caching of all parameters on the SEC node is advised,
     i.e. the parameters should not just be read from hardware for activation, as this may take a long time.
 
 
@@ -299,7 +299,7 @@ Example:
 
 The deactivate message might optionally accept a module name as second item
 of the message for module-wise deactivation. If module-wise deactivation is not
-supported, the SEC-node should ignore a deactivate message which contains a module name
+supported, the SEC node should ignore a deactivate message which contains a module name
 and send an ``error_deactivate`` reply.
 This requires the ECS being able to handle update events at any time!
 
@@ -396,7 +396,7 @@ and communicated before sending the ``done`` message.
 
 .. important:: If a command does not require an argument, an argument MAY still be transferred as JSON-null.
  A SEC node MUST also accept the message, if the data part is empty and perform the same action.
- More precisely, any SEC-node MUST treat the following two messages the same:
+ More precisely, any SEC node MUST treat the following two messages the same:
 
  - ``do <module>:<command>``
  - ``do <module>:<command> null``
@@ -443,7 +443,7 @@ _`Error Classes`:
     Error classes are divided into two groups: persisting errors and retryable errors.
     Persisting errors will yield the exact same error message if the exact same request is sent at any later time.
     A retryable error may give different results if the exact same message is sent at a later time, i.e.
-    they depend on state information internal to either the SEC-node, the module or the connected hardware.
+    they depend on state information internal to either the SEC node, the module or the connected hardware.
 
     .. list-table:: persisting errors
         :widths: 20 80
@@ -532,11 +532,11 @@ _`Error Classes`:
 Logging
 ~~~~~~~
 
-Logging is an optional message, i.e. a sec-node is not enforced to implement it.
+Logging is an optional message, i.e. a SEC node is not enforced to implement it.
 
 ``logging``
   followed by a specifier of <modulename> and a string in the JSON-part which is either "debug", "info", "error" or is the JSON-value false.
-  This is supposed to set the 'logging level' of the given module (or the whole SEC-node if the specifier is empty) to the given level:
+  This is supposed to set the 'logging level' of the given module (or the whole SEC node if the specifier is empty) to the given level:
 
   This scheme may also be extended to configure logging only for selected parameters of selected modules.
 
@@ -549,12 +549,12 @@ Logging is an optional message, i.e. a sec-node is not enforced to implement it.
   "debug"
     All log messages are logged remotely.
 
-  A SEC-node should reply with an :ref:`error-report` (``ProtocolError``) if it doesn't implement this message.
+  A SEC node should reply with an :ref:`error-report` (``ProtocolError``) if it doesn't implement this message.
   Otherwise it should mirror the request, which may be updated with the logging-level actually in use.
-  i.e. if an SEC-node does not implement the "debug" level, but "error" and "info" and an ECS request "debug" logging, the
+  i.e. if an SEC node does not implement the "debug" level, but "error" and "info" and an ECS request "debug" logging, the
   reply should contain "info" (as this is 'closer' to the original request than "error") or ``false``).
-  Similarly, if logging of a too specific item is requested, the SEC-node should activate the logging on the
-  least specific item where logging is supported. e.g. if logging for <module>:<param> is requested, but the SEC-node
+  Similarly, if logging of a too specific item is requested, the SEC node should activate the logging on the
+  least specific item where logging is supported. e.g. if logging for <module>:<param> is requested, but the SEC node
   only support logging of the module, this should be reflected in the reply and the logging of the module is to be influenced.
 
   .. note::
@@ -562,14 +562,14 @@ Logging is an optional message, i.e. a sec-node is not enforced to implement it.
 
 ``log``
   followed by a specifier of <modulename>:<loglevel> and the message to be logged as JSON-string in the datapart.
-  This is an asynchronous event only to be sent by the SEC-node to the ECS which activated logging.
+  This is an asynchronous event only to be sent by the SEC node to the ECS which activated logging.
 
 
 example::
 
   # note: empty specifier -> select all modules
   > logging  "error"
-  # SEC-node confirms
+  # SEC node confirms
   < logging  "error"
   < log mod1:debug "polling value"
   < log mod1:debug "sending request..."
@@ -579,7 +579,7 @@ another example::
 
   # enable full logging of mod1
   > logging mod1 "debug"
-  # SEC-node can only log errors, logging of errors of mod1 is now active
+  # SEC node can only log errors, logging of errors of mod1 is now active
   < logging mod1 "error"
   < log mod1:error "value par1 can not be determined, please refill read-out liquid"
   ...
@@ -638,7 +638,7 @@ Only those messages are ALLOWED to be generated by any software complying to thi
        :alt: defined_requests
 
 .. compound::
-    Any SEC-node is allowed to generate the following messages:
+    Any SEC node is allowed to generate the following messages:
 
     .. image:: images/defined-replies.svg
        :alt: defined_replies
@@ -648,7 +648,7 @@ To future proof the the communication the following messages MUST be parsed and 
 (i.e. the ignored_value part is to be ignored).
 
 .. compound::
-    Any SEC-node **MUST** accept the following messages and handle them properly:
+    Any SEC node **MUST** accept the following messages and handle them properly:
 
     .. image:: images/must-accept-requests.svg
        :alt: must_accept_requests
@@ -772,7 +772,7 @@ Optional SEC Node Properties
 
 ``"implementor"``
      Is an optional string.
-     The implementor of a SEC-node, defining the meaning of custom modules, status values, custom
+     The implementor of a SEC node, defining the meaning of custom modules, status values, custom
      properties and custom accessibles. The implementor **must** be globally unique, for example
      'sinq.psi.ch'. This may be achieved by including a domain name, but it does not need
      to be a registered name, and other means of assuring a global unique name are also possible.
@@ -947,7 +947,7 @@ Optional Parameter Properties
 
 Custom Properties
 -----------------
-Custom properties may further augment accessibles, modules or the SEC-node description.
+Custom properties may further augment accessibles, modules or the SEC node description.
 
 As for all custom extensions, the names must be prefixed with an underscore. The meaning
 of custom properties is dependent on the implementor, given by the `implementor`_
