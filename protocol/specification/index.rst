@@ -1,14 +1,12 @@
 =============
-Split Spec
+Specification
 =============
 
-.. important::
-   This is a rendering of the proposed splitting of the specification for 1.1.
 
 This rendering is generated from the (authoritative) source at `the GitHub
 repository <https://github.com/SampleEnvironment/SECoP>`_.
 
-It represents the version 1.0 of the SECoP specification (file ``SECoP_Specification_V1.0.rst``).
+It represents the most recent in-progress version of the SECoP specification.
 
 .. toctree::
     :maxdepth: 1
