@@ -84,8 +84,8 @@ either indicating success of the request or flag an error.
       with empty identifier  reply          ``pong␣␣``\ <`data-report`>
      `execute command`_      request        ``do␣<module>:<command>␣``\ (\ :ref:`value` | ``null``)
           \                  reply          ``done␣<module>:<command>␣``\ <`data-report`>
-      `check value`_         request        ``check␣<module>:<parameter>␣``\ <:ref:`value`>
-          \                  reply          ``checked␣<module>:<parameter>␣``\ <`data-report`>
+      `check value`_         request        ``check␣<module>:<accessible>␣``\ <:ref:`value`>
+          \                  reply          ``checked␣<module>:<accessible>␣``\ <`data-report`>
     ======================= ============== ==================
 
 
@@ -357,8 +357,8 @@ Until then, it will get regular updates on the current main value (see last upda
 Check Value
 ~~~~~~~~~~~
 
-The check value message allows an ECS to verify if a value can be set on a specific parameter without actually changing it. This verification goes beyond a simple validity check based on the parameter's datainfo and may depend on the current configuration of the entire SEC node.
-Upon successful completion of the check, a ``checked`` response is sent, which includes a `data-report` of the verified value.
+The check value message is used to enable *dry run* functionality on accessibles (parameters and commands). It allows an ECS to verify if a value can be set on a particular parameter without actually changing it. Similarly it can be used on commands to check if a value is a valid argument, without executing the command. This check goes beyond a simple validity check based on the accessible's datainfo and may depend on the current configuration of the entire SEC node.
+Upon successful completion of the check, a ``checked`` response is sent, containing a `data-report` of the verified value. The :ref:`checkable property <prop-checkable>` indicates whether an accessible can be checked.  
 
 
 .. admonition:: Remarks
@@ -966,6 +966,14 @@ Optional Accessible Properties
         For example a client respecting visibility in 'user' mode, will not show modules
         with 'advanced' visibility, and therefore also not their accessibles.
 
+.. _prop-checkable:
+
+``"checkable"``
+    A boolean value, indicating whether the accessible can be checked with a ``check`` message.
+    If omitted, the accessible is assumed to be not checkable (``checkable == False``), and the SEC node should reply with an :ref:`error-report` (``NotCheckable``) error when a ``check`` message is sent.
+
+    :related issue: :issue:`075 New messages check and checked`
+
 
 Optional Parameter Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -978,13 +986,7 @@ Optional Parameter Properties
 
     The value given here must conform to the Datatype of the accessible.
 
-.. _prop-checkable:
 
-``"checkable"``
-    A boolean value, indicating whether the accessible can be checked with a ``check`` message.
-    If not given, the accessible is assumed to be not checkable (``checkable == False``), and the SEC node should reply with an :ref:`error-report` (``NotCheckable``) error if a ``check`` message is sent.
-
-    :related issue: :issue:`075 New messages check and checked`
 
 
 Custom Properties
