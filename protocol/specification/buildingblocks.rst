@@ -357,8 +357,7 @@ Until then, it will get regular updates on the current main value (see last upda
 Check Value
 ~~~~~~~~~~~
 
-The check value message is used to enable *dry run* functionality on accessibles (parameters and commands). It allows an ECS to verify if a value can be set on a particular parameter without actually changing it. Similarly it can be used on commands to check if a value is a valid argument, without executing the command. This check goes beyond a simple validity check based on the accessible's datainfo and may depend on the current configuration of the entire SEC node.
-Upon successful completion of the check, a ``checked`` response is sent, containing a `data-report` of the verified value. The :ref:`checkable property <prop-checkable>` indicates whether an accessible can be checked.  
+The check value message is used to enable *dry run* functionality on accessibles (parameters and commands). It consists of the module and accessible name, in addition to the value to be verified. It allows an ECS to verify if a value can be set on a particular parameter without actually changing it. Similarly it can be used on commands to check if a value is a valid argument, without executing the command. This check goes beyond a simple validity check based on the accessible's datainfo and may depend on the current configuration of the entire SEC node. Upon successful completion of the check, a ``checked`` response is sent, containing a `data-report` of the verified value. The accessible property :ref:`checkable <prop-checkable>` indicates whether an accessible can be checked.  
 
 
 .. admonition:: Remarks
