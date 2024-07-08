@@ -346,7 +346,7 @@ Limits and Offset
 
 parameter ``"target_limits"``:
     In addition to the range given in the ``datainfo`` property of the ``target`` parameter,
-    a SEC-Node might offer changeable limits restricting the allowed range even more.
+    a SEC node might offer changeable limits restricting the allowed range even more.
     ``target_limits`` is structured as a :ref:`tuple` with two numeric members indicating
     the lower and upper end of a valid interval for the setting of the ``target`` parameter.
     The ``datainfo`` property of the ``target`` parameter must match the members of the
@@ -415,7 +415,7 @@ See also: `error-report`_.
 Structure report
 ----------------
 The structure report is a structured JSON construct describing the structure of the SEC node.
-This includes the SEC-node properties, the modules, their module-properties and accessibles
+This includes the SEC node properties, the modules, their module-properties and accessibles
 and the properties of the accessibles.
 For details see :ref:`descriptive-data`.
 

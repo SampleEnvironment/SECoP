@@ -11,9 +11,9 @@ SECoP Node Structure
 --------------------
 
 SECoP is a communication protocol with a client-server model.
-The server is called the 'SECNode'.
+The server is called the 'SEC node'.
 
-Each SECNode consists of one or more :ref:`Modules`.
+Each SEC node consists of one or more :ref:`Modules`.
 These represent the main interface for interacting with the hardware.
 Each of these modules can have static values which are known at startup and dynamic values.
 These are called :ref:`properties` and :ref:`parameters <accessibles>` respectively.
@@ -30,7 +30,7 @@ Drivables funcion similar, but they can take longer to reach the target state.
 Think of a motor that has to drive to a position along a rail.
 For this, they would reflect the operation being ongoing in their status, setting it to ``BUSY`` and returning to ``IDLE`` once the operation is complete.
 
-While this structure is one of the advantages of SECoP, the communication itself is build upon several :ref:`messages <messages>` which are transferred between SECNode and client.
+While this structure is one of the advantages of SECoP, the communication itself is build upon several :ref:`messages <messages>` which are transferred between SEC node and client.
 
 Messages
 --------
@@ -43,8 +43,8 @@ The first part, ``action``, specifies the kind of message we want to send.
 The middle part, ``identifier``, points to the module/parameter/property or command we want to operate on.
 Finally, ``data`` is the data that may be needed for the specified action, like the new value when writing to a parameter, or the argument of a command.
 
-The default mode for communicating between SECNode and client is a classic request-response mode, where the client initiates an exchange.
-However, if the SECNode implementation supports it, the client may choose to move to the asynchronous mode, where the SECNode will send updates asynchronously when they occur. For more details on this, see the :ref:`activate <message-activate>` message.
+The default mode for communicating between SEC node and client is a classic request-response mode, where the client initiates an exchange.
+However, if the SEC node implementation supports it, the client may choose to move to the asynchronous mode, where the SEC node will send updates asynchronously when they occur. For more details on this, see the :ref:`activate <message-activate>` message.
 
 As an example, writing the ``target`` parameter of a module we will name ``Temp``:
 
@@ -63,9 +63,9 @@ This brings us to the topic of the self-description of SECoP.
 Description
 -----------
 
-The description is a formalized structure containing all information about the SECNodes modules and their parameters, properties and commands.
+The description is a formalized structure containing all information about the SEC nodes modules and their parameters, properties and commands.
 It is machine readable, with all details about modules, parameters, datatypes and so on included.
-Additionally, the implementor of the SECNode has to include textual descriptions for the important parts of the SECNode.
+Additionally, the implementor of the SEC node has to include textual descriptions for the important parts of the SEC node.
 These short documentation texts are not intended for machines, but for the human operators of the equipment.
 Functional dependencies that have to be machine readable are exposed through the already mentioned :ref:`interface-classes` and :ref:`features`.
 
