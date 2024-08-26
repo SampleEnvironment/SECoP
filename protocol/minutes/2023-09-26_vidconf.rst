@@ -1,0 +1,184 @@
+meeting 2023-09-26 (ZOOM)
+@@@@@@@@@@@@@@@@@@@@@@@@@
+
+.. sidebar:: participants
+
+     * Markus Zolliker
+     * Peter Wegmann
+     * Klaus Kiefer
+     * Alexander Zaft
+     * Enrico Faulhaber
+     * Bastian Klemke
+     * Niklas Eckström
+     * Anders Petterson
+
+.. contents:: Agenda
+    :local:
+    :depth: 3
+
+1) approval of the minutes 2023-07-05 (already on github)
+=========================================================
+
+Previous minutes approved.
+
+
+2) notes about standardized rfc-like processes
+===============================================
+
+Markus notes that once having moved the issues on github, it is really usefull
+to activate the notifications!
+
+Alexander wants to prepare something for the in-person meeting.
+
+Klaus notes that it would be good to have it at the in-person meeting,
+especially since it is also relevant to the HMC process.
+
+
+3) pending issues for final decision
+====================================
+
+
+3a) Issue 072: features
+----------------------
+
+Klaus rewrote parts to emphasise what kind of feature is referred to.
+General agreement, Issues will be closed.
+
+
+3b) Issue 073: HasOffset
+------------------------
+
+Klaus rewrote the part in the specification to clarify it.
+General agreement, Issues will be closed.
+
+Markus proposes to leave of the double quotes on the keywords in the
+specification, as they are marked anyway already.
+General agreement.
+
+Enno wonders if the time is ready for a Secop Version 1.1.
+Markus points out that there was the decision to restructure the specification
+differently first.
+Alexander ander Peter will have a look at it.
+
+
+3c) Issue 079: hints for readonly access
+----------------------------------------
+
+Klaus reworded it.
+General agreement, Issues will be closed.
+
+
+3d) Issue 065: coupled submodules ('control_off' command)
+---------------------------------------------------------
+
+Markus did some wording for the 'control_off' command, to be approved.
+
+Klaus ponders about whether a more condensed or a more explicit style could fit better.
+
+Enno points out a minor point for clarification.
+Klaus fixes it online.
+
+
+4) other issues
+===============
+
+4a) automated sample changer
+----------------------------
+
+Klaus presents some slides about the approach to control a sample changing robot
+via SECoP from a different project.
+Enno points out that some of the presented approaches would be easier if proper
+interface classes are defined beforehand.
+Also, stopping at 'Drivable + some features' is not to be preferred.
+Alexander has some questions about the storage system answered by Klaus.
+
+
+4b) ramping specifics / Issue 80
+--------------------------------
+
+Markus wants to clarify about the handling of ramping from a different starting
+point. After some discussion Enno points out that this can be handled
+be switching to 'use no ramp', setting the starting setpoint, re-enabling the ramp
+and then set the final target for the ramp.
+
+Klaus points out that this is currently not covered in all cases
+(e.g. magnets don't have a setpoint yet).
+
+After some discussion, having a feature `has_ramp` with a `ramp` parameter to
+set the ramp speed, a `ramp_enable` parameter to en-/disable the use of the ramp
+and a `setpoint` parameter (with the previously defined behaviour) would solve
+the problem.
+
+As always, a custom command could be implemented to combine the above sequence
+in one command.
+
+Markus points out that there are magnet controllers which can ramp, but have no
+way to disable the ramp. After some discussion, the majority prefers having a
+constant `ramp_enable` parameter (ramp is always enabled) instead of omitting the
+parameter, as it is more explicit.
+
+Markus points out that a proposal needs to be written for the `has_ramp` feature.
+
+
+4c) Issue 75: New Messages `check` and `checked`
+------------------------------------------------
+
+Markus and Enno agreed that implementing this in Frappy is feasible.
+Anders points out that this puts a lot of stress on simpler SEC-nodes.
+Klaus points out, that the functionality is actually needed, e.g. for a vector
+magnet.
+
+Enno proposes to add a command `target_check` to check a given value for validity.
+This wouldn't impose an implementation hurdle on SEC-nodes not needing this.
+This mechanic could also be extended for other parameters as well (see Issue 77).
+
+Anders likes this proposal, as it seems to be cleaner.
+
+Enno will rewrite Issue 75 to include the result of this discussion.
+
+4d) Issue 77: predefined parameter name postfixes
+-------------------------------------------------
+
+Needs to be extended to include the '*_check' postfix from 4c).
+
+Also, should be suffix or postfix?
+
+After a short discussion, the postfix version is preferred.
+
+Markus ponders whether _limit should stay, as it can be replaced with
+having _min and _max. Anders prefers this.
+-> _limits is going to be removed.
+
+Markus raises the question about enabling a parameter (e.g. a ramp).
+_used or _active seem inferior to _on.
+
+After some more discussion, the idea of keeping target_check as a parameter
+(i.e. remembering the value) could be worked into some `simulation light`.
+
+more thinking seems needed here...
+
+
+5) list of pending tasks
+========================
+
+ - closing of finalized issues:
+   Markus
+
+ - restructuring the spec for v1.1:
+   Alexander and Peter
+
+ - write a proposal for `has_ramp`:
+   Enno
+
+ - rewrite issue 75/77
+   Enno
+
+
+6) in persona meeting
+---------------------
+
+Alexander is collecting the E-Mail addresses of all participants.
+
+7) date for next video meeting
+------------------------------
+2023-10-24 9:00 via zoom

@@ -1,0 +1,131 @@
+meeting 2023-07-05 (ZOOM)
+@@@@@@@@@@@@@@@@@@@@@@@@@
+
+.. sidebar:: participants
+
+     * Markus Zolliker
+     * Peter Wegmann
+     * Klaus Kiefer
+     * Alexander Zaft
+     * Enrico Faulhaber
+     * Georg Brandl
+     * Bastian Klemke
+
+..     * Lutz Rossa
+..     * Anders Petterson
+..     * Niklas Eckström
+
+.. contents:: Agenda
+    :local:
+    :depth: 3
+
+1) approval of the minutes 2023-06-07 (already on github)
+=========================================================
+
+Previous minutes approved.
+
+2) present findings about standardized rfc-like processes
+=========================================================
+
+Alexander presents the current status of the rfc style progress process.
+Klaus points out, that an automatic final comment period of only 1 month is
+a little short for our small group. 2 months seems more appropriate.
+Markus and Alexander discuss ways of notifying the members if a new issue/pull
+request is brought up.
+
+Apart from some minor cosmetic changes, the text is accepted as is.
+
+2b) clarifaction for ``influences`` property
+============================================
+
+Alexander points out that an influences property referencing a parameter of a
+different module is tricky to implement in a generic framework, as the classes (defining the properties),
+have no clue about the naming and possible existence of any other module, whose working
+might be influenced.
+
+(Within the same module there is no problem, however.)
+
+Enno thinks that the extra amount of configuration just to get the influences property right
+across modules as a) prone to mistakes and b) scares more people away than people
+getting enthralled about the support for synchronous only clients....
+
+Markus proposes to hold back the influences property until a clear use case *needing*
+this pops up.
+
+2c) clarifaction for ``enum`` datainfo
+======================================
+
+Since it is unspecified in the specification, what should happen if an enum valued
+parameter has a value which is not listed as a member in the enum.
+
+A short discuission quickly escalates. However, it seems clear that the direction of data flow from
+client to SEC-node is clear, as the SEC node has to reject invalid or non-matching values.
+The client should obviously not crash if it gets a value outside the defined range from the datainfo.
+Agreement seem to settle that this is a client's problem.
+Markus points out that a SEC node may also send an error_update, indicating the bad value
+and that it can't be mapped due to missing entries.
+Finally it seems a decision of the client implementor, how to proceed in such cases.
+Anyhow, it seems a good idea, to mention this in the spec.
+
+3) in persona meeting
+=====================
+
+As the last poll didn't find a possible date, Klaus will create a new poll,
+probably around KW 45..47.
+
+.. note:: (Peter has to leave.)
+
+4) date for next video meeting
+==============================
+
+next zoom-meeting: 2023-09-26 9:00
+
+
+5) pending issues in finalizing state waiting for approval, already in the draft spec
+=====================================================================================
+
+Issue 072: features
++++++++++++++++++++
+
+Agreed. Klaus points put that the spec needs a little re-phrasing
+to use feature only in the contect of a SECoP feature.
+Also, features should be explained at the same level as interfaces.
+
+Issue 073: HasLimits and HasOffset
+++++++++++++++++++++++++++++++++++
+
+Agreed, though the spec needs a little rewording.
+The text in the spec is much shorter (and less explicit/precise) than the text in the issue.
+
+Issue 079: hints for readonly access
+++++++++++++++++++++++++++++++++++++
+
+Agreed, though the spec should be reworded to explicit state that it's the
+*clients* task to implement/enforce the visibility/readonly access.
+The SEC-node is only enforcing the datainfo and the readonly properties.
+
+6) pending issues, not yet in finalizing state
+==============================================
+
+Issue 065: handling of coupled submodules
++++++++++++++++++++++++++++++++++++++++++
+
+(MZ wants to make an addition: optional 'control_off' command, see Issue 65, Appendix)
+general agreement about this.
+
+7) any other bussiness
+======================
+
+Enno and Georg present some results from this mornings brainstorming
+about schemata and templates....
+
+8) postponed issues
+===================
+
+- Issue 075: 'check' and 'checked' messages
+- Issue 076: Measurable (needs implementation test)
+- Issue 077: predefined parameter name pre-/postfixes
+- Issue 078: Interacting Modules - use case power supply (interferes with 077)
+- Issue 080: issues with software ramp (setpoint aspect not yet discussed)
+- Issue 081: dynamic descriptive data
+

@@ -1,0 +1,2 @@
+('accessible-description')
+[ [ "{" [ ['accessible-property' ","]*!]? "}" ]#`a JSON object`]

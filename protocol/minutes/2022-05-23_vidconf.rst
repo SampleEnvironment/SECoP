@@ -1,0 +1,249 @@
+2-days meeting 2022-05-23 - 2022-06-01 (ZOOM)
+=============================================
+
+.. sidebar:: participants
+
+     * Lutz Rossa
+     * Klaus Kiefer
+     * Bastian Klemke
+     * Niklas Eckström
+     * Markus Zolliker
+     * Anders Pettersson
+     * Enrico Faulhaber
+
+
+.. contents:: Contents
+    :local:
+    :depth: 2
+
+
+Agenda
+------
+
+1) Interface classes or Features?
++++++++++++++++++++++++++++++++++
+
+With a real example from SINQ (sample stick motor at cryomagnets)
+Markus wants to discuss the usefulness of features (or interface_classes).
+
+2) more general discussion, how to go on with interface classes and features
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+e.g. what to do when an interface class does not fit perfectly?
+
+Issue 27, extract from the proposals from Enno:
+
+Readable: has value and status
+Sensor(inherits Readable): has calibration, value is numeric, (optional adjust command)
+Writable(inherits Readable): has target
+Drivable(inherits Writable): has busy status and stop command
+Actuator(inherits Drivable): has ramp/speed, (optional adjust command)
+PIDController(inherits Actuator): has ctrlpars, setpoint, mode, output
+
+This does not address:
+
+- 'calibration' may be combined with any other
+- 'ctrlpars' may exist without 'ramp/speed'
+- 'adjust' command may be combined with any other
+
+If we want interface classes with well defined behaviour, we will
+need a class for each valid combination of predefined parameters,
+which will lead to a combinatorial explosion. There are already
+16 possible drivable combinations alone with "calibration",
+"adjust", "ramp" and "ctrlpars"
+
+We could take only the most common combinations, with additional,
+optional parameters, but what is then the benefit of classes?
+
+If an ECS needs classes, it may find the best match from the existing parameters,
+and make parameters not existing on the SECoP module dummy, omit parameters not
+existing on the class or expand classes with a list of key / value pairs.
+
+3) meanings
++++++++++++
+- temperature (sample T, might be drivable, but not needed)
+- temperature_regulation (heat exchanger T, probably a drivable)
+- ...
+
+For data storing, concerning temperature, above is sufficient.
+However, for control, it would be a benefit to know, which one has to be driven.
+Should we extend the meanings?
+
+4) what SE is interesting to be stored over long term
++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+1) only store the main data (the ones with meanings) together with the scan files
+2) store the full timeline of SE data over (a part of) an experiment in addition.
+
+
+2022-05-23
+----------
+
+1) Interface classes or Features?
++++++++++++++++++++++++++++++++++
+
+Markus starts by proposing two Features HasOffset and HasLimits, driven by his needs to
+support a sample rotation motor.
+Klaus wants to clarify if both Features and Interface classes can be freely combined.
+Enno clarifies that this is in principle true, but it makes no sense to only use Features,
+as the combinatorical amount of possible combinations grows too big.
+Also it makes more sense to combine selected features with an existing interface class as
+a new interface class.
+Klaus summarises.
+Markus prefers to just have the Features, as it is not easy to see, which features are
+within an extended interface class.
+Klaus points out that we already have optional accessibles in the existing interface
+classes, so if things are missing there is no problem.
+Markus doesn't see the need of having interface classes.
+Enno presents another multiple scale view on the problems, as Features and interface
+classes on the module level are comparable to collections of modules and templates on
+higher levels (up to the sec-node).
+A lively discussion goes on. As a result, extended interface classes must be handled the
+same way as specifiying the basic interface classes plus the used features
+(which together would make up the extended interface class).
+Enno proposes to include the composition of interface classes within the description.
+Klaus is not happy with this, as Features and Interface classes should be defined in the
+specification.
+
+2) more general discussion, how to go on with interface classes and features
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Markus thinks that an ECS may provide functionality derived from the existence of
+properties of accessibles only, and does not necessarily need interface classes.
+Klaus states that the interface class is the specified one.
+Markus doesn't want to create the list of proposed interface classes.
+Enno points out that if an optional Feature can not be emulated by the ECS,
+its badly designed.
+Klaus summarises that we want to have 'templates' defining optional and mandatory
+modules/properties on collections as well as Interface classes/features defining optional
+and mandatory accessibles on the module level.
+Enno will make a proposal for the machine-readable format.
+
+Markus don't want to just brainstorm these things, but wants to have a proposal beforehand.
+
+3) meanings
++++++++++++
+
+Markus wants to know how to handle cases where the relevant sample regulation point
+changes during an experiment/the livetime of a secnode.
+Enno points out that meaning and priority are intended to solve this and if this is
+insufficient, you would need another module which handles this dynamically.
+
+4) what SE is interesting to be stored over long term
++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Markus points out that there are several needs for storing/searching SE data.
+Enno points out that this is a) the problem of the ECS and b) you typically store both
+a continous timeseries as well as a copy during the relevant neutron counting time.
+Klaus points at that there are several questions related:
+
+* what do we dump into the nexus file (during scans/counts)
+* what do we do with the information colleted between the above.
+
+After a discussion, it seems clear that every secop module with a meaning *must* be
+stored in the neutron data file and that all data retrieved via secop should
+*at* *least* be stored as a time-series (format not yet clear), but may of course be
+(selectively) included in the neutron data.
+
+
+2022-06-01
+----------
+
+.. sidebar:: participants
+
+     * Lutz Rossa
+     * Klaus Kiefer
+     * Bastian Klemke
+     * Niklas Eckström
+     * Markus Zolliker
+     * Enrico Faulhaber
+
+Agenda
+++++++
+
+1) discuss the JSON description of the HZB proposal of the orange cryo
+2) Issue 72 (features)
+   https://github.com/SampleEnvironment/SECoP/blob/master/protocol/issues/072%20features.rst
+3) Issue 73 (HasLimits and HasOffset)
+   https://github.com/SampleEnvironment/SECoP/blob/master/protocol/issues/073%20HasLimits%20and%20HasOffset.rst
+4) Ennos proposal on how to encode additional definitions in the descriptive data
+5) other still open issues
+6) next meeting
+
+
+1) discuss the JSON description of the HZB proposal of the orange cryo
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Markus raises the question, if UTF8 makes sense on unit-strings, or if we should
+restrict to ASCII.
+Enno points out out that ASCII is too restrictive, but predefining a mechanism on how
+to construct valid unit strings.
+A similar discussion happens about the status texts.
+Agreement on sticking with UTF-8, an issue on how to construct/parse valid unit strings is to be proposed.
+
+Markus raises the question about the formatting of the 'calibration table' parameter.
+Klaus states that this is currently a custom extension and as it is defined as an array of struct,
+it is fine.
+
+A discussion about the need of the 'go' command (or if this should be preferred or recommend) ensures.
+Is the implementor of a sec-node deciding whether a 'go' command is defined, or should this
+be based on the functionality of the module?
+Enno proposes to discuss 'go' and 'shutdown' in the sense of a template-level command.
+
+Agreement on publishing the example (without the go/shutdown commands).
+Klaus would like to publish a commented version, to clarify where future changes / specifications may happen.
+It will probably be published in multiple forms.
+Markus proposes to use the 'rst' syntax. No disagreement.
+
+Klaus/Lutz will prepare the 'to-bu-published version' before the next meeting to discuss it there.
+
+2) Issue 72 (features)
+++++++++++++++++++++++
+
+This is essentially a more precise specification than point 5.something in the specification.
+Everbody agrees.
+
+3) Issue 73 (HasLimits and HasOffset)
++++++++++++++++++++++++++++++++++++++
+
+Enno questions the usefulnus of *these* features, as the complexity should be on the ECS
+and not on the secnode. Also, there seems to be no benefit, as the ECS needs to be capable to
+correct offsets anyway.
+Markus points out that if multiple clients connect, the other clients should be able to show the
+'corrected' values. Klaus points out that the way to achieve this should be standardized.
+Everybody agrees on this.
+
+Enno points out that having an 'adjust' command may make sense on those cases.
+Markus states that having the offset value available is needed if switching between several configurations is desired.
+Enno agrees, that if the complexity of applying the offset is indeed moved to the sec-node,
+the proposed features make sense.
+After a intense discussion, we found out that limit changing and adjustments need to be part of SECoP (and of course in a predefined way).
+Enno sees the use case, but dislikes certain consequences:
+the limits in the datainfo would need to be adjusted which would require a reconnect.
+
+Klaus dislikes dynamic datainfo limits and proposes to have an additional rawvalue/rawtarget.
+An intense discussion continues.
+Markus poropses that if there are 'userlimits' available, they should be used by clients,
+otherwise the datainfo limits are to be used.
+Enno points out that modules implementing an offset then aly need to have userlimits.
+Markus disagrees.
+Discussion gets more intense.
+Enno points out that if needed, a second 'transforming' module could be created.
+It also seems we need to revisit our model of the purpose and interaction of modules.
+Nobody seems to like the idea of a forced reconnect upon changing an offset.
+As a result, a userlimits parameter is needed whenever a transformation is changeable via SECoP.
+Klaus figures out, that the limits are actually optional, so leaving them out would avoid needing a reconnect.
+Enno still *strongly* prefers to have reliable limits.
+Markus will re-work the porposal for discussion at the next meeting.
+
+4) Ennos proposal on how to encode additional definitions in the descriptive data
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Klaus like that the proposal is machine-readable.
+Everyone agrees, that the final location of those added meta-data is to be discussed.
+Enno explains the basic ideas behind the syntax.
+Klaus likes the general approach, but details need to be worked on.
+Discussion postponed to next meeting.
+
+next meeting
+++++++++++++
+2022-07-04 10:30

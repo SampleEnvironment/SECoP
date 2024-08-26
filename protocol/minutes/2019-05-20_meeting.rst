@@ -1,0 +1,279 @@
+Meeting @ MLZ 2019-05-20
+########################
+
+.. sidebar:: participants
+
+     * Klaus Kiefer
+     * Lutz Rossa
+     * Frank Wutzler
+     * Markus Zolliker
+     * Niklas Ekström
+     * Enrico Faulhaber
+
+.. contents:: Contents
+    :local:
+    :depth: 2
+
+
+Opening (2019-05-20)
+====================
+Klaus explains the needed deliverables and the expected timeline.
+We need a paper until probably october and a report.
+
+We need to review all issues and make a decision on them.
+
+Klaus presents a prepared starting point of 'philosophy and rules'.
+
+Agenda:
+
+1) have a look at the prepared documents
+2) look through all the syntax (for the last time), checking them and
+   make notes to the rules document on the fly.
+3) work through all the issues
+4) reword things (if needed)
+
+
+1) looking through the prepared documents
+-----------------------------------------
+Philosophy -> rules -> implications.
+
+'Important' things need to be interoperable, unimportant things may not be interoperable.
+
+1b) HW abstraction
+------------------
+
+After a long discussion, it seems obvious that agreeing on a common philosophy is 'difficult'.
+
+a physical quantity representing a sample parameter transported via secop MUST be represented as its own module.
+
+a quantity which has only meaning in the context of a module MUST be a parameter of this module.
+
+a quantity that can function standalone should be a module.
+
+Parameters (or parameter sets) which in their functionality resemble drivables (target and value can differ),
+should be implemented as Drivable module.
+
+(Other physical quantities are suggested to be a module as well.)
+
+a 'best practice' document should be provided with an example of a multi-channel controller.
+
+The minimal request for the ecs client implementation is to deal with the basic interface classes.
+An implication of this is that custom parameter may not be accessible on all ECS's.
+However, we suggest an ECS to 'store' custom parameters as metadata.
+
+Fallback:
+If in doubt, ask the SECoP committee!
+(Especially, if not in doubt)
+
+(to be extended with Klaus' notes).
+
+
+2) Syntax discussion
+--------------------
+collection of unclear points, discussion postponed to next day.
+
+
+second day (2019-05-21)
+=======================
+Markus presents a sketch of a state diagram and a table showcasing different possible states and their
+overlaps with 'move to target' and 'an action is running'.
+'an action is performing' == transitional state which is left after a while.
+
+A list of open questions is the result:
+
+- after a 'go' or 'change target': do we want to distinguish 'value not moving anymore' from 'action is finished'.
+- Do we need the information 'that we are at target' -> No, may be nice, but not strictly needed.
+- Do we need the information '(not) ready for the next action' -> No, ECS retries. May be nice.
+- Do we need a predefined way to go to a 'prepared' state -> YES !
+- Do we need a way to go to 'enabled' and 'disabled' state -> yes
+- Does a client need to know which (of all) action is currently performed? -> No, but may be nice. String is sufficient.
+- does a client need to distinguish between IDLE and 'prepared'? No, may be nice to have it as a string.
+
+resulting definition: 'ready for measurement' means: 'value is stable'
+
+Proposal:
+
+- if an action is running -> 3xx, else 1xx or 2xx
+- if BUSY, add:
+
+  - 20 - movement is being prepared (PREPARING)
+  - 40 - value is actually moving (MOVING)
+  - 60 - value is no longer moving, but UNSTABLE (awaiting stabilisation) (STABILIZE)
+  - 80 - value is stable, cleanup actions still running, ready for measurements  (FINALIZING)
+
+  - 10 - ready to accept more requests (inverse of 'leave me alone')
+
+
+After a longer discussion, new statuscodes were assigned.
+Markus made a detailed slide about this, Klaus integrated into his
+report.
+
+
+Diskussion about linking of submodules (after lunch)
+----------------------------------------------------
+Klaus tries to explain, why this linking is needed.
+Possible implementations may be to define additional properties (for specific interface classes or features)
+containing the name of the linked module.
+Enrico has problems to unterstand the need of this linking.
+Klaus writes an Issue about it.
+
+Discussing issues which are not closed yet
+------------------------------------------
+SECoP Issue 22: Enable Module instead of Shutdown Command.
+
+Markus sees several possibilities:
+- enable()/disable() command pair
+- enabled: True/False
+- enable Module
+
+The question is raised, whether shutdown and disabled are distinct or can be joined.
+Klaus has difficulties with the wording of enabled/disabled.
+disable() is essentially the same as shutdown().
+
+Either there is a enable module, it dis-/enables all modules from the same group.
+Or each module has to be dis-/enabled individually.
+agreement. Klaus prefers the enable module.
+
+SHUTDOWN state ist the same as DISABLED state.
+
+Klaus prefers the wording of 'shutdown()'.
+The opposite should be 'initialize()'.
+
+closing the issue is postponed.
+
+side-discussion
+---------------
+A <parameter> change which may take time is done via a command
+'set_<parameter>(new_value)'.
+
+
+Results
+=======
+
+Klaus notes
+-----------
+
+SECoP Philosophy and Rules
+
+Philosophy:
+
+- Self-explaining:
+    the description of a SEC node must contain all necessary information for
+
+    a) operating the SEC node by the ECS without further documentation in at least a basic mode
+    b) providing all relevant metadata information
+- Integrative:
+    enable the use of SECoP by ECSs with a great variety of design concepts (e.g. synchronous vs. asynchronous communication)
+- Simple:
+    all parts of SECoP (transport layer, syntax) should be as simple as possible (but as complex as needed)
+- Necessary - sufficient -  unambiguous
+- Transport layer:
+    - message oriented (presently TCP/IP), ASCII
+    - Protocol is independent from specific transport layer
+- Wrap complex functionality of sample environment equipment on the SEC node side / simplify (standardize) the use of SE equipment by the ECS
+- Keep the overhead for the SECoP protocol on SEC node (server) side small
+- Avoid unnecessary traffic
+- Better be explicit
+- All protocol messages must be human readable (with only exception: blob)
+- Use JSON
+- Impose best-practices to the programmer of the SEC node by making important features mandatory
+- Must ignore policy
+- Allow for multiple clients
+- If you have more than one client, SECoP does not handle any resulting problems
+- There should be a general way of doing things.
+- Support both synchronous and asynchronous communication
+
+Rules:
+  + Hardware abstraction (how to build a SEC-node / structure)
+
+  * Naming rules (module names / parameter names / custom names / group names…)
+
+Status:
+ - Numbers see 0 / 100  / 200 / 300 / 400
+ - Combining status numbers: Bigger number wins (within a module)
+ - Consequence: if you are waiting for e.g. a WARNING to go away you have to wait for an IDLE
+ - If you wait for a BUSY go away it can be a WARNING as well, does not have to be an IDLE – see handshake
+
+Handshake (how the module informs about not being able to process requests / how is the ECS informed about acceptance of requests / how is the ECS informed about completion of tasks)
+how the module informs about not being able to process requests:
+
+- Module is idle if it can accept requests
+- Module has to go to busy (flavor “leave me alone”, see status) when it is performing an action (internally or externally triggered) and may not be able to accept requests
+
+how is the ECS informed about acceptance of requests:
+
+- Receiving request – do/initiate all things to be done (incl. side effects, incl. going to busy) – only then send reply
+
+how is the ECS informed about completion of tasks:
+
+- No message but “change target” and commands may take considerable time. Only these two requests can change the status to busy.
+- SEC node may go busy for other reasons (e.g. internal recalibration, other client issuing a command).
+- With two or more actions in parallel there is no possibility to differentiate which actions are still running. When all actions are finished: go to “idle”
+- SEC node is free to reject any action (but “stop” command). Send an error message if the action is rejected.
+- “Stop” command must not be rejected. Stop is ending all running actions.
+- SEC node must reject an action (error message send) which can’t be performed immediately (no queueing!) (to be discussed)
+
+Flow control / synchronization (how is the ECS informed about different intermediate states)
+
+- If an action is running -> 3xxx, else 1xx or 2xx
+- If BUSY, add:
+-   20 – movement is being prepared (PREPARING)
+-   40 – value is actually moving (MOVING), prefect for dynamic measurements
+-   60 – value is no longer moving, but unstable, awaiting stabilization (STABILIZE)
+-   80 – value stable, cleanup actions still running, perfect for static measurements (FINALIZING)
+-  Add 10: If ready to accept more requests (inverse of “leave me alone”)
+
+Procedure:
+
+1) send change target or go
+2) wait for status to leave range 300..379
+3) start measurement
+      120 PREPARED
+
+Stable
+
+- WARN 270 value went unstable only after change target
+- BUSY and ERROR are overwriting (bigger wins)
+- Check for IDLE before possibly restarting the measurement
+- Flag goes to the possible feature “stability”
+
+.. note:: Insert: Picture of Markus state diagram
+
+Status 100: Handshake: 10: Flow control
+
++ Expandability (e.g. how to deal with unknown (not custom) names / keywords: must ignore vs. error)
++ Custom things: SEC-Node or Client MUST work neglecting ALL custom things!
++ Interface classes: module must work with the basic interface classes (e.g. magnet as drivable)
++ Connection rules (SEC node side and ECS side)
+
+- (Re-) Establish Connection (how to connect or reconnect by ECS)
+- ECS MUST do: \*IDN? on SEC-node, send “describe” after new connection / reconnected
+- check for changes (opt)
+- Both sides can close the connection at any time
+- Changes on SEC-Node descriptive data: SEC-Node has to close the connection. (problem of changed calibration curve)
+- On each describe message the same content must be sent if the SEC-Node has no changes. The answer string to a describe message might change but the content must be the same. This is important to know for the ECS for checking the content of a SEC-node after a reconnect.
+- Presently SECoP requires TCP/IP. Other transport protocols: to be defined later (specific Error message?)
+
+Markus notes:
+-------------
+
+Proposal for naming of new states::
+
+  "DISABLED": 0,
+  "IDLE": 100,
+  "PREPARED": 120,
+  "WARN": 200,
+  "UNSTABLE": 270,
+  "BUSY": 300,
+  "PREPARING": 320,
+  "MOVING": 340,    # or "RAMPING" ?
+  "STABLIZING": 360,
+  "FINALIZING": 380,
+  "ERROR": 400,
+  "UNKNOWN": 401
+
+Next meeting
+============
+
+vidconf 2019-06-13 10:00
+

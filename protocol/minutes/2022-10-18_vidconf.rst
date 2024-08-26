@@ -1,0 +1,109 @@
+meeting 2022-10-18 (ZOOM)
+=========================
+
+.. sidebar:: participants
+
+     * Niklas Eckström
+     * Georg Brandl
+     * Klaus Kiefer
+     * Markus Zolliker
+     * Enrico Faulhaber
+     * Anders Petterson
+
+.. contents:: Contents
+    :local:
+    :depth: 3
+
+
+Agenda
+------
+Agenda:
+
+1) approval of the minutes
+
+2) define order of points below
+
+3) refinements of specs (issue 65 and reorganize predefined accessibles)
+   https://github.com/SampleEnvironment/SECoP/blob/master/protocol/secop_specification_draft_wip.rst
+   Please read carefully section 1.2 Accessibles for this.
+
+4) next proposal for issue 73. Instead of the proposed reset_limits command,
+   I propose a read only target_hardlimits parameter. Naming debateable.
+   https://github.com/SampleEnvironment/SECoP/blob/master/protocol/issues/073%20HasLimits%20and%20HasOffset.rst
+
+5) how to represent Measurables in SECoP
+   - discuss further the proposed ideas from last meeting
+
+6) next meeting
+
+7) going through some best practice examples (aka templates)
+   - cryomagnet power supply
+   - other examples?
+
+1) approval of the minutes
+==========================
+
+Previous minutes approved.
+
+2) define order of points
+=========================
+
+reshuffled.
+
+
+3) refinements of specs (issue 65 and reorganize predefined accessibles)
+========================================================================
+
+Discussion about the 'maximum set' of the mode parameter in the current secop_specification_draft_wip.rst
+Klaus will reword the section.
+Klaus points out that in the 'controlled_by' section case where there is no input/output relationship between modules, the current description is confusing.
+A more abstract wording seems apropriate.
+The remaining points seems to be Ok.
+
+4) next proposal for issue 73
+=============================
+
+Enno still dislikes the proposal.
+After some discussion, Klaus and Georg propose the sec-node to indicate
+a re-read of part of the description only.
+This is seems mainly needed to indicated changes of the datainfo.
+Agreement on having user settable limits.
+Also, the datainfo should always be current.
+The only open question is how/when the SEC-node informs the ECS upon which
+parts of the description needs a re-read.
+One possible way seems to be to define a new qualifier 'changed' listing the components
+whose descriptions should be re-read by partial describe requests.
+(An ECS may also just re-read the whole description)
+
+5) how to represent Measurables in SECoP
+========================================
+
+Enno wonders why the conditions/presets aren't distributed on the corresponding 'channel' devices.
+Georg elaborates that conditions may be more complex, so it makes sense to collect all on a single 'main' module controlling all the channels.
+Also, a central start/pause/resume/stop can be implemented easier, to avoid race conditions.
+
+Enno points out that either a group could be used to group the channels, or an additional property, listing the module names of the channels, may be used.
+
+Naming the axis should be done via extension of the array datainfo.
+While we are at it, the ticks information should be stored there as well.
+Nesting of arrays is not a problem, the only question is: is it performance wise better
+to transfer a flattened multi dimensional array, or as nested arrays.
+
+Discussion about how to only use a single channel, without a controlling module.
+Enno likes the simplicity of having a 'control node' controlling several readable channel modules
+representing physical values from the same measurement process.
+Having an extra Module for the 'controller' seems reasonable, but having the MeasurementController as a
+Feature which can be combined with any MeasurementChannel.
+(Otherwise: which is the main value of the MesurementController??)
+
+6) next meeting
+===============
+
+As Georg has to leave early, a date for the next meeting was looked for.
+
+2022-11-14 10:30 and 2022-11-16 10:00
+
+7) best practice examples
+=========================
+
+moved to next meeting.

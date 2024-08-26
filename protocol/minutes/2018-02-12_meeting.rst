@@ -1,0 +1,172 @@
+Minutes of the SECoP Meeting
+============================
+
+Grenoble 12/13 February 2018
+----------------------------
+
+
+Coordinator:         HZB
+
+Partners:         ESS, HZG, ILL, CEA, MLZ, NPI, PSI, STFC
+
+Venue:        ILL, 71 Avenue des Martyrs, 38000 Grenoble, France
+
+Date:         12 – 13 February 2017
+
+
+
+Participants: Kathryn Baker (STFC), Marek Bartkowiak (PSI), Graham Burgess (STFC), Niklas Ekström (ESS), Enrico Faulhaber (MLZ), Klaus Kiefer (HZB), Eddy Lelievre-Berna, Paolo Mutti (ILL), Anders Petterson (ESS), James Stammers (NPI), Pavel Strunz (NPI), Frank Wutzler (HZB), Markus Zolliker (PSI)
+
+
+
+Agenda
+......
+
+1. Short introduction into the present state of SECoP (K. Kiefer)
+2. Presentation of the HZB SECoP server library (F. Wutzler)
+3. Presentation of the content in the SECoP Github (M. Zolliker)
+4. Presentation about the use of commands at the ILL (P. Mutti)
+5. Discussion on the open issues
+
+1) Short introduction into the present state of SECoP (K. Kiefer)
+.................................................................
+
+K. Kiefer gives a short introduction to SECoP highlighting the principal ideas, structure, syntax. The presentation can be found on the SINE2020 server.
+
+2) Presentation of the HZB SECoP server library (F. Wutzler)
+.................................................................
+
+F. Wutzler presents the SECoP server library developed at the HZB and gives examples for C and LabView programming. The server library opens an easy way to embed SECoP functionality in existing newly developed programs for sample environment control.
+
+The presentation can be found on the SINE2020 server.
+
+In the following discussion it was suggested to develop a SECoP client library in the same way.
+
+
+
+3) Presentation of the content in the SECoP Github (M. Zolliker)
+.................................................................
+
+All SECoP documentation and the open questions was moved to the SECoP Github
+https://github.com/SampleEnvironment/SECoP. M. Zolliker presents the content and focuses on the SECoP Issues page where the open and closed questions (issues) are listed.
+
+During the discussion it was proposed to use the native Github functionality for issues.
+
+
+
+4) Presentation about the use of commands at the ILL (P. Mutti)
+.................................................................
+
+P. Mutti explains the use of commands and the use of status at the ILL: "Why do we need Start, Stop, Pause,...". The presentation can be found on the SINE2020 server.
+
+At the ILL there exists the following sequence:
+
+Command "Start" –> Status "Starting" –> Status  "Started"
+
+Command "Stop" –> Status "Stopping" –> Status  "Stopped"
+
+Command "Pause" –> Status "Pausing" –> Status  "Paused"
+
+In the following discussion it was argued that with an additional intermediate layer in the ILL-ECS (Experiment Control Software) the SECoP status "busy" would be sufficient.
+
+
+
+5) Discussion of the open issues
+.................................................................
+
+a) SECoP Issue 15: Support for Start/Stop/Pause/Shutdown Commands
+_________________________________________________________________
+
+A long discussion about the use of commands follows. At the end of this discussion it was decided to define the following standard SECoP commands:
+
+- **go** (optional on drivable): go to target
+
+In the case that the command "go" is not implemented in a module, the process of going to the target is immediately executed when the parameter "target" is set. In the case that the command "go" is implemented, the setting of the parameter "target" does not start the process of going to the target.
+
+- **hold** (optional on drivable): cease the movement, stay more or less where you are, be ready to continue soon, the target value is kept.
+
+Continuation can be triggered with 'go', or if not present, by putting the target parameter to its present value.
+
+- **stop** (mandatory on drivable): cease the movement, set the target parameter to a value close to the present value. Act as if this value would have been the initial target.
+
+- **abort** (optional): cease the movement quickly, a bit like an emergency stop (e.g. switch the heater off).
+
+- **reset** (optional): put the module to a state predefined by the implementation.
+
+- **shutdown** (optional): put the system in a safe state in order to be switched off. All actions are finished (status in idle mode).
+
+
+
+In addition it was decided that it is allowed to **change any parameter** (including the target) at **any time**. In the case that the device does not allow the change of a parameter an error message (busy) has to be issued by the SEC node.
+
+During the discussion it was mentioned that the SECoP server library has to provide the possibility to tunnel error codes with user defined error strings attached to the SECoP client.
+
+b) SECoP Issue 16: wanted\_target Parameter
+_________________________________________________________________
+
+The issue was closed with the decision: there is no predefined "wanted\_target" parameter.
+
+c) SECoP Issue 18: Interface classes
+_________________________________________________________________
+
+It was decided that E. Faulhaber and K. Kiefer will provide suggestions for interface classes.
+
+d) SECoP Issue 8: Groups and Hirarchy
+_________________________________________________________________
+
+It was decided to accept the existing proposal:
+
+Modules as well as parameters may have a property "group". If the client has the possibility to group modules and/or parameters, it should use this information for grouping.
+
+The lowercase version of module group names must not clash with the lowercase version of a module name. The lowercase version of parameter group names must not clash with the lowercase version of a parameter names on the same module.
+
+The "group" property may contain colons (':') as separator, in order to construct a hierarchy of more than one level.
+
+In addition there was the decision about the following naming convention: **lower case versions of all names including group names have to be unique on the same level.**
+
+e) SECoP Issue 19: Set SEC Node clock over SECoP
+_________________________________________________________________
+
+Decision: There will be no synchronization over SECoP coming from the client side (ECS).
+
+f) SECoP Issue 7: Time Synchronization
+_________________________________________________________________
+
+Decision: There will be no SEC node standard property describing the kind of clock.
+
+g) SECoP Issue 9: Module Meaning
+_________________________________________________________________
+
+Decision: The meaning of a module will be defined by a module property with a tupel datatype [meaning, importance] where "meaning" is given by a string and "importance" is given by an integer.
+
+The list of "meanings" (e.g. sample\_temperature\_sensor, sample\_temperature\_regulation) will has to be defined.
+
+The values for "importance" are given by the following matrix
+
++--------------------+-----+---------+------+
+| layer              | Low | default | high |
++--------------------+-----+---------+------+
+| instrument         |   5 |      10 |   14 |
++--------------------+-----+---------+------+
+| device             |  15 |      20 |   24 |
++--------------------+-----+---------+------+
+| insert             |  25 |      30 |   34 |
++--------------------+-----+---------+------+
+| addition to insert |  35 |      40 |   44 |
++--------------------+-----+---------+------+
+
+Example: the value of the importance of the sample temperature sensor (meaning: sample\_temperature\_sensor) mounted on a weak link that is attached to a dilution insert has to be in the range 35 to 44 (default 40).
+
+
+
+h) SECoP Issue 6: Keep Alive
+_________________________________________________________________
+
+Decision: A mechanism to detect that a client is dead will be not be introduced now. We wil open this issue again if we notice that there is a real problem.
+
+However: All SECoP servers and clients have to handle the problem of a lost connection. Any side may close the connection any time.
+
+**Decision: When a lost connection is re-established it has to be handled like a new connection (asking for ID and description)**
+
+
+Thank you all for the discussion and the good progress we made!

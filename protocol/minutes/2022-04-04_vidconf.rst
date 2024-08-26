@@ -1,0 +1,258 @@
+2-days meeting 2022-04-04 - 2022-04-06 (ZOOM)
+=============================================
+
+.. sidebar:: participants
+
+     * Lutz Rossa
+     * Klaus Kiefer
+     * Bastian Klemke
+     * Niklas Eckström
+     * Markus Zolliker
+     * Anders Pettersson
+     * Enrico Faulhaber
+
+
+.. contents:: Contents
+    :local:
+    :depth: 2
+
+
+Agenda
+------
+
+1) Fundamental discussion about the goals of SECoP
+++++++++++++++++++++++++++++++++++++++++++++++++++
+Markus has a strong feeling we should not continue before we agree on these.
+
+
+For the fundamental discussion Markus wants to share the following thoughts:
+
+SECoP should be:
+
+1) simple
+2) inclusive
+3) interoperable
+
+These 3 points are quite hard to balance, especially 'inclusive' means that
+we need to support different implementations, which probably contradicts simplicity
+and interoperability.
+
+I think we need to define to which extent these principle have to be followed.
+I would say:
+
+for (1): as simple as possible, as long as the other principles are respected.
+
+for (3): we should limit on the interoperability we need for the interface ECS - SEC node,
+but not try to impose specifications for the interoperability within a SEC node.
+Within a framework like Frappy, it might be very useful to define classes or features,
+which help to build a SEC-node from bricks (=SECoP modules), but this does not need
+to be a SECoP standard. I think we should concentrate on the main goal for SECoP:
+interfacing sample environment equipment to experiment control software.
+
+For every specification or "SECoP rule", we should have a good reason in respect to
+the main use of SECoP: being an interface to the ECS. I try to define what an ECS
+should be able to do, and what this means in respect to SECoP.
+
+An ECS typically consists of:
+
+1) A user interface to view and change parameters.
+2) A scripting engine or other tool to control the prodecure of an experiment.
+3) A database to store the collected data.
+
+An ECS with full SECoP support must:
+
+1) Provide viewing and changing of all exported SEC Node parameters.
+2) Support changing all exported SEC node parameters.
+   It must also support waiting for the modules status being no longer busy.
+3) Support storing all static and live data from a SEC node together with the
+   other experimental data.
+
+An ECS with limited support might:
+
+- Offer access for configured parameters only by means of a semi automated
+  process for configuring a SEC Node from the description. This is no
+  longer 'plug and play', but might be sufficient to perform an experiment.
+- Limit access to some predefined parameters only (value, target, status).
+
+In addition to above, an ECS may/should for example:
+
+- determine which modules represent sample quantities from the 'meaning' module
+  property for storing in the database
+- limit the access to the parameters depending on visibility
+- group parameters or modules together on a GUI depending on the 'group' property
+- ...
+
+This list is certainly to be extended, but always we should have a use case in mind,
+which is important enough to create a rule for it.
+
+When performing an experiment, the user should be able to use the full functionality
+of the SE equipment, as long as he knows what he is doing. It is not a problem,
+when things are done differently on different equipment. The main use case of SECoP
+is to bring equipment to different places, and the user is carrying the knowledge
+about this equipment with him.
+
+From this point of view for example the structure of PID parameters or the mechanism
+to switch between manual heater power and PID control is NOT something we need to
+unify and specify. Except if somebody can explain me a use case, where we need it.
+
+2) Continue to go through examples of real equipment and identify things we need to add to the SECoP specification
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+2022-04-04
+----------
+day one.
+
+1) Fundamental discussion
++++++++++++++++++++++++++
+
+Klaus shares his point of view, concluding that some of Markus thoughts 'go too far'.
+Markus wants a stronger 'reasoning' for future development, additions to SECoP
+should follow some principal goals. Interface classes are mentioned as example:
+From Markus point of view they are not needed, complicating SECoP needlessly, whereas Klaus argues,
+that interface classes are needed as they bundle (predefined) functionalities
+together and ease integration in the ecs as well as giving implementors of SEC-nodes
+a 'structure' to fill with functionality, discouraging re-inventing ways to implement
+functionalities.
+
+Enno essentially agrees with Klaus, but also accepts Markus doubts.
+Interface classes are not technically required to talk SECoP, but
+should be seen on a 'higher level abstraction'.
+SECoP interface classes are kind of abstractions of device classes used within
+the multitude of frameworks und thus are helpful for integration of SECoP both
+to ECS and SEC-nodes. Also, interface classes are kind of models for a specific task.
+
+Enno points out Issue: 27.
+
+Klaus uses the comparison/example with early cars/motorized carriages:
+in the beginning the handling/steering was individually, still usable for a trained person,
+but not easily exchangeable. In contrast on nowadays cars, the brake is always
+at the same place and steering works the same way, regardless of the model or manufacturer of the car.
+
+Klaus tries a new perspective: interface classes can be seen as a model or essence
+of a certain functionality. They are also modelling ideas on how to solve problems.
+
+After having a draft of what interface classes we may need, we have obviously to
+check with institutes and re-iterate.
+
+interface classes could also be seen as templates for functionalities.
+
+Anders points out that there might be (limited) usefulness in having interface classes when it comes
+to decide which parameters are interesting/relevant for storage.
+Also, a bigger value may grow on the ground of having interface classes.
+Klaus points out, that if newer interface classes are added which an older ECS
+don't know about, the corresponding modules can still be used in the 'fallback' mode (a bunch of named parameters).
+
+Markus points out that 'just store everything' is a viable strategy, as there is not so much sample environment data.
+
+Klaus proposes to first concentrate on finding templates (for a temperature controller, etc...),
+and later figure out what parts are 'features' or 'interface classes'.
+Having templates would allow new users to implement SEC-nodes in a 'more' interoperable way.
+
+Markus is still reluctant to agree on the need to have interface classes.
+
+Klaus points out that we are on the verge on finishing a few template examples.
+
+Enno agrees on concentrating on the templates first and later define interface classes or feature,
+but bundling parameters/types/properties together is essentially needed to capture the essence of a functionality.
+
+Niklas indicates that those templates can also serve as a 'best practice' guidance.
+Klaus state that 'just' putting an additional label on a module (as Niklas seems to indicate),
+may be a good idea for data mining, but is insufficient for interface classes, as they also
+need to predefine the additional parameters/properties.
+
+2) Continue to go through examples of real equipment and identify things we need to add to the SECoP specification
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Klaus points out that we need some 'best practices' for example for pid parameters and so on.
+
+topics for Wednesday:
+
+- concept of (switchable) controlling of coupled modules. naming things!
+- template for HZB orange cryostat (Example_A/Example_B)
+- more template examples
+
+2022-04-06
+----------
+
+.. sidebar:: participants
+
+     * Lutz Rossa
+     * Klaus Kiefer
+     * Bastian Klemke
+     * Niklas Eckström
+     * Markus Zolliker
+     * Anders Pettersson
+     * Enrico Faulhaber
+     * Georg Brandl (had to leave inbetween)
+
+
+Issue  65: linked submodules
+++++++++++++++++++++++++++++
+Markus proposes to keep `controlled_by` (an enum) and `control_active` (a boolean) as names.
+Implementors of SEC-nodes are encouraged to send out target updates of the controlled module
+(target is changed by the controlling module) if that is a Drivable and not just a writable.
+
+Markus discusses if the target should be changed, or be kept on the last 'externally' set value.
+A discussion arises about the names an meaning of 'control_active', 'control_inactive' and 'mode'.
+
+discussion of Bastians Proposal
++++++++++++++++++++++++++++++++
+
+Whether a needle valve should always indicate its flow or if the pressure is good enough arises.
+Essentially all agree, that we can not (and don't want to) enforce implementors
+to have either of them, as this is specific to to actual hardware being controlled.
+
+Markus discusses the usefulness of having predefined names for the regulation temperature and co.
+Klaus proposes to develop naming conventions/schemes for e.g. a orange type cryostat.
+Enno strongly disagrees, as the most basic, yet useful sample environment can (almost always) be just a single module.
+However, such 'naming templates' may have a value as 'best practices' or examples in the secop book.
+
+Anders points out a slight confusion if 'interface classes' refer to the secnode or the module.
+He also prefers to have a schema for e.g.e an orange type cryostat.
+
+Enno proposes to clarify naming as such: 'interface classes' are for/on the module level,
+whereas a templete structures a bunch of modules.
+Also a SEC-node may implement several such templates, for which the group property may be handy.
+(finding a way to declare that modules of a certain group follow a certain template).
+Klaus seems to prefer the name 'collection' instead of 'template'.
+He also sees an added value in having those (however they will be named in the end).
+
+Anders re-expresses his expectation that these templates add a value.
+Klaus proposes to collect the templates in a separate document (also on the github).
+
+Markus raises the issue of naming conventions:
+Temperatures should start with 'T_', other 'words' should be lowercase.
+Snake_casing seems to be preferred.
+Anders and Enno point out that naming things are VERY hard and having people to agree on the same naming convention is even harder.
+Enno proposes to only propose a naming scheme, not to enforce it.
+Klaus states that the name scheme is intended to keep the template examples consistent.
+Everybody agrees.
+
+Enno proposes to keep the examples minimal. Klaus prefers to have them maximal,
+as it seems to be easier to 'just not implement' a module than to guess the right properties of a
+module not in the template.
+
+Markus raises the question of the format of those templates, as it certainly is not
+so useful to have the full description as json dumped onto people (even if its pretty printed).
+(like repeating the status description for each module is probably not helping anyone).
+Enno proposes to use a shortened version, covering only the essence of the example.
+Klaus proposes to provide both, probably as a link to the online json editor.
+Interface classes and features can then be easier derived from the templates.
+
+Enno points out that building a template is easier if the interface are defined beforehand.
+
+Klaus wants to collect the templates first to be able to define the interface classes.
+Enno fears that doing it like this is a) more work (templates need to be redefined once interface classes are defined/changed)
+and b) risks that concentrating on the often templated cases is not a good abstraction and may loose the not-so-commen cases.
+
+Markus raises the question how is going to write down 'the book', as nobody is paid for doing this fulltime.
+Enno agrees on collecting examples for internal discussion, but fears, that if get into the wild before having a decent set of interface classes,
+it would damage the whole thing.
+
+It is agreed upon to collect the template examples in a separate directory on the github, with a README indicating that these examples are for internal discussion ONLY.
+Examples should be put there in advance before the next meeting.
+
+
+next meeting
+++++++++++++
+2022-05-23 9:30 and 2022-06-01 9:30, 2 hours max each.

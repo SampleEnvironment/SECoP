@@ -1,0 +1,2 @@
+('descriptive-text')
+['line-of-text'#`max 72 chars` ['LF'#`\x0A` ['LF'#`\x0A` ['line-of-text'?*['LF'#`\x0A`]]]?]?]

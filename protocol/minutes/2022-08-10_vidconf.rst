@@ -1,0 +1,88 @@
+meeting 2022-08-10 (ZOOM)
+=========================
+
+.. sidebar:: participants
+
+     * Lutz Rossa
+(     * Bastian Klemke)
+     * Niklas Eckström
+     * Markus Zolliker
+(     * Anders Pettersson)
+     * Enrico Faulhaber
+
+
+.. contents:: Contents
+    :local:
+    :depth: 3
+
+
+Agenda
+------
+Agenda:
+
+1) approval of the minutes
+
+2) template description
+
+3) orange type cryostat example
+
+4) finalizing issue 65 (coupled modules, see section "Decision" of https://github.com/SampleEnvironment/SECoP/blob/master/protocol/issues/065%20handling%20of%20coupled%20modules.rst)
+
+5) further discussion on issue 73 (offset and limits, https://github.com/SampleEnvironment/SECoP/blob/master/protocol/issues/073%20HasLimits%20and%20HasOffset.rst)
+
+6) next meeting
+
+
+1) approval of the minutes
+++++++++++++++++++++++++++
+minutes agreed.
+
+2) template description
++++++++++++++++++++++++
+Enno explains the shortcomings of the current proposal.
+Niklas points out that it may be helpful if templates could reference other templates.
+Enno points out, that the leraves in the template description may need an operation
+regarding the value of the actual description: 'must exist', 'must be identical to', 'must be one of....' and 'must contain X'.
+come to mind.
+A longer discussion goes on.
+As a result, it seems helpful to have 'prosa' textual descriptions of templates.
+e.g. 'a cryostat template is just a temperature regulator' and
+'a temperature regulator is a temperature regulation module, an heater module and
+an optional (sample) temperature sensor module' and so on.
+
+Every facility should compile a few prosaic templates for discussion in next meeting.
+
+3) orange type cryostat example
++++++++++++++++++++++++++++++++
+Lutz presented the latest changes.
+After a discussion, some minor discussion points got resolved. (referencing the
+SECoP principle that side-effects must be realized before an reply is sent).
+Also, it was figured out that 'loss of control' only propogates 'upwards' (away from hw),
+never 'downwards' (to hw).
+
+Another good example was spottet: switching from active T_reg to manual needle valve setting.
+Lutz will rework the example for the next meeting.
+
+4) finalizing issue 65 (coupled modules)
+++++++++++++++++++++++++++++++++++++++++
+Markus presented his thoughts.
+Essentially everybody agrees.
+Markus will rework the wip specification.
+
+5) further discussion on issue 73 (offset and limits)
++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Essentially the 'standard formula' should be sufficient.
+If there are nonlinear functions needed, they are considered to be internal
+and the standard formula to be applied 'on top'.
+So, 'adjust()' is not required.
+
+Enno definitely would prefer to have 'trustable numbers'.
+After a longish discussion it became clear, that the
+'targetlimits' parameter essentially makes having to disconnect obsolete, as long
+as there is a way to change the 'targetlimits' to the most open setting.
+Enno proposes to add a 'resetlimits()' command to do this.
+
+6) next meeting
++++++++++++++++
+proposed to happen 2022-09-22 09:30 & 2022-09-26 13:30.
+

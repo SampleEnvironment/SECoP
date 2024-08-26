@@ -1,0 +1,109 @@
+meeting 2022-09-22 (ZOOM)
+=========================
+
+.. sidebar:: participants
+
+     * Lutz Rossa
+     * Niklas Eckström
+     * Georg Brandl
+     * Klaus Kiefer
+     * Bastian Klemke
+     * Markus Zolliker
+
+
+.. contents:: Contents
+    :local:
+    :depth: 3
+
+
+Agenda
+------
+
+1) approval of the minutes
+
+2) define order of points below
+
+3) put issue 65 into specs and reorganize predefined accessibles.
+   https://github.com/SampleEnvironment/SECoP/blob/master/protocol/secop_specification_draft_wip.rst
+   Please read carefully section 1.2 Accessibles for this.
+
+4) next proposal for issue 73. Instead of the proposed reset_limits command,
+   I propose a read only target_hardlimits parameter. Naming debateable.
+   https://github.com/SampleEnvironment/SECoP/blob/master/protocol/issues/073%20HasLimits%20and%20HasOffset.rst
+
+5) follow up of last meeting about templates. citation from the minutes:
+   "Every facility should compile a few prosaic templates for discussion in next meeting."
+
+6) finalizing orange example (minutes: "Lutz will rework the example for the next meeting.")
+
+as Enno is not present we postpone items 1 and 4 on the Agenda
+
+during the meeting, we add a new item (7: how to represent Measurables in SECoP) on the agenda
+
+
+6) finalizing orange example
+++++++++++++++++++++++++++++
+
+general agreement, however the redundant wording "wet" and "liquid helium cooled" should be removed.
+
+
+3) put issue 65 into specs and reorganize predefined accessibles
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Klaus (who was not present at the last meeting) thinks that the specification of
+'control_active' is not easily readable.
+In addition, for the 'status' parameter, the meaning of the digits marked with X is not
+explained.
+
+Markus reworks these two things.
+
+
+7) how to represent Measurables in SECoP
+++++++++++++++++++++++++++++++++++++++++
+
+For a to be implemented use case of a light scatterin equipment sent from
+MLZ to PSI Georg asked how to implement this in SECoP.
+
+In the discussion we find a possible solution would be a drivable preset module and a
+readable value module (in this case an array). The preset module would be just the number
+of repeated data acquisition steps to be summed up.
+
+In the example of a neutron detector the preset module might be the monitor, and the
+value module the detector.
+
+We would need a way to indicate, which module takes over which role.
+
+
+5) templates
+++++++++++++
+
+We start with the example proposed from Anders/Niklas about a power supply module.
+
+Remarks from the discussion:
+
+- the idea of having a main module with a struct with two members 'voltage' and 'current'
+  is not received well. better to have two modules 'voltage' and 'current', which might
+  switch (even automatically) who has control.
+
+- Markus does not like the idea of having a seperate ramping module. the aimed building blocks
+  should be at the level of the implementation software, and might appear in SECoP in this
+  case as a feature
+
+In the discussion we detected also the limits might have two different meanings.
+For example for a power supply in current control mode module might have limits
+for the target, and limits for the voltage, which, when reached, will prevent
+the current value to go to the target.
+
+Despite Klaus has to leave at 15:10, we start a very short discussion at 15:00
+about the cryomagnet power supply example. Klaus thinks, that the coil current
+should be a seperate module with a value proportional to the field, while Markus
+does not see the point to make a seperate module for it.
+Also wheter it makes sense to make the persistent switch a seperate module is
+questionable.
+
+
+
+8) Next meeting
++++++++++++++++
+
+2022-10-18 13:30, if agreed by Enno

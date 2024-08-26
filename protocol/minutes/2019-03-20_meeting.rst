@@ -1,0 +1,287 @@
+Meeting @ ILL 2019-03-20
+########################
+
+.. sidebar:: participants
+
+     * Klaus Kiefer
+     * Lutz Rossa
+     * Markus Zolliker
+     * Niklas Ekström
+     * Anders Petterson
+     * Enrico Faulhaber
+     * Franck Cecillion
+     * Julien Gonthier
+     * Eddy Lelievre-Berna
+     * Jerome Locatelli
+     * Paolo Mutti
+
+.. contents:: Contents
+    :local:
+    :depth: 2
+
+Opening (2019-03-20)
+--------------------
+Markus presents the agenda previously circulated via e-mail.
+
+1) Presentation of uses cases from facilities (ILL, MLZ, HZB, PSI, ESS*)
+2) Discuss problems which might arise related to the integration of SECoP
+   into the ECS (instrument control)
+3) Issues related with different policies
+4) Is the solution with the 'group' property sufficient to support an ECS with a hierarchy?
+5) Discussion about Open SECoP Issues (datatypes)
+6) Discussion about inclusion of (static) metadata.
+
+Agreement on the Aganeda in general. If needed, additional topics will also be covered.
+
+Presentation of uses cases from facilities (ILL, MLZ, HZB, PSI, ESS*)
+---------------------------------------------------------------------
+*Lutz* presents the HZB view on modules, their states and the sequence of events.
+Internally Caress keeps a check_list of devices that got a start command and are potentially moving.
+Then the state of those devices is polled and idle devices are removed from the list.
+The move command is then finished, if the check_list is empty.
+
+Discussion about the stabilization phase of a temperature ramp and who is deciding, that the module is no longer BUSY.
+
+*Klaus* presents a more complicated sequence of messages, states, and actions needed for his lab equipment.
+It has several distinct BUSY and IDLE phases and conforms to the SECoP way defined so far.
+(a command tests the module to BUSY and then you have to wait until it is IDLE again.)
+There is also a simplified version of it, without being IDLe in between, but that needs distinct BUSY states.
+The distinction is needed, since other HW) modules need to be triggered between the phases.
+
+Discussion about the last phase of a sequence of internal states of a module/command.
+
+*Markus* presents the problems he faced when integrating several types of HW.
+Essentially he also found, that sometimes (PPMS magnet) there is a phase in which a module is still doing something, but may safely be mapped to IDLE.
+So Markus does not need sub-states but may want to have a way to indicate if the last phase of the movement of a module following a sequence should be IDLE or BUSY.
+
+*Enrico* presents the problems experienced so far at MLZ at their solutions.
+Essentially at MLZ a device/module is considered BUSY until ALL movement ceased.
+This may mean a small, but acceptable (and accepted) loss of beam time.
+
+*Jerome* present his use case of implementing the communication of an SEC-node into NOMAD.
+ILL uses a very differentiated set of (software) devices.
+One aspect is that often different physical quantities are grouped into one
+logical device (like humidity and temperature in a pressure cell).
+Temperatures, magnetic fields, and other quantities are handled individually,
+but the actual driver is abstracted (i.e. an ls336 temperature and a SECoP temperature are indistinguishable from the user).
+
+A short discussion about inheritance and abstraction of devices.
+Essentially all 'devices' in nomad are derived from an AbstractController.
+nomad needs an intermediate 'STARTING' and 'STOPPING' state since it has to deal with HW directly.
+nomad also distinguishes between an internal 'command_state' and a 'device_state', which is a little confusing for the moment.
+
+
+Summary and wrapup by Klaus and Paolo.
+======================================
+
+STARTING and STOPPING (and some others as well) are 'command states' internally to NOMAD,
+but are not necessarily needed on the SECoP.
+However, if they are there, ILL would be happy to use it.
+
+
+Quick tour through the guide hall, showcasing nomad
+===================================================
+
+
+Second Discussion of the day
+----------------------------
+
+
+Discussion about go, hold, pause, resume
+========================================
+Buffering of values like proposed in Issue 28/29 is NOT needed.
+The SEC-node needs to handle pausing and co, the ECS should merely issue the command.
+Discussion about the minimal interface: Paolo thinks that `go` should be mandatory for all SEC-nodes.
+
+Discussion about what is allowed in which situation and what not.
+
+ILL prefers that there is only one action allowed at any time, you would need to stop it before changing even a parameter (and then use `go` again).
+Enrico points out a possible mixup of discussions of ICS and SECoP.
+Also, there are ECS, which are running fine without supporting the concept of an 'apply', i.e. each change of parameters takes effect 'immediately'.
+Eddy clarifies.
+A small surprise about a possibly structured target value leads to more discussion.
+
+Discussion about synchronizing a set of SEC-nodes.
+
+Discussion about the usefulness of structured `value`/`target` values.
+Discussion about having the `go` command optional.
+
+.. note:: Deja-vu
+
+
+Conclusion
+==========
+
+Klaus wraps up. Definitions kept as before. Paolo understands, that SECoP can not force everybody to implement `go`.
+
+
+Opening (2019-03-21)
+--------------------
+
+.. sidebar:: participants
+
+     * Klaus Kiefer
+     * Lutz Rossa
+     * Markus Zolliker
+     * Niklas Ekström
+     * Anders Petterson
+     * Enrico Faulhaber
+     * Franck Cecillion
+     * Eddy Lelievre-Berna
+     * Jerome Locatelli
+     * Paolo Mutti
+
+Markus opens with a wrapup of yesterdays discussions and presents a new view on the whole interoperability thing.
+Interoperability between equipment from the same facility is expected to be excellent,
+but the interoperability between facilities is expected to still be ok to perform an experiment.
+Interoperability may also be improved with an 'enhancer' (specific for ECS+Equipment).
+
+Discussion about needing a basic validator.
+All agree that a basic validator is needed and will be provided.
+It is also clear, that a validator can never prove an implementation to be correct.
+It may only prove a broken one to be faulty (but may miss a few problems).
+
+A small discussion about the SECoP concepts.
+Klaus tells about syntax, communication, rules, meanings, and custom extensions.
+Eddy discusses how to evolve SECoP.
+
+Discussing how to standardize new features.
+So far the intended steps are to 1) implement them via custom extensions, 2) test it 3) write an issue about it, 4) let the committee decide how to integrate it into the standard.
+Of course, the custom implementation should then be rewritten to use the new feature.
+Klaus focuses on the meaning of extra stuff, which can't be defined beforehand.
+Eddy wraps up, that we need a *predefined* *mechanism* on how to integrate new features into SECoP.
+
+Klaus and Enrico discuss with Eddy about the current foreseen mechanism which seems sufficient.
+
+
+Coffee break
+============
+
+.. sidebar:: participants
+
+     * Klaus Kiefer
+     * Lutz Rossa
+     * Markus Zolliker
+     * Niklas Ekström
+     * Anders Petterson
+     * Enrico Faulhaber
+     * Franck Cecillion
+
+Klaus presents the current state of the metadata project and its influence on SECoP.
+One result is that proper interface classes are needed.
+
+Also, a way to transfer constant metadata needs to be found,
+as having to implement the read command for this static values does not sound logical.
+
+Klaus solved this with a 'static' flag.
+
+Enrico proposes to include the value within the datatype.
+This also makes the discussion of optional/mandatory on other parameters easier.
+General agreement on this, however the details on how to implement this on the datatypes are still to be discussed.
+
+Markus prefers to put the (structured) value in a property `constant` of the parameter and not inside the datatype.
+
+Franck presents his needs for implementing his Nexus File Writer.
+Discussion.
+Essentially there is no problem with datatype mapping.
+SECoP also cannot easily provide globally unique module names.
+Discussion about how to store a set of several temperatures within ILL's defined
+Nexus structures.
+Discussion about where and how to store structured data.
+
+After discussing several aspects there seem to be no problems integrating the data into Nexus.
+If anything else fails, the values can be stored 'flat', whilst keeping the structure in a tree and linking to the flat values.
+
+
+Discussion about precision of values
+====================================
+
+Markus proposes to have 0 as default for `absolute_precision` and 1.2e-7 for`relative_precision` and
+that effective precision is the bigger of `absolute_precision` and value*`relative_precision`.
+
+:Remark by M.Z. after the meeting:
+
+    this should be `absolute_resolution` / `relative_resolution`
+
+Enrico points out, that for scaled integers, the `absolute_precision` should default to `1/scale`.
+Agreement on this.
+
+:Remark by M.Z. after the meeting:
+
+    this should be: ... the `absolute_resolution` should default to `scale`.
+
+
+Discussion about reconfiguring a sec-node: it should close all connections to force all clients to re-issue a describe command.
+Which also means, that a client using information from the descriptive data, *MUST* issue a `describe` request upon reconnect.
+
+New discussion about special functions, states and `stop`.
+The meaning of `stop` is discussed in the context of BUSY states not induced by a target change.
+`stop` should try to go from BUSY to IDLE (ERROR) in (an implementor specific) predefined way,
+if the position changed, the target value SHOULD be updated to the halted position.
+
+Agreement on removing the `abort` as the distinction between `abort` and `stop` is not clear.
+So far, no use case came up, requiring the distinction.
+
+Another discussion, result: any module which is at least `Readable` MUST have a `status`. If it has a `status` it MUST have at least an `IDLE` state.
+It may (for corner cases) have a constant status (of `IDLE`).
+
+
+Discussion about inclusion of `unit`, `fmtstr`, `*_precision` inside the datatype
+=================================================================================
+
+Agreement on moving the former properties inside the data structure.
+
+
+Lunch
+=====
+
+
+last discussion round
+=====================
+
+Markus proposes to store the constant in the datatype.
+limits gets the names 'min' and 'max' for length/size/value.
+max is mandatory for string, blob, an array.
+Array, tuple, and struct get a `member` element listing the contained elements (as Lutz proposed).
+`optional` list the optional members of a struct (as a JSON-array of names).
+
+Agreement on closing Issue 55.
+
+
+Error messages: format change
+=============================
+All request actions + the update get an 'error_' twin for error reply.
+Specifier stays as given in the request (or used as in the update).
+The data part is an error-report:
+
+.. code::
+
+  [ErrorClass, "human readable string", {extra_stuff...}]
+
+similar to before, just with the 'origin' part replaced with the ErrorClass (as a string).
+If a timestamp is desired to be put into the error message, it is put into the hashmap.
+
+
+Discussion about how to parametrize if the last step of a sequence is BUSY or IDLE
+==================================================================================
+
+It should be handled by a boolean parameter: suggestions:
+- `early_idle`
+
+Klaus suggests using a special BUSY state (303: completing),
+which an advanced ECS may also interpret as IDLE to start a measurement early.
+Simple ECS clients would (correctly) interpret this as BUSY,
+but may not start a subsequent measurement early (and thus may waste a little time).
+
+Markus will write an issue about the supposed predefined states.
+
+
+next video meeting
+==================
+2019-04-11 10:00
+
+
+Klaus showcased the current state of the HZB SECoP integration.
+
+A short discussion about interface classes followed.
+Klaus will rework the existing issue about interface classes for discussion in the next vidconf.

@@ -1,0 +1,300 @@
+SECoP Meeting 2018-06-13/14 at ESS Lund
+#######################################
+
+participants
+============
+  - Niklas Eckström
+  - Anders Petterson
+  - Lutz Rossa
+  - Frank Wutzler
+  - Klaus Kiefer
+  - Enrico Faulhaber
+  - Markus Zolliker
+
+(arrival + lunch)
+
+
+first day
+=========
+
+Issue1
+++++++
+allow Extensions by creating a new Issue for the extension and referencing this in the closed Issues.
+
+Issue9: meaning of modules
+++++++++++++++++++++++++++
+
+  * meaning: remove sample_prefix
+  * discussion about the meaning of 'rotation', different possible rotations and names of them
+  * main usage for rotation is supposed to be the rotation around the vertical axis, often called 'omega_rotation'
+  
+Final List of meanings:
+  * temperature - temperature of sample
+  * temperature_regulation - regulation of sample temperature, if different from above. 
+  * magneticfield
+  * electricfield
+  * pressure
+  * rotation_z (counter clockwise when looked at 'from sky to earth')
+  * humidity
+  * viscosity
+  * flowrate
+  * concentration
+
+This list can be extended later. Extension Issue for this will be Issue26.
+First proposed extensions: rotation_x, rotation_y, translation_x, translation_y, translation_z
+
+'_regulation' can be postfixed, if the quantity generating module is different from the (closer to the sample) relevant measuring device.
+
+
+Issue15: hold/go/abort etc.
++++++++++++++++++++++++++++
+
+abort may or may not change the target parameter. it depends on the hw.
+
+Issue25: Pong format
+++++++++++++++++++++
+
+reword to focus on allowed/required formatting/parsing capabilities of the CLIENT.
+clearify case where the secnode has no timestamp. Answer is then 'pong <id> [null,{}]'.
+
+Issue24: Mix parameters and commands as accessibles
+++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Needs a new command datatype.
+
+If more than one argument SHOULD be declared as struct.
+Meaning of Result and Arguments SHOULD be written down in the description of the command.
+
+
+(coffe break)
+
+Issue18: Interfaceclasses
++++++++++++++++++++++++++
+
+A module has a list of interfaceclasses and a list of features.
+The interfaceclasses are listed in the reverse order of inheritance, ending with the first baseclass (Drivable, Movable, Readable, Module).
+All Features are listed in the description.
+
+Discussion about features, modularity, grouping, dependencies, subdevices, ...
+discussion non-persistent vs. persistent magnet is very fruitful...
+
+Idea: flag dependencies by using group property. 
+
+  * class Magnet(Drivable, Has_Ramp):
+     - unit='T'
+     - may have Has_Persistence, Has_window, Has_Timeout Features
+     - may have extra parameters: 'current_in_leads', 'switch_status'
+     - with predefined meanings of optional things 'current_in_leads', 'switch_status', ???'ratio'???
+
+Discussion about temperaturecontroller:
+  * pid/pi/p /pid with base_output
+  * feature HAS_PID provides parameter 'pid' which is a struct with named entities: p, i, d, base_value
+  * only p is mandatory
+  * class TemperatureController(Driveable):
+    unit='K'/'degC'
+    may have HAS_PID, HAS_ramp, HAS_calibration_curve, Has_pid_table, Has_windowtimeout features
+    may have parameters: heater (in W) 
+
+(dinner)
+
+second day
+==========
+
+discussion about Feature HAS_PID
+++++++++++++++++++++++++++++++++
+
+discussion about handling of features, interface classes, interoperability between versions.
+
+  * official features/interface_classes used by the SEC node MUST be listed in a Features_list
+  * if a feature is listed, all mandatory parts of it MUST be implemented as specified
+  * optional parts of a feature/interface_class are, well, optional
+  * predefined parameters (unprefixed ones) might ONLY be used of the feature/interface_class it defines is listed in the descriptive data
+  * the ECS-client still has to be able to cope with unknown features/interface_classes. (which may use parameters without underscores)
+  * Hint for implementors: The ECS-client SHOULD inform to the user about non-prefixed, 'unknown' parameters/interface_classes/features
+    (things which are either from a newer specification or are wrong), but must be able to handle them via the fallback mechanism.
+    Note: we don't want to nag people, but inform them (once per connect?)
+  * note: implementors should either use p,i,d or pid, but ECS must be handle both cases
+  * note: if both p,i,d and pid are implemented, it MUST NOT matter which one gets a change, the final result should be the same
+  * note: if there are additional custom parameters with the same name as an element of the struct, the above applies
+  * note: if extra elements are implemented in the pid struct they MUST BE properly described in the description of the pid paramter
+
+done.
+
+discussion about Has_Persistent feature.
+++++++++++++++++++++++++++++++++++++++++
+
+to allow a compact definition, a possible python declaration syntax is used here::
+
+ class HAS_Persistent(Feature):
+     Parameters = {
+         'persistent_mode' : Param('Use persistent mode', datatype=EnumType(off=0,on=1), default=0, readonly=False),
+         'is_persistent' : Param('current state of persistence', datatype=Booltype(), optional=True),
+         'stored_value' : Param('current persistence value, often used as the modules value', datatype='main', unit='$', optional=True),
+         'driven_value' : Param('driven value (outside value, syncs with stored_value if non-persistent)', datatype='main', unit='$' ),
+     }
+
+done.
+
+discussion about stability feature
+++++++++++++++++++++++++++++++++++++++++
+
+::
+
+ class HAS_Tolerance(Feature):
+     # detects IDLE status by checking if the value lies in a given window:
+     # tolerance is the maximum allowed deviation from target, value must lie in this interval
+     # for at least ´timewindow´ seconds.
+     Parameters = {
+         'tolerance' : Parameter('Half height of the Window', datatype=FloatRange(0), default=1, unit='$'),
+         'timewindow' : Parameter('Length of the timewindow to check', datatype=FloatRange(0), default=30, unit='s', optional=True),
+     }
+
+ class HAS_Timeout(Feature):
+     Parameters = {
+         'timeout' : Param('timeout for movement', datatype=FloatRange(0), default=0, unit='s'),
+     }
+
+meh!
+
+more discussion about the way to go.
+++++++++++++++++++++++++++++++++++++
+
+  * features should be seperate functional subgroups, but may have optional parameters
+  * go for a small amount of features and for small implementation effort on SEC-node
+  * shift work to ECS-Side
+
+(lunch)
+
+discussion about mandatory/optional, derivation, features, and so on.
+
+  * interface_class define mandatory and optional accessibles and a predefined set of included features 
+  * mandatory parts are derived from mandatory parts of the base class as well as the mandatory parts of the included features
+  * optional parts are derived from the optional parts of the base class and optional parts of included features
+  * a derived interface_class may still be combined with features not yet contained in its definition (via its base_classes),
+        it may NOT be combined (again) with features already contained therein.
+  * both mandatory and optional parts may be extended with further accessibles, also: optional parts may become mandatory,
+    but not to opposite way.
+
+  * if two or more accessibles work together on a common functionality, they should belong to a feature
+
+agreement of the features:
+++++++++++++++++++++++++++
+
+::
+
+ class HAS_PID(Feature):
+    # note: implementors should either use p,i,d or pid, but ECS must be handle both cases
+    # note: if both p,i,d and pid are implemented, it MUST NOT matter which one gets a change, the final result should be the same
+    # note: if there are additional custom parameters with the same name as an element of the struct, the above applies
+    # note: (i would still but them in the same group, though)
+    # note: if extra elements are implemented in the pid struct they MUST BE properly described in the description of the pid paramter
+    Parameters = {
+        'use_pid' : Parameter('use the pid mode', datatype=EnumType(openloop=0, pid_control=1), ),
+        'p' :       Parameter('proportional part of the regulation', datatype=FloatRange(0), ),
+        'i' :       Parameter('(optional) integral part', datatype=FloatRange(0), optional=True),
+        'd' :       Parameter('(optional) derivative part', datatype=FloatRange(0), optional=True),
+        'base_output' : Parameter('(optional) minimum output value', datatype=FloatRange(0), optional=True),
+        'pid': StructOf(p=datatype=FloatRange(0),
+                        i=datatype=FloatRange(0),
+                        d=datatype=FloatRange(0),
+                        base_output=FloatRange(0),
+                       ),  # note: struct may be extended with custom elements (names should be prefixed with '_')
+        'output' : Parameter('(optional) output of pid-control', datatype=FloatRange(0), optional=True, readonly=False),
+    }
+
+
+ class Has_PIDTable(HAS_PID):
+    Parameters = {
+        'use_pidtable' : Parameter('use the zoning mode', datatype=EnumType(fixed_pid=0, zone_mode=1),
+        'pidtable' : Parameter('Table of pid-values vs. target temperature',  
+                               datatype=ArrayOf(TupleOf(FloatRange(0), 
+                                   StructOf(p=datatype=FloatRange(0),
+                                            i=datatype=FloatRange(0),
+                                            d=datatype=FloatRange(0),
+                                            _base_output=datatype=FloatRange(0),),), optional=True),  # struct may include 'heaterrange'
+    }
+
+
+ class HAS_Persistent(Feature):
+    extra_Status {
+        'decoupled' : Status.OK+1,  # to be discussed.
+        'coupling' : Status.BUSY+1,  # to be discussed.
+        'coupled' : Status.BUSY+2,  # to be discussed.
+        'decoupling' : Status.BUSY+3,  # to be discussed.
+    }
+    Parameters = {
+        'persistent_mode' : Parameter('Use persistent mode', datatype=EnumType(off=0,on=1), default=0, readonly=False),
+        'is_persistent' : Parameter('current state of persistence', datatype=Booltype(), optional=True),
+        'stored_value' : Parameter('current persistence value, often used as the modules value', datatype='main', unit='$', optional=True),
+        'driven_value' : Parameter('driven value (outside value, syncs with stored_value if non-persistent)', datatype='main', unit='$' ),
+    }
+
+
+ class HAS_Tolerance(Feature):
+    # detects IDLE status by checking if the value lies in a given window:
+    # tolerance is the maximum allowed deviation from target, value must lie in this interval
+    # for at least ´timewindow´ seconds.
+    Parameters = {
+        'tolerance' : Parameter('Half height of the Window', datatype=FloatRange(0), default=1, unit='$'),
+        'timewindow' : Parameter('Length of the timewindow to check', datatype=FloatRange(0), default=30, unit='s', optional=True),
+    }
+
+
+ class HAS_Timeout(Feature):
+    Parameters = {
+        'timeout' : Parameter('timeout for movement', datatype=FloatRange(0), default=0, unit='s'),
+    }
+
+
+ class HAS_Pause(Feature):
+    # just a proposal, can't agree on it....
+    Commands = {
+        'pause' : Command('pauses movement', arguments=[], resulttype=None),
+        'go' : Command('continues movement or start a new one if target was change since the last pause', arguments=[], resulttype=None),
+    }
+
+
+ class HAS_Ramp(Feature):
+    Parameters = {
+        'ramp' : Parameter('speed of movement', unit='$/min', datatype=FloatRange(0)),
+        'use_ramp' : Parameter('use the ramping of the setpoint, or jump', datatype=EnumType(disable_ramp=0, use_ramp=1), optional=True),
+        'setpoint' : Parameter('currently active setpoint', datatype=FloatRange(0), unit='$', readonly=True, ),
+    }
+
+
+ class HAS_Speed(Feature):
+    Parameters = {
+        'speed' : Parameter('(maximum) speed of movement (of the main value)', unit='$/s', datatype=FloatRange(0)),
+    }
+
+
+ class HAS_Accel(HAS_Speed):
+    Parameters = {
+        'accel' : Parameter('acceleration of movement', unit='$/s^2', datatype=FloatRange(0)),
+        'decel' : Parameter('deceleration of movement', unit='$/s^2', datatype=FloatRange(0), optional=True),
+    }
+
+
+ class HAS_MotorCurrents(Feature):
+    Parameters = {
+        'movecurrent' : Parameter('Current while moving', datatype=FloatRange(0)),
+        'idlecurrent' : Parameter('Current while idle', datatype=FloatRange(0), optional=True),
+    }
+
+
+
+discussion about:
+  * rheometer
+  * spectrometer
+  * high pressure liquid chromatography pump
+  * syringe pump
+  * (not easy on/off) valves
+  * flowmeter
+
+  * spectrometer returns a spectrum -> datatype of value is an array -> solved
+  * complex pumping systems with lots of valves: lots of different modules or complex configdata blob if cannot be broken down
+
+proposal for a list of interface_classes from mlz will go to Issue27
+
+Meeting is closed 16:45
+

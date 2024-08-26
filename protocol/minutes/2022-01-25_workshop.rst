@@ -1,0 +1,192 @@
+2-days meeting 2022-01-25 - 2022-01-26 (ZOOM)
+=============================================
+
+.. sidebar:: participants
+
+     * Enrico Faulhaber
+     * Lutz Rossa
+     * Klaus Kiefer
+     * Bastian Klemke
+     * Niklas Eckström
+     * Markus Zolliker
+     * Anders Pettersson
+
+
+.. contents:: Contents
+    :local:
+    :depth: 2
+
+
+Agenda
+------
+Day one.
+
+- discussion about how to proceed with the upcoming meetings/presentations
+  (minutes by markus zolliker)
+- Issue 71: accessing sub items of parameters
+- Interface classes ?
+- Issue 65: handling of coupled (sub)modules
+
+
+2022-01-25
+----------
+
+Extended SECoP video meeting 15 February 2022 12:00
++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Klaus explains the motivation for this meeting. In February the are a couple of kick-off
+meetings for the newly created ISSE committees. The SECoP meeting is not really kick-off,
+just a SECoP meeting with ideally the contacts from all the institutes.
+
+We decided the following agenda:
+
+1) Presentation from the SECoP committee (not more than 15 min).
+
+   a) State of SECoP protocol refinement. Message: the committee is discussing
+      the things we need for defining more detailed Interface classes.
+
+   b) Status of Software (Frappy, Octopy, SHALL. 1-2 slides each)
+      Message: which package for which use case, all are welcome to participate
+
+   c) Klaus: ideas behind SECoP@HMC, focus on impact on SECoP
+
+2) Collect status from all institutions:
+
+   a) projects, where SECoP is intended to be implemented
+
+   b) what are the missing things needed?
+
+3) Frequency of such meetings / how to improve information about SECoP
+
+
+Markus will compile the full presentation in one document, for saving the time
+to change screen sharing. The slides for Octopy (Niklas), SHALL (Lutz) and
+SECoP@HMC (Klaus) must be sent to Markus at the lastest 14 February 12:00.
+
+
+Issue 71: accessing sub items of parameters
++++++++++++++++++++++++++++++++++++++++++++
+Markus doesn't want to do any implementation until a use case shows up.
+The additional complications can be handled by using structs with optional components on the SEC-Node,
+or by manipulating the sub-elements on the ECS.
+
+Issue is to be closed (rejected), can be re-opened if use-cases arise.
+
+
+Interface Classes
++++++++++++++++++
+First discussion in Issue 18, one existing proposal is in Issue 27.
+Bastian will circulate another proposal this evening.
+Lets re-think both and discuss tomorrow.
+
+
+Issue 65: handling of coupled (sub)modules
+++++++++++++++++++++++++++++++++++++++++++
+As there was no final decision last time, the issue should be updated from the minutes
+(and possible also the wip draft spec).
+
+Mode switching is done by setting a new target on the ``controlling`` module.
+Issue needs to be rewritten to reflect currently discussed state.
+
+
+Issue 69: optional structs by default
++++++++++++++++++++++++++++++++++++++
+Enno favours the proposed change (all struct members should be optional if the property
+``optional`` is *not* given. To indicate that all members are mandatory, ``optional``
+should be set to the empty array (``[]``).
+
+Markus raises discussions about the semantics (reading/changing a struct-valued parameter),
+what about command arguments/results.
+
+We stick to the SECoP rule that reading a parameter (or sending updates on one)
+gives the ``full`` value, iven if the value is a struct with optional elements.
+
+Klaus emphasises that a 'simple' SEC-Node, unable to handle optional structs
+would neet to declare all structs with ``optional=[]``.
+All agree on this. This information should be emphasised in the spec.
+
+2022-01-25
+----------
+
+.. sidebar:: participants
+
+     * Enrico Faulhaber
+     * Lutz Rossa
+     * Klaus Kiefer
+     * Bastian Klemke
+     * Niklas Eckström
+     * Markus Zolliker
+     * Anders Pettersson
+
+Discussion jump starts with 'how to export different `views` of a SEC-Node'.
+No conclusion (yet).
+
+Issue 65:handling of coupled (sub)modules
++++++++++++++++++++++++++++++++++++++++++
+After a short discussion the proposed issues is agreed upon:
+Modules which can be controlled get an (readonly) enum parameter ``controlled_by``
+listing 'self' and all possible controllers und the value reflects,
+which module is in charge of controlling this module.
+Control is transferred if a new target is set (or the go command issued).
+(i.e. if a module X is controlled by a module Y, setting X.target will break that relationship).
+
+Agreement on this - Markus is updating the issue....
+
+Issue 69: optional structs by default
++++++++++++++++++++++++++++++++++++++
+Klaus points out that the proposal violates the must-ignore policy.
+(redefining omitting the 'optional' datainfo property used to mean,
+all members are mandatory).
+After a longer discussion, ('better be explicit'), naming all members in case
+all are optional doesn't seem to be a major problem.
+
+Finally we define 'optional=True' for the case that all parameters are optional.
+Issue can be closed.
+
+Agreement on this - Markus is updating the issue....
+
+Proposal of a SEC-node of an orange cryostat
+++++++++++++++++++++++++++++++++++++++++++++
+``controlled_by`` should not be used to build circles.
+Having a temperature controller whose power output is a distinct module, that
+should be able to indicate pid-control/power control mode by its ``controlled_by`` parameter.
+The controller, however, is not controlled by the power output.
+
+A longer discussion follows.
+Klaus wants to indicate that the value of a module somehow is not influenced by
+its own logic, but by the 'logic' of some other module.
+
+After a longer discussion and few helpful examples, an additional
+``active`` (Bool) parameter (for Drivables) is discussed. If this is False,
+the Module acts like a Readable, otherwise it fulfils its normal function.
+Setting a new target would then also set ``active`` back to True.
+Also, a much better description of the ``controlled_by`` is needed.
+
+Klaus obviously wants something else, a discussion about what this is follows.
+
+After a heated discussion, Anders proposes to restart by focusing on the question:
+'what do we want'.
+
+We want to communicate that for a bunch of modules potentially controlling another module,
+which one was set last (and is thus 'active') and which one is just 'passively' updating its
+value parameter and not 'actively doing anything'.
+Since the relationship is usually in the form of many potentially 'controllers' to one 'acting'
+module, it seems naturally to store this information on the acting module
+(I'm acting on the behalf of ...).
+Also the information which modules are potentially controlling a module, is desired,
+it also seemed naturally to use an enum listing the possible values.
+
+Open questions:
+
+- What about the startup condition (no target changes were made already).
+- Is that information needed also on the potential 'controllers'
+- is controller a classical controller (see wikipedia), using 1-N Actuators to
+  manipulate 1-M sensed values towards a goal, or just the last Drivable written to?
+- Why isn't the information, that a module is not actively working to reach its target,
+  but instead just reports the (sensed) value(s), not sufficient?
+
+next meeting
+++++++++++++
+2022-02-28 10:00-12:00 and 2022-03-01 10:00-12:00.
+
+Session closed.

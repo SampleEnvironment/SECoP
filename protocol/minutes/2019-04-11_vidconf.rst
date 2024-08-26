@@ -1,0 +1,123 @@
+Videoconference 2019-04-11
+==========================
+
+.. sidebar:: participants
+
+     * Klaus Kiefer
+     * Lutz Rossa
+     * Markus Zolliker
+     * Niklas Ekström
+     * Anders Petterson
+     * Enrico Faulhaber
+     * Frank Wutzler
+
+.. contents:: Contents
+    :local:
+    :depth: 2
+
+
+Opening
+-------
+Discussion about keeping the order of dict elements (for properties/accessibles/modules).
+
+
+Interface classes
+-----------------
+not discussable yet, shifted to the next meeting.
+
+
+datatype properties
+-------------------
+how to store e.g. the limits on the double datatype?
+specify min/max as JSON-null, or leave them out?
+
+decision: mandatory items always have to be specified and can not be JSON-null.
+optional items can be left out, but not be JSON-null.
+
+agreement on this.
+
+
+discussion about storing the unit in the property
+--------------------------------------------------
+this seems straightforward for all types, but the array.
+Still, this is consistent.
+
+For storing vectors with components differing in value, a tuple shall be used, not an array.
+
+
+min property for string and blob
+--------------------------------
+the default value of min=0 may be omitted.
+
+
+default fmtstr for double/scaled
+--------------------------------
+for "double":
+        "%.6g" (which is the same as "%g")
+for "scaled":
+        "%.<n>f" where <n> = max(0,-floor(log10(scale)))
+        for example: scale = 0.0888888 -> default fmtstr = "%.2f"
+        scale = 15 -> fmtstr = "%.0f"
+
+fmtstr is optional and defaults to above value if omitted.
+
+
+Issue 28+29:
+------------
+close them as not needed.
+
+
+abort command
+-------------
+remove `abort` as there seems to be no need.
+
+
+reset command
+-------------
+The `reset` command should stay as currently defined.
+A new command `clear_errors` should be defined for *just* clearing an error state.
+If the error cannot be cleared, the status should still be (a possible different) error state before the command reply is returned.
+
+
+'time_to_target' parameter
+--------------------------
+is used by at least one ECS. Keep this as an optional parameter (for Drivable).
+
+
+Issue 56: Additional Busy States
+--------------------------------
+BUSY seems to have at least 3 very similar meanings:
+ 1) means: we are waiting for the value to reach the target
+ 2) some action is still being performed
+ 3) we have to wait until we can do the next thing.
+
+Those 3 meanings are not exactly the same but are very often treated similarly.
+It is undisputed that 1) and 3) are BUSY.
+It seems also clear that 2) not coinciding with 1) or 3) is not needed to be BUSY.
+It must be IDLE then.
+
+proposal:
+ * 100: general IDLE
+ * 101: cleanup (case 2))
+ * 300: general BUSY (1) or 3))
+ * 301: preparing (case3) before case 1))
+ * 302: ramping (case 1))
+ * 303: finalizing (case 3) after 1) and before 2)/IDLE)
+
+301/preparing seems to be unneeded.
+
+It seems we need more use cases and concentrate on them.
+
+Agreement on BUSY = case1 1) OR case 3)
+2) may be BUSY or IDLE (proposal: 303/101)
+
+Markus will (re)write an Issue about the specifics of MOVING/FINALIZING substates.
+
+no final agreement, topic postponed.
+
+next meeting
+------------
+personal meeting around 20/21 of May. @HZB or @MLZ.
+(Klaus makes a doodle).
+
+next vidconf 8(th) of May 2019, 10:00 o'clock,

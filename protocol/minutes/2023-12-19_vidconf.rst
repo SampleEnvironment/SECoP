@@ -1,0 +1,169 @@
+meeting 2023-12-19 (ZOOM)
+@@@@@@@@@@@@@@@@@@@@@@@@@
+
+.. sidebar:: participants
+
+     * Markus Zolliker
+     * Georg Brandl
+     * Alexander Zaft
+     * Peter Wegmann
+     * Bastian Klemke
+     * Lutz Rossa
+     * Klaus Kiefer
+     * Enrico Faulhaber
+     * Niklas Eckström
+     * Anders Pettersson
+
+.. contents:: Agenda
+    :local:
+    :depth: 3
+
+
+1) approval of the minutes 2023-10-24 and 2023-11-15
+====================================================
+
+Markus is slightly unhappy with Enno's use of the word heuristics,
+but agrees on the minutes.
+
+Previous minutes approved.
+
+
+2) basic discussion about the goal of the SECoP core committee meetings
+=======================================================================
+
+Markus sees at least 3 different view points for the goals of the work
+in the SECoP committee.
+
+1) For Markus, SECoP V1.0 already covers most of the things needed to run.
+   Of course most of the things discussed for the current draft are
+   improvements to help making SECoP better, and we should not stop here,
+   for example the classes needed for the measurable concept are needed
+   for some type of SEC nodes.
+
+2) Enno is missing since years higher interface classes. He thinks that
+   this is crucial to make SECoP fly.
+
+3) Klaus in addition thinks templates are important, higher interface classes
+   are not enough.
+
+Since the work in the SECoP committee suffered since years from this conflict of different goals, lets discuss this.
+
+Several aspects gets discussed.
+
+Enno indicate that SECoP in the end should be like a stack of technical specifications
+(what is a message, how is it transferred), a basic SECoP core definition, providing the basic
+interoperability, and some extensions (like features, and templates).
+
+Experience from presenting SECoP to other people
+by Klaus indicate that having higher functionalities (interface classes, templates)
+are a unique point of SECoP already. Of course, we should not 'overshoot',
+but instead define a useful, sensible set of higher functionalities.
+Enno points out that only a handful of higher functionalities seems to missing
+and that creating too many would not be helpful.
+
+Markus points out that the way, the issues are actually used/evolve, is not
+super helpful, as there too many undecided issues, which neither get discussed nor advanced.
+
+Klaus points out hat it is much more productive to have f2f meetings, which
+rhere weren't too many since Corona.
+Enno agrees on this.
+
+Markus points out that in the recent years, there have not been enough preparations
+to make the meetings really productive. Enno indicate that the motivation to
+put additional work to SECoP (next to the regular job) declined with the
+impression of less-and-less progress. Which is a bad feedback loop.
+
+Klaus points out that we should announce the topics a week before the meeting
+and really have a look at the topics.
+
+Klaus also proposes, that the status of open issues are presented by assigned
+members in each meeting.
+Enno likes this idea.
+In the beginning there should probably only one issue per person.
+Also, the person assigned to a proposal should rotate to get different points of view over time.
+
+A side discussion about stress rigs, multimeters and dynamic descriptive data leads
+Klaus to point out the we need a well defined 'set of rules' at a central place.
+
+Enno invites Klaus to write an issue about 'the rules' and present it at the next meeting.
+
+
+3) are we ready to start using RFCs instead of SECoP issues?
+============================================================
+
+Alexander confirms this.
+Markus proposes to move the undecided issues over to the rfc style.
+Agreement on using the new style RFC's from now on.
+
+
+4) Status of Documentation
+==========================
+
+Alexander presents his work on splitting the spec into multiple
+interlinked files.
+
+Everyone should read it before the next meeting!
+
+Georg points out, there is no need to wait for the next meeting to propose
+changes or rewordings/rephrasing of sections. Instead, one can make a pull
+request with the improved version. This can significantly speed up the process.
+
+
+5) Date of in persona meeting and next video meeting
+====================================================
+
+The proposed date 21/22 Feb. 2024 does not work for some members.
+shift f2f meeting to 6(th) and (7th) of march 2024, i.e 2024-03-06 + 2024-03-07.
+
+next zoom meeting on 17(th) of January 2024, i.e. 2024-01-17.
+
+
+6) Measurable
+=============
+
+Markus raises the question: Do we need 3 new classes: MeasurableController, MeasurableChannel and a combination of the two?
+Also, are there other things about the Measurable we are ready to discuss?
+
+If there is just one channel, one would typically don't want to implement two modules,
+i.e. having a module with both functionalities.
+
+Markus ponders if the MeasurableChannel could be a feature, so it could be combined
+with the MeasurableController.
+Enno wouldn't mind to have two modules in this case.
+
+Georg proposes to define 3 classes, as otherwise it seems more complex to find a
+good definition of Features/interface classes which work in all cases.
+
+Markus proposes to define 3 interface classes
+- MeasurableController controls multiple channels
+- MeasurableChannel handling the data of some channel, being controlled by a MeasurableController
+- Measurable, joining both into a single module for cases where a single MeasurableChannel would be controlled by a MeasurabelController.
+
+A discussion about how to indicate which channels are controlled by which controller
+(if there are multiple).
+Georg proposes to use the 'group'. Klaus points out, that this is currently only
+for viewing purposes.
+Enno proposes to use the 'controlled_by' parameter already defined.
+Markus ponders if this should be a property instead.
+Markus also points out that the wording of the 'controlled_by' would need to be reworded.
+
+Discussion is postponed, until someone writes/updates an issue.
+
+
+
+7) Proposed NeXus Mapping from Jan
+==================================
+
+Markus thinks that discussion the specifics of a data storage format is
+not the topic of the SECoP committee. Enno agrees here.
+Klaus steers the discussion towards defining a 'quantity' property
+to help ECS/Nexus writes assign the right modules value to the corresponding data fields.
+
+An intense discussion goes on and is shortened due to time running out.
+wrap up: Klaus wants to have a parameter property, Markus thought about a module property,
+Enno proposed to use a Sensor interface class.
+
+topic postponed.
+
+
+Merry Christmas and a happy new year to all!

@@ -1,0 +1,142 @@
+meeting 2024-01-17(ZOOM)
+@@@@@@@@@@@@@@@@@@@@@@@@@
+
+.. sidebar:: participants
+
+     * Markus Zolliker
+     * Georg Brandl
+     * Alexander Zaft
+     * Peter Wegmann
+     * Bastian Klemke
+     * Klaus Kiefer
+     * Enrico Faulhaber
+     * Niklas Eckström
+
+.. contents:: Agenda
+    :local:
+    :depth: 3
+
+
+1a) approval of the minutes 2023-12-19
+======================================
+
+Previous minutes approved.
+
+
+1b) in person meeting 2024-03-13/14
+===================================
+
+No problems, keep date fixed
+
+
+1c) github rendering issue
+==========================
+
+Klaus reports, that the spec is not rendering on the github page anymore.
+Georg points out that this may be due to the length of the spec.
+Markus states, that since we are switching to Alexanders split version anyway,
+no much effort will be spend here.
+
+
+2) open issues
+==============
+
+Klaus and Enno were too busy with other urgent projects, so no presentations got prepared.
+
+
+Issue 76: Measurable
+--------------------
+
+Georg presents his rework on the Issue 76: Measurable.
+An extension to the datainfo of ``Blob`` is needed (and seems a good idea anyway).
+Or a new datatype ``matrix`` could be created, as proposed by proposed by Klaus.
+Enno supports this.
+Enno points out that having the dimensions before the actual data seems preferable.
+Markus thinks that a JSON library should be able to handle an appropriately sized base64
+anyway.
+Klaus would also prefer to have the dimensions before the data in a
+two-step process.
+
+Peter ponders whether the ``get_data()`` is intended for the medium sized data or the full version.
+And how the side channels may look like.
+Georg points out, that a side channel (while still possible) was not the main goal of the proposal.
+Klaus states that ``get_data()`` is intended for medium sized data.
+For clarification: the ``value`` parameter will represent a cooked down version of the data returned
+by ``get_data()``.
+
+Markus points out some confusion about the new ``matrix`` datatype.
+Georg will probably clarify in Issue 76.
+Klaus ponders, if it is a good idea to have the medium sized data returned by the command ``get_data()``,
+or if this should be a parameter.
+Georg points out that, that using a command for big amounts of data carries the least momentum of surprise
+und clogging the transfer path with possibly too frequent updates of too big size.
+
+A minor discussion about whether the new ``matrix`` datatype is comparable to a ``blob``
+or to a ``struct`` containing a ``blob``.
+
+
+``quantity`` property
+---------------------
+
+Markus thinks that SECoP should not be bothered with implementation specifics of data storage
+format (like Nexus). Also, adding a property to all parameters does not seem to be helpful.
+Klaus points out that having this information may be super helpful, not only for Nexus.
+As the property is seen as optional anyway, not all parameters need to have it.
+Also, not only a keyword could be given, but also a link to a glossary/ontology defining
+the keyword, future-proving the mechanism.
+
+minor discussion about which ontologies/glossaries/lists to use/maintain.
+Enno thinks, that references to ontologies/glossaries should be (if used at all) defined
+on the SECnode and not on each property parameter.
+Klaus restate that the minimum of cases include the units, the meanings and the quantity.
+Georg wonders if units shouldn't be preferably be si-units.
+Klaus points out that though degrees Centigrade is not an si-unit, lots of people
+will rather use this instead of Kelvin.
+Enno agrees that the maintenance effort of such glossaries is too much for the SECoP core team.
+
+Enno is not in favour to store unused data, and hence raises the questions of the usefulness of this.
+Georg points out, that due to current developments, SECoP may be required to provide links
+to ontologies. Klaus points out that the properties will be optional in any case, only
+the form/format of the entries need to be specified.
+
+An example of such a glossary is here:
+https://codebase.helmholtz.cloud/em_glossary/em_glossary/-/tree/main/terms?ref_type=heads
+
+
+3) SECoP spec rewritten by Alexander
+====================================
+
+Klaus points out:
+
+- introductions need a little smoothing
+- section 2 starts somewhat *very* similar to section 1
+- 'building blocks' should be renamed
+- sometimes the wrong keywords are used (e.g. tupleof)
+- further minor changes are needed
+
+generally it looks fine and a nice approach.
+Alexander is thanked for the work done already.
+
+Agreement that minor changes and typo corrections could be done on the github directly.
+Bigger changes should be reviewed through pull requests though.
+
+Klaus points out, that the unique point of SECoP is not only defining things,
+but also how to use it/interact with it, making it worthwhile to add a chapter
+about his.
+
+Klaus requests more pictures, especially for the introductory (sub) section(s).
+Peter agrees, as a wall of text (especially in an introduction) is not encouraging people
+to continue reading.
+
+Klaus would like to get an introduction on how to change the spec, especially on the pull requests.
+
+Markus proposes that Alexander makes a short presentation in the next meeting.
+
+Klaus wants to have central point for the assigned todos.
+Markus points out that his already exists:
+https://github.com/SampleEnvironment/SECoP/blob/master/protocol/minutes/pending_tasks.rst
+
+4) Date of next video meeting
+=============================
+2024-02-20 13:30-15:15
+

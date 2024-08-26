@@ -1,0 +1,162 @@
+<svg class="railroad" viewBox="0 0 698 208" width="558pt" xmlns="http://www.w3.org/2000/svg">
+<style type="text/css">
+
+    svg.railroad {
+        background-color: hsl(30, 20%, 95%);
+        background-size: 15px 15px;
+        background-image: linear-gradient(to right, rgba(30, 30, 30, .05) 1px, transparent 1px),
+                          linear-gradient(to bottom, rgba(30, 30, 30, .05) 1px, transparent 1px);
+    }
+
+    svg.railroad path {
+        stroke-width: 3px;
+        stroke: black;
+        fill: transparent;
+    }
+
+    svg.railroad .debug {
+        stroke-width: 1px;
+        stroke: red;
+    }
+
+    svg.railroad text {
+        font: 14px monospace;
+        text-anchor: middle;
+    }
+
+    svg.railroad .nonterminal text {
+        font-weight: bold;
+    }
+
+    svg.railroad text.comment {
+        font: italic 12px monospace;
+    }
+
+    svg.railroad rect {
+        stroke-width: 3px;
+        stroke: black;
+        fill:hsl(-290, 70%, 90%);
+    }
+
+    svg.railroad g.labeledbox > rect {
+        stroke-width: 1px;
+        stroke: grey;
+        stroke-dasharray: 5px;
+        fill:rgba(90, 90, 150, .1);
+    }</style>
+<g class="sequence">
+<path d=" M 10 52 l 5 5 l -5 5 m 5 -5 h 5"/>
+<g class="sequence">
+<g>
+<text class="comment" x="70" y="62">
+error-info</text>
+</g>
+<g class="labeledbox">
+<rect height="188" width="548" x="120" y="10"/>
+<path d=" M 120 57 h 8 m 532 0 h 8"/>
+<g>
+<text class="comment" x="178" y="33">
+a json-object</text>
+</g>
+<g class="sequence">
+<g class="terminal">
+<rect height="22" rx="10" ry="10" width="28" x="128" y="46"/>
+<text x="142" y="62">
+{</text>
+</g>
+<g class="sequence">
+<g class="choice">
+<path d=" M 166 57 h 24 m 0 0 h 432 m -213 0 l -5 -5 m 0 10 l 5 -5 m 213 0"/>
+<g/>
+<path d=" M 166 57 a 12 12 0 0 1 12 12 v 0 m 432 0 v 0 a 12 12 0 0 1 12 -12"/>
+<path d=" M 178 69 v 0 a 12 12 0 0 0 12 12 m 408 0 h 0 a 12 12 0 0 0 12 -12 v 0"/>
+<g class="repeat">
+<path d=" M 190 81 h 12 m 384 0 h 12 m -12 0 a 12 12 0 0 1 12 12 v 74 m 0 -34 l -5 -5 m 10 0 l -5 5 m 0 34 a 12 12 0 0 1 -12 12 m -28 0 h -356 m 181 0 l 5 -5 m 0 10 l -5 -5 m -181 0 a 12 12 0 0 1 -12 -12 v -74 m 0 40 l -5 5 m 10 0 l -5 -5 m 0 -40 a 12 12 0 0 1 12 -12"/>
+<g class="terminal">
+<rect height="22" rx="10" ry="10" width="28" x="558" y="168"/>
+<text x="572" y="184">
+,</text>
+</g>
+<g class="choice">
+<path d=" M 202 81 h 24 m 336 0 h 24"/>
+<g class="sequence">
+<g class="terminal">
+<rect height="22" rx="10" ry="10" width="92" x="226" y="70"/>
+<text x="272" y="86">
+exception</text>
+</g>
+<g class="terminal">
+<rect height="22" rx="10" ry="10" width="28" x="328" y="70"/>
+<text x="342" y="86">
+:</text>
+</g>
+<g class="nonterminal">
+<rect height="22" width="196" x="366" y="70"/>
+<text x="464" y="86">
+exception-information</text>
+</g>
+<path d=" M 318 81 h 10"/>
+<path d=" M 356 81 h 10"/>
+</g>
+<path d=" M 202 81 a 12 12 0 0 1 12 12 v 9 m 360 0 v -9 a 12 12 0 0 1 12 -12"/>
+<path d=" M 214 102 v 33 m 360 0 v -33"/>
+<path d=" M 214 102 v 0 a 12 12 0 0 0 12 12 m 336 0 h 0 a 12 12 0 0 0 12 -12 v 0"/>
+<g class="sequence">
+<g class="terminal">
+<rect height="22" rx="10" ry="10" width="92" x="226" y="103"/>
+<text x="272" y="119">
+traceback</text>
+</g>
+<g class="terminal">
+<rect height="22" rx="10" ry="10" width="28" x="328" y="103"/>
+<text x="342" y="119">
+:</text>
+</g>
+<g class="nonterminal">
+<rect height="22" width="196" x="366" y="103"/>
+<text x="464" y="119">
+traceback-information</text>
+</g>
+<path d=" M 318 114 h 10"/>
+<path d=" M 356 114 h 10"/>
+</g>
+<path d=" M 214 135 v 0 a 12 12 0 0 0 12 12 m 312 0 h 24 a 12 12 0 0 0 12 -12 v 0"/>
+<g class="sequence">
+<g class="nonterminal">
+<rect height="22" width="108" x="226" y="136"/>
+<text x="280" y="152">
+custom-name</text>
+</g>
+<g class="terminal">
+<rect height="22" rx="10" ry="10" width="28" x="344" y="136"/>
+<text x="358" y="152">
+:</text>
+</g>
+<g class="nonterminal">
+<rect height="22" width="156" x="382" y="136"/>
+<text x="460" y="152">
+custom error-info</text>
+</g>
+<path d=" M 334 147 h 10"/>
+<path d=" M 372 147 h 10"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+<g class="terminal">
+<rect height="22" rx="10" ry="10" width="28" x="632" y="46"/>
+<text x="646" y="62">
+}</text>
+</g>
+<path d=" M 156 57 h 10"/>
+<path d=" M 622 57 h 10"/>
+</g>
+</g>
+<path d=" M 110 57 h 10"/>
+</g>
+<path d=" M 678 57 h 5 m -5 5 l 5 -5 l -5 -5 m 5 5"/>
+<path d=" M 20 57 h 10"/>
+<path d=" M 668 57 h 10"/>
+</g>
+</svg>

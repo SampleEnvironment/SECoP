@@ -1,0 +1,8 @@
+('datainfo')
+[
+"{"
+"\"type:\""
+'name of datatype' 
+[ !*['data-property' ","] ]
+"}"
+]

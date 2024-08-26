@@ -1,0 +1,2 @@
+('token')
+['char'*`max 63 times`#`SHOULD restrict to chars+digits`]

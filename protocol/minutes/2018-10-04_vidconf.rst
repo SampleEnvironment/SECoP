@@ -1,0 +1,99 @@
+Videoconference 2018.10.04
+==========================
+
+participants:
+ * Klaus Kiefer
+ * Markus Zolliker
+ * Anders Petterson
+ * Enrico Faulhaber
+
+.. contents:: Contents
+    :local:
+    :depth: 2
+
+
+sine2020 deliverable
+++++++++++++++++++++
+
+Klaus reports the current state of the SECoP deliverable for the SINE2020 WP7.1.
+Discussion about the provided documentation as 'link to github'.
+Klaus notes that we need to store "unchangeable" documents of every SECoP Version.
+Markus wants to keep the older versions in github anyway.
+
+Klaus essentially wants to have the version in the name of the relevant documents
+and only update them (under a new name) if a new version comes out.
+
+Diskussion of the current state and what the problem really is.
+
+Proposal to split SECoP into basic specification plus extensions (for features/buffering+go/partial structs/...)
+
+Klaus accepts a reduced, but watertight basic spec now.
+
+A discussion about how to get extensions into the specification.
+
+The version number needs to be bumped whenever an 'extension' makes it into the specification.
+
+
+Klaus presents some of the points from his draft SECoP report to SINE2020 including that the definition of the SECoP includes
+- the general structure of the SECoP information
+- the syntax for the SECoP messages
+- the set of rules for the SECoP logic
+- the meaning of predefined SECoP components
+
+Everybody agrees on a 'Must-ignore' policy of the SECoP messages.
+
+A new, reworked version of the specification is going to be put by Enrico as base of v1.0 beta.
+
+Discussion about the changes to be expected.
+We need to write down more of the things we consider to be 'normal'.
+Anders can probably not contribute much to the technical details.
+
+The next specification should be in a rfc-style.
+
+Klaus will send around his draft SINE2020 WP7.1 report around beginning of next week.
+Enrico will create on the github a beta-draft of SECoP 1.0, which
+is expected to be very similiar to the current version.
+
+Klaus will continue work on the SECoP book.
+
+
+how to proceed
+++++++++++++++
+
+top priority
+------------
+Directly after putting a watertight specification,
+the software should be put to github.
+Which of the issues should be implemented in it already?
+
+Should we include the possibility to include (custom) features?
+
+There should be an issue about the listing of the interface classes and features:
+should all be listed? only the highest matching ones?
+
+New features should only be included after we gained experience using them (as a custom extension).
+
+Defining interface classes which will work everywhere is a very difficult task.
+
+Software should be applied as soon as apossible and support (at least) the basic SECoP.
+Extensions are to be adopted later.
+
+meetings
+--------
+Markus proposes to have a monthly videoconference.
+Everybody agrees.
+Markus will send doodles.
+
+Enrico says that until the end of the year there will probably be no personal meeting.
+
+
+meta-data
+---------
+Klaus needs interface classes for his definition of metadata.
+Anders and Klaus will start to work on metadata.
+
+conclusion
+----------
+high priority: watertight spec + software on github
+Markus will send doodles around.
+

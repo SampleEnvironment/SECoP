@@ -1,0 +1,121 @@
+2-days meeting 2022-07-04 - 2022-07-06 (ZOOM)
+=============================================
+
+.. sidebar:: participants
+
+     * Lutz Rossa
+     * Klaus Kiefer
+     * Bastian Klemke
+     * Niklas Eckström
+     * Markus Zolliker
+     * Anders Pettersson
+     * Enrico Faulhaber
+
+
+.. contents:: Contents
+    :local:
+    :depth: 3
+
+
+Agenda
+------
+1) discuss the description of the HZB Orange cryostat example
+
+2) finalise issue 65 (handling of coupled submodules).
+   Please look at the proposed addition to the spec draft (last section Decision).
+
+3) discuss issue 73 (HasLimits / HasOffset).
+   main things to discuss here:
+
+   a) is it acceptable, that changing a target parameter might raise an error,
+      even if the value is inside the specified range in datainfo min/max?
+   b) do we need features for this functionality, or is it sufficient to
+      define predefined parameters and commands?
+   c) may we approve the principle?
+
+4) discussion about template description
+
+5) next meeting
+
+
+2022-07-04
+----------
+
+1) description of the HZB Orange cryostat example
++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Lutz and Bastian present the current proposes example.
+Markus starts the discussion by stating that a module representing a temperature should start with capital 'T'.
+Enno points out that so far we have no naming convention.
+Markus points out that a best practice or convention should be put into a seperate issue.
+Klaus prefers to keep lower case level.
+Markus points out that if a module for a power is named 'P', a second module representing
+a pressure can not be named 'p' as the names would clash.
+Bastian proposes 'temp' for temperatures and 'pres' for pressures instead of 't' and 'p'.
+Enno would prefer full words, i.e. 'temperature' and 'pressure'.
+
+Markus points out that the meaning properties are missing and they should be added
+to avoid having to guess.
+
+The 'optional' and 'mandatory' fields in the current example should be removed to avoid
+confusion with 'optional' and 'mandatory' from the specification.
+
+Renaming from orange cryostat to 'a wet cryostat' is proposed by Klaus, to signal that the example
+is meant as a more generic example.
+Also, the custom extension (marked by names starting with '_') should be more clearly marked
+as custom extensions (a '_' is easy to overread).
+Enno expresses his fear that a later specification of those custom extensions later with a slightly
+different semantics may easily be skipped by implementors by just removing the leading '_'.
+Klaus thinks that explicitly stating custom extensions as such should be sufficient,
+as there may always be a slack between the current specification and what implements
+implement.
+
+Enno suggests to add an reference to the relevant issue for the 'heater_power_*' parameter pairs.
+
+The arrows of the diagrams are discussed. The 'going up' arrows (indicating reading a physical value) should be removed.
+Further use cases are discussed, answering some of Bastians questions regarding switching of control.
+
+The example should be reworked for discussion in the next meeting.
+
+2) Issue 65 (handling of coupled submodules)
+++++++++++++++++++++++++++++++++++++++++++++
+
+In principle the current wording is Ok, with a few minor corrections/improvements needed.
+Markus will reword the issue and represent in the next meeting.
+
+3) Issue 73 (HasLimits / HasOffset)
++++++++++++++++++++++++++++++++++++
+
+An intense discussion starts.
+Enno don't mind that a reconnect is needed whenever a property changes, Klaus and Markus
+stringly prefer to avoid that. Hence, a parameter, overriding the limits in the datainfo
+is discussed.
+Enno points out, that discussing several hierarchy levels of access (Sec-node configurator/SE people, instrument users...)
+simultaneously is not helping. Also, there are several kinds of offsets/limits, not all of them
+should be accessible/visible by the ECS.
+Enno thinks that 'adjust' should be mandatory compared to 'offset' as its more generic.
+Klaus proposes to use a Feature for the adjust/offset thingy.
+Enno agrees on having a Feature CanAdjust having a mandatory 'adjust' command and an optional 'offset' parameter,
+as this is the more generic approach.
+Markus prefers 'offset' and to have 2 different Features.
+
+a) is it acceptable, that changing a target parameter might raise an error, even if the value is inside the specified range in datainfo min/max?
+................................................................................................................................................
+
+general agreement.
+
+b) do we need features for this functionality, or is it sufficient to define predefined parameters and commands?
+................................................................................................................
+
+seem to need more discussion, as it depends.
+
+
+
+4) discussion about template description
+++++++++++++++++++++++++++++++++++++++++
+
+postponed to next meeting.
+
+next meeting
+++++++++++++
+2022-08-10 13:30

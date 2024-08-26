@@ -1,0 +1,2 @@
+('accessible' `is:`)
+ <'parameter' 'command'>

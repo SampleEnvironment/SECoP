@@ -1,0 +1,117 @@
+Videoconference 2019-01-16
+==========================
+
+.. sidebar:: participants
+
+     * Klaus Kiefer
+     * Lutz Rossa
+     * Markus Zolliker
+     * Niklas Ekström (on behalf of Anders Petterson)
+     * Enrico Faulhaber
+     * Frank Wutzler (joined later)
+
+.. contents:: Contents
+    :local:
+    :depth: 2
+
+
+Opening
+-------
+Agreement on the agenda previously sent by Markus.
+
+
+next face-toface meeting
+------------------------
+* proposed to be on 20(th) of March to 21(st) of march.
+* alternative is 11(th) march to 12(th) of march (latest 13(th) midday)
+* Klaus sets up a doodle and coordinate with ILL people.
+
+
+SECoP Issue 37: Clarification of status
+---------------------------------------
+* Lutz proposes that ECS should treat state codes which are not defined (i.e. outside of 100-599) should be treated as UNKNOWN.
+  These codes should be treated like an ERROR (from the 4xx error group).
+* Enrico proposed to define UNKNOWN as code 0.
+* Klaus likes DISABLED to be 0, no UNKNOWN code, an ERROR should be used.
+* Markus agrees essentially, but likes to use 401 for UNKNOWN.
+
+Agreement on:
+
+* statuscode for DISABLED is 0, UNKNWON is 401
+* stauscodes 1-99 are RESEVED and MUST NOT be used, if they are seen, they are to be interpreted like DISABLED.
+* close the issue
+
+
+SECoP Issue 46: remote logging
+------------------------------
+The JSON-value true should not be used, instead the string "off" shall be used.
+agreed, closing this and put into specification.
+
+
+SECoP Issue 48: mode parameter
+------------------------------
+* reservation of name `mode` is not needed.
+* Enno proposes to suggest that enum-member 0 shall be used for a good, 'default' setting.
+* generall agreement, accept and close and put into specification.
+
+
+SECoP Issue 50: Reserved Names
+------------------------------
+* should be kept open as an internal 'quick overview' of proposed names/functionalities
+* should also contain a link to the issue
+* decided items (which are in the specification) shall be removed from this issue.
+
+
+SECoP Issue 35: Partial Structs
+-------------------------------
+* new idea has no compatibility issues.
+* issues is lacking some examples.
+* agreement on it, but partiality should never be mandatory.
+* updates and replies MUST still contain the full struct, only the `change`/`do` actions may use the partial struct.
+* agreement, close the issue and put into the specification
+
+
+SECoP Issue 44: Scaled integers
+-------------------------------
+* long discussion about the use case and the goals of the specification
+* Niklas proposes to also include an (optional) offset or an higher order polynom.
+* Enno dislikes to have polynomials of higher order than 1 (as they may be not be reversable).
+* Klaus dislikes to have a recipe to transform numbers, but likes the datatype.
+
+Agreement on the issue in the current form, close the issue and include in the specification.
+
+
+SECoP Issue 47: Error classes
+-----------------------------
+agreement on its current form, needs more examples, close the issue and put into sspecifiaction
+
+
+SECoP Issue 49: Precision of Floating Point Values
+--------------------------------------------------
+* Markus proposes to split the formatting (`fmtstr`) hint and the resolution hint (`resolution`) as different properties.
+* `fmtstr` should be (restricted) c-style printf like formatting string ('%.4f')
+* `resolution` should be in two properties: `absolute_resolution` and `relative_resolution`, containing floating point numbers.
+* except for the name change, agreed, adapt the issue (Solution c) , close and put into specification.
+
+
+SECoP Issue 38: Extension mechanisms
+------------------------------------
+primarily an internal document. used for finding good ways for extensions.
+
+can be closed, tagged as internal document.
+
+
+SECoP Issue 40: Finalise Specification
+--------------------------------------
+the issue is like a 'todo' reminder ticket. Markus will work on this
+
+
+SECoP Issue 28: Clarify buffering mechanism + SECoP Issue 29: New messages for buffering
+----------------------------------------------------------------------------------------
+first discussion will ILL people happened, but not all questions are answered.
+Issue 29 Shall be closed at the ILL-meeting, Issue 28 needs rethinking after Issue 29 is agreed and closed.
+
+
+next vidconf
+------------
+2019-02-20 10' oclock

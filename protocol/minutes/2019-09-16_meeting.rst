@@ -1,0 +1,217 @@
+Meeting @ HZB 2019-09-16
+########################
+
+.. sidebar:: participants
+
+     * Klaus Kiefer
+     * Lutz Rossa
+     * Markus Zolliker
+     * Niklas Ekström
+     * Anders Petterson
+     * Enrico Faulhaber
+
+.. contents:: Contents
+    :local:
+    :depth: 2
+
+
+Opening (2019-09-16)
+====================
+Agreement on Agenda:
+
+1) Collection of problems identified by different partners
+2) Report Developments of Beer-Instrument in Prag
+3) Go through Github pages for questions and clarifications
+4) Discussion about Open SECoP Issues:
+
+  #) Data structure / type - last questions
+  #) Error messages: format change
+  #) Status
+
+5) What is left to be done for Sine2020?
+
+
+1) Collection of problems identified by different partners
+==========================================================
+
+HZB:
+    #) How to deal with mandatory entries, ehere the actual driver does not give any definition -> help for SECNode programmer?
+    #) unit: 'no unit': how to deal with it
+    #) is there a +Inf/-Inf in the answer to describe?
+
+PSI:
+    4) Ist it really needed to prefix not-yet-predefined parameter names?
+
+MLZ:
+    5) revert change of data info structure to a one key JSON-object
+    #) Statuscodes got a mess: can't this be simplified?
+    #) definition of other transport protocols? (binary?)
+    #) How to handle large binary blobs more efficiently
+    #) How to handle/manage high data rate data streams?
+
+1) is clear, will be described in the book
+2) "unit" is optional, if needed, use an empty string.
+3) no
+4) leave like it is.
+5) change to json-object with "type" keyword.
+6) statuscodes were reworked -> done
+7) no binary protocol now. remove from the spec
+8) leave like it is
+9) use another protocol/socket/..., i.e. something else.
+
+2) Report Developments of Beer-Instrument in Prag
+=================================================
+
+Beer is made to investigate strains in materials.
+It was well running until the main person left.
+James is retrying to get it running again, this thime with SECoP.
+Doing so he found quite some questions and confusion grew after checking the github page.
+Lutz managed to help out and continues to help setting up SEC-nodes.
+
+Time stamping of events at rates around 1KHz seems to be required.
+
+Experience from MLZ could be helpful here.
+
+Lessons learned:
+ #) we need an easy introduction to SECoP
+ #) faster data rate / timestamping may be more important in the future
+
+:note:
+ James will be @HZB 21(st) oct to 25(th) oct for personal interaction.
+
+
+3) Go through Github pages for questions and clarifications
+===========================================================
+
+1 Hardware abstraction
+
+1.2 Accessibles
+
+- status to be discussed
+- mode to be discussed
+
+after 1.9 interface classes: feature is missing
+
+2.1 Message syntax
+
+- specifier: in specifier picture invert order, put module:parameter first
+- basic messages: did wwe decide that "describe module" is not possible?
+- Correct handling of side-effects:
+	- point 3: send update only to clients with activated updates (not subscribed!!!)
+	- does not have to go to busy, what to do with constant status (always idle)?
+	- I don't understand point 5
+	- what to do if the sequence idle-> busy-> idle is quicker than the reply to the message?
+	- do we really have to inform all clients about busy- idle?
+
+	- Solution:Handshake: idle -> message (-> busy) -> message_reply -> idle
+	- sending status = busy if NOT necessary (if there is no status busy), status can be constant
+
+2.2 Message intents
+
+- section Update
+	- "An update may also be triggered by an read request, in which case the value reported
+	  in the data report is fresh (i.e. just obtained from a hw)."
+	  This is not always the case or is it defined like this that a read request triggers a
+	  read of the hardware? I don't think so.
+	- Examples: in first example there is an error for the status
+	  (should not be there, error is handled in the second example)
+
+- second Note in section Update: "to speed up the activation process.." "should not just be
+	read FROM HARDWARE...."
+- section Deactivate Updates
+   	"The deactivate message might optionally accept a module name as second item of the
+	message for module-wise deactivation..."
+	Send an error message if module wise deactivation is not possible?
+	Or deactivate all updates?
+	Or do nothing?
+- section Read request
+	"the reply is an update message" I don't understand this. In the example there is a "reply" answer.
+	I think there is old text that has tb be changed.
+	- Same for the remark.
+- section Execute command
+	"Actions which have to wait for physical changes, can be triggered with a command, but not
+	be waited upon before sending the reply."
+	Clarify, I don't get this.
+
+- section Error Reply / Error Classes
+	Did we not decide that the reply is different: see Issue 45
+	This has to be adressed.
+	error_action
+	see section 5.3
+	An Error reply is still needed for things like
+	> reaad tx: target
+	< error NoSuchMessage
+	Do we need an error class: NoSuchMessage?
+- section logging
+	this is an optional message. Do we have other optional messages?
+
+3 Descriptive data
+
+3.2 SEC Node description
+
+- general: what happens if e.g. "equipment_id" is there twice?
+
+3.3 Module Description
+
+- section Mandatory Module Properties
+	Note: as this is a list it SHOULD actually have been called interface_classes
+	or interfaces
+	Do it or remove Note
+- section Optional Module Properties
+- group
+	"The lowercase version of a group must not match any lowercase version of a module name
+	on the same SEC node."
+	- this is true as well for all sections between separators
+- section implementor
+	is a string
+- feature is missing here as Optional Module Property
+
+3.4 Accessible description
+
+- section mandatory Parameter propertis
+	- "readonly" mandatory boolean value.
+	Indication if this parameter may be changed by an ECS, or not
+	I don't understand this
+	- "datatype" change naming
+- section Optional Parameter Properties
+	- constant: waht is its datatype? boolean? constant:true
+
+3.5 Custom Properties
+
+- hint about the datatype of a custom property
+
+4 Data Types
+
+- new name: proposal data structure
+- min max optional?
+- inf?
+- changing max, min to maxlength minlength in integer, string...
+- string: maxbytes or maxchars ?
+- remove "command" from datatype context, make it a standalone part
+- float proposed double must single: comment what happens if max or resloution > single?
+
+5.4 Message handling
+
+- why 2 different flowdiagrams for requests and replies respectively?
+- here error_action is correct
+- remove buffer/buffered
+
+Almost all issues could be solved directly, discussion about status codes to be disussed tomorrow.
+
+status and mode (2019-09-17)
+============================
+a heated discussion abut the current assignment of status codes.
+Anders presented his 'tables' idea.
+
+After a lengthy discussion, a few changes were agreed upon and reworked in the current draft.
+
+
+4) Discussion about Open SECoP Issues:
+======================================
+
+postponed
+
+5) What is left to be done for Sine2020
+=======================================
+
+Klaus writes two reports and queries the required information directly.

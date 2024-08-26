@@ -1,0 +1,73 @@
+Videoconference 2019-07-09
+==========================
+
+.. sidebar:: participants
+
+     * Klaus Kiefer
+     * Lutz Rossa
+     * Markus Zolliker
+     * Niklas Ekström
+     * Anders Petterson
+     * Enrico Faulhaber
+     * Frank Wutzler
+
+
+.. contents:: Contents
+    :local:
+    :depth: 2
+
+
+Opening
+-------
+Discussion of the agenda.
+
+
+Agenda
+------
+
+1) syntax of modules / accessibles description (issue 58)
+2) status codes / mode / set_mode (issue 59)
+3) freezing SECoP syntax
+4) next steps
+
+1) syntax of modules / accessibles description (issue 58)
+---------------------------------------------------------
+Short discussion: the result is to keep commands/parameters mixed as accessibles, transfer as a JSON-object (where the order may be destroyed).
+Keeping the order may later be re-added by an 'order' property.
+
+
+2) status codes / mode / set_mode (issue 59)
+--------------------------------------------
+Markus presents Issue 59 and his thoughts.
+Which information should be handled by mode/set_mode and which should stick to status?
+Which commands to keep and which should have an equivalent mode/set_mode value?
+
+A change mode command should not be rejected (unless the new state would be forbidden) while a target change is effective.
+Also, a target change should not be rejected, while a mode-change is in progress unless the resulting combination is invalid.
+
+side-discussion: WARN_measure should be 200, WARN_no_measure should 250.
+side-discussion: the information about stable/unstable should stay in status.
+side-discussion: mode/set_mode is a good candidate for a Feature.
+
+agreement: shutdown/prepare/finalize should be replaced with mode/set_mode.
+
+Klaus has some doubts about specific use cases and will think hard about it.
+
+
+3) freezing SECoP syntax
+------------------------
+There are currently no unresolved issues with the current syntax (mind the above change! + the change agreed in the last meeting.).
+If we ever have to change the syntax again, we make a new version.
+
+Everybody should check the current draft for any incompatibilities/problems/issues...
+Formally, the syntax will be officially fixed at the next meeting.
+
+Agreement on this.
+
+
+4) next steps
+-------------
+- decide about the mode/set_mode stuff
+- check specification for **syntax** issues, communicate via e-mail
+- any sine2020 todo's leftover?
+- next meeting 2019-08-07 13:00

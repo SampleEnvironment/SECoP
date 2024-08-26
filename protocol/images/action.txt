@@ -1,0 +1,14 @@
+('action')
+[ <"*IDN?" {"ISSE&SINE2020,SECoP," ['version' "," 'add.info']}
+ "describe" "describing"
+ "activate" "active"
+ "deactivate" "inactive"
+ "ping" "pong"
+ "change" "changed"
+ "do" "done"
+ "read" "update" "error"
+ 'custom-action'
+>]
+!!!
+('custom-action')
+'custom-name'

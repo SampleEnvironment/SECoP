@@ -1,0 +1,80 @@
+Videoconference 2019-05-08
+==========================
+
+.. sidebar:: participants
+
+     * Klaus Kiefer
+     * Lutz Rossa
+     * Markus Zolliker
+     * Niklas Ekström
+     * Enrico Faulhaber
+     * Frank Wutzler
+     * Georg Brandl
+
+.. contents:: Contents
+    :local:
+    :depth: 2
+
+
+Opening
+-------
+discussion of agenda
+
+
+jump start without agenda
+
+
+Discussion of (sub)states
+-------------------------
+
+Markus wants to focus on use cases, but also wants to finish the topic.
+It seems a waste of time to signal BUSY while a cryomagnet is ramping down.
+
+Klaus thinks we have to distinguish four things:
+
+1) "Handshake" for action idle -> busy -> idle
+2) Flow-control for measurement: preparing -> moving -> finalizing
+3) at target
+4) Availability: "don't bother me now..."
+5) Disable module
+
+Discussion.
+
+It seems worth to define the distinct meanings which should be transported.
+ * an action is going on
+ * value != target
+ * value is approaching the target
+ * ...
+
+Then define how this is transferred is another topic.
+
+Markus has another proposal:
+give commands a doing and a done reply to signal the end of an action.
+
+Another idea is to encode 'bitfields' in the so far unused digits of the status code.
+
+Further discussion is postponed to face2face meeting.
+
+
+Philosophy
+----------
+
+Markus discusses the question:
+
+  if you have a 'parameter' which can change over time, so it has a 'target' and a 'current value'.
+  shouldn't this be a module of its own?
+
+Further discussion is postponed to face2face meeting.
+
+Everybody should collect his version of the secop rules and circulate before the next meeting.
+
+
+Last check of the syntax definition
+-----------------------------------
+
+to be rechecked by everybody for the last time, as this is going to be finalized.
+
+
+Next meeting
+------------
+face 2 face meeting @MLZ in Garching 2ß19-05-20 to 2019-05-21

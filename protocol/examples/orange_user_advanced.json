@@ -1,0 +1,738 @@
+{
+  "equipment_id": "HZB_Orange",
+  "description": "Orange cryostat example as SECoP node (user, advanced)",
+  "firmware": "SHALL server library (SVN369M)",
+  "order": [
+    "T_reg",
+    "P_reg",
+    "T_sample",
+    "T_additional_sensor_1",
+    "T_additional_sensor_2",
+    "pressure_samplespace",
+    "pressure_vti",
+    "pos_nv",
+    "heliumlevel",
+    "nitrogenlevel"
+  ],
+  "modules": {
+    "T_reg": {
+      "description": "temperature regulation module",
+      "pollinterval": 1,
+      "interface_classes": [
+        "Drivable",
+        "Writable",
+        "Readable"
+      ],
+      "visibility": "user",
+      "order": [
+        "value",
+        "status",
+        "target",
+        "stop",
+        "_calibration_table",
+        "ctrlpars"
+      ],
+      "accessibles": {
+        "value": {
+          "datainfo": {
+            "type": "double",
+            "unit": "K"
+          },
+          "description": "actual temperature",
+          "readonly": true
+        },
+        "status": {
+          "datainfo": {
+            "type": "tuple",
+            "members": [
+              {
+                "type": "enum",
+                "members": {
+                  "IDLE": 100,
+                  "WARN": 200,
+                  "BUSY": 300,
+                  "ERROR": 400,
+                  "DISABLED": 0
+                }
+              },
+              {
+                "type": "string",
+                "isUTF8": true
+              }
+            ]
+          },
+          "description": "status of temperature regulation module",
+          "readonly": true
+        },
+        "target": {
+          "datainfo": {
+            "type": "double",
+            "min": 0,
+            "unit": "K"
+          },
+          "description": "target temperature",
+          "readonly": false
+        },
+        "stop": {
+          "datainfo": {
+            "type": "command",
+            "argument": null,
+            "result": null
+          },
+          "description": "stops ramping"
+        },
+        "_calibration_table": {
+          "datainfo": {
+            "type": "array",
+            "members": {
+              "type": "struct",
+              "members": {
+                "temperature": {
+                  "type": "double",
+                  "min": 0,
+                  "unit": "K"
+                },
+                "resistance": {
+                  "type": "double",
+                  "min": 0,
+                  "unit": "Ω"
+                }
+              }
+            }
+          },
+          "description": "Calibration Table of Sensor X02877",
+          "readonly": true,
+          "visibility": "advanced",
+          "constant": [
+            {
+              "temperature": 325,
+              "resistance": 1.60802
+            },
+            {
+              "temperature": 319,
+              "resistance": 1.61545
+            },
+            {
+              "temperature": 313.5,
+              "resistance": 1.62241
+            },
+            {
+              "temperature": 308,
+              "resistance": 1.62952
+            },
+            {
+              "temperature": 302.5,
+              "resistance": 1.63679
+            }
+          ]
+        },
+        "ctrlpars": {
+          "datainfo": {
+            "type": "struct",
+            "members": {
+              "P": {
+                "type": "double",
+                "unit": ""
+              },
+              "I": {
+                "type": "double",
+                "unit": "1/s"
+              },
+              "D": {
+                "type": "double",
+                "unit": "s"
+              },
+              "heaterrange": {
+                "type": "int",
+                "min": 0,
+                "max": 2
+              },
+              "nv_pressure": {
+                "type": "double",
+                "unit": "mbar"
+              }
+            }
+          },
+          "description": "control parameters",
+          "readonly": true,
+          "visibility": "advanced"
+        }
+      }
+    },
+    "P_reg": {
+      "description": "power regulation module",
+      "pollinterval": 1,
+      "interface_classes": [
+        "Readable"
+      ],
+      "visibility": "advanced",
+      "order": [
+        "value",
+        "status",
+        "heaterrange_enum",
+        "heaterrange_value"
+      ],
+      "accessibles": {
+        "value": {
+          "datainfo": {
+            "type": "double",
+            "unit": "W"
+          },
+          "description": "actual power output",
+          "readonly": true
+        },
+        "status": {
+          "datainfo": {
+            "type": "tuple",
+            "members": [
+              {
+                "type": "enum",
+                "members": {
+                  "IDLE": 100,
+                  "WARN": 200,
+                  "BUSY": 300,
+                  "ERROR": 400,
+                  "DISABLED": 0
+                }
+              },
+              {
+                "type": "string",
+                "isUTF8": true
+              }
+            ]
+          },
+          "description": "status of power regulation module",
+          "readonly": true
+        },
+        "heaterrange_enum": {
+          "datainfo": {
+            "type": "enum",
+            "members": {
+              "0.1W": 0,
+              "1W": 1,
+              "10W": 2
+            }
+          },
+          "description": "actual heater range as enumeration",
+          "readonly": true,
+          "influences": [
+            "P_reg:heaterrange_value"
+          ]
+        },
+        "heaterrange_value": {
+          "datainfo": {
+            "type": "double",
+            "min": 0.1,
+            "max": 10,
+            "unit": "W"
+          },
+          "description": "actual heater range as value",
+          "readonly": true,
+          "influences": [
+            "P_reg:heaterrange_enum"
+          ]
+        }
+      }
+    },
+    "T_sample": {
+      "description": "sample temperature module",
+      "pollinterval": 10,
+      "interface_classes": [
+        "Readable"
+      ],
+      "visibility": "user",
+      "order": [
+        "value",
+        "status",
+        "_calibration_table"
+      ],
+      "accessibles": {
+        "value": {
+          "datainfo": {
+            "type": "double",
+            "unit": "K"
+          },
+          "description": "actual temperature",
+          "readonly": true
+        },
+        "status": {
+          "datainfo": {
+            "type": "tuple",
+            "members": [
+              {
+                "type": "enum",
+                "members": {
+                  "IDLE": 100,
+                  "WARN": 200,
+                  "BUSY": 300,
+                  "ERROR": 400,
+                  "DISABLED": 0
+                }
+              },
+              {
+                "type": "string",
+                "isUTF8": true
+              }
+            ]
+          },
+          "description": "status of sample temperature module",
+          "readonly": true
+        },
+        "_calibration_table": {
+          "datainfo": {
+            "type": "array",
+            "members": {
+              "type": "struct",
+              "members": {
+                "temperature": {
+                  "type": "double",
+                  "min": 0,
+                  "unit": "K"
+                },
+                "resistance": {
+                  "type": "double",
+                  "min": 0,
+                  "unit": "Ω"
+                }
+              }
+            }
+          },
+          "description": "Calibration Table of Sensor X02877",
+          "readonly": true,
+          "visibility": "advanced",
+          "constant": [
+            {
+              "temperature": 325,
+              "resistance": 1.60802
+            },
+            {
+              "temperature": 319,
+              "resistance": 1.61545
+            },
+            {
+              "temperature": 313.5,
+              "resistance": 1.62241
+            },
+            {
+              "temperature": 308,
+              "resistance": 1.62952
+            },
+            {
+              "temperature": 302.5,
+              "resistance": 1.63679
+            }
+          ]
+        }
+      }
+    },
+    "T_additional_sensor_1": {
+      "description": "additional temperature module 1",
+      "pollinterval": 5,
+      "interface_classes": [
+        "Readable"
+      ],
+      "visibility": "advanced",
+      "order": [
+        "value",
+        "status",
+        "_calibration_table"
+      ],
+      "accessibles": {
+        "value": {
+          "datainfo": {
+            "type": "double",
+            "unit": "K"
+          },
+          "description": "actual temperature",
+          "readonly": true
+        },
+        "status": {
+          "datainfo": {
+            "type": "tuple",
+            "members": [
+              {
+                "type": "enum",
+                "members": {
+                  "IDLE": 100,
+                  "WARN": 200,
+                  "BUSY": 300,
+                  "ERROR": 400,
+                  "DISABLED": 0
+                }
+              },
+              {
+                "type": "string",
+                "isUTF8": true
+              }
+            ]
+          },
+          "description": "status of additional temperature module 1",
+          "readonly": true
+        },
+        "_calibration_table": {
+          "datainfo": {
+            "type": "array",
+            "members": {
+              "type": "struct",
+              "members": {
+                "temperature": {
+                  "type": "double",
+                  "min": 0,
+                  "unit": "K"
+                },
+                "resistance": {
+                  "type": "double",
+                  "min": 0,
+                  "unit": "Ω"
+                }
+              }
+            }
+          },
+          "description": "Calibration Table of Sensor X02877",
+          "readonly": true,
+          "constant": [
+            {
+              "temperature": 325,
+              "resistance": 1.60802
+            },
+            {
+              "temperature": 319,
+              "resistance": 1.61545
+            },
+            {
+              "temperature": 313.5,
+              "resistance": 1.62241
+            },
+            {
+              "temperature": 308,
+              "resistance": 1.62952
+            },
+            {
+              "temperature": 302.5,
+              "resistance": 1.63679
+            }
+          ]
+        }
+      }
+    },
+    "T_additional_sensor_2": {
+      "description": "additional temperature module 2",
+      "pollinterval": 5,
+      "interface_classes": [
+        "Readable"
+      ],
+      "visibility": "advanced",
+      "order": [
+        "value",
+        "status",
+        "_calibration_table"
+      ],
+      "accessibles": {
+        "value": {
+          "datainfo": {
+            "type": "double",
+            "unit": "K"
+          },
+          "description": "actual temperature",
+          "readonly": true
+        },
+        "status": {
+          "datainfo": {
+            "type": "tuple",
+            "members": [
+              {
+                "type": "enum",
+                "members": {
+                  "IDLE": 100,
+                  "WARN": 200,
+                  "BUSY": 300,
+                  "ERROR": 400,
+                  "DISABLED": 0
+                }
+              },
+              {
+                "type": "string",
+                "isUTF8": true
+              }
+            ]
+          },
+          "description": "status of additional temperature module 2",
+          "readonly": true
+        },
+        "_calibration_table": {
+          "datainfo": {
+            "type": "array",
+            "members": {
+              "type": "struct",
+              "members": {
+                "temperature": {
+                  "type": "double",
+                  "min": 0,
+                  "unit": "K"
+                },
+                "resistance": {
+                  "type": "double",
+                  "min": 0,
+                  "unit": "Ω"
+                }
+              }
+            }
+          },
+          "description": "Calibration Table of Sensor X02877",
+          "readonly": true,
+          "constant": [
+            {
+              "temperature": 325,
+              "resistance": 1.60802
+            },
+            {
+              "temperature": 319,
+              "resistance": 1.61545
+            },
+            {
+              "temperature": 313.5,
+              "resistance": 1.62241
+            },
+            {
+              "temperature": 308,
+              "resistance": 1.62952
+            },
+            {
+              "temperature": 302.5,
+              "resistance": 1.63679
+            }
+          ]
+        }
+      }
+    },
+    "pressure_samplespace": {
+      "description": "pressure at sample space",
+      "pollinterval": 1,
+      "interface_classes": [
+        "Readable"
+      ],
+      "visibility": "advanced",
+      "order": [
+        "value",
+        "status"
+      ],
+      "accessibles": {
+        "value": {
+          "datainfo": {
+            "type": "double",
+            "unit": "mbar"
+          },
+          "description": "actual pressure",
+          "readonly": true
+        },
+        "status": {
+          "datainfo": {
+            "type": "tuple",
+            "members": [
+              {
+                "type": "enum",
+                "members": {
+                  "IDLE": 100,
+                  "WARN": 200,
+                  "BUSY": 300,
+                  "ERROR": 400,
+                  "DISABLED": 0
+                }
+              },
+              {
+                "type": "string",
+                "isUTF8": true
+              }
+            ]
+          },
+          "description": "status of pressure at sample space",
+          "readonly": true
+        }
+      }
+    },
+    "pressure_vti": {
+      "description": "pressure at variable temperature insert",
+      "pollinterval": 1,
+      "interface_classes": [
+        "Readable"
+      ],
+      "visibility": "advanced",
+      "order": [
+        "value",
+        "status"
+      ],
+      "accessibles": {
+        "value": {
+          "datainfo": {
+            "type": "double",
+            "unit": "mbar"
+          },
+          "description": "actual pressure",
+          "readonly": true
+        },
+        "status": {
+          "datainfo": {
+            "type": "tuple",
+            "members": [
+              {
+                "type": "enum",
+                "members": {
+                  "IDLE": 100,
+                  "WARN": 200,
+                  "BUSY": 300,
+                  "ERROR": 400,
+                  "DISABLED": 0
+                }
+              },
+              {
+                "type": "string",
+                "isUTF8": true
+              }
+            ]
+          },
+          "description": "status of pressure at variable temperature insert",
+          "readonly": true
+        }
+      }
+    },
+    "pos_nv": {
+      "description": "needle valve position",
+      "pollinterval": 1,
+      "interface_classes": [
+        "Readable"
+      ],
+      "visibility": "advanced",
+      "order": [
+        "value",
+        "status"
+      ],
+      "accessibles": {
+        "value": {
+          "datainfo": {
+            "type": "double",
+            "unit": "steps"
+          },
+          "description": "actual needle valve position",
+          "readonly": true
+        },
+        "status": {
+          "datainfo": {
+            "type": "tuple",
+            "members": [
+              {
+                "type": "enum",
+                "members": {
+                  "IDLE": 100,
+                  "WARN": 200,
+                  "BUSY": 300,
+                  "ERROR": 400,
+                  "DISABLED": 0
+                }
+              },
+              {
+                "type": "string",
+                "isUTF8": true
+              }
+            ]
+          },
+          "description": "status of needle valve position",
+          "readonly": true
+        }
+      }
+    },
+    "heliumlevel": {
+      "description": "helium level",
+      "pollinterval": 10,
+      "interface_classes": [
+        "Readable"
+      ],
+      "visibility": "advanced",
+      "order": [
+        "value",
+        "status"
+      ],
+      "accessibles": {
+        "value": {
+          "datainfo": {
+            "type": "double",
+            "min": 0,
+            "max": 100,
+            "unit": "%"
+          },
+          "description": "actual helium level",
+          "readonly": true
+        },
+        "status": {
+          "datainfo": {
+            "type": "tuple",
+            "members": [
+              {
+                "type": "enum",
+                "members": {
+                  "IDLE": 100,
+                  "WARN": 200,
+                  "BUSY": 300,
+                  "ERROR": 400,
+                  "DISABLED": 0
+                }
+              },
+              {
+                "type": "string",
+                "isUTF8": true
+              }
+            ]
+          },
+          "description": "status of helium level",
+          "readonly": true
+        }
+      }
+    },
+    "nitrogenlevel": {
+      "description": "nitrogen level",
+      "pollinterval": 10,
+      "interface_classes": [
+        "Readable"
+      ],
+      "visibility": "advanced",
+      "order": [
+        "value",
+        "status"
+      ],
+      "accessibles": {
+        "value": {
+          "datainfo": {
+            "type": "double",
+            "min": 0,
+            "max": 100,
+            "unit": "%"
+          },
+          "description": "actual nitrogen level",
+          "readonly": true
+        },
+        "status": {
+          "datainfo": {
+            "type": "tuple",
+            "members": [
+              {
+                "type": "enum",
+                "members": {
+                  "IDLE": 100,
+                  "WARN": 200,
+                  "BUSY": 300,
+                  "ERROR": 400,
+                  "DISABLED": 0
+                }
+              },
+              {
+                "type": "string",
+                "isUTF8": true
+              }
+            ]
+          },
+          "description": "status of nitrogen level",
+          "readonly": true
+        }
+      }
+    }
+  }
+}

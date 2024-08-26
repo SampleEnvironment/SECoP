@@ -1,0 +1,66 @@
+Videoconference 2021-06-09
+==========================
+
+.. sidebar:: participants
+
+     * Enrico Faulhaber
+     * Lutz Rossa
+     * Klaus Kiefer
+     * Bastian Klemke
+     * Anders Petterson
+     * Niklas Eckström
+     * Markus Zolliker
+
+
+.. contents:: Contents
+    :local:
+    :depth: 2
+
+
+Agenda
+------
+
+Discuss the description of SECoP example modules 
+
+1) Example from PSI: PPMS (physical property measurement system) plus additional LakeShore 370 resistance bridge
+2) Example from HZB: Orange cryostat draft
+
+1) PPMS + LakeShore 370
+-----------------------
+
+The following issues were discussed:
+
+* Parameters '_persistentmode' and '_enable' in the magnetic field module should be unified to 'mode'
+* The 'implementation' module property from Frappy is not (yet) standard
+  (see `SECoP Issue 61: new predefined property implementation`_)
+* The '_timeout' parameter in the temperature implementation matches the predefined 'timeout' SEC node property.
+  It is proposed to change the name of the parameter.
+* in the temperature module there is a '_workingramp' readonly parameter indicating the actually used ramp,
+  where the 'ramp' parameter is the wanted ramp. Enno proposes to define a naming converntion for these
+  cases, like wanted_ramp, actual_ramp (`SECoP Issue 62: naming convention for related parameters`_).
+* The main value of the chamber module is an enum. The numbers of the enum of 'value' and 'target' should match
+  after the target is reached. Actually they do not, because the meaning of the numbers is taken from the
+  hardware. Klaus proposed to use commands on a (to be created) pressure module. This has the disadvantage that
+  the Drivable interface can not be used for waiting for success. In fact in the implementation at PSI, the
+  pressure reading is not yet impermented
+* The LakeShore370 resistivity module has several parameters which can take a discrete number of floating
+  point values, typically 2 values per decade. Actually it is represented as an enum, with the value/unit as
+  name and the internal integer representation as number. It is proposed to extend the SECoP specification
+  for this case (`SECoP Issue 63: enumeration of floating point values`_).
+
+
+2) Orange cryostat draft
+------------------------
+
+Klaus mentions that when discussing this issue, they found that the SECoP specification may
+need some clarifications/improvements. We create an issue `SECoP Issue 60: enhancements to the documentation`_
+for collecting these items.
+
+The discussion was started, but for time reasons interrupted and postponed to the next video meeting at 2021-06-17.
+
+.. DO NOT TOUCH --- following links are automatically updated by issue/makeissuelist.py
+.. _`SECoP Issue 60: enhancements to the documentation`: ../issues/060%20enhancements%20to%20the%20documentation.rst
+.. _`SECoP Issue 61: new predefined property implementation`: ../issues/061%20new%20predefined%20property%20implementation.rst
+.. _`SECoP Issue 62: naming convention for related parameters`: ../issues/062%20naming%20convention%20for%20related%20parameters.rst
+.. _`SECoP Issue 63: enumeration of floating point values`: ../issues/063%20enumeration%20of%20floating%20point%20values.rst
+.. DO NOT TOUCH --- above links are automatically updated by issue/makeissuelist.py

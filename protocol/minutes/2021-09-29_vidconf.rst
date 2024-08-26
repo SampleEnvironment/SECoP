@@ -1,0 +1,156 @@
+Videoconference 2021-09-29
+==========================
+
+.. sidebar:: participants
+
+     * Enrico Faulhaber
+     * Lutz Rossa
+     * Klaus Kiefer
+     * Niklas Eckström
+     * Markus Zolliker
+     * Bastian Klemke
+     * Anders Petterson (joined later)
+
+
+.. contents:: Contents
+    :local:
+    :depth: 2
+
+
+Agenda
+------
+
+* Discuss possibilities of meeting in persona
+
+* Discuss the issues 60..67
+
+  60) enhancements to the documentation
+  61) new predefined property implementation
+  62) naming convention for related parameters
+  63) enumeration of floating point values
+  64) reading multiple parameters simultaneously
+  65) handling of coupled modules
+  66) force re-connect
+  67) pid control parameters
+
+possibilities of meeting in persona
+-----------------------------------
+
+Klaus suggest to meet at least a day (if regulation permits).
+If regulations forbid, we can switch to zoom.
+Markus proposes to block a set of several days (3) and meet (online) for a few (2) hours
+only, giving brains time to relax and digest the in-between discussions.
+
+
+60) enhancements to the documentation
+-------------------------------------
+
+The issue is to be kept as collection point for further points.
+No details are added during the current meeting.
+
+61) new predefined property ``implementation``
+----------------------------------------------
+
+Markus will prepare some solution and present next time.
+
+62) naming convention for related parameters
+--------------------------------------------
+
+Discussion revolves around the necessity of having such parameters.
+Conclusion ist to collect sensible prefixes with their meanings,
+but not enforcing any implementation to implement all/any of these.
+If they are implemented, they must respect those name prefixes.
+Markus presents the case of a wet magnet, where the actual_ramp may differ from the wanted_ramp,
+but those quantities can't be coerced together, because during ramping down, the magnet needs to
+know up to which ``wanted_ramp`` the ``actual_ramp`` should be increase to.
+
+63) enumeration of floating point values
+----------------------------------------
+
+Discussion revolves around the need for and the use case of having 'float enums'.
+Enno believs that a string is good enough.
+Klaus and Lutz propose to 'augment' the enumeration with a float value.
+Enno thinks that there are only very special uses cases actually needing this and
+thoses cases could easily be handled be parsing the enum strings (which would need to correspond to some
+parseable format).
+Klaus wants to augment enums with an optional value to safe the parsing.
+The extra value can be savely ignored by ecs.
+Klaus and Lutz will come up with a proposal how to implement that.
+
+64) reading multiple parameters simultaneously
+----------------------------------------------
+
+Markus: no priority, may be dropped.
+Enno: no use case, drop it. If really needed, it needs a proper implementation in the secnode and async mode.
+Klaus hints that simultaneous capture of temperature and resistivity (of the temperature sensor) is sometimes required,
+or that a tension rig need to capture several, related values at the same time.
+Enno states, that if the hardware does not support simultaneous capture of several values,
+there is nothing one can do to get those values captured at the same time.
+If the hw is capable of sampling several values at the same time, it should send out those values with the same
+timestamp. This only works in async mode, of course.
+After a lenghty discussion, an extension to the ``read`` command, accepting a (comma separated)
+list of specifiers and replying for each specifier with a normal read reply.
+Markus would accept it. Enno sees no priority on this, but will no reject.
+
+Topic postponed to next meeting.
+
+65) handling of coupled modules
+-------------------------------
+
+Enno presents his few of interdependend modules.
+Few aspects are already solved, others need to be discussed:
+
+* How to indicate which (sub)modules belong together (same group?)
+* How to indicate which (sub)module is currently in charge (new status code?)
+* How to switch the controlling module (setting a target on the new controller?)
+* How to limit the value of the dependent module(s) (with a limiting parameter on the dependant module(s))
+  (parameter names ``max_value`` / ``min_value``)
+
+Main discussion is around how to indicate, which module is in charge and which is (currently) dependant on which.
+(and on which it could be dependant).
+Major agreement about switching the controlling module by setting the target.
+Enno propose to add a parameter ``controlled_by`` (datatype string or an enum) which is either empty (module is not dependant) or
+contains the name of the controlling module.
+Using an enum would also indicate which (sub)modules belong together.
+Adding a (module) property ``controls`` (a list if module names) seems beneficial to be able to
+foresee sideeffects of setting a target. (the information content is essentially deducable from the controlled_by enum entries).
+Agreement for a module can only be controlled by *ONE* other module at any time.
+
+A dependent module should not display ``BUSY`` status codes, it should ``WARN`` instead.
+General agreement to the idea, proposal will be updated.
+
+66) force re-connect
+--------------------
+
+Markus thinks that both sec-node and ecs need a way to re-init the connection.
+Since this is also needed for serial connections, a simple disconnect of the network connection is not sufficient.
+Lutz proposes to use a special status code for this.
+Klaus proposes to use an error-reply from the secnode, if the description changed inbetween and needs to be re-read.
+
+Essentially we try to several problems here:
+
+* The secnode needs a way to inform the ecs about a changed description
+* an ecs needs a way to reset the serial line to a fresh state
+
+The first seems to be solvable by defining a new error message which is sent out 1) as an async message and 2)
+as a reply to any request until a describe request is sent again on this connection.
+
+The second problem can be solved by a special command, or by re-using '*IDN?' to clear the connection status.
+Agreement on using '*IDN?' to clear the communication status of a serial line (ONLY) to a virgin state (comparable to a fresh network connection).
+
+67) pid control parameters
+--------------------------
+
+Agreement to use individual parameters, grouped together by the ``group`` property.
+Klaus suggests to use slightly different names: ``pid_p``, ``pid_i``, ``pid_d``.
+
+No final decision, as lunch comes close.
+
+next meeting
+------------
+
+next zoom meeting 2021-11-03 10:30
+
+possible date for face-to-face meeting 2021-11-30 to 2021-12-02.
+possible location: PSI, HZB, ESS
+

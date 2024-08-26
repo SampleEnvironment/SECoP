@@ -1,0 +1,114 @@
+Videoconference 2019-02-20
+==========================
+
+.. sidebar:: participants
+
+     * Klaus Kiefer
+     * Lutz Rossa
+     * Markus Zolliker
+     * Niklas Ekström (on behalf of Anders Petterson)
+     * Enrico Faulhaber
+     * Frank Wutzler
+
+.. contents:: Contents
+    :local:
+    :depth: 2
+
+Opening
+-------
+Agreement on the agenda previously sent by Markus.
+
+
+Issue 51 No Restrictions on Datatype Nesting (proposed)
+-------------------------------------------------------
+recommend to use a simple as possible structure, but don't restrict the nesting level.
+agreed, closing this.
+
+
+Issue 52 Include Some Properties into Datatype (proposed)
+---------------------------------------------------------
+Klaus likes the current definition better.
+Enno disgrees with Lutz's proposal.
+Lutz wants to have properties/information on the same level.
+Also he thinks the descriptive data is more easy to read.
+
+A discussion about the secop philosophy takes some time....
+The discussion goes on about which 'properties' are properties of the parameter and which are actually 'properties' of the datatype.
+
+Agreement on the need of a structured way of adding units/fmtstr.
+
+Disagreement on the way to implement it.
+
+Proposal to change 'datatype' to 'datadescriptor'.
+
+Enno finds the idea of a 'datadescriptor' description intriguing.
+Klaus likes that as well.
+
+Decision is postponed. Everybody needs to think about all the agreements exchanged.
+
+
+Clarifications in the SECoP specification
+=========================================
+
+various topics which came up during work at the current specification.
+
+
+custom status values
+--------------------
+The meaning of custom status values is only unique for the same defining facility.
+That would need a way to determine the defining facility
+(i.e. a string-type property on the sec-node).
+
+Add an optional 'implementor' property on the module as a string.
+Custom status values must be interpreted in the context of the implementor.
+
+Markus writes an issue for this.
+
+General agreement that even custom staus code have to be implemented properly.
+(so that they cann all be mapped to the generic SECoP codes).
+Also a central registry is out.
+
+
+Issue 45: Async error updates
+-----------------------------
+It seems easier to stick to normal 'update' and 'error' response and not enforce
+using a 'update' message with an error qualifier.
+
+Needs further discussion.
+Issue 45 is to be re-opened.
+
+Klaus proposes to use a new message type 'reply' for replies to 'read'requests to better distinguish async and sync read requests.
+Lutz proposes 'value'.
+
+Markus opens a new issues about 'splitting `update` into two messagetypes'.
+
+
+Communicator class
+------------------
+Agreed to have 'Communicator' as the 4(th) base class.
+Communicators are intended for communications and don't provide the otherwise mandatory 'value' parameter.
+ECS which don't want to use communicators can savely skip those.
+
+Integrate the above into the specification.
+
+
+next face-to-face meeting
+-------------------------
+* 20(th)/21(st) of March at ILL.
+
+
+preparation
+~~~~~~~~~~~
+Discussion about the time when an 'changed' or 'buffered' value is effective and-or should be effective
+and how to mark/transform this.
+
+A collection of use cases may help A LOT here.
+Also a few sequence diagrams of expected order/timing of events may help
+to further tackle this.
+
+Maybe extend Issue 028/29 with some use case....
+
+
+next vidconf
+------------
+2019-03-13 10:00 o'clock.

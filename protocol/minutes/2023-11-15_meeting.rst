@@ -1,0 +1,548 @@
+meeting 2023-11-15 (in person@MLZ)
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+.. sidebar:: participants
+
+     * Alexander Zaft
+     * Georg Brandl
+     * Enrico Faulhaber
+     * Markus Zolliker
+     * Peter Wegmann
+     * Klaus Kiefer
+     * Bastian Klemke
+     * Geritt Günther
+     * Torsten Kracht
+     * Jan Kotanski
+     * Niklas Eckström
+     * Anders Pettersson (via zoom)
+
+     * Moritz (from Daphne project)
+     * Oskar (from Daphne project)
+
+.. contents:: Agenda
+    :local:
+    :depth: 3
+
+
+1) 2023-11-15: SECoP@HMC: 1(st) day
+===================================
+
+
+0) greeting and discussion of agenda (A. Zaft)
+----------------------------------------------
+
+
+1) general overview, current status (K. Kiefer)
+--------------------------------------------------
+
+- financial status: spent money, money available for this year, NO money can be shifted to next year!
+move deliverables WP1 and WP2 to next year
+
+- WP1: what happended, what is missing, milestone
+- WP2: shifted to later presentation of mapping to NeXus
+- WP3: see below (A. Zaft, P. Wegmann, K. Kiefer)
+- WP4: Outreach: Overview over Talks/posters/presentation/trainings...., Todo
+
+
+2) WP3: recent Activities (A. Zaft)
+-----------------------------------
+
+- overview of recent activities
+- (short) demo of webclient (more details tomorrow)
+
+
+3) WP3: SECoP integration into Ophyd (P. Wegmann)
+-------------------------------------------------
+
+Peter shows the current status of the Ophyd integration.
+Torsten discusses some details based in his experience with Ophyd.v1, where
+all signals needed to be class members. Peter has no such problem, as Ophyd.v2
+has a way to dynamically create those signals during runtime.
+
+Peter shows some demonstration of a simulated robot via SECoP->Ophyd.v2->Jupyter Notebook.
+Code is available here: https://github.com/SampleEnvironment/secop-ophyd.
+
+Future usages at different facilities is discussed.
+
+
+4) WP3: ROCK-IT (Experiment & Robotics) (K. Kiefer)
+---------------------------------------------------
+
+Klaus presents the current status of the support for the (SECoP controlled) sample changing robot used in the ROCK-IT project.
+
+A few valuable lessons were learned and presented.
+
+Klaus summarize the key points of SECoP and the metadata.
+
+
+5) WP3: Integration into Sardana (J. Kotanski)
+----------------------------------------------
+
+Jan presents the current state of his work to integrate SECoP into Sardana.
+Torsten starts some discussion about the meaning property, requiring clarification.
+Finally, the discussion ends with the question, whether names with leading '_' are valid in Nexus.
+(Sardana writes NeXus files.)
+
+Jan continues with his presentation, showing his approach of mapping the SECoP metadata to the various Nexus-tree elements.
+
+Minor discussion about the current and wanted properties of NXsample.
+Other possible ways to store SampleEnvironment specific data are also discussed.
+Further discussion is postponed to the talk with Sandor Brockhauser tomorrow.
+
+Geritt points out, that some NX* are not well designed concerning sample environment.
+
+Torsten leads the discussion, trying to favour one way on 'how to do it', to propose to the NIAG.
+
+Discussion intensifies.
+
+Klaus sums it up quite nicely:
+ - we need more keywords for the meaning of NXSensor, those may be synchronized with the keywords of the SECoP meaning (hint: later it was discussed that we probably will have to map the module property meaning to the allowed names for NXenvironment under NXsensor and to allow for a new parameter property reflecting the physical quantity).
+ - we need an additional class to collect all sample environment specific data.
+ - location of this new class is not clear, directly below (or inside) NXSample seems Ok.
+ - just using a NXCollections seems to be too unspecific.
+ - are there synergies with FAIRMAT? (can be discussed tomorrow).
+
+.. note::
+    10 min. coffe-break.
+
+Jan continues his presentation.
+
+A parallel discussion starts about the confusion of storing both
+SECoP meaning temperature and temperature_regulation into the same NXEnvironment.
+This was solved by Jan: only the more relevant one is included.
+The second discussion is about deriving the NXSensor meaning propoerty from the unit,
+which seems feasible for most known cases, but keeps being a heuristic.
+
+A discussion is started by Jan's use of the name field of NXSensor for
+the description.
+Geritt points out that adding extra field seems to be allowed.
+Klaus points out, that having the description (and possible other information like calibration)
+in any data file format (but especially for NeXus) is crucial.
+
+Klaus points out that storing the properties as a NXCollection below NXSensor may solve the problem.
+
+So far, how to store SECoP properties in NeXus is an open question.
+
+Further confusion circles around the vague NeXus definition of NXLog:value, being 'the average value or a setpoint',
+as SECoP is much more specific on these.
+
+Enno raises the questions, which part of the SECoP metadata is crucial enough to be stored 'in some way' in NEXUS.
+Klaus proposes to dump the descriptive json from SECoP as a string in NEXUS anyway.
+Enno points out, the Nexus reader's will expect to find relevant information according to the given Nexus structure
+and won't start to interpret a custom JSON entry.
+So the relevant information need to be stored according to the given structure, even if this means duplication
+pieces of information.
+Essentially, we need to check each and every property and see, how it should be stored :(
+
+Peter points out, that his Ophyd integration already looks at the SEC-node description and
+create different structures, i.e. structs are decomposed into individual members.
+
+Enno thinks, that thinking about which metadata needs to be stored *first* and then figure out *how*
+to store it into NEXUS, may be easier than thinking about how to store *all* metadata.
+
+Peter points out a possible name clash in the current way multiple modules with a meaning are stored to NEXUS.
+Jan agrees, that there changes are needed.
+
+After some discussion, an additional SECoP meaning 'temperature_gradient' may have to be added.
+(There may be other gradients as well...)
+
+Klaus wraps it up and closes todays session.
+
+
+2) 2023-11-16: SECoP@HMC: 2(nd) day
+===================================
+
+.. sidebar:: participants
+
+     * Alexander Zaft
+     * Georg Brandl (via zoom)
+     * Enrico Faulhaber
+     * Markus Zolliker
+     * Peter Wegmann
+     * Klaus Kiefer
+     * Bastian Klemke
+     * Geritt Günther
+     * Torsten Kracht
+     * Jan Kotanski
+     * Niklas Eckström
+     * Anders Pettersson (via zoom)
+
+
+1) SECoP and Nexus, learnings from yesterdays discussion (K. Kiefer)
+--------------------------------------------------------------------
+
+Klaus presents an overview of the open tasks and connection points to other projects.
+
+- If and how to integrate other vocabularies/Glossars into SECoP
+- scan available Vocabularies / glossaries
+- Define extended list of keywords (where missing)
+- look for help in HMC/Nexus/....
+- Look for ccoperations (FAIRmat, NFDi, LEAPS, LENS,...)
+- define own vocabulary/glossar/onthology
+- start new project?
+
+content of original slide from Klaus:
+To do:
+- Decide on general approach if and how to integrate it in SECoP (only for meaning, persistent link, machine readablility, cooperation with others,...)
+- Scan available vocabularies / glossaries
+- Define extended list of keywords (what is missing)
+- Look for help in HMC (e.g. Heike Görzig, projects e.g. MetaCook, https://gitlab.com/metacook/vocpopuli)
+- Look for cooperations (FAIRmat, NFDI, LEAPS, LENS,...)
+- Define own vocabulary / glossary / ontology?
+- Start new project?
+
+Klaus presents an overview of the vocabularies/glossaries he found.
+https://fairsharing.org/search?fairsharingRegistry=Standard
+http://www.ebi.ac.uk/ols4/ontologies
+https://rdamsc.bath.ac.uk/scheme-index
+https://terminology.tib.eu/ts/ontologies?page=1
+https://terminology.nfdi4chem.de/ts/ontologies?page=1
+https://bioportal.bioontology.org/
+https://www.w3.org/TR/?filter-tr-name=sensor
+https://chimad.northwestern.edu
+
+Other things:
+http://purl.org/dc/dcmitype/Dataset
+https://www.rd-alliance.org/group/interoperable-descriptions-observable-property-terminology-wg-i-adopt-wg/wiki/i-adopt
+
+Also have a look an metacook.
+
+Klaus sums up yesterdays discussion about the NeXus integration.
+Essentially, we need:
+
+- a new NXSampleEnvironment class
+- extend the list of allowed NXEnvironments (-> vocabulary/glossary?)
+- extend the list of allowed measurement names in NXSensor (-> vocabulary/glossary?)
+- join forces with others (FAIRmat, Daphne,...)
+
+Several other questions which popped up yesterday are discussed.
+- where to store SE data, if there is no sample?
+- how to store SECoP properties (esp. description)
+- which SECoP metadata needs to be stored
+- how to handle structured data types (Nexus often only foresees a single float/double)
+
+
+content of original slides from Klaus:
+
+slide 1 (things we agreed upon)
+- SECnode -> NXcollection or new NXsampleenvironment class
+- Module -> NXsensor
+- 'meaning' -> create NXenvironment entry with NXsensor mapped (points) to module in NXsampleenvironment
+- Allow for more NXenvironment entries
+- Two different vocabularies/glossaries needed: NXenvironment names and measurement in Nxsensor
+- Join forces with others (FAIRmat, Daphne,...)
+
+slide 2 (open questions)
+- Additional class for sample environment needed as representative for SECnode? (advantage: visibility/findability, more specific) definition_local?
+- New class under NXinstrument or NXsample or on same level?
+- Possibly define new parameter property for physical quantities in SECoP?
+- How to store SECoP properties in NXsensor? Especially 'description'.
+- NXsensor value needs possibly better definition (current: average or setpoint)
+- Review mapping of fields in NXenvironment (name, short name, description,...) to reflect module and to avoid duplication when 2 NXenvironments are coming from one SECnode.
+- Need for vocabulary/glossary for units in SECoP and NeXus?
+- What SECoP metadata is needed to be stored in NeXus?
+- Is a leading _ allowed for NeXus names?
+- Can 'group' property be helping to structure NeXus sample environment?
+- How to store parameters with complex data types in NeXus?
+- How to structured datatypes (static metadata) e.g. calibration curves in NeXus?
+
+
+
+2) WP4: Outreach (K. Kiefer)
+----------------------------
+
+overview of todo's:
+
+- website
+- easy access (SECoP book, downloads,...)
+- test client
+- industry involvement (workshop, lakeshore implementation)
+- support new partners (e.g. ROCK-IT)
+- unify appearance (i.e. graphs/diagrams/....)
+
+
+3) webpage: general remarks (A. Zaft)
+-------------------------------------
+
+- hosted on github pages
+- reacheable via http://www.sampleenvironment.org/secop
+- need more visibility, i.e. link from github
+- spec needs improved consistency, improve 'look'
+
+
+4) discussion with Sandor Brockhauser (K. Kiefer)
+-------------------------------------------------
+
+Starting from 2.2) (presented and explained by Klaus).
+
+Sandor from FAIRmat presents a nice talk about metadata.
+
+key points:
+
+- metadata needs to be FAIR as well.
+- you need a community, metadata can only be FAIR within that community
+- thinking about metadat requires thinking about the mechanics of obtaining the data and describing these. (which varies -> community standards)
+
+- data modelling for a community:
+
+  - controlled vocabulary of *concepts*
+  - clear relationship of concepts and their meta-concepts
+  - cardinality and optionality
+  - standard units
+  - agreed data format or API:
+
+    - common tools and applications
+
+It's common to propose to NIAG to define new Nexus base classes and application definitions.
+
+Sandor presents the current way to store sample environment data.
+Essentially the same problems occurred, as Jan had.
+Nexus seems to be more flexible than we thought so far.
+
+Community definitions are a crucial way to extend NEXUS and can be used
+already. Correct versioning of the resulting NEXUS file is thus crucial.
+
+Jan and Sandor discuss some of the problems Jan had and Sandor makes proposals on how to solve them.
+
+General agreement and joy....
+
+
+5) Outreach: webclient/webdemo (A.Zaft)
+---------------------------------------
+
+Alexander presents the webclient and the required structure to make it work.
+
+A set of open questions are discussed. Also, a synchronous only REST-like API (SECoP over http)
+is proposed.
+
+Discussion is shortened due to time running out.
+
+
+6) Summary (K. Kiefer)
+----------------------
+
+Klaus wraps up the HMC meeting. Unfortunately a few topics had to be shifted to the next meeting due to limited time.
+
+Klaus emphasise that it is important that with Jan a (reviewed) proposal to NIAG is made for required changes to get the relevant metadata into future NEXUS.
+This should bee coordinated in short online meetings untils christmas.
+
+
+.. note:: lunch
+
+
+3) 2023-11-16: SECoP core meeting (1/2)
+=======================================
+
+.. sidebar:: participants
+
+     * Alexander Zaft
+     * Georg Brandl (via zoom)
+     * Enrico Faulhaber
+     * Markus Zolliker
+     * Peter Wegmann
+     * Klaus Kiefer
+     * Bastian Klemke
+     * Niklas Eckström
+     * Anders Pettersson (via zoom)
+
+
+0) Introduction (M. Zolliker)
+-----------------------------
+
+Markus opens with a very good point about discussion culture/approach.
+Instead of trying to convince others that oneselfs approach is 'the right one'.
+Instead, trying to understand other points of view and extract advantages and disadvantages of different approaches should be discussed to form an even better solution.
+All of this seemed it got a little lost over time.
+
+Markus presents different aspects of SECoP, which may touch different parts of SECoP
+for different use cases:
+
+- ECS interoperability
+- human interoperability
+- metadata
+
+We should better distinguish between imperative specification and best practice.
+
+todos:
+
+- split SPECoP specification
+- improvement of RFC process
+- machine readable extensions
+
+Klaus reviews some of the points with the recent NEXUS information in mind.
+
+Markus proposes to open up, especially in non critical cases, to easen up the
+process of extending or adapting SECoP. He wants to distinguish between strict
+machine interopability and (weaker) human interoperability.
+
+A small discussion about technically working, but not agreeable 'solutions' as examples.
+
+Further discussion about referring to exisiting glossaries/onthologies,
+where to put the refrences, how often, etc.
+
+Agreement on having references to exisiting glossaries.
+Agreement also on avoiding duplication.
+
+
+1) Machine readable specification extension (A. Zaft)
+-----------------------------------------------------
+
+Alexander presents the draft discussion starter yaml files
+written together with Georg and Enno.
+http://github.com/cchndl/SECoP/tree/master/rfcs
+
+The general concept is discussed, also in detail.
+General agreement to continue in this discussion,
+i.e. describing the various extendable parts in (partly) machine readable
+(e.g. yaml) definition files and linking to them via SEC-Node or Module properties.
+
+Markus points out, that the used uri's should not only have a stable link,
+but also a stable content. This is agreed upon.
+Also more interaction with the metadata communities seem helpful
+(HMC/Daphne/FAIRmat).
+
+Enno point out that yaml may be dangerous (see:
+https://ruudvanasseldonk.com/2023/01/11/the-yaml-document-from-hell), so
+a subset of yaml will be used in these definitions.
+
+Klaus reminds, that the discussed glossary definition mechanism needs to
+be able to also work on units, the physical quantity or the meaning property.
+Everybody agrees.
+
+It is agreed upon to put a set of yaml definition files covering the spec. at the github repo.
+
+
+.. note:: coffe break
+
+
+2) splitting of the specification: status quo (A. Zaft)
+-------------------------------------------------------
+
+goal: disentangle syntax and semantics + easier navigation
+
+1) Intro
+2) Wire/Transport: Message structure, descriptive data formet
+3) Data info/data types
+4) "building blocks": messages and intent, descriptive data elements
+5) modules: Definition of modules/features/interface Classes
+6) Systems: Larger Structures from Modules (e.g. orange cryostat) [WIP]
+7) Security [WIP]
+8) Future [WIP]
+
+Alexander presents the work he done on splitting the spec.
+
+Details are discussed. As a result, more and bigger examples (as attachment)
+seem a good idea. A fresh re-read of the split spec also seems needed to
+flesh out some rough edges (and broken links).
+
+After some discussion about the best order of the chapters and the chapter names,
+it is agreed, that Alexander will put it on the github in its current form, so everyone can have a look.
+Some pictures may need to be added.
+
+3) RFC process (A. Zaft)
+------------------------
+
+(The formalized process to extend/modify the spec, not initiated by the committee members....)
+
+Using a github-pullrequest number seems not so great, as it excludes part of the potential applicants.
+Instead, using the next free number is discussed.
+
+General agreement.
+
+
+4) Detector interface (G. Brandl)
+---------------------------------
+
+Alexander ad Georg present the current status of Issue76.
+
+A very intense discussion starts about how much hw difference should be reflected
+in a multitude of interface classes, which differences should be abstracted away
+und what use cases can be reflected with having some optional commands.
+
+Maybe a different abstraction than go()/stop()/clear() is better suited.
+Klaus points out that we have a status for 'preparing', so the discussion goes about how to map the different types of hw/states of data aquisition systems onto the status diagram.
+
+Detail discussions about what to put into the value parameter, when and if a value parameter (update) makes sense at all for image type channel.
+
+For the time beeing, 3 Interface classes seem a workable compromise:
+
+- a MeasurementController
+- a (non-matrix) MeasurementChannel
+- a MatrixDataChannel
+
+The MatrixDataChannel has as a value parameter a cooked-down version of the actual data, which can be retrieved with get_data().
+MeasurementChannel, on the other hand, has the measurement result
+represented by the value parameter and thus has no get_data().
+
+Another discussion start around the encoding of the image data,
+the array ordering, compressing of data and if (and how) the array dimensions/names are to be included in the result of get_data().
+
+No conclusive result.
+
+
+4) 2023-11-17: SECoP core meeting (2/2)
+=======================================
+.. sidebar:: participants
+
+     * Alexander Zaft
+     * Georg Brandl (via zoom)
+     * Enrico Faulhaber
+     * Markus Zolliker
+     * Klaus Kiefer
+     * Bastian Klemke
+     * Niklas Eckström
+     * Anders Pettersson (via zoom)
+
+
+0) Introduction (M. Zolliker)
+-----------------------------
+
+1) ROCK-IT sample changer (K. Kiefer)
+-------------------------------------
+
+Klaus presents a preliminary version of the foreseen structure of the
+ROCK-IT sample system.
+Essentially you have a storage for samples, distinct positions
+(at the beamline) where a selectable sample can requested to be moved to/from,
+a robot doing the sample moving and a sample-preparation system.
+
+A few (minor) aspects are discussed, but there are no objections or changes needed.
+
+As a result, an additional meaning 'sample' or 'sample_id' is needed in SECoP.
+
+.. note:: coffe break
+
+
+2) discussion about optional items (M. Zolliker)
+------------------------------------------------
+
+intensive discussion....
+
+As a result, a heuristic (checking presence/types of selected parameters/commands)
+in an ECS may not by avoided in all cases, as having a class based hardware abstraction
+contradicts one of the SECoP principles: 'in doubt, the ECS has to do more work to keep the SEC-node simple'.
+
+3) Measurable
+-------------
+
+- prepare() (optional) is only preparing the measurable for immediate triggering.
+- go() (mandatory) triggers the start of the measurement, or continues a paused measurement (if hold() is implemented). if needed, the measurement is prepared before, if prepare wasn't called in advance.
+- hold() (optional) is pausing an active measurement. Can be continued with go()
+- stop() (optional) stop/abort an active or paused measurement. A subsequent go() will start a new measurement.
+
+Klaus points out parallels of prepare() with a CryoMagnet.
+
+A discussion with the help of the status diagram and the mode parameter results in:
+
+- having a mode parameter with a 'prepared' entry and a command 'prepare()' is no contradiction,
+as the mode parameter is for selecting the 'final idle state after a go()/target change' and prepare() would express the intention
+to 'now go to prepared state'.
+- setting the mode parameter while the module is BUSY only changes the desired target state
+- setting the mode parameter while the module is IDLE, it sets the desired final state and start the required transactions to end there.
+
+4) next meeting
+---------------
+
+2023-12-05 9:00-11:00 via zoom
+
+2024-02-21/2024-02-22 lunch-to-lunch @PSI

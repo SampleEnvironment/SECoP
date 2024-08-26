@@ -1,0 +1,241 @@
+Meeting at PSI 2017.11.27 - 2017.11.29
+======================================
+
+participants:
+ * Eddy Lelievre-Berna
+ * Klaus Kiefer
+ * Markus Zolliker
+ * Anders Petterson
+ * Niklas Ekström
+ * Lutz Rossa
+ * Frank Wutzler
+ * Enrico Faulhaber
+
+.. contents:: Contents
+    :local:
+    :depth: 2
+
+27.11.2017
+++++++++++
+
+Agenda topic: general remarks
+-----------------------------
+
+perception of SECoP seems suboptimal therefore we want to
+
+ * create an forum on the ISSE webpage (+linking to the documentation)
+ * update/rewrite the documentation first
+ * provide a SHORT overview of SECoP (max 2 pages, no details)
+ * provide a readonly copy of SECoP on github (or other PUBLIC site)
+
+ * Eddy mentions some critisism (by others), that information about SECoP was difficult or not at all to be found.
+
+.. highlights:: Todo:
+    An new, short overview shall be created by HZB (i.e. Frank)
+
+
+SECoP from our point of view:
+
+   * self describing protocol to control hardware
+   * flexible, modular
+   * unifying the big number of existing, incompatible (proprietary) protocols, for which often not even an API is provided
+   * provides an api
+   * wants to achieve interoperability between facilities
+
+.. highlights:: Todo:
+    All committee members should be contributors to the SECoP github project
+
+
+Agenda topic: discussion about issues
+-------------------------------------
+
+ * Markus created the Issues, everybody likes the approach
+ * a discussion about the different ways to handle tickets/issues with redmone/github/in a repo ensures.
+ * the discussion broadens about documentation/issue change tracking, rights for modification/merge
+
+.. highlights:: Todo:
+    result is: we try to use the github workflow for documentation (as wiki) and issues (as topics)
+
+Agenda topic: HZB SECoP dll: current status
+-------------------------------------------
+
+ * programmatic creation of SEC-nodes via CreateNode, AddModule, AddParameter, AddCommand, AddProperty
+ * finalise with NodeComplete (also enable access from outside)
+ * builds a multithreaded server for each Node, each Module is handled by it's own thread
+ * building keeps an internal state and should be singlethreaded!
+ * Variant data type (with unit tests) implemented in a C compliant way
+ * LabVIEW test case (calling the DLL from LabVIEW) working
+ * view issues left: (note: still prototype!)
+   * closedown with non-QT application sometimes crashes
+   * validation not yet 100% complete
+   * refactoring
+ * live demo of a needle valve controller controlled by a small LabVIEW demo programm emebdding the dll, beeing controlled by a simple network client (entering secop protocol messages by hand)
+ * accesscontrol can be done via multiple nodes exporting a (posible readonly) subset of modules/parameters
+
+New problems found:
+    1) not all json libraries accept plain json-values like '1.234', but only json-documents
+    2) concentrate on the 'working' ones
+    3) open an issue for this (for documenting this)
+    4) a way out could be to jsonify the whole message, if we would ever need it
+    5) Lutz found a (workaround) way to handle this:
+        * while reading a SECoP value (JSON value), the code surrounds the value with brackets ('[' value ']'), reads it with its library and takes the first element
+        * when writing a SECoP value, you generate a JSON array of one element, convert it with the JSON library to a string and remove the surrounding brackets.
+
+.. highlights:: Todo:
+   create an Issue to document this.
+
+Discussion about access control:
+
+ * currently SECoP itself does not provide access control (except read/write property)
+ * we rely on existing network solutions (bind to local port, use SSL Server, use multiple 'view' nodes)
+ * agreement, that access control is not part of SECoP
+
+.. highlights:: Todo:
+    open an closed issue documenting this discussion
+
+
+Agenda Topic: Issues inside the playground-protocol-documentation
+-----------------------------------------------------------------
+
+ * overview of the current Issues
+
+.. highlights:: note:
+
+    * a lengthy discussion about how to proceed ensures
+    * followed by a discussion about delayed change/commit of parameters, changing multiple parameters 'at once'
+    * discussing commons and differences between start, pause, continue and stop
+    * discussion is postponed without result
+
+.. highlights:: Todo:
+    create an Issue for starting or synchronizing disjunct hw-modules (possible delegated to other SEC-Nodes)
+
+.. highlights:: Todo:
+    create an Issue to collect uses case for:
+     * different kinds of HW (different parameter setting with respect to starting)
+
+.. highlights:: Todo:
+    create an Issue (to be discussed) for:
+     * reading the (RO) target parameter gives you the HW value
+     * if there is no start command available, writing to the (RW) wanted_target starts the action
+       else you need to call start() after writing to wanted_target.
+       In any case, the target parameter reflects the value used by the hw.
+
+       Lutz thinks that looking at the status (and predefining a view values for it) may be sufficient and
+       to have an additional parameter 'wanted_target' can be avoided.
+
+
+
+28.11.2017
+++++++++++
+
+Agenda Topic: discussion about the definition of pause/stop/start/shutdown
+--------------------------------------------------------------------------
+
+.. highlights:: Todo: make an issue about the start/stop/pause/shutdown commands
+       not all commands must always be implemented, but if they are implemented, they have a predefined meaning to it
+       AND
+       if somebody want to implement something with the predefined meaning, it must be with the predefined name
+
+Agenda Topic: timestamps: mandatory or optional
+-----------------------------------------------
+
+ * providing timestamp is highly recommend, but stays optional
+ * timestamps are (still) fractional unix time with a resolution of at least seconds
+ * SEC-node implementor decides about implemented resolution
+
+.. highlights:: Todo: document this in an Issue
+
+Agenda Topic: Interfaceclasses
+------------------------------
+
+ * discussion about custom vs. predefined parameters and properties
+ * proposal to introduce 'features' in addition to base interface_class
+ * features are listed by name in an additional module property called 'features'
+ * explicit listing of 'features' seems better than guessing them from the existence of parameters
+ * features have predefined 'dependencies', excludes, set of parameters with predefined meanings
+ * Open question: how to figure out the difference of an unknown base class to a known base class?
+ * Markus proposes to use just Features then.
+
+
+.. highlights:: Todo: create an Issue for documenting this and for discussing it later in more detail
+
+Agenda Topic: discussing existing Issues
+----------------------------------------
+
+ 1) Issues: agreement to use Issues for documenting, closed
+ 2) Equipment_id is stored as a node property and is no longer part of the describing reply: agreement, closed
+ 3) already closed
+ 4) default timeout: change default to 10s, agreement, closed
+ 5) name change: live properties -> qualifiers to avoid misunderstands: agreement, closed
+ 6) keep alive: leave as to be discussed
+ 7) time synchronisation: leave to be discussed
+    SEC-Nodes have its correct timestamp (provided by other means), have their own invented time, or no timestamps at all.
+    agreement: the kind of SEC-node clock shall be noted as node property in the descriptive data. (this part closed)
+    to be discussed: name of the node property (proposal: clock, datatype: Enum(None=0, relative=1, absolute=2)
+ 8) groups+hierarchy: leave as to discussed
+ 9) meaning/importance: leave as to be discussed
+ 10) Names and upper/lowercase: names can be uppercased as long as the lowercase version is still unique. agreement, close
+ 11) giving only module name for read/update/event request are extended with :value or :target: agreement on not specifying this.
+     Clients are not allowed to use it, servers may support it but it is non-standard behaviour.
+
+.. highlights:: Todo: Issue 11 is still coded as second part of Issue 10 -> split it (Markus)
+
+.. highlights:: Todo: create an Issue about providing a mean to set the SEC-nodes clock from the ECS side.
+
+.. highlights:: note: Klaus and Eddy leaving at this point
+
+
+Agenda Topic: Grouping/Hierachy (Issue 8)
+-----------------------------------------
+
+ * discussion about namespaces and use cases for groups
+ * grouping is 'giving modules or parameters a name to allow guis to group them together'
+ * the (lowercase) name of a (parameter)group is not allowed to clash with (lowercased) names of parameters of the same module
+ * the (lowercase) name of a (module)group is not allowed to clash with (lowercased) names of modules of the same node
+ * agreement, closing this issue
+
+
+.. highlights:: Todo: create an Issue for PID tables
+
+
+Topic: handling of driver generated timestamps in the HZB-DLL
+-------------------------------------------------------------
+
+ 1) initiate the timestamp with NAN before calling the HW-read_a_value callback, which may provide an timestamp
+ 2) if configured to do so, a NAN timestamp is replaced after the callback with the current time
+ 3) if the timestamp is still NAN (or not expressable by digits), it is NOT send
+
+.. highlights:: Todo: @Frank: document this !
+
+
+Discussion about activate/deactivate
+------------------------------------
+
+ * normally values for all values are send before the activated reply is sent
+ * there are very rare cases where a value can (not yet) be determined. In this case it is acceptable to send a null value.
+ * a null value is also accepted when setting parameters of a complex datatype and not all members shall be updated.
+
+.. highlights:: Todo: create an issue about the usage of null
+
+.. highlights:: note: tour around PSI
+
+.. highlights:: note: presentation of the SEA and SICS concept by Markus Zolliker
+
+.. highlights:: note: detailed showcase of the HZB-DLL source
+
+.. highlights:: note: we need more use cases and sequencediagrams
+
+
+29.11.2017
+++++++++++
+
+ * detailed presentation of the playground
+ * discussion about implementation details
+ * structure of config files
+ * introduction to writing secop modules + how to configure them
+ * live demo
+
+ * fixing the amagnet
+ * discussing error propagation (bugs in hw-driver)
+
+.. highlights:: note: meeting was closed around 14:30
