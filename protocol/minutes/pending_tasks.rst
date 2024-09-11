@@ -1,7 +1,7 @@
 ============================================== =================
 Task                                           Who
 ============================================== =================
-write a proposal for new meaning
+write a proposal for new meaning               Peter
 decide on Measurable
 discuss templates/systems
 finalize split spec for v1.1                   Alexander, Peter
