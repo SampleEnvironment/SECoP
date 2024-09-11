@@ -518,12 +518,16 @@ Base classes
 ``"Writable"``:
     The main purpose is to represent fast settable values (i.e. a switch).
     It must have a ``target`` parameter in addition to what a `Readable`_ has.
+    It does not have a ``stop`` command. A module which needs time to reach
+    the target but cannot be stopped has also to be represented as a `Writable`_,
+    with a `BUSY` item (code 300...389) in the status enum.
 
 .. _Drivable:
 
 ``"Drivable"``:
     The main purpose is to represent slow settable values (i.e. a temperature or a motorized needle valve).
-    It must have a ``stop`` command in addition to what a `Writable`_ has.
+    It must have a ``stop`` command in addition to what a `Writable`_ has. Note that in case the
+    ``stop`` command has no effect, a `Writable`_ SHOULD be used.
     Also, the ``status`` parameter will indicate a `BUSY`_ state for a longer-lasting operations.
 
 .. _features:
