@@ -1,0 +1,26 @@
+kind: Interface
+name: Drivable
+version: 1
+# All accessibles from the base are "inherited".
+base: Writable:1
+description: |
+       A base SECoP interface class for modules whose values changes "slowly",
+      so that the change can be stopped.
+commands:
+  stop:
+    kind: Command
+    name: stop
+    version: 1
+    arguments: none
+    return: none
+    description: |
+      Stop the current value-changing operation. If not driving, no effect.
+  hold:
+    kind: Command
+    name: hold
+    version: 1
+    optional: true
+    arguments: none
+    return: none
+    description: |
+      Cease movement, be ready to continue soon, target value is kept.
