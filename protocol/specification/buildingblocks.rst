@@ -82,8 +82,10 @@ either indicating success of the request or flag an error.
        module-wise           reply          ``inactive␣<module>``
      `heartbeat`_            request        ``ping``
       with empty identifier  reply          ``pong␣␣``\ <`data-report`>
-     `execute command`_      request        ``do␣<module>:<command>␣``\ (\ :ref`value` | ``null``)
+     `execute command`_      request        ``do␣<module>:<command>␣``\ (\ :ref:`value` | ``null``)
           \                  reply          ``done␣<module>:<command>␣``\ <`data-report`>
+      `check value`_         request        ``check␣<module>:<accessible>␣``\ <:ref:`value`>
+          \                  reply          ``checked␣<module>:<accessible>␣``\ <`data-report`>
     ======================= ============== ==================
 
 
@@ -325,7 +327,7 @@ After all side-effects are communicated, a "changed" reply is then send, contain
 
     * If the value is not stored in hardware, the "update" message can be sent immediately.
     * The read-back value should always reflect the value actually used.
-    * an client having activated updates may get an ``update`` message before the ``changed`` message, both containing the same data report.
+    * A client having activated updates may get an ``update`` message before the ``changed`` message, both containing the same data report.
 
 
 Example on a connection with activated updates. Qualifiers are replaced by {...} for brevity here.
@@ -347,6 +349,34 @@ Until then, it will get regular updates on the current main value (see last upda
 
 .. note::
     It is vital that all 'side-effects' are realized (i.e. stored in internal variables) and be communicated, **before** the 'changed' reply is sent!
+
+
+
+.. _message-check:
+
+Check Value
+~~~~~~~~~~~
+
+The check value message is used to enable *dry run* functionality on :ref:`accessibles <accessibles>` (parameters and commands). It consists of the module and accessible name, in addition to the value to be verified. It allows an ECS to verify if a value can be set on a particular parameter without actually changing it with a :ref:`change value <message-change>` message. Similarly it can be used on commands to check if a value is a valid argument, without :ref:`executing <message-do>` the command. This check goes beyond a simple validity check based on the accessible's datainfo and may depend on the current configuration of the entire SEC node. Upon successful completion of the check, a ``checked`` response is sent, containing a `data-report` of the verified value. The accessible property :ref:`checkable <prop-checkable>` indicates whether an accessible can be checked.  
+
+
+.. admonition:: Remarks
+  
+  * The response to a ``check`` message must not depend on the current status of the module.
+  * A ``check`` message must not change anything, neither on the hardware nor on any parameter.
+  * The ``checked`` and ``check_error`` messages are only sent in response to the ``check`` message on the same connection, and not to other clients with an activat connection.
+  * If the check fails, the error report should indicate whether this is due to the current configuration of the SEC node (:ref:`error-classes <Impossible>`), or because the checked value is outside the range (:ref:`error-classes <RangeError>`) specified by the ``datainfo`` property . 
+
+
+Example:
+
+.. code::
+
+  > check mf:target [1.0, 1.0, 2.0]
+  < checked mf:target [[1.0, 1.0, 2.0], {}]  
+
+
+:related issue: :issue:`075 New messages check and checked`
 
 .. _message-read:
 
@@ -464,6 +494,10 @@ _`Error Classes`:
 
         * - ReadOnly
           - The requested write can not be performed on a readonly value..
+
+        * - NotCheckable
+          - The requested check can not be performed on the specified parameter.
+            (i.e. on parameters, where no :ref:`checkable <prop-checkable>` property is present, or if it is set to false.)
 
         * - WrongType
           - The requested parameter change or Command can not be performed as the argument has the wrong type.
@@ -931,6 +965,13 @@ Optional Accessible Properties
         For example a client respecting visibility in 'user' mode, will not show modules
         with 'advanced' visibility, and therefore also not their accessibles.
 
+.. _prop-checkable:
+
+``"checkable"``
+    A boolean value, indicating whether the accessible can be checked with a ``check`` message.
+    If omitted, the accessible is assumed to be not checkable (``checkable == False``), and the SEC node should reply with an :ref:`error-report` (``NotCheckable``) error when a ``check`` message is sent.
+
+    :related issue: :issue:`075 New messages check and checked`
 
 
 Optional Parameter Properties
@@ -943,6 +984,8 @@ Optional Parameter Properties
     after the activate command.
 
     The value given here must conform to the Datatype of the accessible.
+
+
 
 
 Custom Properties
