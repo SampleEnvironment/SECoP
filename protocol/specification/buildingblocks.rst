@@ -828,14 +828,18 @@ Optional Module Properties
      :related issue: :issue:`008 Groups and Hierarchy`
 
 ``"meaning"``
-    A dictionary regarding the module meaning. The information is provieded in a machine readable format 
-    1. ``"link"``
+   A dictionary regarding the module meaning. It provides metadata that is useful for interpreting the data in a machine readable format. All entries in the dictionary are optional, with some constraints.
 
-    2. ``"key"``
+   1. ``"link"`` a link to a vocabulary, glossary or onthology. But more preferably a PID (Persistent Identifier) that points to a specific entry. 
+         .. note::
+         If the link does not point directly to an entry, the ``"key"`` field is mandatory 
+    
+   2. ``"key"`` name of the entry that ``"link"`` points to.
+         .. note::
+        This field must not be present if there is no ``"link"`` 
 
-    3.  ``"function"``:a string from an extensible list of predefined meanings:
-
-        * ``"temperature"``   (the sample temperature)
+   3.  ``"function"``:a string from an extensible list of predefined meanings:   
+        * ``"temperature"``   
         * ``"temperature_regulation"`` (to be specified only if different from 'temperature')
         * ``"magneticfield"``
         * ``"electricfield"``
@@ -854,23 +858,27 @@ Optional Module Properties
 
         :related issue: :issue:`026 More Module Meanings`
 
-    4. ``"importance"``  a value describing the importance, with the following values:
-
-        - 10 means the instrument/beamline (Example: room temperature sensor always present)
-        - 20 means the surrounding sample environment (Example: VTI temperature)
-        - 30 means an insert (Example: sample stick of dilution insert)
-        - 40 means an addon added to an insert (Example: a device mounted inside a dilution insert)
+   4. ``"importance"``  a value describing the importance, with the following values:
+        * 10 means the instrument/beamline (Example: room temperature sensor always present)
+        * 20 means the surrounding sample environment (Example: VTI temperature)
+        * 30 means an insert (Example: sample stick of dilution insert)
+        * 40 means an addon added to an insert (Example: a device mounted inside a dilution insert)
 
         Intermediate values might be used. The range for each category starts at the indicated value minus 5
         and ends below the indicated value plus 5.
+       
+      .. note::
+       - This field must not be present if there is no entry for ``"function"`` or ``"link""`` 
 
         :related issue: :issue:`009 Module Meaning`
-
-    5. ``"belongs_to"`` a string that identifies the entity to which the function, referenced in the ``"function"`` field, is associated.
-      predefined associations:
-
+   5. ``"belongs_to"`` string identifying the entity to which the measured quantity (`value <Basic Parameters>`_) of the module is linked. Setting this field forms a relation between the entity and the ``"function"`` field, and thus changes how it is interpreted. 
+      Predefined entities:
         * ``"sample"``
         * ...
+         .. note::
+            - If not present, the default value ``"belongs_to":"sample"`` is assumed.
+            
+
 
 
 .. _implementor:
