@@ -828,9 +828,12 @@ Optional Module Properties
      :related issue: :issue:`008 Groups and Hierarchy`
 
 ``"meaning"``
-    tuple, with the following two elements:
+    A dictionary regarding the module meaning. The information is provieded in a machine readable format 
+    1. ``"link"``
 
-    1.  a string from an extensible list of predefined meanings:
+    2. ``"key"``
+
+    3.  ``"function"``:a string from an extensible list of predefined meanings:
 
         * ``"temperature"``   (the sample temperature)
         * ``"temperature_regulation"`` (to be specified only if different from 'temperature')
@@ -851,7 +854,7 @@ Optional Module Properties
 
         :related issue: :issue:`026 More Module Meanings`
 
-    2.  a value describing the importance, with the following values:
+    4. ``"importance"``  a value describing the importance, with the following values:
 
         - 10 means the instrument/beamline (Example: room temperature sensor always present)
         - 20 means the surrounding sample environment (Example: VTI temperature)
@@ -862,6 +865,21 @@ Optional Module Properties
         and ends below the indicated value plus 5.
 
         :related issue: :issue:`009 Module Meaning`
+
+    5. ``"belongs_to"`` a string that identifies the entity to which the function, referenced in the ``"function"`` field, is associated.
+      predefined associations:
+
+        * ``"sample"``
+        * ...
+
+Example:
+
+.. code::
+
+
+
+
+
 
 .. _implementor:
 
