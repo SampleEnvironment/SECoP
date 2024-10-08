@@ -872,14 +872,6 @@ Optional Module Properties
         * ``"sample"``
         * ...
 
-Example:
-
-.. code::
-
-
-
-
-
 
 .. _implementor:
 
