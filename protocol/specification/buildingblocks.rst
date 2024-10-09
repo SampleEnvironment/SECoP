@@ -830,15 +830,18 @@ Optional Module Properties
 ``"meaning"``
    A dictionary regarding the module meaning. It provides metadata that is useful for interpreting the data in a machine readable format. All entries in the dictionary are optional, with some constraints.
 
-   1. ``"link"`` a link to a vocabulary, glossary or onthology. But more preferably a PID (Persistent Identifier) that points to a specific entry. 
-         .. note::
-         If the link does not point directly to an entry, the ``"key"`` field is mandatory 
+   1. ``"link"`` a link to a vocabulary, glossary or ontology. Preferably a PID (Persistent Identifier) pointing to a specific entry. 
+
+      .. note::
+      If the link does not point directly to an entry, the ``"key"`` field is mandatory 
     
    2. ``"key"`` name of the entry that ``"link"`` points to.
-         .. note::
-        This field must not be present if there is no ``"link"`` 
 
-   3.  ``"function"``:a string from an extensible list of predefined meanings:   
+      .. note::
+      This field must not be present if there is no ``"link"`` 
+
+   3.  ``"function"`` a string from an extensible list of predefined meanings:
+          
         * ``"temperature"``   
         * ``"temperature_regulation"`` (to be specified only if different from 'temperature')
         * ``"magneticfield"``
@@ -852,13 +855,13 @@ Optional Module Properties
 
         This list may be extended later.
 
-        ``_regulation`` may be postfixed, if the quantity generating module is different from the
-        (closer to the sample) relevant measuring device. A regulation device MUST have an
+        ``_regulation`` may be postfixed, if the quantity generating module is different from the relevant measuring device. A regulation device MUST have an
         :ref:`interface class <interface-classes>` of at least ``Writable``.
 
         :related issue: :issue:`026 More Module Meanings`
 
    4. ``"importance"``  a value describing the importance, with the following values:
+          
         * 10 means the instrument/beamline (Example: room temperature sensor always present)
         * 20 means the surrounding sample environment (Example: VTI temperature)
         * 30 means an insert (Example: sample stick of dilution insert)
@@ -868,15 +871,19 @@ Optional Module Properties
         and ends below the indicated value plus 5.
        
       .. note::
-       - This field must not be present if there is no entry for ``"function"`` or ``"link""`` 
+      This field must not be present if there is no entry for ``"function"`` or ``"link""`` 
 
-        :related issue: :issue:`009 Module Meaning`
-   5. ``"belongs_to"`` string identifying the entity to which the measured quantity (`value <Basic Parameters>`_) of the module is linked. Setting this field forms a relation between the entity and the ``"function"`` field, and thus changes how it is interpreted. 
+      :related issue: :issue:`009 Module Meaning`
+
+   5. ``"belongs_to"``a string that identifies the entity to which the measured quantity (`value <Basic Parameters>`_) of the module is linked. Setting this field forms a relation between the entity and the ``"function"`` field, and thus changes how it is interpreted. 
+
       Predefined entities:
-        * ``"sample"``
-        * ...
-         .. note::
-            - If not present, the default value ``"belongs_to":"sample"`` is assumed.
+       
+         * ``"sample"``
+         * ...
+
+   .. note::
+   If not present, the default value ``"belongs_to":"sample"`` is assumed.
             
 
 
