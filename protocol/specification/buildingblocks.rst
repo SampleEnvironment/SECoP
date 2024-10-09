@@ -827,16 +827,23 @@ Optional Module Properties
 
      :related issue: :issue:`008 Groups and Hierarchy`
 
+.. _module-meaning:
+
 ``"meaning"``
-   A dictionary regarding the module meaning. It provides metadata that is useful for interpreting measurement data in a machine-readable format. All entries in the dictionary are optional, with some restrictions.
+   A dictionary regarding the module meaning. It provides metadata that is useful for interpreting measurement data in a machine-readable format. All entries in the dictionary are optional, with some restrictions. A meaning porperty can also be added on the :ref:`parameter-meaning <paremeter level>`.
+   
+   .. note::
+      In order for the meaning dicionary to be valid, it must contain at least a ``"link"`` or a ``"function"`` field.
+
 
    1. ``"link"`` a link to a vocabulary, glossary or ontology. Preferably a PID (Persistent Identifier) pointing to a specific entry. 
     
-   2. ``"key"`` name of the entry to which ``"link"`` points.
+   2. ``"key"`` a key (string) that selects an entry from the knowledge representation that ``"link"`` points to. This mainly serves human readability if ``"link"`` already points to a specific entry. 
 
       .. note::
          - This field must not be present if there is no ``"link"`` 
-         - If ``"link"`` does not point directly to an entry, the ``"key"`` field is mandatory 
+         - If ``"link"`` does not point directly to an entry, the ``"key"`` field is mandatory
+         
 
    3. ``"function"`` a string from an extensible list of predefined functions.
       
@@ -851,6 +858,14 @@ Optional Module Properties
          * ``"viscosity"``
          * ``"flowrate"``
          * ``"concentration"``
+         * ``"ph"``
+         * ``"conductivity"``
+         * ``"voltage"``
+         * ``"surfacepressure"``
+         * ``"stress"``
+         * ``"strain"``
+         * ``"shear"``
+         * ``"heliumlevel"``
 
         This list may be extended later.
 
@@ -878,10 +893,10 @@ Optional Module Properties
 
       Predefined entities:       
          * ``"sample"``
-         * ...
+         * ``"other"``
 
-   .. note::
-      If not present, the default value ``"belongs_to":"sample"`` is assumed.
+      .. note::
+         If not present, the default value ``"belongs_to":"other"`` is assumed.
             
 
 Example:
@@ -980,6 +995,11 @@ Optional Parameter Properties
     after the activate command.
 
     The value given here must conform to the Datatype of the accessible.
+
+.. _parameter-meaning:
+``"meaning"``
+   A dictionary regarding the parameter meaning. It has the same specification as the :ref:`module-meaning <module meaning>`.
+   
 
 
 Custom Properties
