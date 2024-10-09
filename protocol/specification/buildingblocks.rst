@@ -827,41 +827,93 @@ Optional Module Properties
 
      :related issue: :issue:`008 Groups and Hierarchy`
 
+.. _module-meaning:
+
 ``"meaning"``
-    tuple, with the following two elements:
+   A dictionary regarding the module meaning. It provides metadata that is useful for interpreting measurement data in a machine-readable format. All entries in the dictionary are optional, with some restrictions. A meaning porperty can also be added on the :ref:`parameter-meaning <paremeter level>`.
+   
+   .. note::
+      In order for the meaning dicionary to be valid, it must contain at least a ``"link"`` or a ``"function"`` field.
 
-    1.  a string from an extensible list of predefined meanings:
 
-        * ``"temperature"``   (the sample temperature)
-        * ``"temperature_regulation"`` (to be specified only if different from 'temperature')
-        * ``"magneticfield"``
-        * ``"electricfield"``
-        * ``"pressure"``
-        * ``"rotation_z"`` (counter clockwise when looked at 'from sky to earth')
-        * ``"humidity"``
-        * ``"viscosity"``
-        * ``"flowrate"``
-        * ``"concentration"``
+   1. ``"link"`` a link to a vocabulary, glossary or ontology. Preferably a PID (Persistent Identifier) pointing to a specific entry. 
+    
+   2. ``"key"`` a key (string) that selects an entry from the knowledge representation that ``"link"`` points to. This mainly serves human readability if ``"link"`` already points to a specific entry. 
+
+      .. note::
+         - This field must not be present if there is no ``"link"`` 
+         - If ``"link"`` does not point directly to an entry, the ``"key"`` field is mandatory
+         
+
+   3. ``"function"`` a string from an extensible list of predefined functions.
+      
+      Predefined ``"functions"``:
+         * ``"temperature"``   
+         * ``"temperature_regulation"`` (to be specified only if different from 'temperature')
+         * ``"magneticfield"``
+         * ``"electricfield"``
+         * ``"pressure"``
+         * ``"rotation_z"`` (counter clockwise when looked at 'from sky to earth')
+         * ``"humidity"``
+         * ``"viscosity"``
+         * ``"flowrate"``
+         * ``"concentration"``
+         * ``"ph"``
+         * ``"conductivity"``
+         * ``"voltage"``
+         * ``"surfacepressure"``
+         * ``"stress"``
+         * ``"strain"``
+         * ``"shear"``
+         * ``"heliumlevel"``
 
         This list may be extended later.
 
-        ``_regulation`` may be postfixed, if the quantity generating module is different from the
-        (closer to the sample) relevant measuring device. A regulation device MUST have an
+        ``_regulation`` may be postfixed, if the quantity generating module is different from the relevant measuring device. A regulation device MUST have an
         :ref:`interface class <interface-classes>` of at least ``Writable``.
 
         :related issue: :issue:`026 More Module Meanings`
 
-    2.  a value describing the importance, with the following values:
+   4. ``"importance"``  an integer value in the range ``[0,50]`` describing the importance. It allows ordering elements of the same ``"function"``/``"link"`` by importance.  
 
-        - 10 means the instrument/beamline (Example: room temperature sensor always present)
-        - 20 means the surrounding sample environment (Example: VTI temperature)
-        - 30 means an insert (Example: sample stick of dilution insert)
-        - 40 means an addon added to an insert (Example: a device mounted inside a dilution insert)
+      Predefined values:         
+        * 10 means the instrument/beamline (Example: room temperature sensor always present)
+        * 20 means the surrounding sample environment (Example: VTI temperature)
+        * 30 means an insert (Example: sample stick of dilution insert)
+        * 40 means an addon added to an insert (Example: a device mounted inside a dilution insert)
 
-        Intermediate values might be used. The range for each category starts at the indicated value minus 5
-        and ends below the indicated value plus 5.
+      Intermediate values might be used. The range for each category starts at the indicated value minus 5 and ends below the indicated value plus 5.
+       
+      .. note::
+         This field must not be present if there is no entry for ``"function"`` or ``"link""`` 
 
-        :related issue: :issue:`009 Module Meaning`
+      :related issue: :issue:`009 Module Meaning`
+
+   5. ``"belongs_to"`` a string identifying the entity to which the module is linked. Setting this field forms a relation between the entity and the ``"function"`` field.
+
+      Predefined entities:       
+         * ``"sample"``
+         * ``"other"``
+
+      .. note::
+         If not present, the default value ``"belongs_to":"other"`` is assumed.
+            
+
+Example:
+
+.. code::
+
+   "meaning": {
+      "link": "https://w3id.org/nfdi4cat/voc4cat_0000051",
+      "key": "synthesis temperature",
+      "function": "temperature_regulation",
+      "importance": 20,
+      "belongs_to": "sample"
+   }
+
+
+
+
 
 .. _implementor:
 
@@ -943,6 +995,11 @@ Optional Parameter Properties
     after the activate command.
 
     The value given here must conform to the Datatype of the accessible.
+
+.. _parameter-meaning:
+``"meaning"``
+   A dictionary regarding the parameter meaning. It has the same specification as the :ref:`module-meaning <module meaning>`.
+   
 
 
 Custom Properties
