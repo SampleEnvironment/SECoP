@@ -1,0 +1,216 @@
+
+kind: System
+name: Sample_Changer
+version: 1
+description: |
+  A sample changer.
+modules:
+  sample_at_measurement_position:
+    definition: Drivable:1
+    description: |
+      Sample currently present at the measuerement position
+    parameters:
+      value:
+        description: |
+          ID of the sample currently present at the measurement position ('' means no sample is present)
+        datainfo: 
+          type: string
+         
+      target:
+        description: |
+          ID of the sample that should be moved to the position 
+        datainfo: 
+          type: string
+        
+      status:
+        description: |
+          Status of the hardware component responsible for moving samples
+        datainfo: 
+          type: tuple
+          members:
+            - type: enum
+              members:
+                DISABLED:     0
+                IDLE:       100
+                BUSY:       300
+                ERROR:      400
+            - type: string
+        readonly: True
+
+    commands:
+      stop:
+        kind: Command
+        name: stop
+        vesion: 1
+        arguments: none
+        return: none
+        description:
+          Send a stop signal to the hardware component responsible for moving samples
+      _next:
+        kind: Command
+        name: next
+        vesion: 1
+        arguments: none
+        return: none
+        optional: true
+        description:
+          (removes (if necessary) old sample and mounts next sample, same as setting the target first to '' and then to 'sampleID')
+            
+
+  storage:
+    definition: Readable
+    description: |
+      Hardware component that holds a number of samples in sample slots
+    parameters:
+      value:  
+        datainfo: 
+          type: array
+          members:
+            type: string
+          minlen: STORAGE_SIZE
+          maxlen: STORAGE_SIZE
+        description: |
+          array of sample IDs as strings
+            - empty string ('') when empty
+            - '@' + tray index, when tray full but unknown ID ('@1', '@2', ...) 
+        readonly: True
+
+      status:
+        description: |
+          Status of the hardware component responsible for moving samples
+        datainfo: 
+          type: tuple
+          members:
+            - type: enum
+              members:
+                DISABLED:     0
+                IDLE:       100
+                BUSY:       300
+                ERROR:      400
+            - type: string
+        readonly: True
+
+
+    commands:
+      stop:
+        kind: Command
+        name: stop
+        arguments: none
+        return: none
+        description:
+          Send a stop signal to the hardware component responsible for moving samples 
+      _scan:
+        kind: Command
+        name: scan
+        arguments: none
+        return: none
+        optional: true
+        description:
+          Scans every slot in the storage
+      _load:
+        kind: Command
+        name: load
+        arguments: none
+        return: none
+        optional: true
+        description: |
+          Loads new sample from loading position into the next free slot in the storage
+      _unload:
+        kind: Command
+        name: unload
+        arguments: string
+        return: none
+        optional: true
+        description: |
+          unloads Sample of the given ID from its storage slot 
+
+  hardware:
+      definition: Readable
+      description: The hardware component responsible for physically moving the samples
+      parameters:
+        # Hardware specificmetadata 
+        value:
+          description: TODO
+          datainfo: TODO
+          readonly: True
+
+        status:
+          description: |
+            Status of the hardware component responsible for moving samples
+          datainfo: 
+            type: tuple
+            members:
+              - type: enum
+                members:
+                  DISABLED:     0
+                  IDLE:       100
+                  BUSY:       300
+                  ERROR:      400
+              - type: string
+          readonly: True
+
+      commands:
+        reset:
+          kind: Command
+          name: reset
+          arguments: none
+          return: none
+          description: |
+            resets the hardware component responsible for moving samples to its home position and empties gripper if necessary
+
+
+############################################################################################################################################################################################                       
+# There can be an arbitrary number of modules present of the following module class. It represents a postion that only be occupied by a single sample. For example: a measurement position #
+############################################################################################################################################################################################
+ 
+  special_posititon:
+    definition: Drivable:1
+    description: |
+      Position, that is only able to hold a single sample at a time
+    parameters:
+      value:
+        description: |
+          ID of the sample currently present at the position ('' means that the Position is empty)
+        datainfo: 
+          string:
+         
+      target:
+        description: |
+          ID of the sample that should be moved to the position 
+        datainfo: 
+          string:
+        
+      status:
+        description: |
+          Status of the hardware component responsible for moving samples
+        datainfo: 
+          type: tuple
+          members:
+            - type: enum
+              members:
+                DISABLED:     0
+                IDLE:       100
+                BUSY:       300
+                ERROR:      400
+            - type: string
+        readonly: True
+
+ 
+    commands:
+      stop:
+        kind: Command
+        name: stop
+        vesion: 1
+        arguments: none
+        return: none
+        description:
+          Stops the robot arm
+      _next:
+        kind: Command
+        name: next
+        vesion: 1
+        arguments: none
+        return: none
+        optional: true
+        description:
+          (removes (if necessary) old sample and mounts next sample, same as setting the target first to '' and then to 'sampleID')

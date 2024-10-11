@@ -1,0 +1,162 @@
+
+kind: System
+name: Reactor_Cell
+version: 1
+description: |
+  Collection of functionalities needed for the temperature at the sample position and for the readout of pressures directly before and after the reactor cell.
+modules:
+  temperature_reg:
+    definition: Drivable
+    description: |
+      Information and control of reactor cell heater temperature.
+    meaning:
+      link: TODO
+      key: TODO
+      function: temperature_regulation
+      importance: 20
+      belongs_to: sample
+
+    parameters:
+      value:
+        description: |
+          heater temperature at reactor cell
+        datainfo:
+          type: float
+          min: 0
+          max: 1000
+          unit: "°C"
+      target:
+        description: |
+          desired heater temperature at reactor cell
+        datainfo:
+          type: float
+          min: 0
+          max: 1000
+          unit: "°C"
+      ramp:
+        description: |
+          Desired ramp speed for the heater temperature
+        datainfo:
+          float:
+          min: 0
+          max: 1000
+        unit: "°C/min"
+      
+      _tolerance:
+        description: |
+          Tolerance range for deciding if target is reached
+        datainfo:
+          float:
+            minval: 0
+            maxval: 100
+        unit: "°C"
+
+      status:
+        description: |
+          current status of the module 
+        datainfo:
+          type: tuple
+          members:
+            - type: enum
+              members:
+                DISABLED: 0
+                IDLE: 100  
+                BUSY: 300  
+                ERROR: 400 
+            - type: string
+
+    commands:
+      stop: 
+        kind: Command
+        name: stop
+        version: 1
+        arguments: none
+        return: none
+        description: |
+          Stop ramping the temperature
+  
+  temperature_sam:
+    definition: Readable
+    description: |
+      Information of reactor cell temperature.
+    meaning:
+      link: TODO
+      key: TODO
+      function: temperature
+      importance: 30
+      belongs_to: sample
+    parameters:
+      value:
+        description: |
+          Temperature at reactor cell
+        datainfo:
+          type: float
+          min: 0
+          max: 5000
+          unit: "°C"
+
+      status:
+        description: |
+          current status of the module 
+        datainfo:
+          type: tuple
+          members:
+            - type: enum
+              members:
+                DISABLED: 0
+                IDLE: 100  
+                BUSY: 300  
+                ERROR: 400 
+            - type: string
+
+  pressure_sam:
+    definition: Readable
+    description: |
+      Information on medium pressure at the reactor cell, averaging the pressure_inlet and pressure_outlet values.
+    meaning:
+      link: TODO
+      key: TODO
+      function: pressure
+      importance: 10
+      belongs_to: sample
+
+    parameters:
+      value:
+        description: |
+          Sample pressure 
+        datainfo:
+          type: float
+          min: 0
+          unit: "bar"
+
+  pressure_inlet:
+    definition: Readable
+    description: |
+      Reads the pressure at the reactor cell inlet
+
+    parameters:
+      value:
+        description: |
+          Reactor cell inlet pressure 
+        datainfo:
+          min: 0
+          unit: "bar"
+
+  pressure_outlet:
+
+    definition: Readable
+    description: |
+      Reads the pressure at the reactor cell outlet
+
+    parameters:
+      value:
+        description: |
+          Reactor cell outlet pressure 
+        datainfo:
+          type: float
+          min: 0
+          unit: "bar"
+
+
+
+    
