@@ -2,11 +2,11 @@
 Specification
 =============
 
+.. important::
+    This rendering is generated from the (authoritative) source at `the GitHub
+    repository <https://github.com/SampleEnvironment/SECoP>`_.
 
-This rendering is generated from the (authoritative) source at `the GitHub
-repository <https://github.com/SampleEnvironment/SECoP>`_.
-
-It represents the most recent in-progress version of the SECoP specification.
+    It represents the most recent in-progress version of the SECoP specification.
 
 .. toctree::
     :maxdepth: 1
