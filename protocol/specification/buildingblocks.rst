@@ -885,7 +885,7 @@ Optional Module Properties
       Intermediate values might be used. The range for each category starts at the indicated value minus 5 and ends below the indicated value plus 5.
        
       .. note::
-         This field must not be present if there is no entry for ``"function"`` or ``"link""`` 
+         This field must not be present if there is no entry for ``"function"`` or ``"link"`` 
 
       :related issue: :issue:`009 Module Meaning`
 
