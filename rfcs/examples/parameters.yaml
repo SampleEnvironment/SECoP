@@ -31,6 +31,7 @@ kind: Parameter
 name: pollinterval
 version: 1
 datainfo: double
+readonly: false
 description: |
   Hint for polling interval in seconds.
 

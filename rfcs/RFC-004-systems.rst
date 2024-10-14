@@ -11,18 +11,18 @@ Summary
 =======
 
 This RFC proposes a way to define and implement "systems", which are collections
-of SECoP modules provided by a SEC node that function and interact in a defined
-way.
+of SECoP modules provided by a SEC node that function and interact with defined
+semantics.
 
-This allows the definition of inter-facility standards for control and metadata
-collection beyond the level of "a sensor" or "an analog output", towards the
-level of "a cryomagnet".
+This allows the definition of facility-specific and inter-facility standards for
+control and metadata collection beyond the level of "a sensor" or "an analog
+output", towards the level of "a cryomagnet".
 
 
 Goal
 ====
 
-All current standard SECoP interface elements (interface classes, standard
+All current standard SECoP interface entities (interface classes, standard
 accessibles and so on) refer to a single module.
 
 However, in most cases, it is not desirable (or even possible) to represent a
@@ -36,7 +36,7 @@ Therefore, the notion of a "system" is introduced, which encompasses a
 collection of modules that work and interact in a defined way.
 
 As always, the definition of a system specifies the *minimum* interface
-required, and may contain optional elements.  More elements can always be
+required, and may contain optional entities.  More entities can always be
 introduced by each implementation.
 
 
@@ -46,32 +46,79 @@ Technical explanation
 Specification
 ~~~~~~~~~~~~~
 
-Like other standard elements like, a system will be defined by the SECoP
+Like other standard entities, a system will be defined by the SECoP
 specification.
 
 It will specify both the *name* of each required module, and its *interface* (an
 interface class, and/or additional accessibles).
 
-Preferably, if RFC 2 is implemented, systems will be able to be specified in a
+The SEC node will have a new property that lists the systems contained in it,
+with a mapping of system-given module names to actual modules in the node.
+
+Systems can derive from other systems, and contain other systems as subgroups of
+their modules.
+
+Preferably, if RFC-002 is implemented, systems will be able to be specified in a
 semi-machine-readable manner using YAML definition files, just like other
-interface elements.
+interface entities.
 
-Naming Scheme
-~~~~~~~~~~~~~
+Referencing Systems
+~~~~~~~~~~~~~~~~~~~
 
-In SEC nodes, the name of a module must be composed as ::
+In the SECNode descriptive data, the optional property ``systems`` is
+introduced.  It is a JSON object with local system names as keys and the
+schema name of the system and a mapping of module names as the value.  For a
+system to be valid, all non-optional modules that are included in the system
+definition have to be present.
 
-   <instance-name>_<module-name>
+Example:
 
-So for example, if a system called "power supply" specifies a module ``current``
-and a module ``voltage``, and the SEC node has a power supply instance called
-``lasersupply``, it needs to provide modules called ``lasersupply_current`` and
-``lasersupply_voltage``.
+.. code:: json
 
-Definition of Systems
-~~~~~~~~~~~~~~~~~~~~~
+    "systems": {
+        "cryo1": [
+            "OrangeCryostat",
+            {
+                "T": "cryo1_T",
+                "HeLevel": "cryo1_helevel",
+            },
+        ],
+    },
 
-If RFC 3 is implemented
+
+For subsystems, the mapping dictionary can be nested:
+
+.. code:: json
+
+    "systems": {
+        "mag5t": [
+            "VectorMagnet",
+            {
+                "T": "magtemp",
+                "X": [
+                    "PowerSupply",
+                    {
+                        "current": "magcur_x",
+                        "voltage": "magvolt_x"
+                    }
+                ],
+                "Y": [
+                    "PowerSupply",
+                    {
+                        "current": "magcur_y",
+                        "voltage": "magvolt_y"
+                    }
+                ],
+                "Z": [
+                    "PowerSupply",
+                    {
+                        "current": "magcur_z",
+                        "voltage": "magvolt_z"
+                    }
+                ],
+            },
+        ],
+    },
 
 
 Disadvantages, Alternatives
@@ -84,10 +131,6 @@ More complexity in the specification.
 
 Alternatives
 ------------
-
-Instead of a fixed naming scheme, one could define the mapping from
-"system-given name" to "concrete name" in the SEC node's descriptive data.
-The concrete names could then be freely chosen.
 
 
 Open Questions
