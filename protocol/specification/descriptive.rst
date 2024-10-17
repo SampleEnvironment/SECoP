@@ -3,7 +3,11 @@
 Descriptive Data
 ================
 
-The format of the descriptive data is JSON, as all other data in SECoP.
+This section explains the "descriptive data", also called "structure report",
+i.e. the completely self-describing metadata sent by the SEC node in response to
+a ``describe`` message.
+
+The format is JSON, as all other data in SECoP.
 
 .. note:: All names on each hierarchy level need to unique (i.e. not repeated)
           when lowercased.
