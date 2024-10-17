@@ -114,7 +114,7 @@ texts are not intended for machines, but for the human operators of the
 equipment.  Functional dependencies that have to be machine readable are exposed
 through the already mentioned :ref:`interface-classes` and :ref:`features`.
 
-For the representation details, see the section :ref:`descriptive-data-format`.
+For the representation details, see the section :ref:`descriptive-data`.
 
 
 Data types

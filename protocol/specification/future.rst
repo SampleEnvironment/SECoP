@@ -53,7 +53,7 @@ The herein specified protocol has foreseen some extension mechanisms in its desi
 Message Handling
 ----------------
 
-For this, see :ref:`message-handling`.
+For this, see :ref:`message-overview`.
 
 Binary representations of the protocol
 --------------------------------------

@@ -30,7 +30,7 @@ have to be unique within an SEC node, accessible names have to be unique
 within a module. There are two basic types of accessibles: parameters and commands.
 
 Module and accessible names should be in English (incl. acronyms), using
-only ASCII letters + digits and some additional characters (see :ref:`messagefmt`).
+only ASCII letters + digits and some additional characters (see :ref:`messages`).
 The maximum name length is 63 characters.
 
 Parameter:
@@ -390,7 +390,7 @@ Data report
 A JSON array with the value of a parameter as its first element,
 and an JSON object containing the Qualifiers_ for this value as its second element.
 
-See also: :ref:`data-report`_.
+See also: :ref:`data-report`.
 
 :Remark:
 
@@ -401,7 +401,8 @@ See also: :ref:`data-report`_.
 
 Error report
 ------------
-An error report is used in a :ref:ref::`error-reply` indicating that the requested action could
+
+An error report is used in an :ref:`error-reply` indicating that the requested action could
 not be performed as request or that other problems occurred.
 The error report is a JSON-array containing the name of one of the :ref:`Error classes <error-classes>`, a human readable string
 and as a third element a JSON-object containing extra error information,
@@ -410,10 +411,10 @@ implementation specific information about the error (stack dump etc.).
 
 See also: `error-report`_.
 
-.. _structure-report:
 
 Structure report
 ----------------
+
 The structure report is a structured JSON construct describing the structure of the SEC node.
 This includes the SEC node properties, the modules, their module-properties and accessibles
 and the properties of the accessibles.

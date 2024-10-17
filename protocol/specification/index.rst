@@ -14,9 +14,9 @@ Specification
 
     intro
     overview
-    wire
+    messages
+    descriptive
     datainfo
-    buildingblocks
     modules
     future
     security
