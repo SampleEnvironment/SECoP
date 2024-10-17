@@ -295,19 +295,19 @@ first element, and an JSON object containing the :ref:`qualifiers` as its second
 element.
 
 If an error occurs while determining a parameter, an ``error_update`` message
-has to be sent, which includes an <:ref:`error-report`> stating the problem.
+has to be sent, which includes an :ref:`prop-error-report` stating the problem.
 
 Example:
 
 .. code::
 
-  > activate
-  < update t1:value [295.13,{"t":150539648.188388,"e":0.01}]
-  < update t1:status [[400,"heater broken or disconnected"],{"t":1505396348.288388}]
-  < active
-  < error_update t1:_heaterpower ["HardwareError","heater broken or disconnected",{"t":1505396349.20}]
-  < update t1:value [295.14,{"t":1505396349.259845,"e":0.01}]
-  < update t1:value [295.13,{"t":1505396350.324752,"e":0.01}]
+    > activate
+    < update t1:value [295.13,{"t":150539648.188388,"e":0.01}]
+    < update t1:status [[400,"heater broken or disconnected"],{"t":1505396348.288388}]
+    < active
+    < error_update t1:_heaterpower ["HardwareError","heater broken or disconnected",{"t":1505396349.20}]
+    < update t1:value [295.14,{"t":1505396349.259845,"e":0.01}]
+    < update t1:value [295.13,{"t":1505396350.324752,"e":0.01}]
 
 The example shows an ``activate`` request triggering an initial update of two
 values: ``t1:value`` and ``t1:status``, followed by the ``active`` reply.  Also,
@@ -526,9 +526,9 @@ Error Reply
 ~~~~~~~~~~~
 
 Contains an error class from the list below as its second item (the specifier).
-The third item of the message is an :ref:`error-report`, containing the request
-message (minus line endings) as a string in its first element, a (short) human
-readable text as its second element.  The third element is a JSON object,
+The third item of the message is an :ref:`prop-error-report`, containing the
+request message (minus line endings) as a string in its first element, a (short)
+human readable text as its second element.  The third element is a JSON object,
 containing possibly implementation specific information about the error (stack
 dump etc.).
 
@@ -674,7 +674,7 @@ Logging is an optional message, i.e. a SEC node is not forced to implement it.
     "debug"
         All log messages are logged remotely.
 
-    A SEC node should reply with an :ref:`error-report` (``ProtocolError``) if
+    A SEC node should reply with an :ref:`prop-error-report` (``ProtocolError``) if
     it doesn't implement this message.  Otherwise it should mirror the request,
     which may be updated with the logging-level actually in use.  I.e. if an SEC
     node does not implement the "debug" level, but "error" and "info" and an ECS
@@ -743,8 +743,8 @@ Example:
 
 .. code::
 
-  > ping 123
-  < pong 123 [null, {"t": 1505396348.543}]
+    > ping 123
+    < pong 123 [null, {"t": 1505396348.543}]
 
 .. admonition:: Related Issues
 
@@ -798,7 +798,7 @@ correctly.
 
 Similarly, the reports need to be handled like this:
 
-.. _`data-report`:
+.. _data-report:
 
 .. compound::
     Data report:
@@ -806,7 +806,7 @@ Similarly, the reports need to be handled like this:
     .. image:: images/data-report.svg
        :alt: data_report ::= "[" JSON-value "," qualifiers ("," ignored_value)* "]"
 
-.. _`error-report`:
+.. _error-report:
 
 .. compound::
     Error report:

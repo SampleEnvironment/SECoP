@@ -72,6 +72,8 @@ Optional SEC Node Properties
      *see* :issue:`004 The Timeout SEC Node Property`.
 
 
+.. _module-description:
+
 Module Description
 ------------------
 
