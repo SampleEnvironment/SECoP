@@ -830,22 +830,12 @@ Optional Module Properties
 .. _module-meaning:
 
 ``"meaning"``
-   A dictionary regarding the module meaning. It provides metadata that is useful for interpreting measurement data in a machine-readable format. All entries in the dictionary are optional, with some restrictions. A meaning porperty can also be added on the :ref:`parameter-meaning <paremeter level>`.
+   An unordered dictionary regarding the module meaning. It provides metadata that is useful for interpreting measurement data in a machine-readable format. It can have the keys ``function``, ``importance``, ``belongs_to``, ``link`` and ``key``, all of which are optional, with some restrictions. A meaning property can also be added on the :ref:`parameter-meaning <paremeter level>`.
    
    .. note::
       In order for the meaning dicionary to be valid, it must contain at least a ``"link"`` or a ``"function"`` field.
 
-
-   1. ``"link"`` a link to a vocabulary, glossary or ontology. Preferably a PID (Persistent Identifier) pointing to a specific entry. 
-    
-   2. ``"key"`` a key (string) that selects an entry from the knowledge representation that ``"link"`` points to. This mainly serves human readability if ``"link"`` already points to a specific entry. 
-
-      .. note::
-         - This field must not be present if there is no ``"link"`` 
-         - If ``"link"`` does not point directly to an entry, the ``"key"`` field is mandatory
-         
-
-   3. ``"function"`` a string from an extensible list of predefined functions.
+   - ``"function"`` a string from an extensible list of predefined functions.
       
       Predefined ``"functions"``:
          * ``"temperature"``   
@@ -874,7 +864,7 @@ Optional Module Properties
 
         :related issue: :issue:`026 More Module Meanings`
 
-   4. ``"importance"``  an integer value in the range ``[0,50]`` describing the importance. It allows ordering elements of the same ``"function"``/``"link"`` by importance.  
+   - ``"importance"``  an integer value in the range ``[0,50]`` describing the importance. It allows ordering elements of the same tuple of ``"function"`` and ``"belongs_to"`` by importance.  
 
       Predefined values:         
         * 10 means the instrument/beamline (Example: room temperature sensor always present)
@@ -885,34 +875,56 @@ Optional Module Properties
       Intermediate values might be used. The range for each category starts at the indicated value minus 5 and ends below the indicated value plus 5.
        
       .. note::
-         This field must not be present if there is no entry for ``"function"`` or ``"link"`` 
+         - This field can only be present, if and only if there is an entry for ``"function"``        
 
       :related issue: :issue:`009 Module Meaning`
 
-   5. ``"belongs_to"`` a string identifying the entity to which the module is linked. Setting this field forms a relation between the entity and the ``"function"`` field.
+   - ``"belongs_to"`` a string identifying the entity to which the module is linked. Setting this field forms a relation between the entity and the ``"function"`` field.
 
       Predefined entities:       
          * ``"sample"``
          * ``"other"``
+      .. note::
+         - If not present, the default value ``"belongs_to":"other"`` is assumed.
+         - This field can only be present, if there is an entry for ``"function"``
+
+   - ``"link"`` a link to a vocabulary, glossary or ontology. Preferably a PID (Persistent Identifier) pointing to a specific entry. 
+    
+   - ``"key"`` a key (string) that selects an entry from the knowledge representation that ``"link"`` points to. This mainly serves human readability if ``"link"`` already points to a specific entry. 
 
       .. note::
-         If not present, the default value ``"belongs_to":"other"`` is assumed.
-            
+         - This field must not be present if there is no ``"link"`` 
+         - If ``"link"`` does not point directly to an entry, the ``"key"`` field is mandatory
+         
+           
 
 Example:
 
 .. code::
 
    "meaning": {
-      "link": "https://w3id.org/nfdi4cat/voc4cat_0000051",
-      "key": "synthesis temperature",
       "function": "temperature_regulation",
       "importance": 20,
-      "belongs_to": "sample"
+      "belongs_to": "sample",
+      "link": "https://w3id.org/nfdi4cat/voc4cat_0000051",
+      "key": "synthesis temperature"
    }
 
+This reads as:
+Regulation of the sample (``belongs_to``) temperature (``function``) in the surrounding sample environment (``importance``).The ``key`` and ``link`` give additional metadata, saying that the regulated temperature is also the ``synthesis temperature`` of the experiment. 
 
+Allowed key combinations in valid meaning dictionaries:
 
+.. code::
+
+   {function, importance,belongs_to}
+   {function, importance}
+   {key,link}
+   {link}
+   {function, importance,link}
+   {function, importance,key,link}
+   {function, importance,belongs_to,link}
+   {function, importance,belongs_to,key,link}
 
 
 .. _implementor:
