@@ -130,6 +130,7 @@ example:
 - :ref:`Enum <enum>`
 - :ref:`String <string>`
 - :ref:`Blob <blob>`
+- :ref:`Matrix <matrix>`
 
 For more complicated values, there are three structured datatypes:
 

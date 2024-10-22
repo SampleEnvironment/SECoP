@@ -13,7 +13,8 @@ SECoP defines some basic data types for numeric quantities, like double_,
 scaled_ and int_.  An enum_ is defined for convenience of not having to remember
 the meaning of values from a reduced set.  A bool_ datatype is similar to a
 predefined Enum, but uses the JSON values true and false.  For non-numeric
-types, a string_ and a blob_ are defined as well.
+types, a string_ and a blob_ are defined as well.  Finally, matrix_ can
+transport larger multi-dimensional homogeneous arrays.
 
 Furthermore, SECoP not only defines basic data types, but also structured
 datatypes.  tuple_ allows aggregation of a fixed amount of values with different
@@ -466,6 +467,75 @@ As a JSON object.
 Example: ``{"x": 0.5, "y": 1}``
 
 Related issue: :issue:`035 Partial Structs`
+
+
+.. _matrix:
+
+Binary Matrix: ``matrix``
+-------------------------
+
+Type for transferring a medium to large amount of homogeneous arrays with
+potentially multiple dimensions.
+
+At the moment, the type intends direct transfer of the data within the JSON
+data.  It could be extended later to allow referring to a side-channel for
+obtaining the data.
+
+Mandatory Data Properties
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+``"names"``
+    A list of names for each dimension in the data.
+
+``"maxlen"``
+    A list of maximum lengths for each dimension. The actual lengths can vary
+    but may not exceed these limits.
+
+``"elementtype"``
+    A string defining the type of each element, as a combination of three parts:
+
+    - ``<`` or ``>`` to indicate little or big endianness.
+    - ``i``, ``u``, ``f`` to indicate signed or unsigned integers or floating
+      point numbers.
+    - a number to indicate the number of bytes per element (1, 2, 4 or 8).
+
+    Example: ``"<u4"`` is a little-endian encoded 32-bit unsigned integer.
+
+``"compression"``
+    A string defining if and how the data is each ``blob`` is compressed.
+    Currently, no compression types are defined.
+
+
+Example
+~~~~~~~
+``{"type": "matrix", "elementtype": "<f4", "names": ["x", "y"], "maxlen": [100, 100]}``
+
+
+Transport
+~~~~~~~~~
+
+As a JSON object containing the following items:
+
+``"len"``
+    List of the actual length of each dimension in the data.
+
+``"blob"``
+    The data, encoded as a single-line base64 (see :RFC:`4648`) encoded
+    JSON-string.
+
+Example: ``{"len": [2, 3], "blob": "AACAPwAAAEAAAEBAAACAQAAAoEAAAMBA"}``
+
+The order of the matrix elements is defined so that the first dimension
+named in ``names`` (and listed in ``maxlen``/``len``) varies the fastest.
+
+In this example, the result of decoding ``blob`` as a flat sequence of 4-byte
+floats is ``[1, 2, 3, 4, 5, 6]``.  Then the matrix looks as follows::
+
+  .     x=0 x=1
+  y=0   1   2
+  y=1   3   4
+  y=2   5   6
+
 
 
 .. _command:
