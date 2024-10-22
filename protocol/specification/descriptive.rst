@@ -134,85 +134,88 @@ Optional Module Properties
 
    - ``"function"`` a string from an extensible list of predefined functions.
 
-      Predefined ``"functions"``:
-         * ``"temperature"``
-         * ``"temperature_regulation"`` (to be specified only if different from 'temperature')
-         * ``"magneticfield"``
-         * ``"electricfield"``
-         * ``"pressure"``
-         * ``"rotation_z"`` (counter clockwise when looked at 'from sky to earth')
-         * ``"humidity"``
-         * ``"viscosity"``
-         * ``"flowrate"``
-         * ``"concentration"``
-         * ``"ph"``
-         * ``"conductivity"``
-         * ``"voltage"``
-         * ``"surfacepressure"``
-         * ``"stress"``
-         * ``"strain"``
-         * ``"shear"``
-         * ``"heliumlevel"``
+     Predefined ``"functions"``:
 
-        This list may be extended later.
+     * ``"temperature"``
+     * ``"temperature_regulation"`` (to be specified only if different from 'temperature')
+     * ``"magneticfield"``
+     * ``"electricfield"``
+     * ``"pressure"``
+     * ``"rotation_z"`` (counter clockwise when looked at 'from sky to earth')
+     * ``"humidity"``
+     * ``"viscosity"``
+     * ``"flowrate"``
+     * ``"concentration"``
+     * ``"ph"``
+     * ``"conductivity"``
+     * ``"voltage"``
+     * ``"surfacepressure"``
+     * ``"stress"``
+     * ``"strain"``
+     * ``"shear"``
+     * ``"heliumlevel"``
 
-        ``_regulation`` may be postfixed, if the quantity generating module is different from the relevant measuring device. A regulation device MUST have an
-        :ref:`interface class <interface-classes>` of at least ``Writable``.
+     This list may be extended later.
 
-        :related issue: :issue:`026 More Module Meanings`
+     ``_regulation`` may be postfixed, if the quantity generating module is different from the relevant measuring device. A regulation device MUST have an :ref:`interface class <interface-classes>` of at least ``Writable``.
+
+     :related issue: :issue:`026 More Module Meanings`
 
    - ``"importance"``  an integer value in the range ``[0,50]``. It allows ordering elements with the same tuple of ``"function"`` and ``"belongs_to"`` by importance.
 
-      Predefined values:
-        * 10 means the instrument/beamline (Example: room temperature sensor always present)
-        * 20 means the surrounding sample environment (Example: VTI temperature)
-        * 30 means an insert (Example: sample stick of dilution insert)
-        * 40 means an addon added to an insert (Example: a device mounted inside a dilution insert)
+     Predefined values:
 
-      Intermediate values might be used. The range for each category starts at the indicated value minus 5 and ends below the indicated value plus 5.
+     * 10 means the instrument/beamline (Example: room temperature sensor always present)
+     * 20 means the surrounding sample environment (Example: VTI temperature)
+     * 30 means an insert (Example: sample stick of dilution insert)
+     * 40 means an addon added to an insert (Example: a device mounted inside a dilution insert)
 
-      .. note::
-         - This field can only be present, if and only if there is an entry for ``"function"``
+     Intermediate values might be used. The range for each category starts at the indicated value minus 5 and ends below the indicated value plus 5.
 
-      :related issue: :issue:`009 Module Meaning`
+     .. note::
+          This field can only be present, if and only if there is an entry for ``"function"``
+
+     :related issue: :issue:`009 Module Meaning`
 
    - ``"belongs_to"`` a string identifying the entity to which the module is linked. Setting this field forms a relation between the entity and the ``"function"`` field.
 
-      Predefined entities:
-         * ``"sample"``
-         * ``"other"``
-      .. note::
-         - If not present, the default value ``"belongs_to":"other"`` is assumed.
-         - This field can only be present, if there is an entry for ``"function"``
+     Predefined entities:
+     
+     * ``"sample"``
+     * ``"other"``
+
+     .. note::
+          - If not present, the default value ``"belongs_to":"other"`` is assumed.
+          - This field can only be present, if there is an entry for ``"function"``
 
    - ``"link"`` a link to a vocabulary, glossary or ontology. Preferably a PID (Persistent Identifier) pointing to a specific entry.
 
    - ``"key"`` a key (string) that selects an entry from the knowledge representation that ``"link"`` points to. This mainly serves human readability if ``"link"`` already points to a specific entry.
 
-      .. note::
+     .. note::
          - This field must not be present if there is no ``"link"``
          - If ``"link"`` does not point directly to an entry, the ``"key"`` field is mandatory
 
 
 
-    Example:
+   Example:
 
-    .. code::
+   .. code::
 
-    "meaning": {
+     "meaning": {
         "function": "temperature_regulation",
         "importance": 20,
         "belongs_to": "sample",
         "link": "https://w3id.org/nfdi4cat/voc4cat_0000051",
         "key": "synthesis temperature"
-    }
+     }
 
-    This reads as:
-    Regulation of the sample (``belongs_to``) temperature (``function``) in the surrounding sample environment (``importance``).The ``key`` and ``link`` give additional metadata, saying that the regulated temperature is also the ``synthesis temperature`` of the experiment.
+   This reads as:
+   Regulation of the sample (``belongs_to``) temperature (``function``) in the surrounding sample environment (``importance``).The ``key`` and ``link`` give additional metadata, saying that the regulated temperature is also the ``synthesis temperature`` of the experiment.
 
-    Allowed key combinations in valid meaning dictionaries:
+   Allowed key combinations in valid meaning dictionaries:
 
-    .. code::
+   .. code::
 
     {function, importance,belongs_to}
     {function, importance}
