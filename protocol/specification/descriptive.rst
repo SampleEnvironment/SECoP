@@ -126,6 +126,8 @@ Optional Module Properties
 
     Related issue: :issue:`008 Groups and Hierarchy`
 
+.. _module-meaning:
+
 ``"meaning"``
    A struct with data regarding the module meaning. It provides metadata that is useful for interpreting measurement data in an automatic fashion. It can have the keys ``function``, ``importance``, ``belongs_to``, ``link`` and ``key``, all of which are optional, with some restrictions. A meaning property can also be added on the :ref:`parameter-meaning <paremeter level>`.
 
