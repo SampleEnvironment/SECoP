@@ -186,7 +186,7 @@ Optional Module Properties
 
      .. note::
           - If not present, the default value ``"belongs_to":"other"`` is assumed.
-          - This field can only be present, if there is an entry for ``"function"``
+          - This field can only be present, if there is an entry for ``"function"``.
 
    - ``"link"`` a link to a vocabulary, glossary or ontology. Preferably a PID (Persistent Identifier) pointing to a specific entry.
 
@@ -211,7 +211,7 @@ Optional Module Properties
      }
 
    This reads as:
-   Regulation of the sample (``belongs_to``) temperature (``function``) in the surrounding sample environment (``importance``).The ``key`` and ``link`` give additional metadata, saying that the regulated temperature is also the ``synthesis temperature`` of the experiment.
+   Regulation of the sample (``belongs_to``) temperature (``function``) in the surrounding sample environment (``importance``) .The ``key`` and ``link`` give additional metadata, saying that the regulated temperature is also the ``synthesis temperature`` of the experiment.
 
    Allowed key combinations in valid meaning dictionaries:
 
