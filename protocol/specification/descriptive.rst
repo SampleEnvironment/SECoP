@@ -161,7 +161,7 @@ Optional Module Properties
 
         :related issue: :issue:`026 More Module Meanings`
 
-   - ``"importance"``  an integer value in the range ``[0,50]`` describing the importance. It allows ordering elements of the same tuple of ``"function"`` and ``"belongs_to"`` by importance.
+   - ``"importance"``  an integer value in the range ``[0,50]``. It allows ordering elements with the same tuple of ``"function"`` and ``"belongs_to"`` by importance.
 
       Predefined values:
         * 10 means the instrument/beamline (Example: room temperature sensor always present)
