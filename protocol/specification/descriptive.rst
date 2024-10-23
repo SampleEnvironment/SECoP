@@ -132,7 +132,7 @@ Optional Module Properties
    A JSON object with data regarding the module meaning. It provides metadata that is useful for interpreting measurement data in an automatic fashion. It can have the keys ``function``, ``importance``, ``belongs_to``, ``link`` and ``key``, all of which are optional, with some restrictions. A meaning property can also be added on the :ref:`parameter-meaning <paremeter level>`.
 
    .. note::
-      In order for the meaning dictionary to be valid, it must contain at least a ``"link"`` or a ``"function"`` field.
+      In order for the meaning object to be valid, it must contain at least a ``"link"`` or a ``"function"`` field.
 
    - ``"function"`` a string from an extensible list of predefined functions.
 
@@ -215,7 +215,7 @@ Optional Module Properties
    This reads as:
    Regulation of the sample (``belongs_to``) temperature (``function``) in the surrounding sample environment (``importance``) .The ``key`` and ``link`` give additional metadata, saying that the regulated temperature is also the ``synthesis temperature`` of the experiment.
 
-   Allowed key combinations in valid meaning dictionaries:
+   Allowed key combinations in valid meaning objects:
 
    .. code::
 
@@ -313,7 +313,7 @@ Optional Parameter Properties
 
 .. _parameter-meaning:
 ``"meaning"``
-   A dictionary regarding the parameter meaning. It has the same specification as the :ref:`module-meaning <module meaning>`.
+   A JSON object regarding the parameter meaning. It has the same specification as the :ref:`module-meaning <module meaning>`.
 
 
 Custom Properties
