@@ -11,4 +11,5 @@ rewrite issue 77 (parameter postfixes)         Enno
 write proposal for HasRamp feature
 finalize issue 67 (pids)
 finalize issue 69 (optional structs)
+update "visibility" to the new version         Alexander
 ============================================== =================
