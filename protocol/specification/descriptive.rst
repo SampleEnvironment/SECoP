@@ -219,14 +219,14 @@ Optional Module Properties
 
    .. code::
 
-    {function, importance,belongs_to}
+    {function, importance, belongs_to}
     {function, importance}
-    {key,link}
+    {key, link}
     {link}
-    {function, importance,link}
-    {function, importance,key,link}
-    {function, importance,belongs_to,link}
-    {function, importance,belongs_to,key,link}
+    {function, importance, link}
+    {function, importance, key, link}
+    {function, importance, belongs_to, link}
+    {function, importance, belongs_to, key, link}
 
 
 .. _implementor:
