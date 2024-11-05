@@ -129,7 +129,7 @@ Optional Module Properties
 .. _module-meaning:
 
 ``"meaning"``
-   A JSON object with data regarding the module meaning. It provides metadata that is useful for interpreting measurement data in an automatic fashion. It can have the keys ``function``, ``importance``, ``belongs_to``, ``link`` and ``key``, all of which are optional, with some restrictions. A meaning property can also be added on the :ref:`parameter level <parameter-meaning>`.
+   A JSON object with data regarding the module meaning. It provides metadata that is useful for interpreting measurement data in an automatic fashion. It can have the keys ``function``, ``importance``, ``belongs_to``, ``link`` and ``key``, all of which are optional, with some restrictions. A meaning property can also be added on the :ref:`accessible level <accessible-meaning>`.
 
    .. note::
       In order for the meaning object to be valid, it must contain at least a ``"link"`` or a ``"function"`` field.
@@ -155,7 +155,7 @@ Optional Module Properties
      * ``"stress"``
      * ``"strain"``
      * ``"shear"``
-     * ``"heliumlevel"``
+     * ``"level"``
 
      This list may be extended later.
 
@@ -299,6 +299,11 @@ Optional Accessible Properties
               mode, will not show modules with 'advanced' visibility, and
               therefore also not their accessibles.
 
+.. _accessible-meaning:
+
+``"meaning"``
+   A JSON object regarding the accessible meaning. It has the same specification as the :ref:`module meaning <module-meaning>` property.
+
 
 Optional Parameter Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -310,11 +315,6 @@ Optional Parameter Properties
     activate command.
 
     The value given here must conform to the data type of the accessible.
-
-.. _parameter-meaning:
-
-``"meaning"``
-   A JSON object regarding the parameter meaning. It has the same specification as the :ref:`module meaning <module-meaning>` property.
 
 
 Custom Properties
