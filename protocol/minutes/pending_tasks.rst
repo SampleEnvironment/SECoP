@@ -1,8 +1,7 @@
 ============================================== =================
 Task                                           Who
 ============================================== =================
-write a proposal for new meaning               Peter
-decide on Measurable
+decide on wording (Measurable, preset)
 discuss templates/systems
 finalize split spec for v1.1                   Alexander, Peter
 standardized rfc process                       Alexander
