@@ -1,0 +1,316 @@
+meeting 2024-03-13 (in person@PSI)
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+.. sidebar:: participants
+
+     * Alexander Zaft
+     * Georg Brandl
+     * Enrico Faulhaber
+     * Markus Zolliker
+     * Peter Wegmann
+     * Klaus Kiefer
+     * Bastian Klemke
+     * Niklas Eckström
+     * Anders Pettersson
+
+
+.. contents:: Agenda
+    :local:
+    :depth: 3
+
+
+1) 2024-03-13 lunch to dinner
+=============================
+
+1) Opening and Agenda (Markus)
+------------------------------
+
+Opening (Marek Bartkowiak).
+SECoP seems to be known be few communities by now, which is good.
+
+Agenda (presented by Markus):
+
+- RFC Procedure / gitlab pull requests (Alex)
+- Sample changer / Galvanostat implementation (Klaus / Georg)
+- outsource vocabularies, ontologies (Klaus, anybody?)
+
+Further topics (depending on progress):
+
+- SECoP implementation on a µC (Georg)
+- status of new website (Peter/Alex) (incl. pictures?)
+- Issue 75 target checks (Peter)
+- best practice examples (all)
+- other open issues
+- interface classes?
+
+
+1) Sample changer (Klaus)
+-------------------------
+
+Klaus presents the Robotic Sample Changer interface and the abstraction
+and generalisation which comes with it.
+The lessons learned from several discussions with distinct communities
+gave some valuable insights on what to modify (and what to keep) in SECoP.
+Klaus then presents a proposal for the next iteration of the api for the
+sample changer.
+One of the problems presented is that, sometimes, the actual sample ID
+is known only after some measurement (e.g. by an RFID scanner).
+Enno propses to use a temporary ID until the right one is used.
+Klaus points aut, that then the target would contain the temporary ID,
+whereas value would jump to the real ID.
+Enno states, that there is no principal problem for target to be corrected to
+the real ID.
+Klaus and Markus discuss with the result that there are two distinct use cases,
+which can't be joined with such an approach.
+After more brainstorming, Enno points out, that the Idea presented by Marek
+earlier, to uses a 'sample holder id' for selecting/moving areound a sample and
+an 'sample id' as a property connected to that sample.
+The 'sample id' is allowed to be set a soon as it is known.
+This avoids the target change problem.
+An additional Readable module may provide the `sample id` after measuring it
+on the scpecified `sample holder id`.
+
+Some discussion starts about where to store the mapping(s) and how many are there.
+Markus tries to clarify by presenting two essential use cases:
+
+1) we know the sample id's and their mapping to the sample holder id's in advance
+2) The sample id is known only after some measurement is done,
+   a selection of the used sample holder id's still needs to be done.
+
+Further discussion goes on.
+
+Klaus tries to summarize:
+
+- the ECS needs to know the mapping between sample holder id and sample id
+- the ECS needs to know which sample holder id's are available (for measurements).
+
+After some confusion cleared, it seems, we need to deal with two mappings:
+
+- sample position id/tray id to sample holder id  (answering which sample holder
+  is placed were)
+- sample holder id to sample id (which sample is mounted at which sample holder)
+
+The first needs to be handled by the SEC node, the second by the ECS.
+
+So the sample changer works with sample holder id's or sample position/tray id's.
+There is even no need to use distinct namespaces.
+
+
+2) Sample changer / Galvanostat implementation (Klaus)
+------------------------------------------------------
+
+Klaus presents the problems and challenges found during implementation a sec
+node for a potentiostat. Since a potentiostat is like a cc/cv powersupply with
+some automation included and is used in different modes it seems not trivial to
+implement an api on it in SECoP.
+The spectroscopy mode (and it's measurements) should probably be handled by an
+additional module.
+Klaus presented the final proposal which seems to be accepted by everyone after
+some minor points got discussed.
+Enno points out that the number of cycles wanted/achieved needs to be available
+as well.
+Alex and Georg point out that this should then be a MeasurementChannel
+controlled by the (Potentiostat)Controller.
+
+Agreement on this.
+
+
+small break
+-----------
+
+3) outsource vocabularies, ontologies (Klaus)
+---------------------------------------------
+
+Klaus presents to methods to refer to ontologies:
+
+- referring to a specific entry
+- referring to the whole ontology
+
+Open questions: Which way do we want? How to implement it?
+What about backwards compatibility?
+How to resolve overlapping definitions in multiple distinct ontologies.
+
+It seems preferable to use as few references as possible.
+Markus points out, that at least for proxying SEC-nodes, the
+definitions/references should probably be on the module level.
+
+Enno points out some open questions:
+
+- what if the content of an ontology changes?
+   -> a new link is required, i.e. the content of the references are assumed
+   to be constant
+- what if a name collision occurs between a generic and a specific definition?
+   -> the more specific definition wins
+- what about name collisions between multiple generic ontologies occurs?
+   -> forbidden, since foreseeable. same answer for multiple specific references.
+
+Anders wonders if referencing an ontology is mandatory or optional.
+
+Markus proposes to have a default ontology included in the SECoP specification
+which is automatically used in places where there is no explicit reference in
+the descriptive data.
+
+Klaus presents several possible implementations (version 1abcd/2abcd...).
+Georg points out that it is better to have the referenced 'keyword' as an part
+of the uri (possible after a '#' sign, like in other uri based systems).
+Markus proposes version 1e), having a references entry on the SEC-node^nad or
+on the module (if necessary), which contains entries referenced from properties
+in the descriptive data and map those entries to specific ontology entries.
+
+A discussion starts on how to handle the ontology references for other quantities
+as well. Markus would want to have speaking names (like 'electric_field') which
+could potentially occur with distinct meanings (like in the meaning entry and in
+the quantity property).
+Enno proposes to either use the link directly wherever a reference is needed
+or to uses double mapping for the references, with first level referring to the
+module property where the meaning of the entry needs a reference.
+
+Further, intense discussion goes on.
+One intermediary result is that, the meaning entries should probably be a list,
+listing several compatible specific definitions. Also, one of the entries
+currently defined in the SECoP specification is referenced without a link,
+the default SECoP ontology is implicitly assumed.
+And explicitly referring the default SECoP ontology must be treated identical to
+relying on the fallback of just specifying the keyword.
+
+Klaus restates that we effectively are discussing two things:
+
+- a mark for the ECS that som module represent a sample centric measurement value
+- a definition on that the physical quantity is.
+
+The first part is done by putting stuff below the 'meaning' module property,
+the other by the content of this entry. Which is supposed to be able to refer
+to an ontology entry.
+
+
+Enno raises the question on which places we might need/want reference an
+ontology entry.
+
+Georg raises the question the question if we can't put the reference always as
+a parameter property.
+Markus points out that this doesn't work for unit.
+
+More discussion. Sadly, the topic seems to be complex.
+
+It seems we need to distinguish at least 3 properties:
+
+- a flag: this is a sample centric entry? (Yes/No)
+- what is it (helium level?)
+- which physical quantity is it? (percent)
+
+Enno points out that the meaning 'temperature_regulation' is kind of
+superfluous, as this could be identified by a meaning 'sample_temperature' with
+slightly lower priority and being at least a Drivable.
+
+Final agreement on keeping the meaning as defined for ECS functionality detection
+with entries from a SCEoP maintained vocabulary.
+Add a property to mark modules as sample-centric.
+Add properties for referring ontologies. Whether specific or generic seems unclear atm.
+
+Really, really, ernest proposal to rename SECoP to ScECoP or SECoup.
+
+
+4) SECoP implementation on a µC (Georg)
+---------------------------------------
+
+Georg presents his implementation of SECoP in rust on a raspberrypi pico with
+wiznet ethernet expansion (https://github.com/birkenfeld/microSECoP-rp2040-w5000).
+The lack of a RTC on the pic is circumvented by contacted a DHCP provided
+NTP server.
+The rust library/framework (https://github.com/SampleEnvironment/microSECoP)
+written by Georg allows to implement the specific modules without much effort
+as most of the (meta) data handling is automated away.
+Everybody cheers Georg for this gorgeous work called microSECoP.
+Klaus seems very interested and cheers Georg to extend this further, make it
+accessible and to connect to other people starting with SECoP on Arduino as well.
+
+Session closed.
+
+
+2) 2024-03-14 breakfast to lunch
+================================
+
+Summary of yesterday and agenda of today given by Markus.
+
+
+1) RFC Procedure / gitlab pull requests (Alex)
+----------------------------------------------
+
+Alexander gives an overview (+ tutorial) on how the github
+fork/change/pull-request cycle works with some minor demo changes.
+Working with pull-requests, discussing things on pull requests and finally
+merging it into the main repository are covered as well.
+
+
+2) Issue 75 target checks (Peter)
+---------------------------------
+
+Peter presents the current state of the Issue.
+The pros and cons of the two proposed variants are discussed.
+The explicit target_check commands are preferred over the
+check/checked messages.
+Peter presents another proposal, which again introduces new messages.
+Enno dislikes the introduction of another message type and asks for the reasoning.
+Klaus tries to explain.
+An intense discussion start about the pros and cons of an extra message versus
+using an explicitly declared command for each parameter supporting checks.
+Niklas wonders if it is possible to specify a way in the descriptive data
+for the ecs to calculate whether a value is value or not.
+This is quickly rejected to to the huge complex
+Georg queries the actual use case(s).
+It becomes clear, that anything more complex than 'just check the value NOW for
+the current configuration' is not going to be implemented soon.
+After more discussion it becomes clear, that essentially both ways have no big
+difference when it comes for implementing it in frameworks or to use it in a client.
+Since there are no hard facts against the additional message,
+other than Enno's feelings, and the majority prefers to have the checks as an extra message,
+the checked message is going to be introduced.
+The result of check as well as error_check should be synchronized with changed/error_change.
+if the 'closest_value' is going to be a qualifier, it needs adaptions in the specifiactions
+and needs to be used in the error_change message as well.
+Enno agrees on a new message for 'check' and suggests to move the 'closest_value'
+out of the qualifier, before the qualifier in the error report.
+
+
+3) status of new website (Peter/Alex)
+-------------------------------------
+
+Peter presents some of the schematics/graphics he created to spice up the
+documentation.
+Some minor comments from the audience for reworking were noted instantly be peter
+for reworking the graphics.
+Some suggestions for more graphics include sequence diagrams for some use cases.
+
+
+4) other open issues
+--------------------
+
+- Logos should be accessible by the github site.
+- status of the self describing interface_classes/systems (rfc???)
+- Klaus ponders if a non-Drivable could be BUSY. nobody sees a reason why not.
+  Markus wonders if it would be helpful to distinguish a BUSY-due-to-target-change
+  form the other possible BUSY's. Nobody finds a use case.
+  The discussion extends a little, but must be shortened due to time running out.
+- Outreach. discussion about a possible SECoP users meeting/hackathon/....
+
+5) best practice examples (all)
+-------------------------------
+
+skipped.
+
+
+6) interface classes?
+---------------------
+
+skipped. again.
+
+
+3) Date of next video meeting
+=============================
+
+2024-04-26 9:00-11:00 via zoom
+
+4) closing
+==========
+
+closing words by Markus.

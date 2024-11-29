@@ -1,0 +1,97 @@
+meeting 2024-04-26 (ZOOM)
+@@@@@@@@@@@@@@@@@@@@@@@@@
+
+.. sidebar:: participants
+
+     * Markus Zolliker
+     * Alexander Zaft
+     * Peter Wegmann
+     * Bastian Klemke
+     * Klaus Kiefer
+     * Niklas Eckström
+
+
+.. contents:: Agenda
+    :local:
+    :depth: 3
+
+
+1) approval of the minutes 2024-03-13/14
+=========================================
+
+Previous minutes approved.
+
+2) check/checked message:
+=========================
+
+Klaus proposes to split the ProtocolError to differentiate the cases where a
+parameter is not checkable vs the check message not being implemented.
+
+Markus proposes to use the error reason for that.
+
+The pull request is discussed.
+
+There is general agreement that introducing the 'check' message is good, the
+discussion about the error which is returned has to be done in a new step.
+
+It was noticed, that the email notifications from GitHub were not received by
+everyone, and that everyone has to check theirs settings.
+
+
+3) Syntax of meaning/quantity and links to glossaries
+=====================================================
+
+Klaus presents his suggestion for meaning and quantity
+------------------------------------------------------
+
+- There should be a global definition of units.
+
+Quantity
+~~~~~~~~
+
+- quantity as a parameter property with three keys: key, link and importance
+- link and key may be optional, this has to be discussed
+
+Meaning
+~~~~~~~
+
+- meaning should be used for capability detection 'this is a temperature regulator'
+- tuple of name and importance
+- discussion is needed, if a secop vocabulary should be build (or just a list)
+  and if there should be non-sample related modules
+
+Samplemodule
+~~~~~~~~~~~~
+
+- flag for sample-related modules
+- indication to data-storage
+- how to differentiate multiple modules with the same quantity?
+
+Discussion
+----------
+
+Markus would like to keep the number of properties small.
+Meaning may be extended with keys such as 'sample-related' or similar
+
+It is proposed that the links should be saved in a node-wide index.
+There is a discussion about whether the index should be the only way or an
+additional option.
+
+Peter mentions that there was already a discussion previously and there is a
+problem with composing SECNodes. So the index should be placed on the module.
+
+The question whether it would not be preferrable to not factor out important
+parameters in there own modules is discussed. If it is important enough to
+store, should it be its own module?
+
+The link to the ontology and the key may be split up.
+
+There is a proposal to extend quantity as a module or parameter property by
+meaning and belongs_to (replacing samplemodule), with all keys optional.
+
+The discussion will be continued at the next meeting.
+
+4) Date of next video meeting
+=============================
+
+Proposed 2024-05-29 09:00-10:00

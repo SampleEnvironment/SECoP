@@ -1,0 +1,96 @@
+meeting 2024-02-20(ZOOM)
+@@@@@@@@@@@@@@@@@@@@@@@@@
+
+.. sidebar:: participants
+
+     * Markus Zolliker
+     * Georg Brandl
+     * Alexander Zaft
+     * Peter Wegmann
+     * Bastian Klemke
+     * Klaus Kiefer
+     * Enrico Faulhaber
+     * Niklas Eckström
+
+
+.. contents:: Agenda
+    :local:
+    :depth: 3
+
+1) approval of the minutes from 2023-01-17
+==========================================
+
+approved.
+
+
+2) Measurable (defining the data info for big arrays, Georg)
+============================================================
+
+Georg made a pull request. The pull request is presented and the mechanics
+behind pull requests are explained.
+The pull request itself is discussed.
+The proposed names for the additional datainfo elements are discussed.
+Several options are discussed, some of them rejected, others agreed upon.
+Georg emphasises the way the flattened matrix data is reshaped into a matrix.
+I.e. the fastest running index is listed first.
+Maybe the description needs a minor rewording.
+
+Enno raises the question of data compression.
+After a short discussion the conclusion is that at a later point a compression
+hint may be added to the datainfo. Until then, the data is transferred uncompressed.
+(basic idea is to keep the sec-node simple, so it either does no compression at
+all, or is always using the same one. Also compression is not to optimize each
+and every data transfer, i.e. it is not supposed to adapt to the data.
+Instead compression support is intended for reducing the average data transfer size.)
+
+Also, the programmers convention of marking commands with a trailing pair of brackets
+(like ``get_data()``) should not be used solely in the specification.
+Georg points out, that with some custom extension and the proper tags within the raw
+text, the rendering can be customized as required by different audiences.
+Github does only the basic rendering though....
+
+
+2b) (Measurable)Controller
+==========================
+
+Klaus reports about his latest talk at XXXX about SECoP and the feedback he received.
+As a result he ponders, if the ``MeasureableController`` can be a more generic thing.
+In the discussion, nothing speaks against it.
+Another point is the wish to include the elapsed time as part of the ``Controller``.
+Which can be done in the proposed way how ``MeasurableChannel`` and
+``MeasureableController`` can be fused. Georg proposes to represent the elapsed
+time by giving either two parameters or a tuple (``current time``, ``total time``).
+Both units could also be steps to completion or percentage done, however the
+SECnode sees fit.
+
+Georg will rework the pull request to reflect to agreed upon changes.
+
+
+3) Introduction for pull requests for proposing spec changes (Alex)
+===================================================================
+
+The current state (as a pull request) is shortly presented, however,
+further discussion and decision is postponed to the f2f meeting @PSI.
+
+
+4) Agenda for the in persona meeting 2024-03-13/14
+==================================================
+
+- pictures for the SECoP Website/Spec (Peter/Alex)
+- galvanostat implementation (Controller, Voltage, Current,...). (Klaus/Georg)
+- outsource vocabularies, ontologies (Klaus, anybody?)
+- best practice examples (all)
+- new website (Alex)
+- interface classes?
+- open issues
+- Issue 75: check(ed)
+
+minor sub discussion about the state/need for Issue 75.
+
+Discussion about meeting details: travel, accommodation, etc....
+
+
+5) Date of next meeting(s)
+==========================
+
+in persona meeting 2024-03-13/14 at PSI

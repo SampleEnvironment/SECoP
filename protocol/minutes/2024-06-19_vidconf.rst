@@ -1,0 +1,141 @@
+meeting 2024-06-17(ZOOM)
+@@@@@@@@@@@@@@@@@@@@@@@@@
+
+.. sidebar:: participants
+
+     * Markus Zolliker
+     * Alexander Zaft
+     * Bastian Klemke
+     * Klaus Kiefer
+     * Enrico Faulhaber
+     * Niklas Eckström
+
+.. contents:: Agenda
+    :local:
+    :depth: 3
+
+
+Opening
+=======
+
+Markus ponders whether it may make sense to collect contributions for a SECoP
+side-kick during the next ISSE workshop in Lund.
+Klaus likes that idea very much.
+
+
+1) approval of the minutes 2024-04-26
+=====================================
+
+approved.
+
+
+2) finalise check/checked message
+=================================
+
+Discussion about the pull request from Peter:
+https://github.com/SampleEnvironment/SECoP/pull/10/commits/e547616678225a10b36756e962628bb743e47f39
+
+Klaus found a few minor problems (links not working, typos, etc.) during checking the docu.
+-> needs rework. The ``check``/``checked`` messages should be 'in parallel' to ``change``/``changed``.
+Enno agrees.
+Also, there should be a link from the ``checkable`` property to the ``check``/``checked`` messages section.
+(the other direction is already present.)
+Klaus raises the question, if ``check`` could also be applied to commands (i.e. instead of ``do``),
+to check the argument. Nobody objects.
+
+Markus wonders if older SEC-nodes should reply with ``NoImplemented`` instead of ``ProtocolError`` upon a ``check`` message.
+Alex + Enno disagrees with this as it only increase complexity, without gaining anything.
+
+Klaus will contact Peter, who will adapt the change.
+
+
+3) new version of meaning
+=========================
+
+Klaus presents his (reworked) proposal.
+
+excerpt:
+
+.. code-block::
+
+    "meaning": {
+        "key": "synthesis temperature",
+        "link": "https://w3id.org/nfdi4cat/voc4cat_0000051",
+        "function": "temperature_regulation",
+        "importance": 20,
+        "belongs_to": "sample"
+    },
+
+Agreement about using links. However, the meaning of all fields is not 100% clear.
+Also, if multiple entries are present: how to determine *the* sample temperature?
+There will be another meeting next week with HMC people, which hopefully clarifies the situation.
+The result will be re-discussed in one of the next SECoP meetings.
+
+4) Alexander presents the current state of the templating proposal
+==================================================================
+
+There are a few issues to be solved when declaring derived datatypes.
+Instead of the current, essential only human readable, form, a more machine friendly format
+is needed. And instead if defining all fields, references (like for the unit) to other definitions
+may be needed.
+Klaus points out, that like the SECoP-datainfo types, one could only specify the known elements and leave everything off.
+Markus points out, that this may be insufficient for enums.
+This could be solved by defining the required minimal set if the definition and allow more in real world implementations.
+Enno agrees on this.
+
+As we can have more than one system, the instance need to be named. Also, a module may be
+belong to more than one system instance.
+Conclusion: the listing/mapping needs to be done on the SEC-node (as a property).
+
+
+5) implementation question
+==========================
+
+During review of Frappy code the question came up how to model a Drivable which can not be stopped.
+Example: a pump, which needs time to start, with only two stable states 'off' and 'running'.
+Possible solutions:
+
+a) Drivable, but 'stop' is a no-op
+b) Writable with an added BUSY status (would need some precision in the specs)
+c) Drivable without 'stop' command (not strictly backwards compatible)
+d) introduce a class between Writable and Drivable
+e) like (a), but mark stop with visibility "---". this would allow 'do <module>:stop'
+   without error message, but tell the ECS to hide the stop command.
+
+After some discussion it is clear, that:
+
+- declaring a BUSY state on any module (which has a status) is not really a problem,
+  as this is covered by the extensibility mechanism
+- the mechanism of triggering a BUSY state is also covered, by the 'side-effects must be realized
+  before the reply' handshake
+- a rewording may be in order to clarify the expected behaviour.
+
+Klaus thinks, that having a Writable with a BUSY status (and which follows the handshake)
+is not really a problem.
+Enno favours version b). There are no objections.
+
+Klaus proposes to see modules as Drivable if they have intermediate values, whereas
+Writables are either the old or the new value.
+Markus points out that Writables may have intermediate values, but can't stay there.
+(Hence no ``stop()``.)
+
+Markus tries to make a pull-request for this clarification.
+
+
+6) Any other items?
+===================
+
+- Markus has seen, that the new 'visibility' spec is not yet in the 'split' specification.
+- Klaus has to write a Deliverable and will check back for some details.
+
+
+7) Date of next meeting
+=======================
+
+1.7/2.7 in Dresden in persona, partially with remote access.
+
+
+8) Date of next video meeting
+=============================
+
+11(th) of September, 13:30 via zoom.

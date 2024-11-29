@@ -1,0 +1,197 @@
+meeting 2024-11-05 (via ZOOM)
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+.. sidebar:: participants
+
+     * Alexander Zaft
+     * Georg Brandl
+     * Enrico Faulhaber
+     * Markus Zolliker
+     * Peter Braun
+     * Klaus Kiefer
+     * Bastian Klemke (nneds to leave earlier)
+     * Niklas Eckström
+
+
+.. contents:: Agenda
+    :local:
+    :depth: 3
+
+
+approval of the minutes 2024-09-11
+----------------------------------
+
+Minutes approved. previous minutes are still to be uploaded.
+
+
+RFC process
+-----------
+
+Markus complains that the RFC process is not visible enough yet.
+The notification about a new rfc did not seem to work for everyone.
+
+Question: the latest RFC has number 005 - how can we find out what the next free
+number is, as open commits are not yet in the rfcs folder?
+Shouldn't we directly commit at least for the first time when an new RFC is created?
+It is marked as Status: Open, so it is clear that it is open for discussion.
+
+Markus thinks that this is a good example how it should work to make propositions to the standard.
+The discussion should be online.     * Anders Pettersson
+
+
+Unfortunately, the web interface of github is not intuitive for everyone.
+
+
+current state of rfc's and schema
+---------------------------------
+
+RFC 002: schemata
++++++++++++++++++
+
+The pull request online in github seemingly has not the most up-to-date versions of the files.
+Georg presents his work on schemata and the yaml file with the definitions.
+The yaml definitions don't contain a datainfo but a ``dataty`` entry
+describing the type of data (without limits).
+The datainfo is then described with several ``dataty`` entries.
+
+Georg shows the up-to date version of RFCs 002 and 004.
+There is agreement that the new versions look good.
+Georg will update the PR's.
+
+
+new meaning version
+-------------------
+
+Peter displays the prepared and previously discussed definition of the new meaning.
+It can be reviewed here: https://sampleenvironment.github.io/secop-site/specification/descriptive.html
+
+Peter proposes to define the new meaning not as an optional parameter property,
+but as an optional accessible property. Use case for commands include predefined
+(and referenced) recipes for e.g. catalysis proced     * Anders Pettersson
+ures.
+
+Except for the word `heliomlevel`, which (after a discussion) should be
+replaced with just `level`, this is accepted.
+
+
+Measurable interface class
+--------------------------
+
+Klaus is not happy with the name and wants to discuss alternative names.
+
+proposals:
+  - 'Triggerable' by Peter
+  - 'Collector' by Markus
+
+Alexander points out that there is no need to let the name end with 'able'.
+After a minor side discussion about naming in Bluesky, Georg suggests 'Acquisition'.
+Klaus ponders around 'collector'/'capture'.
+
+proposed implementation specs:
+https://github.com/SampleEnvironment/SECoP/blob/measurable/protocol/issues/076%20Interface%20for%20Measurable%20hardware.rst
+
+The implementation seems to be accepted.
+
+ChatGPT had some ideas about naming:
+
+Given that you're following a pattern of interface names like **Readable**, **Writable**, and **Drivable**, and now you're dealing with a device that represents a value but takes time to obtain, the name of the interface should reflect that there is some latency involved in obtaining the value.
+
+Here are some suggestions for naming this interface:
+
+### 1. **`Observable`**
+   - **Why**: The device represents a value that can be observed over time. This works well if you expect the device to allow polling or subscribing to value changes. It suggests that obtaining the value requires waiting for it to be available.
+
+### 2. **`Lazy`**
+   - **Why**: Suggests that the value is not immediately available and might require some time to "lazily" load or fetch. It implies that there's a delay in accessing the value.
+
+### 3. **`StaleReadable`**
+   - **Why**: Implies that the value can be read, but there's a delay (or potential for staleness) in obtaining the most up-to-date value.
+
+### 4. **`DelayedReadable`**
+   - **Why**: This directly conveys that while the device's value is readable, there is some delay involved in accessing or obtaining that value.
+
+### 5. **`Fetchable`**
+   - **Why**: Indicates that the value can be fetched, but the process involves some waiting or delay, aligning with the idea of fetching data over time.
+
+### 6. **`LazyReadable`**
+   - **Why**: A combination of "lazy" and "readable," this name communicates that reading the value will take time, suggesting it's not instantaneous.
+
+### 7. **`SynchronousReadable`**
+   - **Why**: If the value has a delay but is obtained in a synchronous way (i.e., blocking until the value is retrieved), this name might work. It reflects the fact that the value is read synchronously but takes time.
+
+### 8. **`PollingReadable`**
+   - **Why**: If obtaining the value involves repeatedly checking or polling the device until the value is ready, this name could be appropriate.
+
+### 9. **`TimedReadable`**
+   - **Why**: This suggests that there is a timing aspect to reading the value, similar to how you have "Drivable" to indicate actions that take time.
+
+### 10. **`SlowReadable`**
+   - **Why**: Indicates that reading the value takes more time than usual, directly addressing the delay without being overly technical.
+
+second try:
+
+### 1. **`StaleReadable`**
+   - **Why**: Reflects that the value is available and remains available (potentially stale) until the next measurement is explicitly triggered. This name suggests that the value can be read but might not be fresh until an explicit update is done.
+
+### 2. **`Refreshable`**
+   - **Why**: The device provides a value that can be read, and the value can be refreshed (or updated) by triggering a new measurement. This implies the need for explicit action to get a fresh value.
+
+### 3. **`Pollable`**
+   - **Why**: Suggests that the value can be retrieved through a polling-like mechanism, but the value remains static until explicitly updated.
+
+### 4. **`CachedReadable`**
+   - **Why**: Implies that the value is "cached" (i.e., held in memory and static) until explicitly updated by triggering a new measurement.
+
+### 5. **`SnapshotReadable`**
+   - **Why**: This name implies that the device provides a snapshot of a value that is only updated when a new measurement is triggered. It highlights the idea that the value is a static snapshot until refreshed.
+
+### 6. **`StableReadable`**
+   - **Why**: Suggests that once the value is obtained, it is stable until an explicit update is triggered. It conveys that the value doesn't change unless specifically refreshed.
+
+### 7. **`StaticReadable`**
+   - **Why**: Indicates that the value remains static (unchanging) until a new measurement is explicitly requested. The value doesn't change unless triggered by an action.
+
+### 8. **`Recalculable`**
+   - **Why**: Implies that the value can be recalculated or updated, but only when a new measurement is explicitly triggered. This suggests the value is not live and can be recalculated upon request.
+
+### 9. **`Measured`**
+   - **Why**: This is simple and to the point: the value is the result of a measurement, and the interface implies that the value is only updated when a new measurement is explicitly triggered.
+
+### 10. **`FixedReadable`**
+   - **Why**: This implies that the value stays fixed until explicitly updated by a new measurement.
+
+
+The `preset` parameter should be renamed to `goal`. Further discussion with other colleagues is adviced.
+
+
+Matrix Datatype
+---------------
+https://github.com/SampleEnvironment/SECoP/blob/measurable/protocol/secop_specification_draft_wip.rst#binary-matrix-matrix
+
+Discussion postponed due to time running out.
+
+
+Pending tasks
+-------------
+
+Discussion on the pending_tasks.rst file.
+
+
+any other items
+---------------
+
+HMC related
++++++++++++
+
+Klaus reports from the recent HMC conference, covering the SECoP@HMC project.
+The need for vertical interoperability is exactly the reason to provide metadata.
+
+End of November will be a Helmholtz incubator meeting, where Klaus is urged to attend.
+
+A possible followup project may be created within the Oscars project call.
+But the ISSE needs to be included in the preparatory discussions.
+
+
+date of the next video meeting
+------------------------------
+2024-12-03 13:30 via zoom
