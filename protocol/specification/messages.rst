@@ -501,7 +501,7 @@ an accessible can be checked.
   * The response to a ``check`` message must not depend on the current status of the module.
   * A ``check`` message must not change anything, neither on the hardware nor on any parameter.
   * The ``checked`` and ``check_error`` messages are only sent in response to the ``check`` message on the same connection, and not to other clients with an activat connection.
-  * If the check fails, the error report should indicate whether this is due to the current configuration of the SEC node (:ref:`error-classes <Impossible>`), or because the checked value is outside the range (:ref:`error-classes <RangeError>`) specified by the ``datainfo`` property . 
+  * If the check fails, the error report should indicate whether this is due to the current configuration of the SEC node (:ref:`error-classes <Impossible>`), or because the checked value is outside the range (:ref:`error-classes <RangeError>`) specified by the ``datainfo`` property. 
 
 
 Example:
