@@ -184,6 +184,8 @@ message will naturally be replied with an ``error_change`` message with an
        module-wise           reply          ``inactive␣<module>``
      `heartbeat`_,           request        ``ping``
       with empty identifier  reply          ``pong␣␣<data-report>``
+     `check value`_          request        ``check␣<module>:<accessible>␣``\ <:ref:`value`>
+         \                   reply          ``checked␣<module>:<accessible>␣``\ <`data-report`>
     ======================= ============== ==================
 
 
@@ -475,6 +477,44 @@ Correct handling of side-effects:
     Temporal order should be kept wherever possible!
 
 
+.. _message-check:
+
+Check Value
+~~~~~~~~~~~
+
+The check value message is used to enable *dry run* functionality on 
+:ref:`accessibles <accessibles>` (parameters and commands). It consists of the module 
+and accessible name, in addition to the value to be verified. It allows an ECS to 
+verify if a value can be set on a particular parameter without actually changing it 
+with a :ref:`change value <message-change>` message. Similarly it can be used on 
+commands to check if a value is a valid argument, without 
+:ref:`executing <message-do>` the command. This check goes beyond a simple validity 
+check based on the accessible's datainfo and may depend on the current configuration 
+of the entire SEC node. Upon successful completion of the check, a ``checked`` 
+response is sent, containing a `data-report` of the verified value. The accessible 
+property :ref:`checkable <prop-checkable>` indicates whether 
+an accessible can be checked.  
+
+
+.. admonition:: Remarks
+  
+  * The response to a ``check`` message must not depend on the current status of the module.
+  * A ``check`` message must not change anything, neither on the hardware nor on any parameter.
+  * The ``checked`` and ``check_error`` messages are only sent in response to the ``check`` message on the same connection, and not to other clients with an activat connection.
+  * If the check fails, the error report should indicate whether this is due to the current configuration of the SEC node (:ref:`error-classes <Impossible>`), or because the checked value is outside the range (:ref:`error-classes <RangeError>`) specified by the ``datainfo`` property . 
+
+
+Example:
+
+.. code::
+
+  > check mf:target [1.0, 1.0, 2.0]
+  < checked mf:target [[1.0, 1.0, 2.0], {}]  
+
+
+:related issue: :issue:`075 New messages check and checked`
+
+
 .. _message-do:
 
 Execute Command
@@ -578,6 +618,10 @@ _`Error Classes`:
 
         * - ``ReadOnly``
           - The requested write can not be performed on a readonly value.
+        
+        * - ``NotCheckable``
+          - The requested check can not be performed on the specified parameter.
+            (i.e. on parameters, where no :ref:`checkable <prop-checkable>` property is present, or if it is set to false.)
 
         * - ``WrongType``
           - The requested parameter change or command can not be performed as
