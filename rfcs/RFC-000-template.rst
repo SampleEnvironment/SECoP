@@ -1,9 +1,9 @@
 - Feature: < the name of your feature >
 - Status: < the state of the rfc, start with Open >
 - Submit Date: < your date >
-- Authors: < Your Name(s)>
-- Type: < which place it touches: Wire, Protocol, Modules >
-- PR: <link to the pull-request>
+- Authors: < Your Name(s) and Address(es) >
+- Type: < which place it touches: Wire, Protocol, Modules, Meta >
+- PR: < link to the pull-request, if applicable >
 
 Summary
 =======
