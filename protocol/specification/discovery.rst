@@ -1,29 +1,10 @@
-- Feature: UDP discovery for SECoP
-- Status: Open
-- Submit Date: 2024-10-22
-- Authors: Georg Brandl <g.brandl@fz-juelich.de>,
-  Alexander Zaft <a.zaft@fz-juelich.de>
-- Type: Wire
-- PR: https://github.com/SampleEnvironment/SECoP/pull/28
-
-Summary
-=======
-
-This document describes a simple mechanism for clients to discover SEC nodes
-reachable via TCP in the local network.
-
-
-Goal
-====
+SECoP UDP discovery protocol
+============================
 
 Due to the flexibility of the SECoP node system, it is quite likely for multiple
 SEC nodes to be running on a single host.  Therefore, it is not sufficient to
 connect to just a single "commonly known" port to discover all available SECoP
 device on that host.
-
-
-Technical explanation
-=====================
 
 All SEC nodes that wish to support autodiscovery open a UDP socket listening on
 port 10767.  Upon receiving a packet on this port, they reply with a packet
@@ -95,23 +76,7 @@ Implementation hints
   necessary.
 
 
-Disadvantages, Alternatives
-===========================
-
-Disadvantages
--------------
-
-None known.
-
-Alternatives
-------------
-
-An alternative would be the SEC node sending discovery broadcast packets on its
-own in a certain interval.  However, that would result in unnecessary network
-traffic even when discovery is not wanted.
+See also `SECoP RFC 5`_.
 
 
-Open Questions
-==============
-
-None yet.
+.. _SECoP RFC 6: https://github.com/SampleEnvironment/SECoP/blob/master/rfcs/RFC-005-udp-discovery.rst
