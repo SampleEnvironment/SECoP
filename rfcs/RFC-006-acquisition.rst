@@ -1,14 +1,20 @@
-SECoP Issue 76: Interface for Measurable hardware (closed)
-==========================================================
+- Feature: Acquisition interface classes
+- Status: Open
+- Submit Date: 2025-02-12
+- Authors: Georg Brandl <g.brandl@fz-juelich.de>
+- Type: Modules
+- PR:
 
-Note
-----
+Summary
+=======
 
-Discussion has moved to SECoP RFC 006.
+This RFC (carried over from `issue 76
+<https://github.com/SampleEnvironment/SECoP/blob/master/protocol/issues/076%20Interface%20for%20Measurable%20hardware.rst>`_)
+proposes the addition of two new interface classes, specific to modules that
+support longer-running data acquisition.
 
-
-Motivation
-----------
+Goal
+====
 
 In order to support a wider spectrum of hardware, SECoP should support
 integrating devices used for data acquisition, and define appropriate
@@ -17,37 +23,40 @@ provide values after some acquisition time, to multi-channel detector setups
 common in large scale facilities.
 
 
-Definitions
------------
-
-- "Measurable": a complete data acquisition system consisting of one controller
-  module and one or more channel modules.
-
-- "Data acquisition": a single cycle of data acquisition, started by the
-  controller's ``go`` command.
-
-- "Channel": a part of the data acquisition system representing a measured
-  quantity.  A measurable can acquire data for one or more channels at the same
-  time.
-
-- "Matrix type channel": a channel whose measured data is not a single
-  value/handful of values that is manageable as the ``value`` parameter.
-
-
-Proposal
---------
+Technical explanation
+=====================
 
 It is proposed to add three new interface classes.
 
+All modules belonging to an acquisition MUST have a ``group`` property, which is
+set to the same identifier.
 
-``Controller`` (no base interface)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Definitions
+~~~~~~~~~~~
+
+- "acquisition": a complete data acquisition system consisting of one
+  AcquisitionController module and optionally some AcquisitionChannel modules.
+
+- "acquisition cycle": a single cycle of data acquisition, started by the
+  controller's ``go`` command.
+
+- "channel": a part of the data acquisition system representing a measured
+  quantity.  An acquisition can acquire data for one or more channels at the
+  same time.
+
+- "matrix type channel": a channel whose measured data is not a single
+  value/handful of values that is manageable as the ``value`` parameter.
+
+
+``AcquisitionController`` (no base interface)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Accessibles:
 
 ``status``
     Mandatory: Standard SECoP status.
-    The module is in ``BUSY`` state while the measurable is acquiring.
+    The module is in ``BUSY`` state while the acquisition is acquiring.
     The module is in ``PREPARED`` state after ``prepare`` is called or data
     acquisition is paused by ``hold``.
 
@@ -72,8 +81,8 @@ command ``stop``
     acquired data.
 
 
-``MeasurableChannel`` (derived from ``Readable``)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+``AcquisitionChannel`` (derived from ``Readable``)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Accessibles:
 
@@ -88,34 +97,34 @@ Accessibles:
 
 ``status``
     Mandatory: Standard SECoP status.
-    The module is in ``BUSY`` state while the measurable is acquiring.
+    The module is in ``BUSY`` state while the channel is acquiring.
 
-``preset``
-    Optional: a value that, when reached, stops the data acquisition.
-    In most cases, this will exist, and at least one channel MUST have
-    a preset.
+``goal``
+    Optional: a ``value`` that, when reached, stops the data acquisition.
 
     Interpretation is channel specific: It can represent time for timer
     channels, or a certain number of events, or even a desired statistical
     significance.
 
-``use_preset``
-    Optional (but must be there when ``preset`` is): a Boolean, if false, the
-    preset is ignored and the acquisition does not stop due to this channel.
+``use_goal``
+    Optional: a Boolean, if false, the goal is ignored and the acquisition
+    does not stop due to this channel.
+
+    If ``goal`` is present but not ``use_goal``, it is never ignored.
 
 
-``Measurable``
-~~~~~~~~~~~~~~
+``Acquisition``
+~~~~~~~~~~~~~~~
 
-Combines both MeasurableController and MeasurableChannel accessibles into one
-interface, for simple devices where only one channel is ever needed.
+Combines both AcquisitionController and AcquisitionChannel accessibles into one
+interface, for simple devices where only one channel is needed.
 
 
 "Matrix" type channels
 ~~~~~~~~~~~~~~~~~~~~~~
 
 Not an additional interface class, but an optional extension of
-``MeasurableChannel``.
+``AcquisitionChannel``.
 
 Accessibles:
 
@@ -141,13 +150,28 @@ data is considered for this reduction.
     useful (i.e. not just "pixel 1..N").  (Precise semantics to be specified.)
 
 
-Remarks
-~~~~~~~
+Disadvantages, Alternatives
+===========================
 
-- All modules belonging to one measurable SHOULD have a ``group`` property,
-  which is set to the same identifier.
+Disadvantages
+-------------
+
+None except for more complexity in the specification.
+
+Alternatives
+------------
+
+- Instead of having three new classes, let ``AcqusitionController`` optionally
+  have the interface of ``AcquisitionChannel`` as well.  However, this gets
+  messy and repetitive when later more accessibles for the channel class are
+  added.
 
 
-Discussion
-----------
+Open Questions
+==============
 
+- Should we add an optional parameter ``progress`` on the
+  ``AcqusitionController``, which gives an (approximate) percentage (or
+  elapsed/remaining timings) for the acquisition process?
+
+- How to map channel names to "preset names" in ECS like NICOS?
