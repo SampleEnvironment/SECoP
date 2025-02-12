@@ -302,16 +302,21 @@ Optional Accessible Properties
 .. _accessible-meaning:
 
 ``"meaning"``
-   A JSON object regarding the accessible meaning. It has the same specification as the :ref:`module meaning <module-meaning>` property.
+    A JSON object regarding the accessible meaning. It has the same
+    specification as the :ref:`module meaning <module-meaning>` property.
 
 
 .. _prop-checkable:
 
 ``"checkable"``
-    A boolean value, indicating whether the accessible can be checked with a ``check`` message.
-    If omitted, the accessible is assumed to be not checkable (``checkable == False``), and the SEC node should reply with an :ref:`error-report` (``NotCheckable``) error when a ``check`` message is sent.
+    A boolean value, indicating whether the accessible can be checked with a
+    ``check`` message.  If omitted, the accessible is assumed to be not
+    checkable (``checkable == false``), and the SEC node should reply with an
+    :ref:`error-report` (``NotCheckable``) error when a ``check`` message is
+    sent.
 
     :related issue: :issue:`075 New messages check and checked`
+
 
 Optional Parameter Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
