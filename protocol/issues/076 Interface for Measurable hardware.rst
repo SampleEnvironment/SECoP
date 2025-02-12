@@ -34,35 +34,35 @@ Proposal
 It is proposed to add three new interface classes.
 
 
-``MeasurableController`` (no base interface)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+``Controller`` (no base interface)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Accessibles:
 
 ``status``
     Mandatory: Standard SECoP status.
     The module is in ``BUSY`` state while the measurable is acquiring.
-    The module is in ``PREPARED`` state after ``prepare()`` is called or data
-    acquisition is paused by ``hold()``.
+    The module is in ``PREPARED`` state after ``prepare`` is called or data
+    acquisition is paused by ``hold``.
 
-``prepare()``
+command ``prepare``
     Optional command: prepares a data acquisition so that triggering with ``go``
     is immediate.  No-op if already prepared.  Cannot be called when busy.
 
-``go()``
+command ``go``
     Mandatory command: starts a data acquisition.  No-op if busy.
     Data acquisition runs until one of the channels' active presets is hit or
-    ``stop`` is called explicitly.  Runs the ``prepare()`` sequence first if
+    ``stop`` is called explicitly.  Runs the ``prepare`` sequence first if
     module is not already prepared.
 
-``hold()``
+command ``hold``
     Optional command: pauses a data acquisition.  No-op if not busy.
-    Subsequent ``go()`` continues the acquisition without clearing currently
+    Subsequent ``go`` continues the acquisition without clearing currently
     acquired data.
 
-``stop()``
+command ``stop``
     Optional command: stops a data acquisition.  No-op if not busy.
-    Subsequent ``go()`` starts a new acquisition with clearing currently
+    Subsequent ``go`` starts a new acquisition with clearing currently
     acquired data.
 
 
@@ -116,10 +116,10 @@ Accessibles:
 ``roi``
     Optional: a list containing a ``(min, max)`` tuple per dimension, to specify
     a sub-slice of matrix data to consider in ``value`` and return in
-    ``get_data()``.
+    ``get_data``.
 
-``get_data()``
-    Optional: returns the channel's matrix data, see below for details.
+command ``get_data``
+    Optional: returns the channel's data, with a ``matrix`` data type.
 
 The ``value`` parameter only contains a useful "reduced" form of the data, for
 example, the sum of all events in the matrix, or the average of all intensity
@@ -133,38 +133,6 @@ data is considered for this reduction.
 ``axes``
     Optional: a list of axes ticks for the dimensions of the matrix data, if
     useful (i.e. not just "pixel 1..N").  (Precise semantics to be specified.)
-
-
-The return value of ``get_data()``
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Since the returned data matrix can get pretty large, it is not efficient to
-encode it as nested ``Array``\s.  Instead, the data is kept in Blob form
-(base64-encoded for JSON transmission).
-
-The return value is a struct, where the following members are currently
-specified:
-
-- ``data``: The data as a ``Blob``, whose datainfo must have these additional
-  properties:
-
-  - ``elementtype``: The type (and size, and byte order) of each matrix element,
-    a string in Numpy convention (e.g. ``"<u4"``).
-  - ``names``: A list of names for each dimension
-  - ``maxlengths``: A list of maximum lengths for each dimension
-
-- ``dims``: An array containing the actual lengths of each dimension.
-
-The order of the matrix elements is defined so that the dimension with the
-fastest running index comes first in ``dims``, ``names`` and ``maxlengths``.
-
-Example: ``data`` is ``[1, 2, 3, 4, 5, 6]``, ``dims`` is ``[2, 3]`` and
-``names`` is ``["x", "y"]``.  Then the matrix looks as follows::
-
-  .     x=0 x=1
-  y=0   1   2
-  y=1   3   4
-  y=2   5   6
 
 
 Remarks
