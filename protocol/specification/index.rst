@@ -20,6 +20,7 @@ Specification
     modules
     future
     security
+    discovery
 
 
 License notes
