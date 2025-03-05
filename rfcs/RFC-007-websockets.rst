@@ -27,7 +27,7 @@ Technical explanation
 =====================
 
 After opening a connection, if the first message the SEC node receives starts
-with ``HTTP``, it treats the connection as a WebSocket connection, i.e. it
+with ``GET /``, it treats the connection as a WebSocket connection, i.e. it
 negotiates the connection using a prelude of HTTP requests, after which the
 connection continues using the WebSocket protocol in both directions.
 
