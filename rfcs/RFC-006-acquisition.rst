@@ -84,21 +84,19 @@ command ``stop``
 Property:
 
 ``acquisition_channels``
+    A JSON object specifying the channel modules belonging to this AcquisitionController.
+    The names of the channel modules are represented as the values of the JSON object.
+    The role of the channels are represented by the keys.
+    The key "t" is predefined as a time channel, which basically ends acquisition when
+    the time indicated by the ``goal`` parameter of the channel module is reached.
 
-A JSON object specifying the channel modules belonging to this AcquisitionController.
-The names of the channel modules are represented as the values of the JSON object.
-The role of the channels are represented by the keys.
-The key "t" is predefined as a time channel, which basically ends acquisition when
-the time indicated by the ``goal`` parameter of the channel module is reached.
+    Example module property of a controller module "controller":
 
-Example module property of a controller module "controller":
+    ``{"t": "timechannel", "monitor": "monitor_channel"}``
 
-    {"t": "timechannel", "monitor": "monitor_channel"}
+    The 3 modules "controller", "timechannel" and "monitor_channel" all belong together.
 
-The 3 modules "controller", "timechannel" and "monitor_channel" all belong together.
-
-This property is mandatory on any ``AcquisitionController`` (and ``Acquisition`` below).
-
+    This property is mandatory on any ``AcquisitionController`` (and ``Acquisition`` below).
 
 
 ``AcquisitionChannel`` (derived from ``Readable``)
