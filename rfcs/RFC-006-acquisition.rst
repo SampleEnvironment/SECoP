@@ -84,7 +84,6 @@ command ``stop``
 Property:
 
 ``acquisition_channels``
-
     A JSON object specifying the channel modules belonging to this AcquisitionController.
     The names of the channel modules are represented as the values of the JSON object.
     The role of the channels are represented by the keys.
