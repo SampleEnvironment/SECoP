@@ -33,7 +33,7 @@ set to the same identifier.
 
 
 Definitions
-~~~~~~~~~~~
+-----------
 
 - "acquisition": a complete data acquisition system consisting of one
   AcquisitionController module and optionally some AcquisitionChannel modules.
@@ -50,7 +50,7 @@ Definitions
 
 
 ``AcquisitionController`` (no base interface)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------------------
 
 Accessibles:
 
@@ -84,6 +84,7 @@ command ``stop``
 Property:
 
 ``acquisition_channels``
+
     A JSON object specifying the channel modules belonging to this AcquisitionController.
     The names of the channel modules are represented as the values of the JSON object.
     The role of the channels are represented by the keys.
@@ -99,8 +100,9 @@ Property:
     This property is mandatory on any ``AcquisitionController`` (and ``Acquisition`` below).
 
 
+
 ``AcquisitionChannel`` (derived from ``Readable``)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------------------------
 
 Accessibles:
 
@@ -132,14 +134,14 @@ Accessibles:
 
 
 ``Acquisition``
-~~~~~~~~~~~~~~~
+---------------
 
 Combines both AcquisitionController and AcquisitionChannel accessibles into one
 interface, for example for simple devices where only one channel is needed.
 
 
 "Matrix" type channels
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 Not an additional interface class, but an optional extension of
 ``AcquisitionChannel``.
