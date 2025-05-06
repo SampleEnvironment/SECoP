@@ -109,25 +109,25 @@ Optional Module Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ``"visibility"``
-     string indicating a hint for UIs for which user roles the module should be
-     displayed, hidden or allow read access only.
-     MUST be one of the values on the two visibility columns. The default is "www".
+    string indicating a hint for UIs for which user roles the module should be
+    displayed, hidden or allow read access only.
+    MUST be one of the values on the two visibility columns. The default is "www".
 
-     .. table:: possible combinations of access hints
+    .. table:: possible combinations of access hints
 
-         ================ ========== ======== ============ =============
-          expert access    advanced   user     visibility   visibility
-                           access     access   new style    old style
-         ================ ========== ======== ============ =============
-          rd/wr            rd/wr      rd/wr    "www"        "user"
-          rd/wr            rd/wr      rd       "wwr"
-          rd/wr            rd/wr      no       "ww-"        "advanced"
-          rd/wr            rd         rd       "wrr"
-          rd/wr            rd         no       "wr-"
-          rd/wr            no         no       "w--"        "expert"
-          rd               rd         rd       "rrr"
-          rd               rd         no       "rr-"
-          rd               no         no       "r--"
+        ================ ========== ======== ============ =============
+         expert access    advanced   user     visibility   visibility
+                          access     access   new style    old style
+        ================ ========== ======== ============ =============
+         rd/wr            rd/wr      rd/wr    "www"        "user"
+         rd/wr            rd/wr      rd       "wwr"
+         rd/wr            rd/wr      no       "ww-"        "advanced"
+         rd/wr            rd         rd       "wrr"
+         rd/wr            rd         no       "wr-"
+         rd/wr            no         no       "w--"        "expert"
+         rd              rd         rd       "rrr"
+         rd              rd         no       "rr-"
+         rd               no         no       "r--"
          ================ ========== ======== ============ =============
 
      The 3 characters in new style form indicate the access on the levels
@@ -139,11 +139,11 @@ Optional Module Properties
      A SECoP client SHOULD ignore any value not listed in the last two columns of
      above table.
 
-     :Note:
-         The access is NOT controlled on the SECnode side! The visibility property is just a
-         hint to the UI (client) what should be exposed to (or better hidden from) the users
-         having different levels of expertise.
-         The UI (client) should implement the different access levels.
+    .. note::
+        The access is NOT controlled on the SECnode side! The visibility property is just a
+        hint to the UI (client) what should be exposed to (or better hidden from) the users
+        having different levels of expertise.
+        The UI (client) should implement the different access levels.
 
 ``"group"``
     A string identifier for grouping modules in the ECS.  It may contain ":"
@@ -322,20 +322,20 @@ Optional Accessible Properties
 
     .. table::
 
-         ================ ========== ======== ========== ============ =============
-          expert access    advanced   user                visibility   visibility
-                           access     access   readonly   new style    old style
-         ================ ========== ======== ========== ============ =============
-          rd/wr            rd/wr      rd/wr    false      "www"        "user"
-          rd/wr            rd/wr      rd       false      "wwr"
-          rd/wr            rd/wr      no       false      "ww-"        "advanced"
-          rd/wr            rd         rd       false      "wrr"
-          rd/wr            rd         no       false      "wr-"
-          rd/wr            no         no       false      "w--"        "expert"
-          rd               rd         rd       true       "rrr"        "user"
-          rd               rd         no       true       "rr-"        "advanced"
-          rd               no         no       true       "r--"        "expert"
-         ================ ========== ======== ========== ============ =============
+        ================ ========== ======== ========== ============ =============
+         expert access    advanced   user                visibility   visibility
+                          access     access   readonly   new style    old style
+        ================ ========== ======== ========== ============ =============
+         rd/wr            rd/wr      rd/wr    false      "www"        "user"
+         rd/wr            rd/wr      rd       false      "wwr"
+         rd/wr            rd/wr      no       false      "ww-"        "advanced"
+         rd/wr            rd         rd       false      "wrr"
+         rd/wr            rd         no       false      "wr-"
+         rd/wr            no         no       false      "w--"        "expert"
+         rd               rd         rd       true       "rrr"        "user"
+         rd               rd         no       true       "rr-"        "advanced"
+         rd               no         no       true       "r--"        "expert"
+        ================ ========== ======== ========== ============ =============
 
     The access for a parameter on a certain access level is determined by the strongest
     restriction for the combination of module visibility, parameter visibility at the
@@ -345,7 +345,7 @@ Optional Accessible Properties
     A SECoP client SHOULD ignore any value not listed in the last two columns of the above
     table.
 
-    :Remark:
+    .. note::
 
         There are redundant possibilities for expressing the same access levels,
         best practice for a SEC node is:
