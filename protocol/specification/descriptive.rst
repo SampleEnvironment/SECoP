@@ -125,8 +125,8 @@ Optional Module Properties
          rd/wr            rd         rd       "wrr"
          rd/wr            rd         no       "wr-"
          rd/wr            no         no       "w--"        "expert"
-         rd              rd         rd       "rrr"
-         rd              rd         no       "rr-"
+         rd               rd         rd       "rrr"
+         rd               rd         no       "rr-"
          rd               no         no       "r--"
          ================ ========== ======== ============ =============
 
@@ -346,7 +346,6 @@ Optional Accessible Properties
     table.
 
     .. note::
-
         There are redundant possibilities for expressing the same access levels,
         best practice for a SEC node is:
 
