@@ -128,7 +128,7 @@ Optional Module Properties
          rd               rd         rd       "rrr"
          rd               rd         no       "rr-"
          rd               no         no       "r--"
-         ================ ========== ======== ============ =============
+        ================ ========== ======== ============ =============
 
      The 3 characters in new style form indicate the access on the levels
      "expert", "advanced" and "user", in this order.
@@ -139,11 +139,10 @@ Optional Module Properties
      A SECoP client SHOULD ignore any value not listed in the last two columns of
      above table.
 
-    .. note::
-        The access is NOT controlled on the SECnode side! The visibility property is just a
-        hint to the UI (client) what should be exposed to (or better hidden from) the users
-        having different levels of expertise.
-        The UI (client) should implement the different access levels.
+    .. note:: The access is NOT controlled on the SECnode side! The visibility property is just a
+              hint to the UI (client) what should be exposed to (or better hidden from) the users
+              having different levels of expertise.
+              The UI (client) should implement the different access levels.
 
 ``"group"``
     A string identifier for grouping modules in the ECS.  It may contain ":"
