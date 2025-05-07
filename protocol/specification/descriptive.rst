@@ -128,6 +128,7 @@ Optional Module Properties
          rd               rd         rd       "rrr"
          rd               rd         no       "rr-"
          rd               no         no       "r--"
+         no               no         no       "---"
         ================ ========== ======== ============ =============
 
     The 3 characters in new style form indicate the access on the levels
@@ -136,8 +137,10 @@ Optional Module Properties
     any parameter of the module and "-" means, the module should be hidden.
     The old style notion must also be accepted by new SECoP clients.
 
-    A SECoP client SHOULD ignore any value not listed in the last two columns of
-    above table.
+    * A parameter with visibility "---" is meant not to be shown in a user interface,
+      but might still be used by the client interface internally.
+    * A SECoP client SHOULD ignore any value not listed in the last two columns of
+      above table.
 
     .. note:: The access is NOT controlled on the SECnode side! The visibility property is just a
               hint to the UI (client) what should be exposed to (or better hidden from) the users
@@ -208,7 +211,7 @@ Optional Module Properties
    - ``"belongs_to"`` a string identifying the entity to which the module is linked. Setting this field forms a relation between the entity and the ``"function"`` field.
 
      Predefined entities:
-     
+
      * ``"sample"``
      * ``"other"``
 
@@ -334,15 +337,26 @@ Optional Accessible Properties
          rd               rd         rd       true       "rrr"        "user"
          rd               rd         no       true       "rr-"        "advanced"
          rd               no         no       true       "r--"        "expert"
+         no               no         no                  "---"
         ================ ========== ======== ========== ============ =============
 
     The access for a parameter on a certain access level is determined by the strongest
     restriction for the combination of module visibility, parameter visibility at the
     given access level and the readonly flag.
-    The old style notion must also be accepted by new SECoP clients.
 
-    A SECoP client SHOULD ignore any value not listed in the last two columns of the above
-    table.
+    Example: A module has a visibility property of "wr-". A parameter on this module
+    with visibility "w--" should be allowed to be written only by experts, as the latter
+    one is stronger.
+    For a readonly parameter with no visibility or with a visibility "rrr" it would be
+    treated as "rr-", e.g. to be shown to experts and advanced clients, but not to simple users.
+
+    * The old style notion must also be accepted by new SECoP clients.
+    * With the new style notation, commands should only be executed when the corresponding
+      character is a "w".
+    * A SECoP client SHOULD ignore any value not listed in the last two columns of the above
+      table.
+    * A parameter with visibility "---" is meant not to be shown in a user interface, but
+      might still be used by the client interface internally.
 
     .. note::
         There are redundant possibilities for expressing the same access levels,
@@ -350,8 +364,7 @@ Optional Accessible Properties
 
         - avoid explicit "w" on parameters with readonly=true
         - omit the parameter visibility, when it does not influence the result
-        - it is recommended to consistently use the same style for all
-          "visibility" properties
+        - consistently use the same style for all "visibility" properties
 
 
 .. _accessible-meaning:
