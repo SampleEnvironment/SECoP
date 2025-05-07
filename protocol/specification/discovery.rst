@@ -79,4 +79,4 @@ Implementation hints
 See also `SECoP RFC 5`_.
 
 
-.. _SECoP RFC 6: https://github.com/SampleEnvironment/SECoP/blob/master/rfcs/RFC-005-udp-discovery.rst
+.. _SECoP RFC 5: https://github.com/SampleEnvironment/SECoP/blob/master/rfcs/RFC-005-udp-discovery.rst

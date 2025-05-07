@@ -20,6 +20,10 @@ needed.  This should offer multiple TCP connections and contain the necessary
 logic to map requests/replies from/to those network connections onto/from the
 serial connection to the actual SEC node.
 
+Finally, SECoP messages can also be exchanged over WebSockets, which is useful
+for interacting directly with browsers/JavaScript clients, see
+:ref:`websockets`.
+
 
 Transfer modes
 --------------
@@ -912,3 +916,75 @@ to be sent before it can continue as before.
 
    | :issue:`004 The Timeout SEC Node Property`
    | :issue:`006 Keep Alive`
+
+
+.. _websockets:
+
+SECoP over WebSockets
+---------------------
+
+Since browser (i.e. HTML+JavaScript) based human interface solutions are more
+and more important, and JavaScript lacks traditional socket based APIs,
+exchanging raw SECoP messages is not an option.  The best alternative is
+WebSockets (RFC :rfc:`6455`), which are a relatively overhead-free way of
+exchanging messages between two endpoints in an arbitrary pattern.
+
+See also `SECoP RFC 7`_.
+
+Implementation in a SEC node
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+After opening a connection, if the first message the SEC node receives starts
+with ``GET /``, it treats the connection as a WebSocket connection, i.e. it
+negotiates the connection using a prelude of HTTP requests, after which the
+connection continues using the WebSocket protocol in both directions.
+
+Since WebSockets provide reliable framing, every SECoP message is sent in a
+frame.  The line ending added to separate messages over raw TCP is therefore
+unneded, but remains valid.  Messages are sent as TEXT frames.
+
+Everything else (message structure and semantics) remains unchanged.
+
+.. note::
+
+    If the SEC node doesn't want to support WebSockets, no further action is
+    required.  It will reply with the standard SECoP error messages, and the
+    client will abort the connection attempt.
+
+    A minimal implementation of the HTTP prelude is pretty small, does not have
+    a lot of complexity, and can be implemented even on microcontrollers `in
+    about 200 lines of code
+    <https://github.com/SampleEnvironment/microSECoP/blob/master/src/http.rs>`_.
+
+Implementation in a client
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+On the WebSocket client side, making a connection is as easy as opening a
+connection and start sending request messages, handling response messages as
+they come in.  A very minimal example in JavaScript::
+
+    function on_connect(event) {
+        // On initial connect, we should ask for identification
+        event.target.send('*IDN?');
+    }
+
+    function on_message(event) {
+        let msg = event.data;
+        // Handle response to initial *IDN? and request descriptive data
+        if (msg.startsWith('ISSE')) {
+            event.target.send('describe');
+            return;
+        }
+        // Parse `msg` as a SECoP message here, and react to it
+    }
+
+    let ws = new WebSocket('ws://node:10767');
+    ws.addEventListener('open', on_connect);
+    ws.addEventListener('message', on_message);
+    // Should also listen on 'close' and 'error' events
+
+    // Whenever needed, send messages, for example:
+    ws.send('change mod:param 42');
+
+
+.. _SECoP RFC 7: https://github.com/SampleEnvironment/SECoP/blob/master/rfcs/RFC-007-websockets.rst
