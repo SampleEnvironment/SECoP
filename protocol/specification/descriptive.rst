@@ -130,14 +130,14 @@ Optional Module Properties
          rd               no         no       "r--"
         ================ ========== ======== ============ =============
 
-     The 3 characters in new style form indicate the access on the levels
-     "expert", "advanced" and "user", in this order.
-     "w" means full (read and write) access, "r" means restricted read only access on
-     any parameter of the module and "-" means, the module should be hidden.
-     The old style notion must also be accepted by new SECoP clients.
+    The 3 characters in new style form indicate the access on the levels
+    "expert", "advanced" and "user", in this order.
+    "w" means full (read and write) access, "r" means restricted read only access on
+    any parameter of the module and "-" means, the module should be hidden.
+    The old style notion must also be accepted by new SECoP clients.
 
-     A SECoP client SHOULD ignore any value not listed in the last two columns of
-     above table.
+    A SECoP client SHOULD ignore any value not listed in the last two columns of
+    above table.
 
     .. note:: The access is NOT controlled on the SECnode side! The visibility property is just a
               hint to the UI (client) what should be exposed to (or better hidden from) the users
