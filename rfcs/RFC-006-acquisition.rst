@@ -13,6 +13,7 @@ This RFC (carried over from `issue 76
 proposes the addition of two new interface classes, specific to modules that
 support longer-running data acquisition.
 
+
 Goal
 ====
 
@@ -22,11 +23,18 @@ interfaces.  This hardware can range in complexity from devices that simply
 provide values after some acquisition time, to multi-channel detector setups
 common in large scale facilities.
 
+This is conceptually different from a simple ``Readable``, where reading a
+value is assumed to be always available, without noticeably waiting time.
+In contrast, an acqusition cycle represented by these modules can take a
+while to complete, maybe providing intermediate values, and deliver a final
+value once finished, until the next acquisition cycle is started.
+
 
 Technical explanation
 =====================
 
-It is proposed to add three new interface classes.
+It is proposed to add three new interface classes: ``AcquisitionController``,
+``AcquisitionChannel`` and ``Acqusition``.
 
 
 Definitions
@@ -48,6 +56,8 @@ Definitions
 
 ``AcquisitionController`` (no base interface)
 ---------------------------------------------
+
+Descriptive data ``interface_classes``: ``["AcquisitionController"]``.
 
 Accessibles:
 
@@ -77,28 +87,30 @@ command ``stop``
     Subsequent ``go`` starts a new acquisition with clearing currently
     acquired data.
 
-
 Property:
 
 ``acquisition_channels``
     A JSON object specifying the channel modules belonging to this AcquisitionController.
     The names of the channel modules are represented as the values of the JSON object.
-    The role of the channels are represented by the keys.
+    The role of the channels are represented by the keys and can be used as such by
+    an ECS.
+
     The key "t" is predefined as a time channel, which basically ends acquisition when
     the time indicated by the ``goal`` parameter of the channel module is reached.
 
-    Example module property of a controller module "controller":
+    Example module property of a controller module "controller"::
 
-    ``{"t": "timechannel", "monitor": "monitor_channel"}``
+        {"t": "timechannel", "monitor": "monitor_channel"}
 
     The 3 modules "controller", "timechannel" and "monitor_channel" all belong together.
 
-    This property is mandatory on any ``AcquisitionController`` (and ``Acquisition`` below).
-
+    This property is mandatory on any ``AcquisitionController``.
 
 
 ``AcquisitionChannel`` (derived from ``Readable``)
 --------------------------------------------------
+
+Descriptive data ``interface_classes``: ``["AcquisitionChannel", "Readable"]``.
 
 Accessibles:
 
@@ -118,9 +130,15 @@ Accessibles:
 ``goal``
     Optional: a ``value`` that, when reached, stops the data acquisition.
 
-    Interpretation is channel specific: It can represent time for timer
-    channels, or a certain number of events, or even a desired statistical
-    significance.
+    Depending on the nature of the acqusition cycle being performed, it
+    may or may not be useful to configure the acqusition with a ``goal``.
+    It can for example represent time for timer channels, or a certain
+    number of events for event counter channels, or a desired statistical
+    significance for a channel that represents the measurement uncertainty.
+
+    For acquisitions that are configured with several parameters whose value
+    is unrelated to the main ``value`` parameter, it is better to use custom
+    parameters instead.
 
 ``use_goal``
     Optional: a Boolean, if false, the goal is ignored and the acquisition
@@ -129,15 +147,8 @@ Accessibles:
     If ``goal`` is present but not ``use_goal``, it is never ignored.
 
 
-``Acquisition``
----------------
-
-Combines both AcquisitionController and AcquisitionChannel accessibles into one
-interface, for simple devices where only one channel is needed.
-
-
 "Matrix" type channels
-----------------------
+~~~~~~~~~~~~~~~~~~~~~~
 
 Not an additional interface class, but an optional extension of
 ``AcquisitionChannel``.
@@ -166,6 +177,17 @@ data is considered for this reduction.
     useful (i.e. not just "pixel 1..N").  (Precise semantics to be specified.)
 
 
+``Acquisition`` (derived from ``Readable``)
+-------------------------------------------
+
+Combines both AcquisitionController and AcquisitionChannel accessibles into one
+interface, for simple devices where only one channel is needed.
+
+Does not have the ``acquisition_channels`` property.
+
+Descriptive data ``interface_classes``: ``["Acquisition", "Readable"]``.
+
+
 Disadvantages, Alternatives
 ===========================
 
@@ -183,11 +205,12 @@ Alternatives
   added.
 
 
-Open Questions
-==============
+Formerly Open Questions
+=======================
 
 - Should we add an optional parameter ``progress`` on the
   ``AcqusitionController``, which gives an (approximate) percentage (or
   elapsed/remaining timings) for the acquisition process?
 
-- How to map channel names to "preset names" in ECS like NICOS?
+  (This has been deferred to when a use-case is brought up and may be added
+  as a generic SECoP feature.)
