@@ -1,5 +1,11 @@
-SECoP Issue 76: Interface for Measurable hardware (proposed)
-============================================================
+SECoP Issue 76: Interface for Measurable hardware (closed)
+==========================================================
+
+Note
+----
+
+Discussion has moved to SECoP RFC 006.
+
 
 Motivation
 ----------
