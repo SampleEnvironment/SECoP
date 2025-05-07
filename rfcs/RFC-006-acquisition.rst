@@ -28,9 +28,6 @@ Technical explanation
 
 It is proposed to add three new interface classes.
 
-All modules belonging to an acquisition MUST have a ``group`` property, which is
-set to the same identifier.
-
 
 Definitions
 -----------
@@ -136,7 +133,7 @@ Accessibles:
 ---------------
 
 Combines both AcquisitionController and AcquisitionChannel accessibles into one
-interface, for example for simple devices where only one channel is needed.
+interface, for simple devices where only one channel is needed.
 
 
 "Matrix" type channels
