@@ -109,7 +109,7 @@ Optional Module Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ``"visibility"``
-    string indicating a hint for UIs for which user roles the module should be
+    A string indicating a hint for UIs, for which user roles the module should be
     displayed, hidden or allow read access only.
     MUST be one of the values on the two visibility columns. The default is "www".
 
@@ -135,12 +135,12 @@ Optional Module Properties
     "expert", "advanced" and "user", in this order.
     "w" means full (read and write) access, "r" means restricted read only access on
     any parameter of the module and "-" means, the module should be hidden.
-    The old style notion must also be accepted by new SECoP clients.
 
-    * A parameter with visibility "---" is meant not to be shown in a user interface,
-      but might still be used by the client interface internally.
+    * The old style notion must also be accepted by new SECoP clients.
     * A SECoP client SHOULD ignore any value not listed in the last two columns of
       above table.
+    * A module with visibility "---" is meant not to be shown in a user interface,
+      but might still be used by the client interface internally.
 
     .. note:: The access is NOT controlled on the SECnode side! The visibility property is just a
               hint to the UI (client) what should be exposed to (or better hidden from) the users
@@ -319,7 +319,8 @@ Optional Accessible Properties
               for grouping of modules within a node.
 
 ``"visibility"``
-    A string indicating a hint for a GUI about the accessibility of the accessible.
+    A string indicating a hint for UIs, for which user roles the accessible should be
+    displayed, hidden or allow read access only.
     MUST be one of the values on the two visibility columns. The default is "www".
 
     .. table::
@@ -340,8 +341,13 @@ Optional Accessible Properties
          no               no         no                  "---"
         ================ ========== ======== ========== ============ =============
 
-    The access for a parameter on a certain access level is determined by the strongest
-    restriction for the combination of module visibility, parameter visibility at the
+    The 3 characters in new style form indicate the access on the levels
+    "expert", "advanced" and "user", in this order.
+    "w" means full (read and write) access, "r" means restricted read only access on
+    the accessible and "-" means, the accessible should be hidden.
+
+    The access for an accessible on a certain access level is determined by the strongest
+    restriction for the combination of module visibility and accessible visibility at the
     given access level and the readonly flag.
 
     Example: A module has a visibility property of "wr-". A parameter on this module
@@ -355,8 +361,14 @@ Optional Accessible Properties
       character is a "w".
     * A SECoP client SHOULD ignore any value not listed in the last two columns of the above
       table.
-    * A parameter with visibility "---" is meant not to be shown in a user interface, but
+    * An accessible with visibility "---" is meant not to be shown in a user interface, but
       might still be used by the client interface internally.
+
+    .. note::
+        The access is NOT controlled on the SECnode side! The visibility property is just a
+        hint to the UI (client) what should be exposed to (or better hidden from) the users
+        having different levels of expertise.
+        The UI (client) should implement the different access levels.
 
     .. note::
         There are redundant possibilities for expressing the same access levels,
