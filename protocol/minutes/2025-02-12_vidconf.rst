@@ -1,0 +1,163 @@
+meeting 2025-02-12(ZOOM)
+@@@@@@@@@@@@@@@@@@@@@@@@@
+
+.. sidebar:: participants
+
+     * Markus Zolliker
+     * Alexander Zaft
+     * Bastian Klemke
+     * Klaus Kiefer
+     * Enrico Faulhaber
+     * Niklas Eckström
+     * Peter Braun
+
+.. contents:: Agenda
+    :local:
+    :depth: 3
+
+
+1) approval of the minutes 2024-11-05
+=====================================
+approved.
+
+
+2) RFC-005: UDP Autodetection
+=============================
+
+Markus presents his current data-collection procerss which collects data from all sec-nodes (in a network) and
+stores them in a common database. This is especially useful for collecting historic data.
+It also requires mangling of the equipment id.
+
+Klaus asks for a practical test. Markus replies that it is in use as documented in RFC-005. klaus seems happy with this.
+
+Conclusion: general acceptance.
+
+
+Help for GitHub Pull requests:
+
+https://github.com/SampleEnvironment/SECoP
+
+- click on "Pull requests" (item 3 on 2nd line in header)
+- click on the selected one: "add RFC for UDP discovery"
+- click on Commits (on top of conversation, 2nd item)
+- either:
+ - to see the changes in raw source: click on "add RFC for UDP discovery"
+ - to see the rendered version: click on <> on the right of the topmost commit and then browse to the file to be seen
+
+
+3) 'Measurable'
+===============
+
+see also https://github.com/SampleEnvironment/SECoP/issues/24
+
+Discussion started at the Proposition: discard the condition: "at least one channel MUST have a preset."
+
+Markus presents his use case of some ultrasonic measurement device, which doesn't take that long.
+Peter shows an example of an atomic mass spectrometer, where had to leave the preset as there
+is no sensible parametrisation connected to a preset value.
+
+In a longer discussion several points are discussed:
+
+- Klaus dislikes the name 'preset' and prefers 'goal' or smth. similiar
+- Enno acknowledges the fact that there may be use case where there is no sensible preset
+- Enno propose to change the wording from 'MUST' to 'SHOULD' to cover those cases.
+- Enno also states that always having the preset eases implementation
+- above presented use cases could also use a 0..100% value with a preset of 100%.
+  This would allow gui's to show the progress.
+- Georg states that for showing progress bars in a gui an extra parameter of the controller seems better.
+- Markus discusses the difference between measurement (channels) representing an increasing value (e.g. time, counts,...)
+  from values where the statistical significance improves, i.e. the value itself roughly stays the same, but gets more precise.
+- Enno thinks that instead of joining a controller with the only channel, the controller may get a 'representative' value,
+  which in all cases could be useful. wording seems important here.
+- further discussion about integration into ECS (e.g. nicos, bluesky): what is needed?
+  it seems, a mapping is needed from the SECoP module name to the named preset names used by ECS's.
+  (e.g. 't' as the preset for measurement time)
+- wordings!
+- agreement on discarding the condition: "use_preset must be there when preset is" (default when not present: use_preset=True)
+- renaming Measurable -> Acquisition (Controller keeps name Controller), MeasurableChannel -> AcquisitionChannel
+- Georg proposes the Controller to have a 'representative' value (and maybe a 'preset')
+- a Controller is required to have a 'go' command.
+- instead of defining a merged (controller+Channel) class, we may also list both in the 'interface_classes' list.
+- Peter states that this is not a good idea, as the ECS should treat a module like the first known interface from interface_class.
+- Enno agrees and proposes to use the 'features' list, though this means that corresponding features need to be defined.
+- Markus proposes to rename 'preset' to 'target'. Enno has no objection. Georg doesn't like it. further discussion.
+- agreement on renaming 'preset' to 'goal'.
+
+Georg will rework the RFC.
+
+
+4) finalize matrix datainfo
+===========================
+
+https://github.com/SampleEnvironment/SECoP/blob/abd1c12b88617c93edee1e0629d29c02599988c7/protocol/specification/datainfo.rst#binary-matrix-matrix
+
+Since there are no objections, this is be accepted.
+
+
+5) finalize check message and checkable property
+================================================
+
+if there are no objections, this should be accepted
+
+check message:
+
+https://github.com/SampleEnvironment/SECoP/blob/4fc717017a83254155060e30e64ab33ca30a920a/protocol/specification/buildingblocks.rst#check-value
+
+checkable property:
+
+https://github.com/SampleEnvironment/SECoP/blob/4fc717017a83254155060e30e64ab33ca30a920a/protocol/specification/buildingblocks.rst#optional-accessible-properties
+
+Both are accepted as-is.
+
+
+6) final reports of SECoP@HMC
+=============================
+
+Klaus asks anyone to check the deliverables/reports Peter prepared.
+
+- https://nubes.helmholtz-berlin.de/apps/files/files/627996505?dir=/HMC_SECoP%40HMC/Steering_Board/Reports/Final_Report_2025
+- https://nubes.helmholtz-berlin.de/apps/files/files/625971700?dir=/HMC_SECoP%40HMC/Steering_Board/Reports/Deliverable_D1
+- https://nubes.helmholtz-berlin.de/apps/files/files/619391848?dir=/HMC_SECoP%40HMC/Steering_Board/Reports/Deliverable_D3.2
+
+
+7) Website
+==========
+
+Klaus asks for a search function on the web docu.
+Alex proposes the one on the top right. It seems not very comfortable.
+Markus proposes to use google....
+
+Shall/OctoPy are missing at the website as well.
+
+Peter has problems to access the website repo (access expired) and asks if it can be moved to github.
+No objection, but no excitement either.
+
+
+8) Access levels
+================
+
+Klaus is working on a gashandling rack, consisting of several mass flow controllers (as individual sec-nodes)
+and then combined into a 'management' sec-node.
+There seem to be difficulties with 'locking' some modules from external access.
+
+Markus proposes to use different port numbers for distinct access levels.
+
+After some discussion it becomes clear that a paragraph in the spec mentioning the
+problem of different 'access' levels and showing exemplary ways to tackle this problem.
+
+
+9) outlook
+==========
+
+There are some project application deadlines approaching. (Oscars, automated beamline,...)
+Klaus proposes a few project ideas.
+
+The discussion did not trigger any storms of enthusiasm.
+
+Klaus states that the NIAG will probably not do anything if we don't keep pushing.
+
+
+10) Date of next video meeting
+=============================
+
+5(th) of March (Ash Wednesday), 09:00 via zoom.

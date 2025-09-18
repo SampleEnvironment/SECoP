@@ -1,0 +1,116 @@
+meeting 2024-12-03 (via ZOOM)
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+.. sidebar:: participants
+
+     * Alexander Zaft
+     * Enrico Faulhaber
+     * Markus Zolliker
+     * Bastian Klemke
+     * Niklas Eckström
+
+
+.. contents:: Agenda
+    :local:
+    :depth: 3
+
+
+approval of the minutes 2024-11-05
+==================================
+
+Minutes approved. previous minutes are still to be uploaded.
+
+
+RFC process: UDP Autodetection
+==============================
+
+Alex reminds all to have a look at the github issue.
+
+
+Measurable interface class
+==========================
+
+Some of the proposed names (see minutes of last meeting) are discussed.
+Discussion is postponed.
+
+Some of the suggestions are repeated here:
+
+**`Collector`**
+   - Markus favourite
+
+**`Measurable`**
+   - Current name
+
+**`Acquisition`**
+   - Markus favourite
+
+Here are a few ChatGPT generated names:
+
+**`Observable`**
+   - **Why**: The device represents a value that can be observed over time. This works well if you expect the device to allow polling or subscribing to value changes. It suggests that obtaining the value requires waiting for it to be available.
+
+**`Lazy`**
+   - **Why**: Suggests that the value is not immediately available and might require some time to "lazily" load or fetch. It implies that there's a delay in accessing the value.
+
+**`StaleReadable`**
+   - **Why**: Implies that the value can be read, but there's a delay (or potential for staleness) in obtaining the most up-to-date value.
+
+**`DelayedReadable`**
+   - **Why**: This directly conveys that while the device's value is readable, there is some delay involved in accessing or obtaining that value.
+
+**`Fetchable`**
+   - **Why**: Indicates that the value can be fetched, but the process involves some waiting or delay, aligning with the idea of fetching data over time.
+
+**`LazyReadable`**
+   - **Why**: A combination of "lazy" and "readable," this name communicates that reading the value will take time, suggesting it's not instantaneous.
+
+**`TimedReadable`**
+   - **Why**: This suggests that there is a timing aspect to reading the value, similar to how you have "Drivable" to indicate actions that take time.
+
+**`SlowReadable`**
+   - **Why**: Indicates that reading the value takes more time than usual, directly addressing the delay without being overly technical.
+
+**`Refreshable`**
+   - **Why**: The device provides a value that can be read, and the value can be refreshed (or updated) by triggering a new measurement. This implies the need for explicit action to get a fresh value.
+
+**`Measured`**
+   - **Why**: This is simple and to the point: the value is the result of a measurement, and the interface implies that the value is only updated when a new measurement is explicitly triggered.
+
+
+The `preset` parameter should be renamed to `goal`. Further discussion with other colleagues is adviced.
+
+
+Finalize Matrix Datainfo
+========================
+
+Bastian asked for clarification on the format string specifier.
+Alexander explained its analogy to the datainfo used e.g. in numpy.
+
+https://github.com/SampleEnvironment/SECoP/blob/measurable/protocol/secop_specification_draft_wip.rst#binary-matrix-matrix
+https://github.com/SampleEnvironment/SECoP/blob/abd1c12b88617c93edee1e0629d29c02599988c7/protocol/specification/datainfo.rst#binary-matrix-matrix
+
+Essentially agreed, but all members not participating in this meeting are welcome to check.
+If there are no objections until next meeting, this is expected to be accepted.
+
+
+Finalize check message and checkable property
+=============================================
+
+check message:
+    https://github.com/SampleEnvironment/SECoP/blob/4fc717017a83254155060e30e64ab33ca30a920a/protocol/specification/buildingblocks.rst#check-value
+
+Markus found a typo (3rd bullet point of the remarks).
+
+checkable property:
+    https://github.com/SampleEnvironment/SECoP/blob/4fc717017a83254155060e30e64ab33ca30a920a/protocol/specification/buildingblocks.rst#optional-accessible-properties
+
+Essentially accepted. If there aro no objection until next meeting,
+this is expected to be accepted.
+
+
+next meeting
+============
+
+A preliminary discussion found the weeks 13-17/20-24 january
+acceptable.
+Markus will send a poll around.

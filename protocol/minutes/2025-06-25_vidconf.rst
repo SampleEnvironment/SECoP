@@ -1,0 +1,70 @@
+meeting 2025-06-25 (ZOOM)
+@@@@@@@@@@@@@@@@@@@@@@@@@
+
+.. sidebar:: participants
+
+     * Markus Zolliker
+     * Georg Brandl
+     * Klaus Kiefer
+     * Enrico Faulhaber
+     * Niklas Ekström
+     * Bastian Klemke
+
+.. contents:: Agenda
+    :local:
+    :depth: 3
+
+1) approval of the minutes 2025-05-07
+=====================================
+
+Markus has exchanged the "group property" by "'aquisition_modules' property".
+Otherwise approved.
+
+2) Acquisition RFC
+==================
+
+Georg has updated the Acquisition RFC after last meeting.
+It is approved, Georg will prepare a PR for updating the spec.
+
+3) Visibility change in spec
+============================
+
+Some details were found, to be corrected by Markus,
+the PR can then be merged next time.
+
+4) Websocket RFC
+================
+
+The RFC is approved (implementation is already present in Frappy
+and used at PSI), Georg will prepare a PR for updating the spec.
+
+5) In person meeting
+====================
+
+Possible topics:
+
+- Machine readable spec definition (GB)
+- Low-level introduction: how to get new people on board (KK)
+- Finalize web page: tutorials/software/new users sections (KK)
+- Create a SECoP "newsletter"? Need to make users aware of new features
+  since ISSE is not too active right now (KK)
+
+Timeline: maybe October, Markus sends noodle
+Duration: probably 2 full days
+Location: probably Lund, Niklas asks
+
+6) A.O.B.
+=========
+
+KK: wrote proposal to HMC for working out missing parts in NeXuS and bringing
+to NIAC, taking ideas from SECoP@HMC, submitted, good chance for funding
+(lots of support by lots of institutions)
+
+KK: proposal upcoming for InfraTec (LEAPS applies), standardization
+approach for electrochemical cells, one task is for integration of
+controls at beamline
+
+7) Date of next meeting
+=======================
+
+After summer break: 17th of September 2025, 09:00 via Zoom.

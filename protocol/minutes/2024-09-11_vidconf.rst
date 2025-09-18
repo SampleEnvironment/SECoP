@@ -1,0 +1,114 @@
+meeting 2024-09-11 (ZOOM)
+@@@@@@@@@@@@@@@@@@@@@@@@@
+
+.. sidebar:: participants
+
+     * Markus Zolliker
+     * Alexander Zaft
+     * Bastian Klemke
+     * Klaus Kiefer
+     * Niklas Eckström
+     * Peter Braun
+
+.. contents:: Agenda
+    :local:
+    :depth: 3
+
+
+1) approval of the minutes 2024-06-19
+=====================================
+
+approved.
+
+
+2) Coordination for ISSE Workshop Contributions
+===============================================
+
+Markus
+------
+
+- Markus will give a general overview over the SECoP implementation landscape
+- the abstractions (module base classes) will be shown in the talk
+- there is some feedback on the slides
+
+Klaus
+-----
+
+- overview Metadata in SECoP
+- will touch on glossaries/vocabularies
+- Show the new meaning
+- in the end, discuss NeXus mapping
+
+Second Talk of Klaus
+--------------------
+
+- Showcase SHALL Labview integration of a small example (press. sensor)
+
+Peter
+-----
+
+- SECoP integration into BlueSky with secop-ophid
+- continuation of Klaus' second talk
+
+Second Talk of Markus
+---------------------
+
+- Frappy demonstration (practical)
+
+Alexander
+---------
+
+- overview of the SECoP integration in NICOS
+- experience report for porting an old driver to frappy
+- depending on time mngmt, demonstrate Markus' SECNode in NICOS
+
+Posters
+-------
+
+- Niklas will have a poster regarding octopy
+
+3) Pending Tasks
+================
+
+The pending task list is updated.
+
+4) New version of meaning
+=========================
+
+The final writeup is still in progress, but delayed because of hight workload.
+Klaus shows some of Gerrits work.
+
+5) Measurable
+=============
+
+Klaus would like to change the name. Peter proposes Triggerable.
+There currently is no agreement on the name, but we will search for an alternative.
+
+6) Templating / Systems
+=======================
+
+The pull request needs feedback, everyone should have a look at it until next time.
+If there is time, the plan is to go through it in person at the ISSE meeting.
+
+7) Clarifying Writable
+======================
+
+There is general agreement that the clarification goes in the right direction.
+The changes are accepted, pending only feedback from Georg and Enno.
+With the changes, Markus would now favour another name for Writable.
+
+8) Any other items?
+===================
+
+- The split specification should be checked again.
+- Klaus wants to have feedback on the idea of standardized properties for serial number etc.
+There is some discussion about the website. For one, Version 1.0 should be present on the website.
+Additionally, the remark that the rendered version is in progress should be made more obvious.
+
+The public presence of the SHALL library is discussed. It is decided to add a repository to the SampleEnvironment GitHub organization.
+
+9) Date of next video meeting
+=============================
+
+The meeting in October will be skipped.
+The 05.11.2024 13:30 is proposed for now.

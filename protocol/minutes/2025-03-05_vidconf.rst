@@ -1,0 +1,111 @@
+meeting 2025-03-05 (ZOOM)
+@@@@@@@@@@@@@@@@@@@@@@@@@
+
+.. sidebar:: participants
+
+     * Markus Zolliker
+     * Alexander Zaft
+     * Klaus Kiefer
+     * Enrico Faulhaber
+     * Niklas Eckström
+     * Georg Brandl
+
+.. contents:: Agenda
+    :local:
+    :depth: 3
+
+
+1) approval of the minutes 2025-02-12
+=====================================
+
+approved.
+
+2) meeting software
+===================
+As reported in the Invitation:
+
+    .. cite::
+    PSI is trying to save money by reducing the licence costs, e.g. for Zoom.
+    So I might not be able to further host zoom meetings - if I can not justify that there is no
+    viable alterative.
+    Recommended alternative: Microsoft Teams. Objections?
+    Possible alternative: somebody living at an institute with a less restrictive software policy
+    hosts the meetings.
+    Other alternatives?
+
+- Teams is rejected
+- Markus will check in at PSI, alternatively someone else will provide a Zoom Meeting
+
+3) Acquisition proposal
+=======================
+
+From the invitation:
+    Georg has moved the proposal form the old SECoP issue to an RFC, taking into account the
+    things we discussed last time.
+
+    What is still lacking or at least not fully satisfying to me, is how the ECS can determine
+    exactly which modules belong to an acquisition. It is specified that they must belong to
+    the same group. But is is not specified that there might be no other modules in the group
+    and more important, the case where an channel belongs to several acquisitions, which would
+    be possible. In addition, we have the question how to assign the channels to the preset names
+    in NICOS. My proposition to solve above issues is to add a new module property 'acquisition_channels',
+    with a JSON object with a name as keys and module names as values.
+
+    Example: acquisition_channels = {"t": "timer", "cnt": "counter"}
+
+    The names for the keys may be choosen freely, but we might also have some predefined names,
+    mainly "t" for a timer. Later we might add more predefined items if it makes sense.
+
+    In case of an Acquisition class a reference to its own module must be included.
+
+Enno likes the proposed acquisition_channels property.
+Klaus proposes a general solution similar to controlledBy: controls, which list all modules which are controlled, but lacks a distinct use case.
+He dislikes to maybe have to change some acquisition specifc solution later to a more general one.
+Georg ponders whether this can be expressed by the systems already.
+Enno points out that the systems are very specific, i.e. adding a channel to an acquisition would mean, a new system needs to be specified.
+Additionally, he would prefer waiting for uses before generalizing.
+Markus wonders about a different name, which is more generic.
+Klaus proposes to use the proposed syntax and, if needed, rename the property later.
+
+Since the proposed property already groups together, the group requirement can be removed.
+
+Markus is going to write a pull request.
+
+
+4) other pull requests pending
+==============================
+
+The following pull requests are open
+
+- clarify RFC life cycle
+- add websocket RFC
+
+Klaus asks whether the port used in the discovery RFC is known to be regularly used by other programs and how to prevent abuse.
+The general information on port numbers don't list any registered or unofficial uses for the port.
+Markus points out that due to the message structure a valid message can be distinguished from an invalid one.
+Essentially there is no way to prevent accidential/abusive use of this port for/from other stuff.
+Since broadcasts are typically restricted to instrument nets, there seems to be no big issue.
+
+
+RFC lifecycle
+~~~~~~~~~~~~~
+
+Georg ponders if the a new pull request should be open for a longer time to have a specific place to discuss it,
+or if it would be beneficial to merge quickly and discuss afterwards and make changes, if needed, later on.
+Markus and Klaus propose to keep it like it is now.
+All agreed to merge pull request #25 ( https://github.com/SampleEnvironment/SECoP/pull/25 ).
+
+Websocket RFC
+~~~~~~~~~~~~~
+
+As it is an optional suggestion, it is fine like it is but will be left open for more discussion.
+
+5) AOB
+======
+
+Klaus will follow up on calls/grants (OSCARS,HMC,LEAPS) when he is no longer sick.
+
+6) date of next meeting
+=======================
+
+07.05.2025 9:00 (zoom)
