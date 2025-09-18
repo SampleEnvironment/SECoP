@@ -1,0 +1,122 @@
+meeting 2025-05-07(ZOOM)
+@@@@@@@@@@@@@@@@@@@@@@@@
+
+.. sidebar:: participants
+
+     * Markus Zolliker
+     * Alexander Zaft
+     * Georg Brandl
+     * Klaus Kiefer
+     * Enrico Faulhaber
+     * Niklas Eckström
+     * Peter Braun
+     * Bastian Klemke
+
+.. contents:: Agenda
+    :local:
+    :depth: 3
+
+
+1) approval of the minutes 2025-03-05
+=====================================
+approved.
+
+
+2) Acquisition Proposal
+=======================
+
+Markus added the property 'acquisition modules' to the proposal:
+
+https://github.com/SampleEnvironment/SECoP/blob/4c3e7e933cf9e1dd941487499e1ef4a60d60ccb0/rfcs/RFC-006-acquisition.rst#acquisitioncontroller-no-base-interface
+
+Klaus wants a better wording of the description to highlight the difference to a Readable.
+A discussion about the 'aquisition_modules' property and whether its mandatory or optional follows.
+Nobody rejects the idea that the 'aquisition_modules' property is not mandatory if the acquisition ist a single module only.
+Similar for the 'goal': if an acquisition has no sensible/adjustable 'goal' parameter, it may be left out.
+Better wording seems also needed for the description of the matrix datainfo/datatype.
+
+next step is to update the pull request to make it part of the specification.
+
+A discussion about 'Acquisition' starts.
+Markus presents a case, where one would start with a acquisition system with a single channel,
+so you can implement a single 'Acquisition' module. If later on, additional channels need to be added,
+can the original 'Acquisition' stay, or is it needed to be split into an 'AcquisitionControl' and an
+'AcquisitionChannel'. Markus would allow this.
+Enno dislikes it, as it makes things untidy and confusing.
+Allowing an 'Acquisition' module *only* if there is a single channel, which can then leave out the 'aquisition_modules' property,
+seems much cleaner. Even a single-channel Acquisition system can still be implemented as Controller + channel,
+making it easier to extend it later.
+
+It is then discussed, what to put into the interface_class entry.
+An intermediate result seems to have an interface_class 'Acquisition' and two features 'AcquisitionChannel' and
+'AcquisitionController'.
+Georg dislikes this, as it is untidy. He proposes to instead use three distinct interface_classes
+'Acquisition', 'AcquisitionController', 'AcquisitionChannel'.
+Klaus seems to be happy with this.
+
+Georg will rework the pull request.
+
+Another point discussed is the 'progress' parameter.
+Peter points out, that this can be optional or be defined via a Feature.
+
+Klaus ponders about the mapping of AcqisitionChannels/Controllers parameters to ECS devices/modules/parameters.
+This seems to be done with the property Markus added.
+
+
+3) Visibility
+=============
+
+Markus moved the missing new visibility specification from the previous secop_specification_draft_wip.rst to the split specification.
+Everybody was invited to check for correctness.
+
+* https://github.com/SampleEnvironment/SECoP/blob/6e37621a9fdf456ee77e742121f4bdaf145e086e/protocol/specification/descriptive.rst#optional-module-properties
+* https://github.com/SampleEnvironment/SECoP/blob/6e37621a9fdf456ee77e742121f4bdaf145e086e/protocol/specification/descriptive.rst#optional-accessible-properties
+
+The discussion starts with an example of a readonly parameter with visibility 'w', i.e. an indication to the
+ECS that the parameter may be shown as a changeable parameter. This can happen, if the parameter visibility was inherited.
+It seems a clear case of an misconfiguration, but it is not supposed to make real trouble,
+as readonly is enforced and the visibility is just an indication.
+
+A slight rewording seem to fix this nicely.
+
+A similar case happens for commands, where a visibility of 'w' seems to be sensible to chow the command to the user.
+
+The case of visibility '---' is discussed. For Klaus and Enno it totally makes sense to have such a visibility
+for parameters which are internal/debug parameters which are not supposed to show to any user, but still have it
+accessible via SECoP.
+
+
+4) websocket RFC pull request
+=============================
+
+No objections, can be merged.
+
+
+5) other issues
+===============
+
+Klaus informs about selected project calls.
+The Oscars project call didn't match.
+Another HMC proposal is going to be submitted end of May by Peter and Klaus.
+Klaus queries, who wants to participate either as member or as observer.
+Topic is roughly speaking networking people to get a proposal to NIAC (and to get it accepted)
+about storing the SECoP metadata in Nexus.
+
+
+6) Stop() on Mass flow controllers
+==================================
+
+Peter displays the case of a mass flow controller with the desired mass flow as target/value.
+If then a stop() is issued, the specification suggests to set the target to the actual value.
+The more sensible behaviour seems to stop the mass flow, i.e. setting the target to zero.
+Enno thinks there is no problem in doing that, the specification may need some better wording.
+Nobody rejects the idea of setting the target to zero in this case.
+
+Some further ideas are pondered upon. Essentially, a custom command is suggested.
+Several headache inducing views on the problem are discussed.
+
+
+7) Date of next video meeting
+=============================
+
+25(th) of June, 13:30 via zoom.
