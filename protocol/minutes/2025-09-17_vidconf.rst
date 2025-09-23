@@ -1,0 +1,120 @@
+meeting 2025-09-17 (ZOOM)
+@@@@@@@@@@@@@@@@@@@@@@@@@
+
+.. sidebar:: participants
+
+     * Markus Zolliker
+     * Klaus Kiefer
+     * Enrico Faulhaber
+     * Niklas Ekström
+     * Bastian Klemke
+     * Peter Braun
+     * Alexander Zaft
+     * Georg Brandl
+
+.. contents:: Agenda
+    :local:
+    :depth: 3
+
+
+1) discussion about in persona meeting
+======================================
+
+Niklas will be the local organiser.
+Seminar rooms for the first day are booked, there seems to be no problem to book more.
+
+Several constraints regarding the date are discussed.
+As a result, the date is now fixed wednesday 15.oct around 14:00 until friday 17.oct around lunch time.
+For better coordination, all should attendees should communicate their planned arrival and departure dates.
+
+Possible topics:
+
+- Machine readable spec definition (GB)
+- Low-level introduction: how to get new people on board (KK)
+- Finalize web page: tutorials/software/new users sections (KK)
+- Create a SECoP "newsletter"? Need to make users aware of new features
+  since ISSE is not too active right now (KK)
+- adaption of SECoP to other communication ways (tango/mqtt/epics)
+- next steps/directions
+
+Georg thinks that may be good to keep the agenda rather loose, so
+its easier to do some brainstorming.
+Priority is to finish up and then direct work on the problems.
+
+A small facility tour may be interesting for Peter, Alexander amd Georg (unless its on a friday).
+
+2) approval of the minutes 2025-06-25
+=====================================
+
+minutes are approved.
+
+
+3) chair for SECoP committee
+============================
+
+Markus Zolliker steps down from the position of chair of the SECoP committee.
+Everybody thanks him for the his work in the past 9.5 years.
+Markus will continue his work in the commitee.
+
+A new chair needs to be elected.
+After a short discussion, Georg Brandl is elected as the new chair.
+Klaus Kiefer will report this change to the ISSE.
+
+Georg is going to apply as a personal ISSE member through MLZ.
+
+
+4) state of pending issues
+==========================
+
+
+Acquisition RFC PR (GB)
+-----------------------
+
+Accepted in general, but needs some work - Georg will work on it.
+
+
+Visibility specs (MZ)
+---------------------
+
+Pull request created and accepted. Will be merged.
+
+
+Websocket RFC PR (GB)
+---------------------
+
+pull request for spec exists and may be merged. Any comments should be put there.
+
+
+
+
+5) A.O.B.
+=========
+
+Prefixes/Postfixes
+------------------
+
+Triggered by a question from ILL about naming schemes, a discussion about renaming of `target_limits` to `target_min` and `target_max` started.
+Further, adding '_min' / '_max' to any parameter to make its limits dynamic/changeable, was discussed and agreed upon.
+
+Markus stated, that we already discussed and agreed upon this, but it's not yet in the spec.
+A pull request is to be made for this change.
+
+other discussions
+-----------------
+
+Discussion about making it easier for others to implement SECoP.
+Status Quo of SECoP integration in different facilities and how to improve.
+(automatic SECoP->tango bridge?)
+
+Klaus reports about two proposals which are in-flight.
+
+An initiative within LENS raised the topic of integrating potentiostats, where SECoP may be helpful, triggering an
+experience exchange about integration of potentiostats (especially 'Biologic',
+which seems to have gotten an API recently).
+
+
+
+6) date of next video meeting
+=============================
+
+Will be done in persone meeting.
