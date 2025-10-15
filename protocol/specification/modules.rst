@@ -512,7 +512,6 @@ Currently 2 qualifiers are defined:
               can be sent (see also :ref:`message-heartbeat`).
 
 ``"e"``:
-
     The uncertainty of the quantity.  MUST be in the same units as the value.
     So far the interpretation of "e" is not fixed (sigma vs. RMS difference
     vs. other possibilities).
