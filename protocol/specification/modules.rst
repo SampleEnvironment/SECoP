@@ -70,10 +70,10 @@ will be extended continuously.
 Basic Parameters
 ~~~~~~~~~~~~~~~~
 
-Parameter ``"value"``:
+Parameter ``"value"``
     A parameter representing the *main* value of a readable module.
 
-Parameter ``"status"``:
+Parameter ``"status"``
     A :ref:`tuple` of two elements:
 
     - A predefined value from an :ref:`enum`.  The possible values for each
@@ -89,15 +89,15 @@ Parameter ``"status"``:
 
     - A free form descriptive text.
 
-Parameter ``"pollinterval"``:
+Parameter ``"pollinterval"``
     A hint to the module for the polling interval in seconds, type is always a
     :ref:`double`.
 
-Parameter ``"target"``:
+Parameter ``"target"``
     Present, if the module's main value is to be changeable remotely, i.e. it
     is at least a Writable_.
 
-Command ``"stop"``:
+Command ``"stop"``
     Mandatory command on a drivable.  When a module's target is changed (or, if
     present, when the ``go`` command is sent), it is 'driving' to a new value
     until the target is reached or until its stop command is sent.
@@ -106,7 +106,7 @@ Command ``"stop"``:
     parameter to a value close to the present one.  Then it SHOULD act as if
     this value had been the initial target.
 
-Command ``"go"``:
+Command ``"go"``
     Optional command for starting an action.  If the ``go`` command is present,
     changing any parameter (especially the 'target' parameter) does not yet
     initiate any action leading to a BUSY state.  In contrast, if no 'go'
@@ -115,13 +115,13 @@ Command ``"go"``:
     state.  Changing any parameter, which has an impact on measured values,
     should be executed immediately.
 
-command ``"hold"``:
+Command ``"hold"``
     Optional command on a drivable.  Stay more or less where you are, cease
     movement, be ready to continue soon, target value is kept.  Continuation can
     be triggered with ``go``, or if not present, by putting the target parameter
     to its present value.
 
-Command ``"shutdown"``:
+Command ``"shutdown"``
     Optional command for shutting down the hardware.  When this command is sent,
     and the status is DISABLED, it is safe to switch off the related device.
 
@@ -129,20 +129,20 @@ Command ``"shutdown"``:
 Ramping
 ~~~~~~~
 
-Parameter ``"ramp"``:
+Parameter ``"ramp"``
     Writable parameter, desired ramp.  Units: main units/min.
 
-Parameter ``"setpoint"``:
+Parameter ``"setpoint"``
     Ramping setpoint, read only.
 
-Parameter ``"time_to_target"``:
+Parameter ``"time_to_target"``
     Read only :ref:`double`, expected time to reach target in seconds.
 
 
 Modes
 ~~~~~
 
-Parameter ``"mode"``:
+Parameter ``"mode"``
     A parameter of datatype :ref:`enum`, for selecting the operation mode of a
     module.  The available operation modes can not be predefined in the
     specification, since they depend on the specific module.
@@ -265,11 +265,11 @@ visualized in the following graph:
 Error handling
 ~~~~~~~~~~~~~~
 
-Command ``"reset"``:
+Command ``"reset"``
     Optional command for putting the module into a state predefined by the
     implementation.
 
-Command ``"clear_errors"``:
+Command ``"clear_errors"``
     Optional command to try and clear an error state.  It may be called when
     status is ERROR, and the command will try to transform status to IDLE or
     WARN.  If it can not do it, the status should not change or change to an
@@ -279,7 +279,7 @@ Command ``"clear_errors"``:
 Coupled Modules
 ~~~~~~~~~~~~~~~
 
-Parameter ``"controlled_by"``:
+Parameter ``"controlled_by"``
     The control mechanism of a module might be coupled to another module (both
     modules are Drivable or Writable).  This coupling is indicated by the
     ``controlled_by`` parameter (readonly).  The datatype of the
@@ -327,8 +327,7 @@ Parameter ``"controlled_by"``:
         for example the parameter ``"_automatic_nv_pressure_mode"`` in the
         example of a liquid helium cooled cryostat.
 
-Parameter ``"control_active"``:
-
+Parameter ``"control_active"``
     A readonly flag indicating whether a drivable or writable module is
     currently actively controlling.  On a drivable without ``control_active``
     parameter or with ``control_active=true``, the system is trying to bring the
@@ -365,7 +364,7 @@ Parameter ``"control_active"``:
     would switch control from one module to the other, toggling the
     ``control_active`` parameter of both modules.
 
-Command ``"control_off"``:
+Command ``"control_off"``
    A command to turn off active control (i.e setting the parameter
    ``control_active`` to false).  This command is needed for turning off
    control, when there is no controlled module, e.g. when there is no heater
@@ -384,8 +383,7 @@ Command ``"control_off"``:
 Limits and Offset
 ~~~~~~~~~~~~~~~~~
 
-Parameter ``"target_limits"``:
-
+Parameter ``"target_limits"``
     In addition to the range given in the ``datainfo`` property of the
     ``target`` parameter, a SEC node might offer changeable limits restricting
     the allowed range even more.  ``target_limits`` is structured as a
@@ -397,7 +395,7 @@ Parameter ``"target_limits"``:
 
 .. _offset:
 
-Parameter ``"offset"``:
+Parameter ``"offset"``
     A storage for an offset to be applied when converting SECoP values to ECS
     values.  See feature `HasOffset`_.
 
@@ -405,7 +403,7 @@ Parameter ``"offset"``:
 Communication
 ~~~~~~~~~~~~~
 
-Command ``"communicate"``:
+Command ``"communicate"``
     Used for direct communication with hardware, with proprietary commands.  It
     is useful for debugging purposes, or if the implementor wants to give access
     to parameters not supported by the driver.  The datatype might be
@@ -500,7 +498,7 @@ values in a JSON object.
 
 Currently 2 qualifiers are defined:
 
-``"t"``:
+``"t"``
     The timestamp when the parameter has changed or was verified/measured (when
     no timestamp is given, the ECS may use the arrival time of the update
     message as the timestamp).  It SHOULD be given, if the SEC node has a
@@ -511,7 +509,7 @@ Currently 2 qualifiers are defined:
     .. note:: To check if a SEC node supports time stamping, a ``ping`` request
               can be sent (see also :ref:`message-heartbeat`).
 
-``"e"``:
+``"e"``
     The uncertainty of the quantity.  MUST be in the same units as the value.
     So far the interpretation of "e" is not fixed (sigma vs. RMS difference
     vs. other possibilities).
@@ -550,7 +548,7 @@ Base classes
 
 .. _Communicator:
 
-``"Communicator"``:
+``"Communicator"``
     The main purpose of the module is communication.  It may have none of the
     predefined parameters of the other classes.
 
@@ -560,13 +558,13 @@ Base classes
 
 .. _Readable:
 
-``"Readable"``:
+``"Readable"``
     The main purpose is to represent readable values (i.e. from a Sensor).
     It has at least a ``value`` and a ``status`` parameter.
 
 .. _Writable:
 
-``"Writable"``:
+``"Writable"``
     The main purpose is to represent fast settable values (i.e. a switch).
     It must have a ``target`` parameter in addition to what a `Readable`_ has.
     It does not have a ``stop`` command. A module which needs time to reach
@@ -575,7 +573,7 @@ Base classes
 
 .. _Drivable:
 
-``"Drivable"``:
+``"Drivable"``
     The main purpose is to represent slow settable values (i.e. a temperature or
     a motorized needle valve).  It must have a ``stop`` command in addition to
     what a `Writable`_ has.  Note that in case the ``stop`` command has no
@@ -596,7 +594,7 @@ functionality in a specific way.
 
 .. _HasOffset:
 
-``"HasOffset"``:
+``"HasOffset"``
     This feature indicates that the ``value`` and ``target`` parameters of a
     module represent raw values, which need to be corrected by an offset.  A
     module with the feature ``"HasOffset"`` must have a parameter ``offset``,
