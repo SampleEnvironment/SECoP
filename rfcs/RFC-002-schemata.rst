@@ -54,8 +54,8 @@ using the "document separator"s of YAML.
 Each entity has a few common fields:
 
 ``kind``
-  The kind of entity, one of ``Version``, ``System``, ``Interface``,
-  ``Feature``, ``Parameter``, ``Command``, ``Property``, ``Datatype``.
+  The kind of entity, one of ``Repository``, ``System``, ``Interface``,
+  ``Feature``, ``Parameter``, ``Command``, ``Property``, ``Datainfo``.
 ``name``
   The entity's unique name.
 ``version``
@@ -65,14 +65,25 @@ Each entity has a few common fields:
 
 Then, depending on the ``kind``, different keys can be present:
 
-**For versions:**
+**For repositories:**
 
-TODO
+A repository defines a collection of entities, such as "SECoP 1.0" or "Rock-IT
+SECoP extensions".
+
+``files``
+  Other YAML file paths, relative to this file, in which the entities making
+  up the repository can be found.
+``systems``, ``interfaces``, ``features``, ``parameters``, ``commands``, ``datainfo``
+  Lists of references to entities that are part of the repository.
+``properties``
+  Dictionary of lists of references to properties in the repository, keyed
+  by the entity they can appear on: ``SECNode``, ``System``, ``Module``,
+  ``Parameter``, ``Command``
 
 **For interface classes and features:**
 
 ``base``
-  The base interface/feature this one is derived from.
+  The base interface/feature this one is derived from. TODO how do references look
 ``properties``
   The properties that are required on this entity.
 ``parameters``, ``commands``
@@ -83,7 +94,7 @@ TODO
 ``readonly``
   If the parameter should be readonly.
 ``datainfo``
-  Human readable explanation of the parameter's datainfo.
+  Explanation of the parameter's datainfo. (TODO how to specify)
 ``properties``
   The properties that are possible on this entity.
 ``optional``
@@ -92,9 +103,9 @@ TODO
 **For commands:**
 
 ``argument``
-  Human readable explanation of the arguments including datainfos.
+  The list of argument datainfos, or "none". TODO
 ``result``
-  Human readable explanation of the return value and its datainfo.
+  The return value datainfo, or "none". TODO
 ``properties``
   The properties that are possible on this entity.
 ``optional``
@@ -102,22 +113,34 @@ TODO
 
 **For properties:**
 
-``datainfo``
-  Human readable explanation of the property's datainfo.
+``dataty``
+  Specification of the property's JSON data type. TODO how to specify
 ``optional``
   If the property is optional.
 
-**For datatypes:**
+**For datainfos:**
 
-TODO
+``dataty``
+  Explanation of the datainfo's JSON (transport) data type.
+``members``
+  A dictionary of members of the datainfo specification. Each member can have
+  the following properties:
+
+  ``dataty``
+    Specification of the datainfo property's JSON data type.
+  ``optional``
+    If the property is optional.
+  ``default``
+    A default value.
 
 **For systems:**
 
 ``base``
   The base system this one is derived from.
 ``modules``
-  A dictionary of module names and their definitions. Each item is
-  either a reference to an interface/feature definition.
+  A dictionary of module names and their definitions.  Each item is
+  either a reference to an interface/feature definition or a full
+  inline interface definition.
 
 When a new entity is proposed, the ``version`` starts at 0.  A version of 0
 does not give a stability guarantee, unlike versions larger than 0.  If an
@@ -133,7 +156,7 @@ this:
     kind: Parameter
     name: target
     version: 1
-    datainfo: numeric
+    datainfo: any
     readonly: false
     description: |
       The target value for the module. By setting this parameter, a move
@@ -214,48 +237,66 @@ issue 78:
       A power supply consisting of current and voltage regulation modules.
       The active module can be switched with the parameter `control_active`.
     modules:
-      - current:
-          definition: Drivable:1
-          description: Controls the current.
-          properties:
-            # This property has a general definition, but here the description
-            # defines a required value.
-            - quantity:
-                definition: quantity:1
-                description: Must be set to "current".
-          parameters:
-            # This parameter is already defined by Drivable, but the required
-            # datainfo is made more concrete by this definition.
-            - value:
-                datainfo: numeric, has unit Ampere
-            # This parameter is completely specific to this module.
-            - voltage_limit:
-                description: |
-                  Compliance voltage applied when supply is in current mode.
-                datainfo: numeric, has unit Volts
-                optional: true
-            - power_limit:
-                description: |
-                  Power limit applied when supply is in current mode.
-                datainfo: numeric, has unit Watts
-                optional: true
-            - control_active:
-                definition: control_active:1
-                description: |
-                  If true, power supply is in current mode.
-                  Setting `voltage:control_active` resets this to false.
+      current:
+        definition: Drivable:1
+        description: Controls the current.
+        properties:
+          # This property has a general definition, but here the description
+          # defines a required value.
+          - quantity:
+              definition: quantity:1
+              description: Must be set to "current".
+        parameters:
+          # This parameter is already defined by Drivable, but the required
+          # datainfo is made more concrete by this definition.
+          - value:
+              datainfo:
+                type: double
+                unit: A
+          # This parameter is completely specific to this module.
+          - voltage_limit:
+              description: |
+                Compliance voltage applied when supply is in current mode.
+              datainfo:
+                type: double
+                unit: V
+              optional: true
+          - power_limit:
+              description: |
+                Power limit applied when supply is in current mode.
+              datainfo:
+                type: double
+                unit: W
+              optional: true
+          - control_active:
+              definition: control_active:1
+              description: |
+                If true, power supply is in current mode.
+                Setting `voltage:control_active` resets this to false.
       # similar for power, voltage
-      - resistance:
-          definition: Readable:1
-          description: Readback for the measured resistance.
-          optional: true
-          parameters:
-            value:
-              datainfo: numeric, has unit Ohms
-          properties:
-            quantity:
+      resistance:
+        definition: Readable:1
+        description: Readback for the measured resistance.
+        optional: true
+        parameters:
+          - value:
+              datainfo:
+                type: number
+                unit: Ohm
+        properties:
+          - quantity:
               definition: quantity:1
               description: Must be set to "resistance".
+
+
+Examples
+========
+
+Current state of the YAML files for SECoP core are maintained as part of the
+"secop-checker", which is a library that allows verification of descriptive data
+against the declared set of YAML specs.
+
+https://forge.frm2.tum.de/review/plugins/gitiles/secop/check
 
 
 Disadvantages, Alternatives
