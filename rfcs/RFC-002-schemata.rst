@@ -71,81 +71,87 @@ A repository defines a collection of entities, such as "SECoP 1.0" or "Rock-IT
 SECoP extensions".
 
 ``files``
-  Other YAML file paths, relative to this file, in which the entities making
-  up the repository can be found.
+  A list of other YAML file paths, relative to this file, in which the entities
+  making up the repository can be found.
 ``systems``, ``interfaces``, ``features``, ``parameters``, ``commands``, ``datainfo``
-  Lists of references to entities that are part of the repository.
+  Lists of references_ to entities that are part of the repository.
 ``properties``
-  Dictionary of lists of references to properties in the repository, keyed
+  Dictionary of lists of references_ to properties in the repository, keyed
   by the entity they can appear on: ``SECNode``, ``System``, ``Module``,
   ``Parameter``, ``Command``
 
 **For interface classes and features:**
 
 ``base``
-  The base interface/feature this one is derived from. TODO how do references look
+  Reference to the base interface/feature this one is derived from.
 ``properties``
-  The properties that are required on this entity.
+  References_ to the properties that are required/allowed on this entity
+  (depending on their "optional" setting).
 ``parameters``, ``commands``
-  The accessibles that are required on this entity.
+  References_ to the accessibles that are required/allowed on this entity.
 
 **For parameters:**
 
 ``readonly``
-  If the parameter should be readonly.
+  Boolean, if the parameter should be readonly.
 ``datainfo``
-  Explanation of the parameter's datainfo. (TODO how to specify)
+  Specification of the parameter's datainfo_.
 ``properties``
-  The properties that are possible on this entity.
+  References_ to the properties that are possible on this entity.
 ``optional``
-  If the parameter is optional when added in interfaces/features.
+  Boolean, if the parameter is by default optional when added in
+  interfaces/features.
 
 **For commands:**
 
 ``argument``
-  The list of argument datainfos, or "none". TODO
+  The list of argument datainfo_\s, or "none".
 ``result``
-  The return value datainfo, or "none". TODO
+  The return value datainfo_, or "none".
 ``properties``
-  The properties that are possible on this entity.
+  References_ to the properties that are possible on this entity.
 ``optional``
-  If the command is optional when added in interfaces/features.
+  Boolean, if the command is by default optional when added in
+  interfaces/features.
 
 **For properties:**
 
 ``dataty``
-  Specification of the property's JSON data type. TODO how to specify
+  Specification of the property's `JSON type`_.
 ``optional``
-  If the property is optional.
+  Boolean, if the property is by default optional.
 
 **For datainfos:**
 
 ``dataty``
-  Explanation of the datainfo's JSON (transport) data type.
+  Specification of the datainfo's `JSON type`_ (i.e. transport layer).
 ``members``
   A dictionary of members of the datainfo specification. Each member can have
   the following properties:
 
   ``dataty``
-    Specification of the datainfo property's JSON data type.
+    Specification of the datainfo property's `JSON type`_.
   ``optional``
-    If the property is optional.
+    Boolean, if the property is optional.
   ``default``
     A default value.
 
 **For systems:**
 
 ``base``
-  The base system this one is derived from.
+  Reference to the base system this one is derived from.
 ``modules``
   A dictionary of module names and their definitions.  Each item is
-  either a reference to an interface/feature definition or a full
-  inline interface definition.
+  either a reference to an existing interface/feature definition or a
+  full inline interface definition.
 
 When a new entity is proposed, the ``version`` starts at 0.  A version of 0
 does not give a stability guarantee, unlike versions larger than 0.  If an
 entity is accepted and introduced into the specification, the version is
 defined as 1. Changes to the interface afterwards bump the version number.
+
+Example
+-------
 
 As an example, a YAML description for some standard entities would look like
 this:
@@ -289,6 +295,65 @@ issue 78:
               description: Must be set to "resistance".
 
 
+References
+----------
+
+A reference to another entity is one of two things:
+
+- A string, which specifies the entity name and version separated by a colon,
+  such as ``"Readable:1"``.
+
+- A dictionary that inlines the entity, with a ``definition`` key that
+  references an existing entity as ``name:version`` and adds/overrides other
+  keys, most commonly the ``description`` to make it more specific.
+
+  See the example above for how to use this.
+
+
+Datainfo
+--------
+
+``datainfo`` entries are dictionaries with a key ``type`` (the name of the
+datainfo entity) and all members of the respective datainfo.
+
+
+JSON type
+---------
+
+In ``dataty`` entries, you can specify the JSON type:
+
+- Bool: ``dataty: bool``
+- String: ``dataty: string``
+- Number: ``dataty: number``
+- Integer: ``dataty: int``
+
+- Array (JSON array)::
+
+    dataty:
+      type: array
+      members: <dataty>  # the dataty of array members
+
+- Tuple (JSON array)::
+
+    dataty:
+      type: tuple
+      members: [<dataty>, ...]  # list of datatys
+
+- Struct (JSON object)::
+
+    dataty:
+      type: struct
+      members:
+        membername: <dataty>
+        ...
+      optional: [...]  # list of optional member names
+
+Special cases:
+
+- Any datainfo: ``dataty: datainfo``
+- Same type as the parent accessible: ``dataty: parent``
+
+
 Examples
 ========
 
@@ -297,6 +362,8 @@ Current state of the YAML files for SECoP core are maintained as part of the
 against the declared set of YAML specs.
 
 https://forge.frm2.tum.de/review/plugins/gitiles/secop/check
+
+This is supposed to be moved to the main SECoP GitHub presence once agreed.
 
 
 Disadvantages, Alternatives
