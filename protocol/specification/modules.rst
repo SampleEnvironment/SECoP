@@ -531,7 +531,7 @@ Currently 2 qualifiers are defined:
     floating point when the resolution is better than 1 second.
 
     .. note:: To check if a SEC node supports time stamping, a `ping` request
-              can be sent (see also :ref:`message-heartbeat`).
+              can be sent.
 
 .. describe:: "e"
 
