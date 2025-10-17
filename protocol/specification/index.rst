@@ -21,6 +21,7 @@ Specification
     future
     security
     discovery
+    ../genindex
 
 
 License notes
