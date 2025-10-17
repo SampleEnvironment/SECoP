@@ -84,23 +84,25 @@ The default mode for communicating between SEC node and client is a classic
 request-response mode, where the client initiates an exchange.  However, if the
 SEC node implementation supports it, the client may choose to move to the
 asynchronous mode, where the SEC node will send updates asynchronously when they
-occur. For more details on this, see the :ref:`activate <message-activate>`
-message.
+occur. For more details on this, see the `activate` message.
 
-As an example, writing the ``target`` parameter of a module we will name ``Temp``::
 
-    change Temp:target 11.5
+Most important messages
+-----------------------
 
-This will change the target parameter to the value 11.5, if possible.
+.. describe:: read
 
-For an example of a message where one or more of the components is optional,
-lets have a look at the :ref:`describe <message-describe>` message::
+   TODO
 
-    describe
+.. describe:: change module:parameter value
 
-As you can see, this message only needs the ``action`` part.
+.. describe:: do module:command value
 
-This brings us to the topic of the self-description of SECoP.
+.. describe:: activate
+
+.. describe:: update
+
+.. describe:: describe
 
 
 Description
