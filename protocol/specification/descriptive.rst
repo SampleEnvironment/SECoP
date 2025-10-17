@@ -401,12 +401,13 @@ Optional Accessible Properties
 
 ``"checkable"``
     A boolean value, indicating whether the accessible can be checked with a
-    ``check`` message.  If omitted, the accessible is assumed to be not
-    checkable (``checkable == false``), and the SEC node should reply with an
-    :ref:`error-report` (``NotCheckable``) error when a ``check`` message is
-    sent.
+    `check` message.  If omitted, the accessible is assumed to be not
+    checkable (``checkable == false``), and the SEC node should reply with a
+    `NotCheckable` error when a `check` message is sent.
 
-    :related issue: :issue:`075 New messages check and checked`
+    .. dropdown:: Related issues
+
+        | :issue:`075 New messages check and checked`
 
 
 Optional Parameter Properties
