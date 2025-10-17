@@ -313,8 +313,11 @@ A reference to another entity is one of two things:
 Datainfo
 --------
 
-``datainfo`` entries are dictionaries with a key ``type`` (the name of the
-datainfo entity) and all members of the respective datainfo.
+``datainfo`` entries are either strings (the name of the datainfo entity) or
+dictionaries with a key ``type`` (the name of the datainfo entity) and all
+members of the respective datainfo.
+
+``"any"`` is allowed for unspecified datainfos.
 
 
 JSON type
@@ -322,7 +325,8 @@ JSON type
 
 In ``dataty`` entries, you can specify the JSON type:
 
-- Bool: ``dataty: bool``
+- Unspecified: ``dataty: any``
+- Boolean: ``dataty: bool``
 - String: ``dataty: string``
 - Number: ``dataty: number``
 - Integer: ``dataty: int``
