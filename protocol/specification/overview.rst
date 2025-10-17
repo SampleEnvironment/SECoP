@@ -37,12 +37,11 @@ SECoP Node Structure
 - To show which capabilities a module supports, and to give a name to common
   groupings, there are :ref:`interface-classes` and :ref:`features`.
 
-  The four interface classes currently defined are :ref:`Communicator
-  <Communicator>`, which is intended for bare request-response communication,
-  and three that represent values that can be interacted with: :ref:`Readable
-  <Readable>`, :ref:`Writable <Writable>` and :ref:`Drivable <Drivable>`.
+  The four interface classes currently defined are `Communicator`, which is
+  intended for bare request-response communication, and three that represent
+  values that can be interacted with: `Readable`, `Writable` and `Drivable`.
 
-  The only feature currently defined is :ref:`HasOffset <HasOffset>`.
+  The only feature currently defined is `HasOffset`.
 
 - Readable modules have a ``value`` and a ``status`` parameters, which show the
   current error state of the module.  As the name implies, the main value can
@@ -63,21 +62,23 @@ Messages
 The communication between client and server builds upon :doc:`messages`
 which are transferred between SEC node and client.
 
-As an introduction, we will look at the general message structure, and the
-messages :ref:`*IDN? <message-identification>`, :ref:`describe
-<message-describe>`, :ref:`read <message-read>`, and :ref:`change
-<message-change>`.  For an overview of all available messages, including calling
-commands and remote logging, etc., see :ref:`messages`.
+Examples of messages are::
 
-There are three parts a message can have: ``action``, ``identifier`` and
-``data``. Of these, depending on the action, ``identifier`` and ``data`` may not
+  describe
+  read temp:setpoint
+  change temp:target 15.0
+  update temp:value [15.3, {"t": 1736239123.0}]
+
+There are three parts a message can have: ``action``, ``specifier`` and
+``data``. Of these, depending on the action, ``specifier`` and ``data`` may not
 be needed.
 
 - The first part, ``action``, specifies the kind of message we want to send.
-- The middle part, ``identifier``, points to the module/parameter/property or
-  command we want to operate on.
-- Finally, ``data`` is the data that may be needed for the specified action,
-  like the new value when writing to a parameter, or the argument of a command.
+- The middle part, ``specifier``, points to the module, parameter or command we
+  want to operate on.
+- Finally, ``data`` is the JSON-formatted data that may be needed for the
+  specified action, like the new value when writing to a parameter, or the
+  argument of a command.
 
 The default mode for communicating between SEC node and client is a classic
 request-response mode, where the client initiates an exchange.  However, if the
