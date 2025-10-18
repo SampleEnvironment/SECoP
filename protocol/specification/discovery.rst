@@ -1,5 +1,5 @@
-SECoP UDP discovery protocol
-============================
+UDP Discovery Protocol
+======================
 
 Due to the flexibility of the SECoP node system, it is quite likely for multiple
 SEC nodes to be running on a single host.  Therefore, it is not sufficient to
@@ -10,7 +10,7 @@ All SEC nodes that wish to support autodiscovery open a UDP socket listening on
 port 10767.  Upon receiving a packet on this port, they reply with a packet
 containing the required information to connect to this node.
 
-Format of the packets
+Format of the Packets
 ---------------------
 
 From client to nodes
@@ -37,7 +37,7 @@ From node to client
 
     Further keys in the object can be specified later.
 
-Node self-announcement
+Node Self-Announcement
 ----------------------
 
 Furthermore, a SEC node can self-announce by broadcasting UDP packets to port

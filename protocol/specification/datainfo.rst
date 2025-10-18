@@ -3,11 +3,18 @@
 Data types
 ==========
 
-SECoP defines a very flexible data typing system.  Data info structures are used
-to describe the possible values of parameters and how they are serialized.  They
-may also impose restrictions on the usable values or amount of data.  The data
-info structure consists of the name of the datatype augmented by data properties
-to pinpoint the exact meaning of the data to be described.
+SECoP defines a very flexible data typing system.  The "Data info" structures
+specified here are used to describe the possible values of parameters and how
+they are serialized.  They may also impose restrictions on the usable values or
+amount of data.
+
+The data types are specified as JSON in the `datainfo` property of parameters
+and commands.  An example for a floating-point valued parameter that can be in
+the range (0,100) is:
+
+.. code:: json
+
+    {"type": "double", "min": 0, "max": 100, "fmtstr": "%.3f"}
 
 SECoP defines some basic data types for numeric quantities, like double_,
 scaled_ and int_.  An enum_ is defined for convenience of not having to remember
@@ -27,21 +34,11 @@ For data types that specify limits, they are always inclusive, i.e. the value is
 allowed to be one of the limit values.  Also, both limits may be set to the same
 value, in which case there is just one allowed value.
 
-All data info structures are specified in the descriptive data in the following
-generic form:
-
-.. image:: images/datatype.svg
-    :alt: datatype ::= '{' datatype-name ':' '{' ( datatype-property ( ',' datatype-property )* )? '}'
-
-Here is an overview of all defined data types:
-
-.. contents::
-    :depth: 1
-    :local:
-    :backlinks: entry
-
 Depending on the data type, there are different sets of data properties
 available.
+
+.. note:: There is as of this writing no ``None``/``null`` value or "optional"
+          datatype that can be transported over SECoP.
 
 
 .. _double:
@@ -502,8 +499,8 @@ floats is ``[1, 2, 3, 4, 5, 6]``.  Then the matrix looks as follows::
 Commands: ``command``
 ---------------------
 
-If an accessible is a command, its main datatype is ``command``.
-Argument and result data are described within.
+If an accessible is a command, its main datatype is ``command``.  Argument and
+result data are described within.
 
 .. rubric:: Optional data properties
 
