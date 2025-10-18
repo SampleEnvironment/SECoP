@@ -473,6 +473,8 @@ obtaining the data.
 
     Example: ``"<u4"`` is a little-endian encoded 32-bit unsigned integer.
 
+.. rubric:: Optional data property
+
 ``"compression"``
     A string defining if and how the data is each ``blob`` is compressed.
     Currently, no compression types are defined.
