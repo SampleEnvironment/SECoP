@@ -101,10 +101,10 @@ SECoP over WebSockets
 Since browser (i.e. HTML+JavaScript) based human interface solutions are more
 and more important, and JavaScript lacks traditional socket based APIs,
 exchanging raw SECoP messages is not an option.  The best alternative is
-WebSockets (RFC :rfc:`6455`), which are a relatively overhead-free way of
+WebSockets (:rfc:`6455`), which are a relatively overhead-free way of
 exchanging messages between two endpoints in an arbitrary pattern.
 
-See also `SECoP RFC 7`_.
+See also :secop-rfc:`007-websockets`.
 
 Implementation in a SEC node
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -160,6 +160,3 @@ they come in.  A very minimal example in JavaScript::
 
     // Whenever needed, send messages, for example:
     ws.send('change mod:param 42');
-
-
-.. _SECoP RFC 7: https://github.com/SampleEnvironment/SECoP/blob/master/rfcs/RFC-007-websockets.rst
