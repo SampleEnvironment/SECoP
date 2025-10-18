@@ -87,7 +87,7 @@ Mandatory SEC node properties
 
 .. node-property:: modules
 
-    A JSON object with names of modules as key and JSON-objects as values,
+    A JSON object with names of modules as key and JSON objects as values,
     see :ref:`module-description`.
 
     .. note:: Be aware that some JSON libraries may not be able to keep the
@@ -178,11 +178,11 @@ Optional module properties
 
 .. mod-property:: visibility
 
-    A string giving a hint for UIs, for which user roles the module should be
-    displayed, hidden or allow read access only.
-    MUST be one of the values on the two visibility columns. The default is ``"www"``.
+    A string providing UIs with a hint for which user roles the module should be
+    displayed, hidden or allow read access only.  MUST be one of the values in
+    the two visibility columns.  The default is ``"www"``.
 
-    .. table:: possible combinations of access hints
+    .. table:: Possible combinations of access hints
 
         ================ ========== ======== ============ =============
          expert access    advanced   user     visibility   visibility
@@ -201,20 +201,21 @@ Optional module properties
         ================ ========== ======== ============ =============
 
     The 3 characters in new style form indicate the access on the levels
-    "expert", "advanced" and "user", in this order.
-    "w" means full (read and write) access, "r" means restricted read only access on
-    any parameter of the module and "-" means, the module should be hidden.
+    "expert", "advanced" and "user", in this order.  "w" means full (read and
+    write) access, "r" means restricted read only access on any parameter of the
+    module and "-" means that the module should be hidden.
 
-    * The old style notion must also be accepted by new SECoP clients.
-    * A SECoP client SHOULD ignore any value not listed in the last two columns of
-      above table.
-    * A module with visibility "---" is meant not to be shown in a user interface,
-      but might still be used by the client interface internally.
+    * The old style notation must also be accepted by new SECoP clients.
+    * A SECoP client SHOULD ignore any value not listed in the last two columns
+      of above table.
+    * A module with visibility "---" is meant not to be shown in a user
+      interface, but might still be used by the client interface internally.
 
-    .. note:: The access is NOT controlled on the SEC node side! The visibility property is just a
-              hint to the UI (client) what should be exposed to (or better hidden from) the users
-              having different levels of expertise.
-              The UI (client) should implement the different access levels.
+    .. note:: Access is NOT controlled on the SEC node side!  The visibility
+              property is just a hint to the UI (client) what should be exposed
+              to (or better hidden from) the users having different levels of
+              expertise.  The client should implement the different access
+              levels.
 
 .. mod-property:: group
 
@@ -229,21 +230,23 @@ Optional module properties
 
 .. mod-property:: meaning
 
-    A JSON object with data regarding the module meaning. It provides metadata
-    that is useful for interpreting measurement data in an automatic fashion. It
-    can have the keys ``function``, ``importance``, ``belongs_to``, ``link`` and
-    ``key``, all of which are optional, with some restrictions. A meaning
-    property can also be added on the `accessible level <meaning>`.
+    A JSON object with data regarding the module's meaning.  It provides
+    metadata that is useful for interpreting measurement data in an automatic
+    fashion.  It can have the keys ``function``, ``importance``, ``belongs_to``,
+    ``link`` and ``key``, all of which are optional, with some restrictions.  A
+    meaning property can also be added on the `accessible level <meaning>`.
 
     .. note:: In order for the meaning object to be valid, it must contain at
               least a ``"link"`` or a ``"function"`` field.
 
-    - ``"function"`` a string from an extensible list of predefined functions.
+    - ``"function"`` is a string from an extensible list of predefined
+      functions.
 
-      Predefined ``"functions"``:
+      Predefined ``"function"``\s:
 
       * ``"temperature"``
-      * ``"temperature_regulation"`` (to be specified only if different from 'temperature')
+      * ``"temperature_regulation"`` (to be specified only if different from
+        'temperature')
       * ``"magneticfield"``
       * ``"electricfield"``
       * ``"pressure"``
@@ -263,29 +266,31 @@ Optional module properties
 
       This list may be extended later.
 
-      ``_regulation`` may be postfixed, if the quantity generating module is
-      different from the relevant measuring device. A regulation device MUST
+      ``_regulation`` may be postfixed if the quantity generating module is
+      different from the relevant measuring device.  A regulation device MUST
       have an :ref:`interface class <interface-classes>` of at least
-      ``Writable``.
+      `Writable`.
 
-    - ``"importance"`` an integer value in the range ``[0,50]``. It allows
+    - ``"importance"`` is an integer value in the range ``[0, 50]``.  It allows
       ordering elements with the same tuple of ``"function"`` and
       ``"belongs_to"`` by importance.
 
       Predefined values:
 
-      * 10 means the instrument/beamline (Example: room temperature sensor always present)
+      * 10 means the instrument/beamline (Example: room temperature sensor
+        always present)
       * 20 means the surrounding sample environment (Example: VTI temperature)
       * 30 means an insert (Example: sample stick of dilution insert)
-      * 40 means an addon added to an insert (Example: a device mounted inside a dilution insert)
+      * 40 means an addon added to an insert (Example: a device mounted inside a
+        dilution insert)
 
-      Intermediate values might be used. The range for each category starts at
+      Intermediate values might be used.  The range for each category starts at
       the indicated value minus 5 and ends below the indicated value plus 5.
 
-      .. note:: This field can only be present if and only if there is an entry
-          for ``"function"``.
+      .. note:: This field can only be present if there is an entry for
+                ``"function"``.
 
-    - ``"belongs_to"`` a string identifying the entity to which the module is
+    - ``"belongs_to"`` is a string identifying the entity to which the module is
       linked. Setting this field forms a relation between the entity and the
       ``"function"`` field.
 
@@ -297,23 +302,24 @@ Optional module properties
       .. note::
 
           - If not present, the default value ``"belongs_to":"other"`` is assumed.
-          - This field can only be present, if there is an entry for ``"function"``.
+          - This field can only be present if there is an entry for ``"function"``.
 
-    - ``"link"`` a link to a vocabulary, glossary or ontology. Preferably a PID
+    - ``"link"`` is a link to a vocabulary, glossary or ontology.  Preferably a PID
       (Persistent Identifier) pointing to a specific entry.
 
-    - ``"key"`` a key (string) that selects an entry from the knowledge
-      representation that ``"link"`` points to. This mainly serves human
+    - ``"key"`` is a key (string) that selects an entry from the knowledge
+      representation that ``"link"`` points to.  This mainly serves human
       readability if ``"link"`` already points to a specific entry.
 
       .. note::
 
-          - This field must not be present if there is no ``"link"``
-          - If ``"link"`` does not point directly to an entry, the ``"key"`` field is mandatory
+          - This field must not be present if there is no ``"link"``.
+          - If ``"link"`` does not point directly to an entry, the ``"key"``
+            field is mandatory.
 
     Example:
 
-    .. code::
+    .. code:: json
 
         "meaning": {
            "function": "temperature_regulation",
@@ -326,11 +332,9 @@ Optional module properties
     This reads as: Regulation of the sample (``belongs_to``) temperature
     (``function``) in the surrounding sample environment (``importance``) .The
     ``key`` and ``link`` give additional metadata, saying that the regulated
-    temperature is also the ``synthesis temperature`` of the experiment.
+    temperature is also the "synthesis temperature" of the experiment.
 
-    Allowed key combinations in valid meaning objects:
-
-    .. code::
+    Allowed key combinations in valid meaning objects::
 
         {function, importance, belongs_to}
         {function, importance}
@@ -416,9 +420,9 @@ Optional properties
 
 .. acc-property:: visibility
 
-    A string giving a hint for UIs, for which user roles the parameter or
+    A string providing UIs with a hint for which user roles the parameter or
     command should be displayed, hidden or allow read access only.  MUST be one
-    of the values on the two visibility columns. The default is ``"www"``.
+    of the values on the two visibility columns.  The default is ``"www"``.
 
     .. table::
 
@@ -439,35 +443,36 @@ Optional properties
         ================ ========== ======== ========== ============ =============
 
     The 3 characters in new style form indicate the access on the levels
-    "expert", "advanced" and "user", in this order.
-    "w" means full (read and write) access, "r" means restricted read only access on
-    the accessible and "-" means, the accessible should be hidden.
+    "expert", "advanced" and "user", in this order.  "w" means full (read and
+    write) access, "r" means restricted read only access on the accessible and
+    "-" means, the accessible should be hidden.
 
-    The access for an accessible on a certain access level is determined by the strongest
-    restriction for the combination of module visibility and accessible visibility at the
-    given access level and the readonly flag.
+    The access for an accessible on a certain access level is determined by the
+    strongest restriction for the combination of module visibility and
+    accessible visibility at the given access level and the readonly flag.
 
-    Example: A module has a visibility property of "wr-". A parameter on this module
-    with visibility "w--" should be allowed to be written only by experts, as the latter
-    one is stronger.
-    For a readonly parameter with no visibility or with a visibility "rrr" it would be
-    treated as "rr-", e.g. to be shown to experts and advanced clients, but not to simple users.
+    Example: A module has a visibility property of "wr-".  A parameter on this
+    module with visibility "w--" should be allowed to be written only by
+    experts, as the latter one is stronger.  For a readonly parameter with no
+    visibility or with a visibility "rrr" it would be treated as "rr-", e.g. to
+    be shown to experts and advanced clients, but not to simple users.
 
-    * The old style notion must also be accepted by new SECoP clients.
-    * With the new style notation, commands should only be executed when the corresponding
-      character is a "w".
-    * A SECoP client SHOULD ignore any value not listed in the last two columns of the above
-      table.
-    * An accessible with visibility "---" is meant not to be shown in a user interface, but
-      might still be used by the client interface internally.
+    * The old style notation must also be accepted by new SECoP clients.
+    * With the new style notation, commands should only be executed when the
+      corresponding character is a "w".
+    * A SECoP client SHOULD ignore any value not listed in the last two columns
+      of the above table.
+    * An accessible with visibility "---" is meant not to be shown in a user
+      interface, but might still be used by the client interface internally.
+
+    .. note:: Access is NOT controlled on the SECnode side!  The visibility
+              property is just a hint to the UI (client) what should be exposed
+              to (or better hidden from) the users having different levels of
+              expertise.  The client should implement the different access
+              levels.
 
     .. note::
-        The access is NOT controlled on the SECnode side! The visibility property is just a
-        hint to the UI (client) what should be exposed to (or better hidden from) the users
-        having different levels of expertise.
-        The UI (client) should implement the different access levels.
 
-    .. note::
         There are redundant possibilities for expressing the same access levels,
         best practice for a SEC node is:
 
@@ -478,7 +483,7 @@ Optional properties
 .. acc-property:: meaning
 
     A JSON object regarding the accessible meaning.  It has the same
-    specification as the module `meaning` property.
+    specification as the module `~mod.meaning` property.
 
 .. acc-property:: checkable
 
