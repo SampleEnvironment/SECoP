@@ -129,12 +129,12 @@ Disadvantages, Alternatives
 ===========================
 
 Disadvantages
--------------
+~~~~~~~~~~~~~
 
 More complexity in the specification.
 
 Alternatives
-------------
+~~~~~~~~~~~~
 
 
 Open Questions
