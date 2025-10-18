@@ -3,23 +3,28 @@
 ``error_*``: Error replies
 --------------------------
 
-Contains an error class from the list below as its second item (the specifier).
-The third item of the message is an :ref:`error-report`, containing the request
-message (minus line endings) as a string in its first element, a (short) human
-readable text as its second element.  The third element is a JSON object,
-containing possibly implementation specific information about the error (stack
-dump etc.).
+.. message:: [reply] error_* <specifier> <error-report>
 
-Example:
+    Contains an error class from the list below as its second item (the
+    specifier).  The third item of the message is an :ref:`error-report`,
+    containing the request message (minus line endings) as a string in its first
+    element, a (short) human readable text as its second element.  The third
+    element is a JSON object, containing possibly implementation specific
+    information about the error (stack dump etc.).
+
+Examples:
 
 .. code::
 
     > read tx:target
     < error_read tx:target ["NoSuchModule", "tx is not configured on this SEC node", {}]
+
     > change ts:target 12
     < error_change ts:target ["NoSuchParameter", "ts has no parameter target", {}]
+
     > change t:target -9
     < error_change t:target ["RangeError", "requested value (-9) is outside limits (0..300)", {}]
+
     > meas:volt?
     < error_meas:volt?  ["ProtocolError", "unknown action", {}]
 

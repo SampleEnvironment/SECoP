@@ -5,7 +5,7 @@
              [event] error_update <module>:<parameter> <error-report>
 
     When activated, update messages are delivered without explicit request from the
-    client.  The value is a `data-report`, i.e. a JSON array with the value as its
+    client.  The value is a :ref:`data-report`, i.e. a JSON array with the value as its
     first element, and an JSON object containing the :ref:`qualifiers` as its second
     element.
 
