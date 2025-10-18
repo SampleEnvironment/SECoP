@@ -63,7 +63,7 @@ design:
 Message Handling
 ----------------
 
-For this, see :ref:`message-compat`.
+For this, see :ref:`this section <message-compat>`.
 
 
 Binary representations of the protocol
