@@ -37,10 +37,13 @@ Any SEC node is allowed to generate the following messages:
 
 .. rubric:: Compatibility
 
-The specification is intended to grow and adopt to new needs. (Related issue:
-:issue:`038 Extension mechanisms`.) To futureproof the the communication, the
-following messages MUST be parsed and treated correctly (i.e. the ignored_value
-part is to be ignored).
+The specification is intended to grow and adapt to new needs.  To futureproof
+the the communication, the following messages MUST be parsed and treated
+correctly (i.e. the ignored_value part is to be ignored).
+
+.. dropdown:: Related issues
+
+    | :issue:`038 Extension mechanisms`
 
 Any SEC node **MUST** accept the following messages and handle them properly:
 

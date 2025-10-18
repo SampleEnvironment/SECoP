@@ -29,7 +29,7 @@ Example:
     > ping 123
     < pong 123 [null, {"t": 1505396348.543}]
 
-.. dropdown:: Related Issues
+.. dropdown:: Related issues
 
     | :issue:`003 Timestamp Format`
     | :issue:`007 Time Synchronization`

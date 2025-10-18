@@ -56,7 +56,9 @@ JSON can't transport those 'values'.
 If the relative resolution is not given or not better than 1.2e-7, single
 precision floats may be used in the ECS.
 
-Related issue: :issue:`042 Requirements of datatypes`
+.. dropdown:: Related issues
+
+    | :issue:`042 Requirements of datatypes`
 
 .. rubric:: Optional data properties
 
@@ -84,7 +86,9 @@ Related issue: :issue:`042 Requirements of datatypes`
     SHOULD be given, if meaningful.  The quantity is unitless if unit is omitted
     or the empty string.  Preferably SI units (including prefix) SHOULD be used.
 
-    Related issue: :issue:`043 Parameters and units`
+    .. dropdown:: Related issues
+
+        | :issue:`043 Parameters and units`
 
 ``"absolute_resolution"``
     A JSON number specifying the smallest difference between distinct values.
@@ -103,7 +107,9 @@ Related issue: :issue:`042 Requirements of datatypes`
 
     ``max(absolute_resolution, abs(value) * relative_resolution)``
 
-    Related issue: :issue:`049 Precision of Floating Point Values`
+    .. dropdown:: Related issues
+
+        | :issue:`049 Precision of Floating Point Values`
 
 ``"fmtstr"``
     A C-style format  string as a hint on how to format numeric parameters for
@@ -137,7 +143,9 @@ floating point value.  It is up to the client to perform the conversion when
 reading/writing.  The main motivation for this datatype is for SEC nodes with
 limited capabilities, where floating point calculation is a major effort.
 
-Related issue: :issue:`044 Scaled integers`
+.. dropdown:: Related issues
+
+    | :issue:`044 Scaled integers`
 
 .. rubric:: Mandatory data properties
 
@@ -426,7 +434,9 @@ As a JSON object.
 
 Example: ``{"x": 0.5, "y": 1}``
 
-Related issue: :issue:`035 Partial Structs`
+.. dropdown:: Related issues
+
+    | :issue:`035 Partial Structs`
 
 
 .. _matrix:
