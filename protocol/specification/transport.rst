@@ -87,7 +87,7 @@ description does not match, it is up to the ECS to handle this.
 Naturally, if the previous connection was activated, an `activate` message has
 to be sent before it can continue as before.
 
-.. dropdown:: Related Issues
+.. dropdown:: Related issues
 
    | :issue:`004 The Timeout SEC Node Property`
    | :issue:`006 Keep Alive`
