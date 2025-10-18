@@ -12,9 +12,9 @@ to pinpoint the exact meaning of the data to be described.
 SECoP defines some basic data types for numeric quantities, like double_,
 scaled_ and int_.  An enum_ is defined for convenience of not having to remember
 the meaning of values from a reduced set.  A bool_ datatype is similar to a
-predefined Enum, but uses the JSON values true and false.  For non-numeric
-types, a string_ and a blob_ are defined as well.  Finally, matrix_ can
-transport larger multi-dimensional homogeneous arrays.
+predefined enum, but uses the JSON values ``true`` and ``false``.  For
+non-numeric types, a string_ and a blob_ are defined as well.  Finally, matrix_
+can transport larger multi-dimensional homogeneous arrays.
 
 Furthermore, SECoP not only defines basic data types, but also structured
 datatypes.  tuple_ allows aggregation of a fixed amount of values with different
@@ -68,6 +68,18 @@ Related issue: :issue:`042 Requirements of datatypes`
 
 ``"max"``
     Upper limit. If ``max`` is omitted, there is no upper limit.
+
+.. note::
+
+    When a SEC Node receives a ``"change"`` or ``"do"`` message with a value
+    outside the allowed range [``"min"``, ``"max"``], it MUST reply with an
+    error message.  For readonly parameters, [``"min"``, ``"max"``] indicate a
+    trusted range.  A SEC-Node might send ``"update"`` or ``"reply"`` messages
+    with values outside the trusted range, for example when the value is an
+    extrapolation of the calibrated range. The idea behind this relaxed rule is,
+    that it is better for a SEC-node to send an acquired value outside the range
+    as it is - rather than change its value just to comply with the specified
+    range.  The decision, how to treat such values is left to the ECS.
 
 ``"unit"``
     String giving the unit of the parameter.
@@ -138,11 +150,13 @@ Related issue: :issue:`044 Scaled integers`
 ``"min"``, ``"max"``
     The limits of the transported integer, ``min <= max``.  The limits of the
     represented floating point value are ``min*scale`` and ``max*scale``.
+    See also the note on the ``"min"`` and ``"max"`` properties of the
+    :ref:`float` datatype.
 
 .. rubric:: Optional data properties
 
 ``"unit"``
-    String giving the unit of the paramete, as for double_.
+    String giving the unit of the parameter, as for double_.
 
 ``"absolute_resolution"``
     A JSON number specifying the smallest difference between distinct values.
@@ -189,6 +203,8 @@ with 32bit float too.
 
 ``"min"``, ``"max"``
     Integer limits, ``<min>`` <= ``<max>``.
+    See also the note on the ``"min"`` and ``"max"`` properties of the
+    :ref:`float` datatype.
 
 .. rubric:: Optional data properties
 
@@ -235,7 +251,7 @@ Datatype to be used for values that can only have a set of predefined values.
 .. rubric:: Mandatory data property
 
 ``"members"``
-    A JSON object giving all possible values: ``{<name>: <value>, ....}``
+    A JSON object giving all possible values: ``{<name>: <value>, ...}``
 
     ``name``\ s are strings, ``value``\ s are (preferably small) integers.  Both
     ``name``\ s and ``value``\ s MUST be unique within an enum.
@@ -248,7 +264,7 @@ Datatype to be used for values that can only have a set of predefined values.
 
 .. rubric:: Transport
 
-As a JSON-number.  The client may perform a mapping back to the name.
+As a JSON number.  The client may perform a mapping back to the name.
 
 Example: ``200``
 
@@ -391,10 +407,10 @@ value.
 ``"optional"``
     A JSON list giving the names of optional struct elements.
 
-    In 'change' and 'do' commands, the ECS might omit these elements, all other
-    elements must be given.  The effect of a 'change' action with omitted
+    In `change` and `do` commands, the ECS might omit these elements, all other
+    elements must be given.  The effect of a `change` action with omitted
     elements should be the same as if the current values of these elements would
-    have been sent with it.  The effect of a 'do' action with omitted elements
+    have been sent with it.  The effect of a `do` action with omitted elements
     is defined by the implementation.
 
     In all other messages (i.e. in replies and updates), all elements have to be

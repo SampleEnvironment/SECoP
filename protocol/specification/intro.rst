@@ -52,8 +52,8 @@ Other requirements
 - The protocol should be defined in way that allows a maximum **compatibility**:
   Newer and older versions of the syntax should be compatible.
 
-- The protocol should be defined in a way that allows maximum **flexibility**:
-  A simple (= with minimal features) ECS implementation should be able to
-  communicate with a complex SEC node (with a lot of features), and an ECS with
-  a rich number of features should be able to cope with a simple SEC node,
-  implementing only a minimum number of features/functionality.
+- The protocol should be defined in a way that allows maximum **flexibility**: A
+  simple (= equipped with minimal functionality) ECS implementation should be
+  able to communicate with a complex SEC node (with wide-ranging functionality),
+  and an ECS with extensive functionality should be able to deal with a simple
+  SEC node that implements only a minimum of features.

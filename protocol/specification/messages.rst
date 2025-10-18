@@ -588,13 +588,13 @@ Example:
 .. code::
 
     > read tx:target
-    < error_read tx:target ["NoSuchModule","tx is not configured on this SEC node", {}]
+    < error_read tx:target ["NoSuchModule", "tx is not configured on this SEC node", {}]
     > change ts:target 12
-    < error_change ts:target ["NoSuchParameter","ts has no parameter target", {}]
+    < error_change ts:target ["NoSuchParameter", "ts has no parameter target", {}]
     > change t:target -9
-    < error_change t:target ["BadValue","requested value (-9) is outside limits (0..300)", {}]
+    < error_change t:target ["RangeError", "requested value (-9) is outside limits (0..300)", {}]
     > meas:volt?
-    < error_meas:volt?  ["ProtocolError","unknown action", {}]
+    < error_meas:volt?  ["ProtocolError", "unknown action", {}]
 
 
 .. _error-classes:
@@ -602,10 +602,12 @@ Example:
 _`Error Classes`:
     Error classes are divided into two groups: persisting errors and retryable
     errors.  Persisting errors will yield the exact same error message if the
-    exact same request is sent at any later time.  A retryable error may give
-    different results if the exact same message is sent at a later time, i.e.
-    depends on state information internal to either the SEC node, the module or
-    the connected hardware.
+    exact same request is sent at a later time without other interactions
+    inbetween.
+
+    A retryable error may give different results if the exact same message is
+    sent at a later time, i.e.  depends on state information internal to either
+    the SEC node, the module or the connected hardware.
 
     .. list-table:: Persisting errors
         :widths: 20 80

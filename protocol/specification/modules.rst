@@ -64,7 +64,7 @@ Definition: Command
     ECS can use them only in a general way, as their meaning is not known.
 
 The following section describes the currently predefined accessibles, this list
-will be extended continuously.
+will be extended in new versions.
 
 
 Basic Parameters
@@ -109,11 +109,12 @@ Command ``"stop"``
 Command ``"go"``
     Optional command for starting an action.  If the ``go`` command is present,
     changing any parameter (especially the 'target' parameter) does not yet
-    initiate any action leading to a BUSY state.  In contrast, if no 'go'
-    command is present, changing the target will start an action trying to
-    change the value to get closer to the target, which usually leads to a BUSY
-    state.  Changing any parameter, which has an impact on measured values,
-    should be executed immediately.
+    initiate any action leading to a ``BUSY`` state.
+
+    In contrast, if no 'go' command is present, changing the target will start
+    an action trying to change the value to get closer to the target, which
+    usually leads to a BUSY state.  Changing any parameter, which has an impact
+    on measured values, should be executed immediately.
 
 Command ``"hold"``
     Optional command on a drivable.  Stay more or less where you are, cease
@@ -600,7 +601,7 @@ functionality in a specific way.
     module with the feature ``"HasOffset"`` must have a parameter ``offset``,
     which indicates to all clients that the transmitted raw values for the
     parameters ``value`` and ``target`` are to be converted to corrected values
-    (at the client side) by the following formulas:
+    (on the client side) by the following formulas:
 
     For reading the parameters ``value`` and ``target``:
 

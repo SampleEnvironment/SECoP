@@ -109,9 +109,9 @@ Optional Module Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ``"visibility"``
-    A string indicating a hint for UIs, for which user roles the module should be
-    displayed, hidden or allow read access only.
-    MUST be one of the values on the two visibility columns. The default is "www".
+    A string giving a hint for UIs, for which user roles the module should be
+    displayed, hidden or allow read access only.  MUST be one of the values on
+    the two visibility columns. The default is ``"www"``.
 
     .. table:: possible combinations of access hints
 
@@ -142,7 +142,7 @@ Optional Module Properties
     * A module with visibility "---" is meant not to be shown in a user interface,
       but might still be used by the client interface internally.
 
-    .. note:: The access is NOT controlled on the SECnode side! The visibility property is just a
+    .. note:: The access is NOT controlled on the SEC node side! The visibility property is just a
               hint to the UI (client) what should be exposed to (or better hidden from) the users
               having different levels of expertise.
               The UI (client) should implement the different access levels.
@@ -261,12 +261,23 @@ Optional Module Properties
 .. _implementor:
 
 ``"implementor"``
-    An optional string giving the implementor of a module, defining the meaning
+    A string giving the implementor of a module, defining the meaning
     of custom status values, custom properties and custom accessibles.  The
     implementor must be globally unique, for example 'sinq.psi.ch'.  This may
     be achieved by including a domain name, but it does not need to be a
     registered name, and other means of assuring a global unique name are also
     possible.
+
+``"implementation"``
+    A string indicating information about the implementation of the
+    module, like a Python class.
+
+    Example: ``"secop_psi.ppms.Field"``
+
+``"features"``
+    A list of supported features of a module.
+
+    Example: ``["HasOffset"]``
 
 
 Accessible Description
@@ -319,9 +330,9 @@ Optional Accessible Properties
               for grouping of modules within a node.
 
 ``"visibility"``
-    A string indicating a hint for UIs, for which user roles the accessible should be
-    displayed, hidden or allow read access only.
-    MUST be one of the values on the two visibility columns. The default is "www".
+    A string giving a hint for UIs, for which user roles the accessible should
+    be displayed, hidden or allow read access only.  MUST be one of the values
+    on the two visibility columns.  The default is ``"www"``.
 
     .. table::
 
