@@ -1,9 +1,10 @@
 - Feature: < the name of your feature >
 - Status: < the state of the rfc, start with Open >
 - Submit Date: < your date >
-- Authors: < Your Name(s) and Address(es) >
+- Authors: < your name(s) and address(es) >
 - Type: < which place it touches: Wire, Protocol, Modules, Meta >
 - PR: < link to the pull-request, if applicable >
+- Version: < spec version that the final change will be visible in >
 
 Summary
 =======

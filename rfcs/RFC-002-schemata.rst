@@ -1,10 +1,11 @@
 - Feature: Schema Definitions and Repository
 - Status: Open
-- Submit Date: <your date>
+- Submit Date: 2024-06-18
 - Authors: Alexander Zaft <a.zaft@fz-juelich.de>, Enrico Faulhaber
   <enrico.faulhaber@frm2.tum.de>, Georg Brandl <g.brandl@fz-juelich.de>
 - Type: Meta/Protocol
-- PR: <link to the pull-request>
+- PR:
+- Version: 2.0
 
 Summary
 =======

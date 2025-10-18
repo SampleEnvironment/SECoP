@@ -1,10 +1,11 @@
 - Feature: UDP discovery for SECoP
-- Status: Open
+- Status: Final
 - Submit Date: 2024-10-22
 - Authors: Georg Brandl <g.brandl@fz-juelich.de>,
   Alexander Zaft <a.zaft@fz-juelich.de>
 - Type: Wire
 - PR: https://github.com/SampleEnvironment/SECoP/pull/28
+- Version: 1.1
 
 Summary
 =======

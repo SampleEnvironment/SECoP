@@ -1,9 +1,10 @@
 - Feature: Acquisition interface classes
-- Status: Open
+- Status: Accepted
 - Submit Date: 2025-02-12
 - Authors: Georg Brandl <g.brandl@fz-juelich.de>
 - Type: Modules
-- PR:
+- PR: https://github.com/SampleEnvironment/SECoP/pull/35
+- Version: 2.0
 
 Summary
 =======

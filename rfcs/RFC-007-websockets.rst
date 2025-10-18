@@ -1,10 +1,11 @@
 - Feature: Optional WebSocket support
-- Status: Open
+- Status: Final
 - Submit Date: 2025-02-16
 - Authors: Georg Brandl <g.brandl@fz-juelich.de>,
   Alexander Zaft <a.zaft@fz-juelich.de>
 - Type: Wire
-- PR:
+- PR: https://github.com/SampleEnvironment/SECoP/pull/33
+- Version: 2.0
 
 Summary
 =======

@@ -1,9 +1,10 @@
 - Feature: SECoP Requests for Comments
-- Status: Open
+- Status: Accepted
 - Submit Date: 2023-11-13
 - Authors: Alexander Zaft <a.zaft@fz-juelich.de>, Enrico Faulhaber
   <enrico.faulhaber@frm2.tum.de>, Georg Brandl <g.brandl@fz-juelich.de>
 - Type: Meta
+- Version: none
 
 Summary
 =======
