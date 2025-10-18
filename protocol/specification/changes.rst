@@ -53,13 +53,11 @@ loss of functionality.
 .. TODO
 
     - The `AcquisitionController`, `AcquisitionChannel` and `Acquisition` interface
-      classes have been specified (:secop-rfc:`006-acquisition`).
+      classes have been specified (:ref:`rfc-006`).
 
-- The UDP discovery protocol has been specified
-  (:secop-rfc:`005-udp-discovery`).
+- The UDP discovery protocol has been specified (:ref:`rfc-005`).
 
-- Optional SECoP transport over WebSockets has been specified
-  (:secop-rfc:`007-websockets`).
+- Optional SECoP transport over WebSockets has been specified (:ref:`rfc-007`).
 
 
 Version 1.1

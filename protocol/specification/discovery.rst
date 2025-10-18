@@ -80,4 +80,4 @@ Implementation hints
   necessary.
 
 
-See also :secop-rfc:`005-udp-discovery`.
+See also :ref:`rfc-005`.
