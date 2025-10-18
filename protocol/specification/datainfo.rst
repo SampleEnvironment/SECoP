@@ -156,7 +156,7 @@ limited capabilities, where floating point calculation is a major effort.
     The limits of the transported integer, ``min <= max``.  The limits of the
     represented floating point value are ``min*scale`` and ``max*scale``.
     See also the note on the ``"min"`` and ``"max"`` properties of the
-    :ref:`float` datatype.
+    :ref:`double` datatype.
 
 .. rubric:: Optional data properties
 
@@ -209,7 +209,7 @@ with 32bit float too.
 ``"min"``, ``"max"``
     Integer limits, ``<min>`` <= ``<max>``.
     See also the note on the ``"min"`` and ``"max"`` properties of the
-    :ref:`float` datatype.
+    :ref:`double` datatype.
 
 .. rubric:: Optional data properties
 

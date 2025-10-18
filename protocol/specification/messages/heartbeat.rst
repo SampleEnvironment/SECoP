@@ -9,7 +9,7 @@
     a space and should be short and not be re-used.  It may be omitted.  The reply
     will contain exactly the same id.
 
-    A SEC node replies with a `pong` message with a `data-report` of a null value.
+    A SEC node replies with a `pong` message with a :ref:`data-report` of a null value.
     The :ref:`qualifiers` part SHOULD only contain the timestamp (as member "t") if
     the SEC node supports timestamping.  This can be used to synchronize the time
     between ECS and SEC node.

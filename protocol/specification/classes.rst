@@ -13,9 +13,9 @@ but earlier definitions will stay intact, i.e. no removals or redefinitions will
 occur.
 
 The module class is in fact a list of classes (highest level class first) and is
-stored in the module-property `interface_classes`.  The ECS chooses the first
-class from the list which is known to it.  The last one in the list must be one
-of the base classes listed below.
+stored in the module-property `interface_classes <mod.interface_classes>`.  The
+ECS chooses the first class from the list which is known to it.  The last one in
+the list must be one of the base classes listed below.
 
 .. admonition:: Remark
 
@@ -46,7 +46,7 @@ Base classes
     It must have a `target` parameter in addition to what a `Readable` has.
     It does not have a `stop` command. A module which needs time to reach
     the target but cannot be stopped has also to be represented as a `Writable`,
-    with a `BUSY` item (code 300...389) in the status enum.
+    with a ``BUSY`` item (code 300...389) in the status enum.
 
 .. baseclass:: Drivable
 
