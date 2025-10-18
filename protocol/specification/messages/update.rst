@@ -10,7 +10,7 @@
     element.
 
     If an error occurs while determining a parameter, an `error_update` message
-    has to be sent, which includes an :ref:`prop-error-report` stating the problem.
+    has to be sent, which includes an :ref:`error-report` stating the problem.
 
 Example:
 
