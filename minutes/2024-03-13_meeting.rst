@@ -10,7 +10,7 @@ meeting 2024-03-13 (in person@PSI)
      * Peter Wegmann
      * Klaus Kiefer
      * Bastian Klemke
-     * Niklas Eckström
+     * Niklas Ekström
      * Anders Pettersson
 
 

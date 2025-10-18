@@ -7,7 +7,7 @@ meeting 2024-09-11 (ZOOM)
      * Alexander Zaft
      * Bastian Klemke
      * Klaus Kiefer
-     * Niklas Eckström
+     * Niklas Ekström
      * Peter Braun
 
 .. contents:: Agenda

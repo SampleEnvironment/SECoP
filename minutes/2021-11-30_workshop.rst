@@ -7,7 +7,7 @@
      * Lutz Rossa
      * Klaus Kiefer
      * Bastian Klemke
-     * Niklas Eckström
+     * Niklas Ekström
      * Markus Zolliker
      * Bastian Klemke
      * Anders Pettersson
@@ -109,7 +109,7 @@ time is running out. remaining topics are saved for tomorrow.
      * Lutz Rossa
      * Klaus Kiefer
      * Bastian Klemke
-     * Niklas Eckström
+     * Niklas Ekström
      * Markus Zolliker
      * Anders Pettersson
 
@@ -153,7 +153,7 @@ related: Issue 20: PID tables
      * Lutz Rossa
      * Klaus Kiefer
      * Bastian Klemke (joined later)
-     * Niklas Eckström
+     * Niklas Ekström
      * Markus Zolliker
      * Anders Pettersson
 

@@ -13,7 +13,7 @@ meeting 2023-07-05 (ZOOM)
 
 ..     * Lutz Rossa
 ..     * Anders Petterson
-..     * Niklas Eckström
+..     * Niklas Ekström
 
 .. contents:: Agenda
     :local:

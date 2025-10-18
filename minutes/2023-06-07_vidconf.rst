@@ -6,7 +6,7 @@ meeting 2023-06-07 (ZOOM)
      * Markus Zolliker
      * Lutz Rossa
      * Anders Petterson
-     * Niklas Eckström
+     * Niklas Ekström
      * Peter Wegmann
      * Klaus Kiefer
      * Alexander Zaft

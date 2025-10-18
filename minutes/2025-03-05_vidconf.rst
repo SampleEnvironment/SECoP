@@ -7,7 +7,7 @@ meeting 2025-03-05 (ZOOM)
      * Alexander Zaft
      * Klaus Kiefer
      * Enrico Faulhaber
-     * Niklas Eckström
+     * Niklas Ekström
      * Georg Brandl
 
 .. contents:: Agenda

@@ -3,7 +3,7 @@ meeting 2022-10-18 (ZOOM)
 
 .. sidebar:: participants
 
-     * Niklas Eckström
+     * Niklas Ekström
      * Georg Brandl
      * Klaus Kiefer
      * Markus Zolliker

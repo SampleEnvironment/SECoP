@@ -11,7 +11,7 @@ meeting 2023-12-19 (ZOOM)
      * Lutz Rossa
      * Klaus Kiefer
      * Enrico Faulhaber
-     * Niklas Eckström
+     * Niklas Ekström
      * Anders Pettersson
 
 .. contents:: Agenda

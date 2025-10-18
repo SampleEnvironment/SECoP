@@ -8,7 +8,7 @@ meeting 2025-02-12(ZOOM)
      * Bastian Klemke
      * Klaus Kiefer
      * Enrico Faulhaber
-     * Niklas Eckström
+     * Niklas Ekström
      * Peter Braun
 
 .. contents:: Agenda

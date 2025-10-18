@@ -7,7 +7,7 @@ meeting 2024-12-03 (via ZOOM)
      * Enrico Faulhaber
      * Markus Zolliker
      * Bastian Klemke
-     * Niklas Eckström
+     * Niklas Ekström
 
 
 .. contents:: Agenda

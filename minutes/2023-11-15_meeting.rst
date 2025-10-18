@@ -13,7 +13,7 @@ meeting 2023-11-15 (in person@MLZ)
      * Geritt Günther
      * Torsten Kracht
      * Jan Kotanski
-     * Niklas Eckström
+     * Niklas Ekström
      * Anders Pettersson (via zoom)
 
      * Moritz (from Daphne project)
@@ -164,7 +164,7 @@ Klaus wraps it up and closes todays session.
      * Geritt Günther
      * Torsten Kracht
      * Jan Kotanski
-     * Niklas Eckström
+     * Niklas Ekström
      * Anders Pettersson (via zoom)
 
 
@@ -342,7 +342,7 @@ This should bee coordinated in short online meetings untils christmas.
      * Peter Wegmann
      * Klaus Kiefer
      * Bastian Klemke
-     * Niklas Eckström
+     * Niklas Ekström
      * Anders Pettersson (via zoom)
 
 
@@ -490,7 +490,7 @@ No conclusive result.
      * Markus Zolliker
      * Klaus Kiefer
      * Bastian Klemke
-     * Niklas Eckström
+     * Niklas Ekström
      * Anders Pettersson (via zoom)
 
 

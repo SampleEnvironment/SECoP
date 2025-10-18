@@ -9,7 +9,7 @@ meeting 2023-09-26 (ZOOM)
      * Alexander Zaft
      * Enrico Faulhaber
      * Bastian Klemke
-     * Niklas Eckström
+     * Niklas Ekström
      * Anders Petterson
 
 .. contents:: Agenda

@@ -5,7 +5,7 @@ meeting 2022-08-10 (ZOOM)
 
      * Lutz Rossa
 (     * Bastian Klemke)
-     * Niklas Eckström
+     * Niklas Ekström
      * Markus Zolliker
 (     * Anders Pettersson)
      * Enrico Faulhaber

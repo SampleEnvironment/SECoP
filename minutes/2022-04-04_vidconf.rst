@@ -6,7 +6,7 @@
      * Lutz Rossa
      * Klaus Kiefer
      * Bastian Klemke
-     * Niklas Eckström
+     * Niklas Ekström
      * Markus Zolliker
      * Anders Pettersson
      * Enrico Faulhaber
@@ -179,7 +179,7 @@ topics for Wednesday:
      * Lutz Rossa
      * Klaus Kiefer
      * Bastian Klemke
-     * Niklas Eckström
+     * Niklas Ekström
      * Markus Zolliker
      * Anders Pettersson
      * Enrico Faulhaber

@@ -6,7 +6,7 @@ Videoconference 2021-09-29
      * Enrico Faulhaber
      * Lutz Rossa
      * Klaus Kiefer
-     * Niklas Eckström
+     * Niklas Ekström
      * Markus Zolliker
      * Bastian Klemke (joined later)
 

@@ -4,7 +4,7 @@ meeting 2022-09-22 (ZOOM)
 .. sidebar:: participants
 
      * Lutz Rossa
-     * Niklas Eckström
+     * Niklas Ekström
      * Alexander Zaft
      * Klaus Kiefer
      * Bastian Klemke

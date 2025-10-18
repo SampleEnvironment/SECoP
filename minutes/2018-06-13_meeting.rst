@@ -3,7 +3,7 @@ SECoP Meeting 2018-06-13/14 at ESS Lund
 
 participants
 ============
-  - Niklas Eckström
+  - Niklas Ekström
   - Anders Petterson
   - Lutz Rossa
   - Frank Wutzler

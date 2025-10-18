@@ -1,5 +1,5 @@
-meeting 2025-05-07(ZOOM)
-@@@@@@@@@@@@@@@@@@@@@@@@
+meeting 2025-05-07 (ZOOM)
+@@@@@@@@@@@@@@@@@@@@@@@@@
 
 .. sidebar:: participants
 
@@ -8,7 +8,7 @@ meeting 2025-05-07(ZOOM)
      * Georg Brandl
      * Klaus Kiefer
      * Enrico Faulhaber
-     * Niklas Eckström
+     * Niklas Ekström
      * Peter Braun
      * Bastian Klemke
 

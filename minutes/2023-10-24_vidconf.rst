@@ -9,7 +9,7 @@ meeting 2023-09-26 (ZOOM)
      * Klaus Kiefer
      * Alexander Zaft
      * Enrico Faulhaber
-     * Niklas Eckström
+     * Niklas Ekström
      * Anders Pettersson
 
 .. contents:: Agenda

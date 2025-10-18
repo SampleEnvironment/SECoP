@@ -10,7 +10,7 @@ meeting 2024-11-05 (via ZOOM)
      * Peter Braun
      * Klaus Kiefer
      * Bastian Klemke (nneds to leave earlier)
-     * Niklas Eckström
+     * Niklas Ekström
 
 
 .. contents:: Agenda

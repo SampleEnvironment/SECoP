@@ -8,7 +8,7 @@ meeting 2024-06-17(ZOOM)
      * Bastian Klemke
      * Klaus Kiefer
      * Enrico Faulhaber
-     * Niklas Eckström
+     * Niklas Ekström
 
 .. contents:: Agenda
     :local:

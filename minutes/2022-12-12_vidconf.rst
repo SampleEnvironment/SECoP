@@ -6,7 +6,7 @@ meeting 2022-12-13 (ZOOM)
      * Markus Zolliker
      * Klaus Kiefer
      * Lutz Rossa
-     * Niklas Eckström
+     * Niklas Ekström
      * Georg Brandl
      * Alexander Zaft
      * Enrico Faulhaber
