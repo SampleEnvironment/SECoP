@@ -1,7 +1,7 @@
 .. _data-types:
 
-Data Info
-=========
+Data types
+==========
 
 SECoP defines a very flexible data typing system.  Data info structures are used
 to describe the possible values of parameters and how they are serialized.  They
@@ -46,7 +46,7 @@ available.
 
 .. _double:
 
-Floating Point Numbers: ``double``
+Floating point numbers: ``double``
 ----------------------------------
 
 Datatype to be used for all physical quantities.
@@ -61,9 +61,7 @@ precision floats may be used in the ECS.
 
 Related issue: :issue:`042 Requirements of datatypes`
 
-
-Optional Data Properties
-~~~~~~~~~~~~~~~~~~~~~~~~
+.. rubric:: Optional data properties
 
 ``"min"``
     Lower limit. If ``min`` is omitted, there is no lower limit.
@@ -107,17 +105,13 @@ Optional Data Properties
     .. image:: images/fmtstr.svg
         :alt: fmtstr ::= "%" "." [1-9]? [0-9] ( "e" | "f" | "g" )
 
-
-Example
-~~~~~~~
+.. rubric:: Example
 
 .. code:: json
 
     {"type": "double", "min": 0, "max": 100, "fmtstr": "%.3f"}
 
-
-Transport
-~~~~~~~~~
+.. rubric:: Transport
 
 As a JSON number.
 
@@ -126,7 +120,7 @@ Example: ``3.14159265``
 
 .. _scaled:
 
-Scaled Integer: ``scaled``
+Scaled integer: ``scaled``
 --------------------------
 
 Scaled integers are transported as integers, but the physical value is a
@@ -136,9 +130,7 @@ limited capabilities, where floating point calculation is a major effort.
 
 Related issue: :issue:`044 Scaled integers`
 
-
-Mandatory Data Properties
-~~~~~~~~~~~~~~~~~~~~~~~~~
+.. rubric:: Mandatory data properties
 
 ``"scale"``
     A (numeric) scale factor to be multiplied with the transported integer.
@@ -147,9 +139,7 @@ Mandatory Data Properties
     The limits of the transported integer, ``min <= max``.  The limits of the
     represented floating point value are ``min*scale`` and ``max*scale``.
 
-
-Optional Data Properties
-~~~~~~~~~~~~~~~~~~~~~~~~
+.. rubric:: Optional data properties
 
 ``"unit"``
     String giving the unit of the paramete, as for double_.
@@ -169,9 +159,7 @@ Optional Data Properties
 
     The string must obey the same syntax as above for double_.
 
-
-Example
-~~~~~~~
+.. rubric:: Example
 
 .. code:: json
 
@@ -179,9 +167,7 @@ Example
 
 i.e. a value between 0.0 and 250.0.
 
-
-Transport
-~~~~~~~~~
+.. rubric:: Transport
 
 As an integer JSON number.
 
@@ -199,31 +185,23 @@ be representable with signed 24 bits, i.e. all integers SHOULD fit inside -2\
 :sup:`24` ... 2\ :sup:`24`, as some JSON libraries might parse JSON numbers
 with 32bit float too.
 
-
-Mandatory Data Properties
-~~~~~~~~~~~~~~~~~~~~~~~~~
+.. rubric:: Mandatory data properties
 
 ``"min"``, ``"max"``
     Integer limits, ``<min>`` <= ``<max>``.
 
-
-Optional Data Properties
-~~~~~~~~~~~~~~~~~~~~~~~~
+.. rubric:: Optional data properties
 
 ``"unit"``
     A string giving the unit of the parameter, as for double_.
 
-
-Example
-~~~~~~~
+.. rubric:: Example
 
 .. code:: json
 
     {"type": "int", "min": 0, "max": 100}
 
-
-Transport
-~~~~~~~~~
+.. rubric:: Transport
 
 As a JSON number.
 
@@ -236,27 +214,25 @@ Example: ``-55``
 Boolean: ``bool``
 -----------------
 
-Syntax
-~~~~~~
+.. rubric:: Syntax
 
 .. code:: json
 
     {"type": "bool"}
 
-
-Transport
-~~~~~~~~~
+.. rubric:: Transport
 
 As JSON ``true`` or ``false``.
 
 
 .. _enum:
 
-Enumerated Type: ``enum``
+Enumerated type: ``enum``
 -------------------------
 
-Mandatory Data Property
-~~~~~~~~~~~~~~~~~~~~~~~
+Datatype to be used for values that can only have a set of predefined values.
+
+.. rubric:: Mandatory data property
 
 ``"members"``
     A JSON object giving all possible values: ``{<name>: <value>, ....}``
@@ -264,17 +240,13 @@ Mandatory Data Property
     ``name``\ s are strings, ``value``\ s are (preferably small) integers.  Both
     ``name``\ s and ``value``\ s MUST be unique within an enum.
 
-
-Example
-~~~~~~~
+.. rubric:: Example
 
 .. code:: json
 
     {"type": "enum", "members": {"IDLE": 100, "WARN": 200, "BUSY": 300, "ERROR": 400}}
 
-
-Transport
-~~~~~~~~~
+.. rubric:: Transport
 
 As a JSON-number.  The client may perform a mapping back to the name.
 
@@ -286,8 +258,9 @@ Example: ``200``
 String: ``string``
 ------------------
 
-Optional data properties
-~~~~~~~~~~~~~~~~~~~~~~~~
+For human-readable strings.  Use :ref:`blob <blob>` for binary data.
+
+.. rubric:: Optional data properties
 
 ``"maxchars"``
     The maximum length of the string in UTF-8 code points, counting the number
@@ -303,17 +276,13 @@ Optional data properties
 
     Defaults to **False** if not given.
 
-
-Example
-~~~~~~~
+.. rubric:: Example
 
 .. code:: json
 
     {"type": "string", "maxchars": 80}
 
-
-Transport
-~~~~~~~~~
+.. rubric:: Transport
 
 As a JSON string.
 
@@ -322,34 +291,27 @@ Example: ``"Hello\n\u2343World!"``
 
 .. _blob:
 
-Binary Large Object: ``blob``
+Binary large object: ``blob``
 -----------------------------
 
-Mandatory Data Property
-~~~~~~~~~~~~~~~~~~~~~~~
+.. rubric:: Mandatory data property
 
 ``"maxbytes"``
     The maximum length, counting the number of bytes (**not** the size of the
     encoded string).
 
-
-Optional Data Property
-~~~~~~~~~~~~~~~~~~~~~~
+.. rubric:: Optional data property
 
 ``"minbytes"``
     The minimum length, default is 0.
 
-
-Example
-~~~~~~~
+.. rubric:: Example
 
 .. code:: json
 
     {"type": "blob", "min": 1, "max": 64}
 
-
-Transport
-~~~~~~~~~
+.. rubric:: Transport
 
 As a single-line base-64 (see :RFC:`4648`) encoded JSON string.
 
@@ -358,11 +320,10 @@ Example: ``"AA=="`` (a single, zero valued byte)
 
 .. _array:
 
-Sequence of Uniformly Typed Items: ``array``
+Sequence of uniformly typed items: ``array``
 --------------------------------------------
 
-Mandatory Data Properties
-~~~~~~~~~~~~~~~~~~~~~~~~~
+.. rubric:: Mandatory data properties
 
 ``"members"``
     A nested datainfo, giving the datatype of the elements.
@@ -370,53 +331,42 @@ Mandatory Data Properties
 ``"maxlen"``
     The maximum length, counting the number of elements.
 
-
-Optional Data Property
-~~~~~~~~~~~~~~~~~~~~~~
+.. rubric:: Optional data property
 
 ``"minlen"``
     The minimum length, default is 0.
 
-
-Example
-~~~~~~~
+.. rubric:: Example
 
 .. code:: json
 
     {"type": "array", "min": 3, "max": 10, "members": {"type": "int", "min": 0, "max": 9}}
 
-
-Transport
-~~~~~~~~~
+.. rubric:: Transport
 
 As a JSON array.
 
-example: ``[3,4,7,2,1]``
+Example: ``[3,4,7,2,1]``
 
 
 .. _tuple:
 
-Finite Sequence of Items with Individually Typed Items: ``tuple``
+Finite sequence of items with individually typed items: ``tuple``
 -----------------------------------------------------------------
 
-Mandatory Data Property
-~~~~~~~~~~~~~~~~~~~~~~~
+.. rubric:: Mandatory data property
 
 ``"members"``
     A JSON array listing the datatype for each member.  This also gives the
     number of members.
 
-
-Example
-~~~~~~~
+.. rubric:: Example
 
 .. code:: json
 
     {"type": "tuple", "members": [{"type": "int", "min": 0, "max": 999}, {"type": "string", "maxchars": 80}]}
 
-
-Transport
-~~~~~~~~~
+.. rubric:: Transport
 
 As a JSON array.
 
@@ -425,18 +375,18 @@ Example: ``[300,"accelerating"]``
 
 .. _Struct:
 
-Collection of Named Items: ``struct``
+Collection of named items: ``struct``
 -------------------------------------
 
-Mandatory Data Property
-~~~~~~~~~~~~~~~~~~~~~~~
+This data type allows you to combine multiple named data members in a single
+value.
+
+.. rubric:: Mandatory data property
 
 ``"members"``
     A JSON object containing the names and datatypes of the members.
 
-
-Optional Data Property
-~~~~~~~~~~~~~~~~~~~~~~
+.. rubric:: Optional data property
 
 ``"optional"``
     A JSON list giving the names of optional struct elements.
@@ -450,17 +400,14 @@ Optional Data Property
     In all other messages (i.e. in replies and updates), all elements have to be
     given.
 
-
-Example
-~~~~~~~
+.. rubric:: Example
 
 .. code:: json
 
     {"type": "struct", "members": {"y": {"type": "double"},
                                    "x": {"type": "enum", "members": {"On": 1, "Off": 0}}}}
 
-Transport
-~~~~~~~~~
+.. rubric:: Transport
 
 As a JSON object.
 
@@ -471,7 +418,7 @@ Related issue: :issue:`035 Partial Structs`
 
 .. _matrix:
 
-Binary Matrix: ``matrix``
+Binary matrix: ``matrix``
 -------------------------
 
 Type for transferring a medium to large amount of homogeneous arrays with
@@ -481,8 +428,7 @@ At the moment, the type intends direct transfer of the data within the JSON
 data.  It could be extended later to allow referring to a side-channel for
 obtaining the data.
 
-Mandatory Data Properties
-~~~~~~~~~~~~~~~~~~~~~~~~~
+.. rubric:: Mandatory data properties
 
 ``"names"``
     A list of names for each dimension in the data.
@@ -505,14 +451,11 @@ Mandatory Data Properties
     A string defining if and how the data is each ``blob`` is compressed.
     Currently, no compression types are defined.
 
+.. rubric:: Example
 
-Example
-~~~~~~~
 ``{"type": "matrix", "elementtype": "<f4", "names": ["x", "y"], "maxlen": [100, 100]}``
 
-
-Transport
-~~~~~~~~~
+.. rubric:: Transport
 
 As a JSON object containing the following items:
 
@@ -546,8 +489,7 @@ Commands: ``command``
 If an accessible is a command, its main datatype is ``command``.
 Argument and result data are described within.
 
-Optional Data Properties
-~~~~~~~~~~~~~~~~~~~~~~~~
+.. rubric:: Optional data properties
 
 ``"argument"``
     The datatype of the single argument, or ``null``.
@@ -562,17 +504,13 @@ Optional Data Properties
 The meaning of result and argument(s) SHOULD be written down in the description
 of the command.
 
-
-Example
-~~~~~~~
+.. rubric:: Example
 
 .. code:: json
 
     {"type": "command", "argument": {"type": "bool"}, "result": {"type": "int"}}
 
-
-Transport
-~~~~~~~~~
+.. rubric:: Transport
 
 Command values are not transported as such.  But commands may be called
 (i.e. executed) by an ECS.  Example:
