@@ -18,8 +18,8 @@ and should reply with a `ProtocolError` error to indicate this.
     simple validity check based on the accessible's datainfo and may depend on the
     current configuration of the entire SEC node. Upon successful completion of the
     check, a `checked` response is sent, containing a `data-report` of the
-    verified value. The accessible property :ref:`checkable <prop-checkable>`
-    indicates whether an accessible can be checked.
+    verified value. The accessible property `checkable` indicates whether an
+    accessible can be checked.
 
     .. admonition:: Remarks
 
@@ -33,7 +33,7 @@ and should reply with a `ProtocolError` error to indicate this.
         * If the check fails, the error report should indicate whether this is
           due to the current configuration of the SEC node (`Impossible`), or
           because the checked value is outside the range (`RangeError`)
-          specified by the ``datainfo`` property.
+          specified by the `datainfo` property.
 
     Example:
 
