@@ -70,13 +70,13 @@ precision floats may be used in the ECS.
 
 .. note::
 
-    When a SEC Node receives a ``"change"`` or ``"do"`` message with a value
+    When a SEC node receives a ``"change"`` or ``"do"`` message with a value
     outside the allowed range [``"min"``, ``"max"``], it MUST reply with an
     error message.  For readonly parameters, [``"min"``, ``"max"``] indicate a
-    trusted range.  A SEC-Node might send ``"update"`` or ``"reply"`` messages
+    trusted range.  A SEC node might send ``"update"`` or ``"reply"`` messages
     with values outside the trusted range, for example when the value is an
     extrapolation of the calibrated range. The idea behind this relaxed rule is,
-    that it is better for a SEC-node to send an acquired value outside the range
+    that it is better for a SEC node to send an acquired value outside the range
     as it is - rather than change its value just to comply with the specified
     range.  The decision, how to treat such values is left to the ECS.
 
@@ -487,7 +487,7 @@ As a JSON object containing the following items:
 
 ``"blob"``
     The data, encoded as a single-line base64 (see :rfc:`4648`) encoded
-    JSON-string.
+    JSON string.
 
 Example: ``{"len": [2, 3], "blob": "AACAPwAAAEAAAEBAAACAQAAAoEAAAMBA"}``
 
@@ -527,18 +527,23 @@ result data are described within.
 The meaning of result and argument(s) SHOULD be written down in the description
 of the command.
 
-.. rubric:: Example
+.. rubric:: Examples
 
 .. code:: json
 
     {"type": "command", "argument": {"type": "bool"}, "result": {"type": "int"}}
 
+    {"type": "command",
+     "argument": {"type": "struct", "members": {"p": {"type": "double"},
+                                                "i": {"type": "double"},
+                                                "d": {"type": "double"}}},
+     "result": {"type": "tuple", "members": [{"type": "int"}, {"type": "string"}]}}
+
 .. rubric:: Transport
 
 Command values are not transported as such.  But commands may be called
-(i.e. executed) by an ECS.  Example:
+(i.e. executed) by an ECS.  Example calling the command with the type of the
+second example above::
 
-.. code::
-
-    > do module:invert true
-    < done module:invert [72,{t:123456789.2}]
+    > do module:setpid {"p": 100.0, "i": 5.0, "d": 1.2}
+    < done module:setpid [[42, "control active"], {"t": 123456789.2}]

@@ -12,9 +12,7 @@
     element is a JSON object, containing possibly implementation specific
     information about the error (stack dump etc.).
 
-Examples:
-
-.. code::
+Examples::
 
     > read tx:target
     < error_read tx:target ["NoSuchModule", "tx is not configured on this SEC node", {}]

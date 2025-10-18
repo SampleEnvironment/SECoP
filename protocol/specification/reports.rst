@@ -13,7 +13,9 @@ Data report
 A JSON array with the value of a parameter as its first element, and a JSON
 object containing the :ref:`qualifiers` for this value as its second element.
 
-For example::
+For example:
+
+.. code:: json
 
     [15.0, {"t": 1723712392.1}]
 
@@ -30,13 +32,15 @@ An error report is used in an :ref:`error-reply` indicating that the requested
 action could not be performed as request or that other problems occurred.  The
 error report is a JSON array containing the name of one of the
 :ref:`error-classes`, a human readable string and as a third element a
-JSON-object containing extra error information, which may include the timestamp
+JSON object containing extra error information, which may include the timestamp
 (as key "t") and possible additional implementation specific information about
 the error (stack dump etc.).
 
-For example::
+For example:
 
-    ["HardwareError", "heater is broken", {"t": 1723812391.1, "stack": [...]}]
+.. code:: json
+
+    ["HardwareError", "heater is broken", {"t": 1723812391.1, "stack": []}]
 
 
 Structure report

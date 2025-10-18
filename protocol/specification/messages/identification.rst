@@ -22,15 +22,14 @@
     - The fourth field specifies the released version of SECoP that the node
       implements.
 
-Examples:
-
-.. code::
+Examples::
 
     > *IDN?
     < ISSE,SECoP,,v2.0
 
+    # Reply from a pre-release version based on version 2.0
     > *IDN?
-    < ISSE,SECoP,2025-12-24,v2.0
+    < ISSE,SECoP,2026-03-10,v2.0
 
     # Connecting to an older version, note the different "manufacturer"
     > *IDN?
