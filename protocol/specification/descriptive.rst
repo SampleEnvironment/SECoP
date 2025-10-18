@@ -513,6 +513,6 @@ description.
 
 As for all custom extensions, their names must be prefixed with an underscore.
 The meaning of custom properties depends on the implementor, given by the
-`implementor` module property.  An ECS that doesn't know the meaning of a
-custom property MUST ignore it.  The data type of a custom property is not
-pre-defined, an ECS should be prepared to handle anything here.
+`implementor <mod.implementor>` module property.  An ECS that doesn't know the
+meaning of a custom property MUST ignore it.  The data type of a custom property
+is not pre-defined, an ECS should be prepared to handle anything here.

@@ -69,7 +69,7 @@ Parameter
     A piece of data associated with a module, typically in one of three
     categories:
 
-    - physical or hardware defined, e.g. `value` or `pid`
+    - physical or hardware defined, e.g. `value` or ``pid``
     - informational, e.g. `status`
     - controlling the operation of the module, e.g. `pollinterval`
 

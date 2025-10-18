@@ -17,7 +17,7 @@
     conform to the declared datatypes from the datatype of the command argument.
 
     A command may have a return value, which may also be structured.  The "done"
-    reply always contains a `data-report` with the return value.  If no value is
+    reply always contains a :ref:`data-report` with the return value.  If no value is
     returned, the data part is set to "null".  The "done" message should be returned
     quickly, the time scale should be in the order of the time needed for
     communications.  Still, all side-effects need to be realized and communicated

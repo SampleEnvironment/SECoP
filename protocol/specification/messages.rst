@@ -43,7 +43,7 @@ The ``<`` or ``>`` marks whether messages are sent to or received from the node.
  Message intent          Kind           Message structure
 ======================= ============== ==================
  Identification          request        `*IDN?`
-      \                  reply          `ISSE&SINE2020,SECoP,revision,version`
+      \                  reply          `ISSE,SECoP,revision,version <ISSE,SECoP,<revision>,<version>>`
  Description             request        `describe`
       \                  reply          `describing . structure-report <describing>`
  Activate updates        request        `activate`
@@ -59,7 +59,7 @@ The ``<`` or ``>`` marks whether messages are sent to or received from the node.
  Execute command         request        `do mod:cmd value <do>`
       \                  reply          `done mod:cmd data-report <done>`
  Value update event      event          `update mod:param data-report <update>`
- Error reply             reply          `error_action specifier error-report <error>`
+ Error reply             reply          `error_action specifier error-report <error_*>`
  Checking (\*)           request        `check mod:param value <check>`
       \                  reply          `checked mod:param data-report <checked>`
  Logging (\*)            request        `logging mod level <logging>`
