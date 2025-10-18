@@ -83,8 +83,9 @@ Essentially this boils down to:
 #) treat needed, but missing data as null (or an empty string, depending on
    context)
 #) if a specifier contains more ":" than you can handle, use the part you
-   understand, ignore the rest (i.e. treat ``activate module:parameter`` as
-   ``activate module``, ignoring the ``:parameter`` part)
+   understand, ignore the rest (i.e. treat `activate module:parameter
+   <activate>` as `activate module <activate>`, ignoring the ``:parameter``
+   part)
 #) same for error class (i.e. treat ``WrongType:MustBeInt`` as `WrongType`,
    ignoring the ``:MustBeInt`` part)
 #) upon parsing a value, when you know it should be one element from an

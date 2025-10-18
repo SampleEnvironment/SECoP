@@ -247,11 +247,11 @@ Coupled modules
 
     The control mechanism of a module might be coupled to another module (both
     modules are Drivable or Writable).  This coupling is indicated by the
-    `controlled_by` parameter (readonly).  The datatype of the
-    `controlled_by` parameter must be an :ref:`enum <enum>`, with the names being
-    module names or ``self``.  The :ref:`enum <enum>` value of ``self`` must be 0.  A
-    module with a `controlled_by` parameter indicates that it may be
-    controlled by one of the named modules.
+    `controlled_by` parameter (readonly).  The datatype of the `controlled_by`
+    parameter must be an :ref:`enum <enum>`, with the names being module names
+    or ``"self"``.  The :ref:`enum <enum>` value of ``"self"`` must be 0.  A
+    module with a `controlled_by` parameter indicates that it may be controlled
+    by one of the named modules.
 
     This coupling of two modules influences in particular the behavior of the
     parameters `target` and `value`.  For example a module B (e.g.
@@ -278,7 +278,7 @@ Coupled modules
     module B must be set to the controlling module A.  However, when the
     `target` change or a `go` command is sent to module B, the control
     switches over to module B and the `controlled_by` parameter of module B
-    has to be set to ``self``.  Please notice that in addition, the
+    has to be set to ``"self"``.  Please notice that in addition, the
     `control_active` parameters of module A and module B have to be set
     correctly (see next section) before sending the reply to a `target` change
     or a `go` command as stated before.

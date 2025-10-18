@@ -13,14 +13,11 @@ The dot (second item in the reply message) is a placeholder for extensibility
 reasons and may be changed in a later revision.  A client implementing the
 current specification MUST ignore it.
 
-.. note:: This reply might be a very long line, no raw line breaks are allowed
-          in the JSON part.  Clients MUST implement a reasonable buffer size for
-          these replies or use a streaming JSON decoder.
-
-Example:
-
-.. code::
+Example::
 
     > describe
     < describing . {"modules":{"t1":{"interface_classes":["TemperatureSensor","Readable"],"accessibles":{"value": ...
 
+.. note:: This reply might be a very long line, no raw line breaks are allowed
+          in the JSON part.  Clients MUST implement a reasonable buffer size for
+          these replies or use a streaming JSON decoder.

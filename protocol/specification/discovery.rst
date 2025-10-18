@@ -50,11 +50,15 @@ Example
 Here, whitespace is added for readability.  In practice, the JSON encoder should
 be configured to omit them to leave maximum space for the content.
 
-From client to nodes::
+From client to nodes:
+
+.. code:: json
 
     {"SECoP": "discover"}
 
-From node to client, or for self-announcement::
+From node to client, or for self-announcement:
+
+.. code:: json
 
     {"SECoP": "node",
      "port": 14932,

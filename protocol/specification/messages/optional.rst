@@ -35,16 +35,14 @@ and should reply with a `ProtocolError` error to indicate this.
           because the checked value is outside the range (`RangeError`)
           specified by the `datainfo` property.
 
-    Example:
-
-    .. code::
+    Example::
 
         > check mf:target [1.0, 1.0, 2.0]
         < checked mf:target [[1.0, 1.0, 2.0], {}]
 
-.. dropdown:: Related issues
+    .. dropdown:: Related issues
 
-    | :issue:`075 New messages check and checked`
+        | :issue:`075 New messages check and checked`
 
 
 .. message:: [request] logging <module>[:<parameter>] <level>
@@ -89,7 +87,7 @@ and should reply with a `ProtocolError` error to indicate this.
     This is an asynchronous event only to be sent by the SEC node to the ECS
     which activated logging.
 
-Example::
+Logging example::
 
     # note: empty specifier -> select all modules
     > logging  "error"
@@ -109,4 +107,3 @@ Another example::
     ...
     > logging mod1 false
     < logging mod1 false
-

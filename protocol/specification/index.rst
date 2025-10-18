@@ -4,7 +4,7 @@ Specification
 
 .. toctree::
     :maxdepth: 2
-    :numbered:
+    :numbered: 2
 
     motivation
     structure
