@@ -1,4 +1,4 @@
-Additional Topics
+Additional topics
 =================
 
 .. toctree::

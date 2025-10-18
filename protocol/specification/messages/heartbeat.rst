@@ -1,4 +1,4 @@
-``ping``: heartbeat
+``ping``: Heartbeat
 ~~~~~~~~~~~~~~~~~~~
 
 .. message:: [request] ping [<token>]
