@@ -50,10 +50,8 @@ loss of functionality.
 
 - The :ref:`matrix <matrix>` data type has been specified for datainfo.
 
-.. TODO
-
-    - The `AcquisitionController`, `AcquisitionChannel` and `Acquisition` interface
-      classes have been specified (:secop-rfc:`006-acquisition`).
+- The `AcquisitionController`, `AcquisitionChannel` and `Acquisition` interface
+  classes have been specified (:secop-rfc:`006-acquisition`).
 
 - The UDP discovery protocol has been specified
   (:secop-rfc:`005-udp-discovery`).

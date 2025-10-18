@@ -48,6 +48,10 @@ Basic parameters
     Present, if the module's main value is to be changeable remotely, i.e. it
     is at least a `Writable`.
 
+
+Basic commands
+~~~~~~~~~~~~~~
+
 .. command:: stop
 
     Mandatory command on a drivable.  When a module's target is changed (or, if
@@ -57,6 +61,8 @@ Basic parameters
     When the `stop` command is sent, the SEC node SHOULD set the target
     parameter to a value close to the present one.  Then it SHOULD act as if
     this value had been the initial target.
+
+    On an `AcquisitionController`, stops the data acquisition if running.
 
 .. command:: go
 
@@ -69,12 +75,21 @@ Basic parameters
     usually leads to a ``BUSY`` state.  Changing any parameter, which has an
     impact on measured values, should be executed immediately.
 
+    On an `AcquisitionController`, starts the data acquisition if not running.
+
 .. command:: hold
 
-    Optional command on a drivable.  Stay more or less where you are, cease
+    Optional command on a `Drivable`.  Stay more or less where you are, cease
     movement, be ready to continue soon, target value is kept.  Continuation can
     be triggered with `go`, or if not present, by putting the target parameter
     to its present value.
+
+    On an `AcquisitionController`, pauses the data acquisition if running.
+
+.. command:: prepare
+
+    On an `AcquisitionController`, prepares for the following data acquisition
+    so that a `go` can be executed immediately.
 
 .. command:: shutdown
 
@@ -380,3 +395,28 @@ Communication
     :ref:`string <string>`, or any other datatype suitable to the protocol of the device.
     The `communicate` command is meant to be used in modules with the
     `Communicator` interface class.
+
+
+Data acquisition
+~~~~~~~~~~~~~~~~
+
+.. parameter:: goal
+
+    In an `AcquisitionChannel`, this optional parameter is is the `value` that,
+    when reached, stops the data acquisition.
+
+    It is useful to combine this with a ``goal_enable`` parameter that can be
+    used to make the channel insensitive to a goal value.
+
+.. parameter:: roi
+
+    In an `AcquisitionChannel` that yields a matrix, this optional parameter can
+    be present to restrict the returned data to a subset of the data originally
+    acquired by the hardware.
+
+.. command:: get_data
+
+    In an `AcquisitionChannel` that yields a matrix, if this command is present,
+    it is used to retrieve the full matrix data.  The `value` parameter then
+    returns a reduced form of the data instead, which is suitable for sending in
+    frequent `update` events, while the return value of `get_data` can be large.
