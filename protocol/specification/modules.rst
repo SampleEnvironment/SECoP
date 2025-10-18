@@ -31,7 +31,7 @@ to be unique within an SEC node, accessible names have to be unique within a
 module.  There are two basic types of accessibles: parameters and commands.
 
 Module and accessible names should be in English (incl. acronyms), using only
-ASCII letters and digits and some additional characters (see :ref:`messages`).
+ASCII letters and digits and some additional characters (see :doc:`messages`).
 The maximum name length is 63 characters.
 
 Definition: Parameter

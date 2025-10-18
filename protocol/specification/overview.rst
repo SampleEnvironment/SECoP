@@ -18,7 +18,7 @@ SECoP Node Structure
 - SECoP is a communication protocol with a client-server model.  The server is
   called the "SEC node".
 
-- Each SEC node consists of one or more :ref:`Modules`.  These represent the
+- Each SEC node consists of one or more :ref:`modules`.  These represent the
   main interface for interacting with the hardware.
 
 - Each of these modules can have static values which are known at startup and
@@ -60,8 +60,8 @@ SECoP Node Structure
 Messages
 --------
 
-The communication between client and server builds upon :ref:`messages
-<messages>` which are transferred between SEC node and client.
+The communication between client and server builds upon :doc:`messages`
+which are transferred between SEC node and client.
 
 As an introduction, we will look at the general message structure, and the
 messages :ref:`*IDN? <message-identification>`, :ref:`describe

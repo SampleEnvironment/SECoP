@@ -109,8 +109,8 @@ identifier length is limited (<=63 characters).
     - accessible names of a module (including the group entries of those
       parameters) - each module has its own scope
     - properties
-    - names of elements in a :ref:`struct` (each struct has its own scope)
-    - names of variants in an :ref:'enum` (each enum has its own scope)
+    - names of elements in a :ref:`struct <struct>` (each struct has its own scope)
+    - names of variants in an :ref:`enum <enum>` (each enum has its own scope)
     - names of qualifiers
 
 SECoP defined names are usually lowercase, though that is not a restriction
@@ -885,7 +885,7 @@ Essentially this boils down to:
 #) same for error class (i.e. treat ``WrongType:MustBeInt`` as ``WrongType``,
    ignoring the ``:MustBeInt`` part)
 #) upon parsing a value, when you know it should be one element from an
-   :ref:`enum` (which SHOULD be transported as integer), if you find a string
+   :ref:`enum <enum>` (which SHOULD be transported as integer), if you find a string
    instead and that string is one of the names from the Enum, use that entry.
 #) check newer versions of the specification and check the issues as well, as
    the above may change
