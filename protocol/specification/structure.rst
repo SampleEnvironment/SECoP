@@ -3,6 +3,9 @@ Structure of SECoP
 
 .. image:: images/secop-img/secop-node-instance.svg
 
+.. index:: ECS
+.. index:: SEC node
+
 SECoP is a communication protocol with a client-server model.  The server is
 called the **SEC node**, while the client in here is called the **ECS**.
 
@@ -18,6 +21,8 @@ SEC node
     node allows ECS to access a set of modules (and their parameters/commands)
     via SECoP.  It also provides a list of accessible modules and parameters as
     well as descriptive meta data.
+
+.. index:: module
 
 Each SEC node consists of one or more **Modules**.  These represent the main
 interface for interacting with the hardware.
@@ -42,6 +47,9 @@ Module
     A SEC node controls a set of named modules.  Modules are fully specified by
     the descriptive data, see :ref:`module-description`.
 
+.. index:: interface class
+.. index:: feature
+
 Interface class
     A named grouping of parameters, commands and properties on a module that
     specifies a certain capability.
@@ -55,6 +63,10 @@ Feature
     however it is not bound to a specific hierarchy and can be added to any
     module regardless of interface class.
 
+.. index:: parameter
+.. index:: command
+.. index:: accessible
+
 Each of these modules can have static values which are known at startup and
 dynamic values.  These are called **Properties** and **Parameters**
 respectively.  Parameters can in turn have their own Properties.  Examples of
@@ -64,6 +76,9 @@ shows whether a parameter may be written to or not.
 To initiate actions that may not necessarily be tied to a parameter, modules can
 also have **Commands**, like stopping the current movement or running a
 calibration.
+
+Accessible
+    Parameters and commands together are called Accessibles.
 
 Parameter
     A piece of data associated with a module, typically in one of three
@@ -101,8 +116,8 @@ Command
     are defined by the implementation of the SEC node, the ECS can use them only
     in a general way, as their meaning is not known.
 
-Accessible
-    Parameters and commands together are called Accessibles.
+.. index:: property
+.. index:: data info
 
 Property
     The static information about SEC nodes, modules, parameters/commands and
