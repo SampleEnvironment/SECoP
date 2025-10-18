@@ -7,7 +7,8 @@ carriage return character (ASCII 13, ``"\r"``), which must be ignored.
 
 A message starts with an action keyword, followed optionally by one space and a
 specifier (not containing spaces), followed optionally by one space and a JSON
-value called data, which contains all remaining characters in the line.
+value (see :rfc:`8259`) called data, which contains all remaining characters in
+the line.
 
 The specifier consists of a module identifier, and for most actions, followed by
 a colon as separator and an accessible identifier.  In special cases

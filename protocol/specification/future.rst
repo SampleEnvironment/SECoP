@@ -75,5 +75,5 @@ representation may be developed.  This will essentially keep the structure of
 the messages, but replace the components of a message with shorter, binary
 representations.
 
-Good candidates for this are CBOR (see :RFC:`7049`) and MessagePack (see
+Good candidates for this are CBOR (see :rfc:`7049`) and MessagePack (see
 https://msgpack.org/).

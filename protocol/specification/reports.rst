@@ -70,7 +70,7 @@ Values are transferred as a JSON value.
     If an implementation uses a library which can not (de-)serialize all JSON
     values, the implementation can add square brackets around a JSON value,
     decode it and take the first element of the result.  When encoding, the
-    reverse action might be used as a workaround.  See also :RFC:`7493`.
+    reverse action might be used as a workaround.  See also :rfc:`7493`.
 
 
 .. _qualifiers:
