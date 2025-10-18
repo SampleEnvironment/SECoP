@@ -1,4 +1,4 @@
-``check``, ``logging``: optional extensions
+``check``, ``logging``: Optional extensions
 -------------------------------------------
 
 These messages are optional feature - the SEC node does not need to support them

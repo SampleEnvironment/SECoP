@@ -1,7 +1,7 @@
 .. _descriptive-data:
 
-Properties: Self-Description
-============================
+Properties and descriptive data
+===============================
 
 This section explains the "descriptive data", also called "structure report",
 i.e. the completely self-describing metadata sent by the SEC node in response to
@@ -75,14 +75,14 @@ Example of a complete description (JSON has been pretty-printed for clarity):
        :alt: accessible_description ::= '{' property+ '}'
 
 
-SEC Node Description
+SEC node description
 --------------------
 
 The descriptive data is a JSON object with nested sub-hierarchies.  The
 properties on the top level describe the SEC node.
 
 
-Mandatory SEC Node Properties
+Mandatory SEC node properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. node-property:: modules
@@ -113,7 +113,7 @@ Mandatory SEC Node Properties
     ``\n`` for linebreaks.
 
 
-Optional SEC Node Properties
+Optional SEC node properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. node-property:: firmware
@@ -140,10 +140,10 @@ Optional SEC Node Properties
 
 .. _module-description:
 
-Module Description
+Module description
 ------------------
 
-Mandatory Module Properties
+Mandatory module properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. mod-property:: accessibles
@@ -167,7 +167,7 @@ Mandatory Module Properties
     "Drivable"]``.
 
 
-Optional Module Properties
+Optional module properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. mod-property:: features
@@ -363,10 +363,10 @@ Optional Module Properties
 
 .. _accessible-description:
 
-Parameter and Command Description
+Parameter and command description
 ---------------------------------
 
-Mandatory Properties
+Mandatory properties
 ~~~~~~~~~~~~~~~~~~~~
 
 .. acc-property:: description
@@ -388,7 +388,7 @@ Mandatory Properties
               the latter have a datainfo of ``{"type": "command", ...}``.
 
 
-Mandatory Parameter Properties
+Mandatory parameter properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. acc-property:: readonly
@@ -397,7 +397,7 @@ Mandatory Parameter Properties
     or not.
 
 
-Optional Properties
+Optional properties
 ~~~~~~~~~~~~~~~~~~~
 
 .. acc-property:: group
@@ -490,7 +490,7 @@ Optional Properties
         | :issue:`075 New messages check and checked`
 
 
-Optional Parameter Properties
+Optional parameter properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. acc-property:: constant
@@ -503,7 +503,7 @@ Optional Parameter Properties
     The value given here must conform to the data type of the accessible.
 
 
-Custom Properties
+Custom properties
 -----------------
 
 Custom properties may further augment accessibles, modules or the SEC node

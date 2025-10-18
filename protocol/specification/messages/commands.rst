@@ -1,4 +1,4 @@
-``do``: execute commands
+``do``: Execute commands
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. message:: [request] do <module>:<command> [<value>]

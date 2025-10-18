@@ -1,6 +1,6 @@
 .. _error-reply:
 
-``error_*``: Error Replies
+``error_*``: Error replies
 --------------------------
 
 Contains an error class from the list below as its second item (the specifier).
@@ -26,7 +26,7 @@ Example:
 
 .. _error-classes:
 
-Error Classes
+Error classes
 -------------
 
 Error classes are divided into two groups: persisting errors and retryable
