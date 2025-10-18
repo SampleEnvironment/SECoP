@@ -1,4 +1,4 @@
-Complete Message Syntax
+Complete message syntax
 =======================
 
 This section formally defines the syntax of SECoP messages with the use of

@@ -1,6 +1,6 @@
 .. _future-compatibility:
 
-Future Compatibility
+Future compatibility
 ====================
 
 Notes for implementors of the current specification
@@ -60,7 +60,7 @@ design:
 * Define additional features, listed in an additional property.
 
 
-Message Handling
+Message handling
 ----------------
 
 For this, see :ref:`this section <message-compat>`.

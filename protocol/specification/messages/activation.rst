@@ -1,5 +1,5 @@
-``activate``, ``deactivate``: Controlling events
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+``activate``, ``deactivate``: Control events
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. message:: [request] activate [<module>]
              [reply] active [<module>]

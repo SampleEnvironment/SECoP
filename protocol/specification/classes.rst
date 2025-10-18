@@ -1,6 +1,6 @@
 .. _interface-classes:
 
-Interface Classes
+Interface classes
 =================
 
 Interface classes let the ECS determine the functionality of a module from its
@@ -23,7 +23,7 @@ of the base classes listed below.
     even conform to the Readable class.
 
 
-Base Classes
+Base classes
 ------------
 
 .. baseclass:: Communicator
