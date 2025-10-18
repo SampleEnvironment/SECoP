@@ -40,8 +40,8 @@ basic functionality, split into **Interface classes** and **Features**.
 
         Most modules should correspond to one independently measurable physical
         quantity and use one of the interface classes `Readable`, `Writable` or
-        `Drivable`.  However, more specialized modules like `Communicator` can be
-        implemented where appropriate.
+        `Drivable`.  However, more specialized modules like `Communicator` or
+        `Acquisition` can be implemented where appropriate.
 
         A SEC node controls a set of named modules.  Modules are fully specified by
         the descriptive data, see :ref:`module-description`.

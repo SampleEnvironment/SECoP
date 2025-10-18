@@ -351,6 +351,17 @@ Optional module properties
     Example: ``"secop_psi.ppms.Field"``
 
 
+Acquisition properties
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. mod-property:: acquisition_channels
+
+    On an `AcquisitionController`, this specifies the channel modules belonging
+    to this controller.  The names of the channel modules are represented as the
+    values of the JSON object.  The role of the channels are represented by the
+    keys and can be used as such by an ECS.
+
+
 .. _accessible-description:
 
 Parameter and command description
