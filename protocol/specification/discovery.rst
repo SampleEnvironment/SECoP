@@ -76,7 +76,4 @@ Implementation hints
   necessary.
 
 
-See also `SECoP RFC 5`_.
-
-
-.. _SECoP RFC 5: https://github.com/SampleEnvironment/SECoP/blob/master/rfcs/RFC-005-udp-discovery.rst
+See also :secop-rfc:`005-udp-discovery`.
