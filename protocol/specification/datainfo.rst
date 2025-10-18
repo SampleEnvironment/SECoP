@@ -204,7 +204,7 @@ Mandatory Data Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ``"min"``, ``"max"``
-   Integer limits, ``<min>`` <= ``<max>``.
+    Integer limits, ``<min>`` <= ``<max>``.
 
 
 Optional Data Properties
@@ -337,7 +337,7 @@ Optional Data Property
 ~~~~~~~~~~~~~~~~~~~~~~
 
 ``"minbytes"``
-   The minimum length, default is 0.
+    The minimum length, default is 0.
 
 
 Example
