@@ -1,4 +1,4 @@
-Parameters and Commands
+Parameters and commands
 =======================
 
 A typical module has several accessibles associated with it.  An accessible is
@@ -14,7 +14,7 @@ The following section describes the currently predefined parameters and
 commands.  This list will be extended continuously in new SECoP versions.
 
 
-Basic Parameters
+Basic parameters
 ~~~~~~~~~~~~~~~~
 
 .. parameter:: value
@@ -240,7 +240,7 @@ Error handling
     other ERROR state before returning ``done <module>:clear_errors``.
 
 
-Coupled Modules
+Coupled modules
 ~~~~~~~~~~~~~~~
 
 .. parameter:: controlled_by
@@ -347,7 +347,7 @@ Coupled Modules
     parameter with the name of the controlling module).
 
 
-Limits and Offset
+Limits and offset
 ~~~~~~~~~~~~~~~~~
 
 .. parameter:: target_limits

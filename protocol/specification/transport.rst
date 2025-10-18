@@ -72,7 +72,7 @@ handle updates, even if it didn't activate them, as that may have been performed
 by another client on a shared connection.
 
 
-Handling Timeout Issues
+Handling timeout issues
 -----------------------
 
 If a timeout happens, it is not easy for the ECS to decide on the best strategy.
