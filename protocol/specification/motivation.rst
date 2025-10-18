@@ -1,14 +1,9 @@
-Introduction
-============
+Motivation
+==========
 
 The main goal of the "committee for the standardization of sample environment
 communication" is to establish a common standard protocol **SECoP** for
 interfacing sample environment equipment to experiment control software.
-
-Definition: Experiment Control Software (ECS)
-    Software controlling the hardware for carrying out an experiment. Includes
-    the user interface.  Usually speaks several protocols with different parts
-    of the instrument.  Often also called "instrument control" in short.
 
 There is a task (7.1) within the European framework SINE2020 also dealing with
 this subject. In its description we read:
@@ -29,17 +24,7 @@ An ECS can be built in such a way that the configuration of the apparatus may be
 as short as entering a network address, as the description can be loaded over
 the protocol.
 
-Definition: Sample Environment Control Node (SEC node)
-    Computing unit or process, connected to all control units (temperature
-    controller, flow controller, pressure sensor ...) of a sample environment,
-    bridge to the ECS.  SECoP specifies how ECS speak with a SEC node.  The SEC
-    node allows ECS to access a set of modules (and their parameters/commands)
-    via SECoP.  It also provides a list of accessible modules and parameters as
-    well as descriptive meta data.
-
-
-Other requirements
-------------------
+.. rubric:: Other requirements
 
 - The protocol should be easy to use.
 

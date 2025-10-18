@@ -1,5 +1,5 @@
-SECoP UDP discovery protocol
-============================
+UDP discovery protocol
+======================
 
 Due to the flexibility of the SECoP node system, it is quite likely for multiple
 SEC nodes to be running on a single host.  Therefore, it is not sufficient to
@@ -76,7 +76,4 @@ Implementation hints
   necessary.
 
 
-See also `SECoP RFC 5`_.
-
-
-.. _SECoP RFC 5: https://github.com/SampleEnvironment/SECoP/blob/master/rfcs/RFC-005-udp-discovery.rst
+See also :secop-rfc:`005-udp-discovery`.

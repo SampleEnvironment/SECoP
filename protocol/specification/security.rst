@@ -1,4 +1,4 @@
-Security and Access Control
+Security and access control
 ===========================
 
 SECoP does not handle security of transferred data nor access control and relies
