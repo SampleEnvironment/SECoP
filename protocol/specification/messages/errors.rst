@@ -4,9 +4,9 @@
 --------------------------
 
 Contains an error class from the list below as its second item (the specifier).
-The third item of the message is an :ref:`prop-error-report`, containing the
-request message (minus line endings) as a string in its first element, a (short)
-human readable text as its second element.  The third element is a JSON object,
+The third item of the message is an :ref:`error-report`, containing the request
+message (minus line endings) as a string in its first element, a (short) human
+readable text as its second element.  The third element is a JSON object,
 containing possibly implementation specific information about the error (stack
 dump etc.).
 

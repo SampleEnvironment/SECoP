@@ -1,70 +1,17 @@
-.. _modules:
-
-Modules
-=======
-
-Definition: Module
-    A named logical component of an abstract view of the equipment.
-
-    We intentionally avoid the term "device", which might be misleading, as
-    "device" is often used for an entire apparatus, like a cryomagnet or
-    humidity cell.  In the context of SECoP, an apparatus in general is composed
-    of several modules.  For example different temperature sensors in one
-    apparatus are to be seen as different modules.
-
-    Most modules should correspond to one independently measurable physical
-    quantity and use one of the interface classes `Readable`, `Writable` or
-    `Drivable`.  However, more specialized modules like `Communicator` can be
-    implemented where appropriate.
-
-A SEC node controls a set of named modules.  Modules are fully specified by the
-descriptive data, see :ref:`module-description`.
-
-.. _accessibles:
-
-Accessibles
------------
+Parameters and Commands
+=======================
 
 A typical module has several accessibles associated with it.  An accessible is
-addressed by the combination of module and accessible name.  Module names have
-to be unique within an SEC node, accessible names have to be unique within a
-module.  There are two basic types of accessibles: parameters and commands.
+addressed by the combination of module and accessible name.  There are two basic
+types of accessibles: parameters and commands.
 
-Module and accessible names should be in English (incl. acronyms), using only
-ASCII letters and digits and some additional characters (see :doc:`messages`).
-The maximum name length is 63 characters.
+Module names have to be unique within an SEC node, accessible names have to be
+unique within a module.  Module and accessible names should be in English
+(incl. acronyms), using only ASCII letters and digits and some additional
+characters (see :ref:`naming`).  The maximum name length is 63 characters.
 
-Definition: Parameter
-    A piece of data associated with a module, typically in one of three
-    categories:
-
-    - physical or hardware defined, e.g. `value` or `pid`
-    - informational, e.g. `status`
-    - controlling the operation of the module, e.g. `pollinterval`
-
-    The main parameter of a module is its value.  Writable parameters may
-    influence the measurement (like PIDs).  Additional parameters may give more
-    information about its state (running, target reached), or details about its
-    functioning (heater power) for diagnostics purposes.  Parameters with a
-    predefined meaning are listed in the standard, they must always be used in
-    the same way.  Custom parameters are defined by the implementation of the
-    SEC node and their name must start with an underscore.  The ECS can use
-    unknown parameters only in a generic way, as their meaning is not known.
-
-Definition: Command
-    Commands are provided to initiate specified actions of the module.
-    They should generate an appropriate reply immediately after that action is
-    initiated, i.e. should not wait until some other state is reached.
-
-    However, if the command triggers side-effects, they MUST be communicated
-    before the reply is sent.  Commands may use an possibly structured argument
-    and may return a possibly structured result.  Commands with a predefined
-    meaning are listed in the standard, they must always be used in the same
-    way. Custom commands are defined by the implementation of the SEC node, the
-    ECS can use them only in a general way, as their meaning is not known.
-
-The following section describes the currently predefined accessibles, this list
-will be extended in new versions.
+The following section describes the currently predefined parameters and
+commands.  This list will be extended continuously in new SECoP versions.
 
 
 Basic Parameters
@@ -117,10 +64,10 @@ Basic Parameters
     changing any parameter (especially the 'target' parameter) does not yet
     initiate any action leading to a ``BUSY`` state.
 
-    In contrast, if no 'go' command is present, changing the target will start
+    In contrast, if no `go` command is present, changing the target will start
     an action trying to change the value to get closer to the target, which
-    usually leads to a BUSY state.  Changing any parameter, which has an impact
-    on measured values, should be executed immediately.
+    usually leads to a ``BUSY`` state.  Changing any parameter, which has an
+    impact on measured values, should be executed immediately.
 
 .. command:: hold
 
@@ -433,202 +380,3 @@ Communication
     :ref:`string <string>`, or any other datatype suitable to the protocol of the device.
     The `communicate` command is meant to be used in modules with the
     `Communicator` interface class.
-
-
-.. _properties:
-
-Properties
-----------
-
-Definition: Properties
-    The static information about parameters, modules and SEC nodes is
-    constructed from properties with predefined names and meanings.
-
-For a list of pre-defined properties see :ref:`descriptive-data`.
-
-
-.. _prop-data-report:
-
-Data report
------------
-
-A JSON array with the value of a parameter as its first element, and a JSON
-object containing the Qualifiers_ for this value as its second element.
-
-See also: :ref:`the syntax <data-report>`.
-
-.. note:: Future revisions may add additional elements.  These are to be ignored
-          for implementations of the current specification.
-
-
-.. _prop-error-report:
-
-Error report
-------------
-
-An error report is used in an :ref:`error-reply` indicating that the requested
-action could not be performed as request or that other problems occurred.  The
-error report is a JSON array containing the name of one of the :ref:`Error
-classes <error-classes>`, a human readable string and as a third element a
-JSON-object containing extra error information, which may include the timestamp
-(as key "t") and possible additional implementation specific information about
-the error (stack dump etc.).
-
-See also :ref:`the syntax <error-report>`.
-
-
-Structure report
-----------------
-
-The structure report is a structured JSON construct describing the structure of
-the SEC node.  This includes the SEC node properties, the modules, their
-module-properties and accessibles and the properties of the accessibles.  For
-details see :ref:`descriptive-data`.
-
-
-.. _value:
-
-Value
------
-
-Values are transferred as a JSON value.
-
-.. admonition:: Programming Hint
-
-    Some JSON libraries do not allow all JSON values in their (de-)serialization
-    functions.  Whether or not a JSON value is a valid JSON text, is
-    controversial, see this `stackoverflow issue
-    <https://stackoverflow.com/questions/19569221>`_ and :rfc:`8259`.
-
-    (clarification: a *JSON document* is either a *JSON object* or a *JSON
-    array*, a *JSON value* is any of a *JSON object*, *JSON array*, *JSON
-    number* or *JSON string*.)
-
-    If an implementation uses a library which can not (de-)serialize all JSON
-    values, the implementation can add square brackets around a JSON value,
-    decode it and take the first element of the result.  When encoding, the
-    reverse action might be used as a workaround.  See also :RFC:`7493`.
-
-
-.. _qualifiers:
-
-Qualifiers
-----------
-
-Qualifiers optionally augment the value in a reply from the SEC node, and
-present variable information about that parameter.  They are collected as named
-values in a JSON object.
-
-Currently 2 qualifiers are defined:
-
-.. describe:: "t"
-
-    The timestamp when the parameter has changed or was verified/measured (when
-    no timestamp is given, the ECS may use the arrival time of the update
-    message as the timestamp).  It SHOULD be given, if the SEC node has a
-    synchronized time.  The format is that of a UNIX time stamp, i.e. seconds
-    since 1970-01-01T00:00:00+00:00Z, represented as a number, in general a
-    floating point when the resolution is better than 1 second.
-
-    .. note:: To check if a SEC node supports time stamping, a `ping` request
-              can be sent.
-
-.. describe:: "e"
-
-    The uncertainty of the quantity.  MUST be in the same units as the value.
-    So far the interpretation of "e" is not fixed (sigma vs. RMS difference
-    vs. other possibilities).
-
-Other qualifiers might be added later to the standard.  If an unknown element is
-encountered, it is to be ignored.
-
-
-.. _interface-classes:
-
-Interface Classes
------------------
-
-Interface classes let the ECS determine the functionality of a module from its
-class or classes.
-
-The standard contains a list of classes, and a specification of the
-functionality for each of them.  The list might be extended over time.  Already
-specified base classes may be extended in later releases of the specification,
-but earlier definitions will stay intact, i.e. no removals or redefinitions will
-occur.
-
-The module class is in fact a list of classes (highest level class first) and is
-stored in the module-property `interface_classes`.  The ECS chooses the first
-class from the list which is known to it.  The last one in the list must be one
-of the base classes listed below.
-
-.. admonition:: Remark
-
-    The list may also be empty, indicating that the module in question does not
-    even conform to the Readable class.
-
-
-Base classes
-~~~~~~~~~~~~
-
-.. baseclass:: Communicator
-
-    The main purpose of the module is communication.  It may have none of the
-    predefined parameters of the other classes.
-
-    The `communicate` command should be used mainly for debugging reasons, or
-    as a workaround for using hardware functionalities not implemented in the
-    SEC node.
-
-.. baseclass:: Readable
-
-    The main purpose is to represent readable values (i.e. from a Sensor).
-    It has at least a `value` and a `status` parameter.
-
-.. baseclass:: Writable
-
-    The main purpose is to represent fast settable values (i.e. a switch).
-    It must have a `target` parameter in addition to what a `Readable` has.
-    It does not have a `stop` command. A module which needs time to reach
-    the target but cannot be stopped has also to be represented as a `Writable`,
-    with a `BUSY` item (code 300...389) in the status enum.
-
-.. baseclass:: Drivable
-
-    The main purpose is to represent slow settable values (i.e. a temperature or
-    a motorized needle valve).  It must have a `stop` command in addition to
-    what a `Writable` has.  Note that in case the `stop` command has no
-    effect, a `Writable` SHOULD be used.  Also, the `status` parameter will
-    indicate a BUSY state for a longer lasting operations.
-
-
-.. _features:
-
-Features
-~~~~~~~~
-
-Features allow the ECS to detect if a SECoP module supports a certain
-functionality.  A feature typically needs some predefined accessibles and/or
-module properties to be present.  However, it is not only a list of mandatory or
-optional accessibles, but indicates to the ECS that it may handle this
-functionality in a specific way.
-
-.. feature:: HasOffset
-
-    This feature indicates that the `value` and `target` parameters of a
-    module represent raw values, which need to be corrected by an offset.  A
-    module with the feature `HasOffset` must have a parameter `offset`,
-    which indicates to all clients that the transmitted raw values for the
-    parameters `value` and `target` are to be converted to corrected values
-    (on the client side) by the following formulas:
-
-    For reading the parameters `value` and `target`:
-
-    | corrected value (client) = value (transmitted) + offset
-    | corrected target (client) = target (transmitted) + offset
-
-    For changing the parameter `target`:
-
-    | target (transmitted) = corrected target (client) - offset
-
-    Mandatory parameter: `offset`

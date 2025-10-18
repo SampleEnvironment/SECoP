@@ -1,29 +1,85 @@
 .. _descriptive-data:
 
-Descriptive Data
-================
+Properties: Self-Description
+============================
 
 This section explains the "descriptive data", also called "structure report",
 i.e. the completely self-describing metadata sent by the SEC node in response to
-a ``describe`` message.
+a `describe` message.
 
 The format is JSON, as all other data in SECoP.
 
 .. note:: All names on each hierarchy level need to unique (i.e. not repeated)
           when lowercased.
 
+Example of a complete description (JSON has been pretty-printed for clarity):
+
+.. code:: json
+
+    {
+      "equipment_id": "example_heater",
+      "description": "a basic example temperature SEC node.",
+      "firmware": "ExampleSECoPFirmware",
+      "modules": {
+        "heater": {
+          "description": "Example Heater",
+          "implementation": "example.actuators.Heater",
+          "interface_classes": ["Drivable"],
+          "features": []
+          "accessibles": {
+            "value": {
+              "description": "current value of the module",
+              "datainfo": {"type": "double", "unit": "degC"},
+              "readonly": true
+            },
+            "target": {
+              "description": "target value of the module",
+              "datainfo": {"type": "double", "unit": "degC"},
+              "readonly": false
+            },
+            "status": {
+              "description": "current status of the module",
+              "datainfo": {
+                "type": "tuple",
+                "members": [
+                  {"type": "enum",
+                   "members": {"IDLE": 100, "WARN": 200, "BUSY": 300, "ERROR": 400}},
+                  {"type": "string"}
+                ]
+              },
+              "readonly": true
+            },
+            "stop": {
+              "description": "Stop heating, stay at current temperature.",
+              "datainfo": {"type": "command"}
+            }
+          }
+        }
+      }
+    }
+
+
+.. dropdown:: Syntax diagrams
+    :icon: code
+
+    .. image:: images/sec-node-description.svg
+       :alt: SEC_node_description ::= '{' ( property ',' )* '"modules":' modules ( ',' property )* '}'
+
+    .. image:: images/property.svg
+       :alt: property ::= name ':' value
+
+    .. image:: images/module-description.svg
+       :alt: module_description ::= '{' ( property ',' )* '"accessibles":' accessibles ( ',' property )* '}'
+
+    .. image:: images/accessible-description.svg
+       :alt: accessible_description ::= '{' property+ '}'
+
 
 SEC Node Description
 --------------------
 
-.. image:: images/sec-node-description.svg
-   :alt: SEC_node_description ::= '{' ( property ',' )* '"modules":' modules ( ',' property )* '}'
-
-.. compound::
-
-    Property:
-
-    .. image:: images/property.svg
+The descriptive data is a JSON object with nested sub-hierarchies.  The
+properties on the top level describe the SEC node.
 
 
 Mandatory SEC Node Properties
@@ -32,7 +88,7 @@ Mandatory SEC Node Properties
 .. node-property:: modules
 
     A JSON object with names of modules as key and JSON-objects as values,
-    see `Module Description`_.
+    see :ref:`module-description`.
 
     .. note:: Be aware that some JSON libraries may not be able to keep the
               order of the items in a JSON objects.  This is not required by the
@@ -69,8 +125,8 @@ Optional SEC Node Properties
 .. node-property:: implementor
 
     An optional string.  The implementor of a SEC node, defining the meaning of
-    custom modules, status values, custom properties and custom accessibles.
-    The implementor **must** be globally unique, for example 'sinq.psi.ch'.
+    custom modules, status values, custom properties and custom parameters/commands.
+    The implementor **must** be globally unique, for example ``"sinq.psi.ch"``.
     This may be achieved by including a domain name, but it does not need to be
     a registered name, and other means of assuring a globally unique name are
     also possible.
@@ -87,16 +143,13 @@ Optional SEC Node Properties
 Module Description
 ------------------
 
-.. image:: images/module-description.svg
-   :alt: module_description ::= '{' ( property ',' )* '"accessibles":' accessibles ( ',' property )* '}'
-
 Mandatory Module Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. mod-property:: accessibles
 
     A JSON object describing all the module's accessibles and their properties,
-    see `Accessible Description`_.
+    see :ref:`accessible-description`.
 
     .. note:: Be aware that some JSON libraries may not be able to keep the
               order of the items in a JSON objects.  This is not required by the
@@ -294,8 +347,8 @@ Optional Module Properties
 .. mod-property:: implementor
 
     A string giving the implementor of a module, defining the meaning
-    of custom status values, custom properties and custom accessibles.  The
-    implementor must be globally unique, for example 'sinq.psi.ch'.  This may
+    of custom status values, custom properties and custom parameters/commands.  The
+    implementor must be globally unique, for example ``"sinq.psi.ch"``.  This may
     be achieved by including a domain name, but it does not need to be a
     registered name, and other means of assuring a global unique name are also
     possible.
@@ -308,20 +361,31 @@ Optional Module Properties
     Example: ``"secop_psi.ppms.Field"``
 
 
-Accessible Description
-----------------------
+.. _accessible-description:
 
-.. image:: images/accessible-description.svg
-   :alt: accessible_description ::= '{' property+ '}'
+Parameter and Command Description
+---------------------------------
 
-
-Mandatory Accessible Properties
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Mandatory Properties
+~~~~~~~~~~~~~~~~~~~~
 
 .. acc-property:: description
 
-    A string describing the accessible, formatted as for module description or
-    node description.
+    A string describing the parameter or command, formatted as for module
+    description or node description.
+
+.. acc-property:: datainfo
+
+    For a parameter: Contains information on the type of data provided by the
+    parameter and associated metadata, such as units.
+
+    For a command: Contains information on the type of command arguments and
+    result types, if any.
+
+    See :ref:`data-types`.
+
+    .. note:: Parameters and commands can be distinguished by the `datainfo`;
+              the latter have a datainfo of ``{"type": "command", ...}``.
 
 
 Mandatory Parameter Properties
@@ -332,38 +396,27 @@ Mandatory Parameter Properties
     A boolean value.  Indicates whether this parameter may be changed by an ECS,
     or not.
 
-.. acc-property:: datainfo
 
-    Contains information on the type of data provided by the accessible and
-    associated metadata, such as units.
-
-    See :ref:`data-types`.
-
-    .. note:: Parameters and commands can be distinguished by the `datainfo`;
-              the latter have a datainfo of ``{"type": "command", ...}``.
-
-
-Optional Accessible Properties
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Optional Properties
+~~~~~~~~~~~~~~~~~~~
 
 .. acc-property:: group
 
-    A string identifier for grouping accessibles in the ECS.  It may contain ":"
-    which may be interpreted as path separator between path components.  The
-    lowercase version of a path component must not match the lowercase version
-    of any module name or accessible on the same SEC node.
+    A string identifier for grouping parameters/commands in the ECS, within the
+    containing module.  It may contain ":" which may be interpreted as path
+    separator between path components.  The lowercase version of a path
+    component must not match the lowercase version of any module name or
+    accessible on the same SEC node.
 
-    Related issue: :issue:`008 Groups and Hierarchy`
+    .. dropdown:: Related issues
 
-    .. note:: The accessible property ``group`` is used for grouping of
-              accessibles within a module, the module property ``group`` is used
-              for grouping of modules within a node.
+        | :issue:`008 Groups and Hierarchy`
 
 .. acc-property:: visibility
 
-    A string giving a hint for UIs, for which user roles the accessible should be
-    displayed, hidden or allow read access only.
-    MUST be one of the values on the two visibility columns. The default is ``"www"``.
+    A string giving a hint for UIs, for which user roles the parameter or
+    command should be displayed, hidden or allow read access only.  MUST be one
+    of the values on the two visibility columns. The default is ``"www"``.
 
     .. table::
 
@@ -423,12 +476,11 @@ Optional Accessible Properties
 .. acc-property:: meaning
 
     A JSON object regarding the accessible meaning.  It has the same
-    specification as the `meaning` property.
-
+    specification as the module `meaning` property.
 
 .. acc-property:: checkable
 
-    A boolean value, indicating whether the accessible can be checked with a
+    A boolean value indicating whether the accessible can be checked with a
     `check` message.  If omitted, the accessible is assumed to be not
     checkable (``checkable == false``), and the SEC node should reply with a
     `NotCheckable` error when a `check` message is sent.

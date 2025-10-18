@@ -9,24 +9,24 @@ and should reply with a `ProtocolError` error to indicate this.
              [reply] error_check <module>:<accessible> <error-report>
 
     The check value message is used to enable *dry run* functionality on
-    :ref:`accessibles <accessibles>` (parameters and commands). It consists of the
-    module and accessible name, in addition to the value to be verified. It allows
-    an ECS to verify if a value can be set on a particular parameter without
-    actually changing it with a `change` message.
-    Similarly, it can be used on commands to check if a value is a valid argument,
-    without `executing <do>` the command. This check goes beyond a
-    simple validity check based on the accessible's datainfo and may depend on the
-    current configuration of the entire SEC node. Upon successful completion of the
-    check, a `checked` response is sent, containing a `data-report` of the
-    verified value. The accessible property `checkable` indicates whether an
-    accessible can be checked.
+    :doc:`parameters and commands <../accessibles>`.  It consists of the module and
+    accessible name, in addition to the value to be verified.  It allows an ECS
+    to verify if a value can be set on a particular parameter without actually
+    changing it with a `change` message.  Similarly, it can be used on commands
+    to check if a value is a valid argument, without `executing <do>` the
+    command.  This check goes beyond a simple validity check based on the
+    accessible's datainfo and may depend on the current configuration of the
+    entire SEC node.  Upon successful completion of the check, a `checked`
+    response is sent, containing a `data-report` of the verified value.  The
+    accessible property `checkable` indicates whether an accessible can be
+    checked.
 
     .. admonition:: Remarks
 
-        * The response to a `check` message must not depend on the current status
-          of the module.
-        * A `check` message must not change anything, neither on the hardware nor
-          on any parameter.
+        * The response to a `check` message must not depend on the current
+          status of the module.
+        * A `check` message must not change anything, neither on the hardware
+          nor on any parameter.
         * The `checked` and `error_check` messages are only sent in response to
           the `check` message on the same connection, and not to other clients
           with an activated connection.
@@ -69,7 +69,7 @@ and should reply with a `ProtocolError` error to indicate this.
     "debug"
         All log messages are logged remotely.
 
-    A SEC node should reply with an :ref:`prop-error-report` (`ProtocolError`) if
+    A SEC node should reply with an :ref:`error-report` (`ProtocolError`) if
     it doesn't implement this message.  Otherwise it should mirror the request,
     which may be updated with the logging-level actually in use.  I.e. if an SEC
     node does not implement the "debug" level, but "error" and "info" and an ECS
