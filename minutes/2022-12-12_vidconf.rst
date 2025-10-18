@@ -26,7 +26,7 @@ Agenda
 3) items resulting from last best practice discussions
 
   - proposal for check/checked message (see issue 75)
-    https://github.com/SampleEnvironment/SECoP/blob/master/protocol/issues/075%20New%20messages%20check%20and%20checked.rst
+    https://github.com/SampleEnvironment/SECoP/blob/master/issues/075%20New%20messages%20check%20and%20checked.rst
 
   Who writes issues about:
   - 'use_' prefix

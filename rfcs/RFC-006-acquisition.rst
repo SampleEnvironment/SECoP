@@ -9,7 +9,7 @@ Summary
 =======
 
 This RFC (carried over from `issue 76
-<https://github.com/SampleEnvironment/SECoP/blob/master/protocol/issues/076%20Interface%20for%20Measurable%20hardware.rst>`_)
+<https://github.com/SampleEnvironment/SECoP/blob/master/issues/076%20Interface%20for%20Measurable%20hardware.rst>`_)
 proposes the addition of two new interface classes, specific to modules that
 support longer-running data acquisition.
 

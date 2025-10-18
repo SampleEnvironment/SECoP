@@ -27,7 +27,7 @@ Agenda
 2) split specification in a core part (protocol + other basic things) and a 'best practice' part
    and discuss a possible adaption the approval process for the specification
 
-3) SECoP Issues: https://github.com/SampleEnvironment/SECoP/tree/master/protocol/issues
+3) SECoP Issues: https://github.com/SampleEnvironment/SECoP/tree/master/issues
    - issue 79: hints for readonly access. decide about the proposal in the draft ("visibility" in modules and accessible)
    - issue 76: Interface for Measurable hardware (are we ready for an agreement?)
    - issue 77: prefixes / postfixes: a precise specification test has to be written

@@ -28,7 +28,7 @@ Agenda:
    - what should we present
    - any issues to discuss with other workpackages?
 
-3) SECoP issues https://github.com/SampleEnvironment/SECoP/tree/master/protocol/issues
+3) SECoP issues https://github.com/SampleEnvironment/SECoP/tree/master/issues
 
    - issue 76: Interface for Measurable hardware (are we ready for an agreement?)
    - issue 77: predefined parameter name prefixes (change to postfix - further discussion needed?)

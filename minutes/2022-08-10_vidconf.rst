@@ -26,9 +26,9 @@ Agenda:
 
 3) orange type cryostat example
 
-4) finalizing issue 65 (coupled modules, see section "Decision" of https://github.com/SampleEnvironment/SECoP/blob/master/protocol/issues/065%20handling%20of%20coupled%20modules.rst)
+4) finalizing issue 65 (coupled modules, see section "Decision" of https://github.com/SampleEnvironment/SECoP/blob/master/issues/065%20handling%20of%20coupled%20modules.rst)
 
-5) further discussion on issue 73 (offset and limits, https://github.com/SampleEnvironment/SECoP/blob/master/protocol/issues/073%20HasLimits%20and%20HasOffset.rst)
+5) further discussion on issue 73 (offset and limits, https://github.com/SampleEnvironment/SECoP/blob/master/issues/073%20HasLimits%20and%20HasOffset.rst)
 
 6) next meeting
 

@@ -29,7 +29,7 @@ Agenda:
 
 4) next proposal for issue 73. Instead of the proposed reset_limits command,
    I propose a read only target_hardlimits parameter. Naming debateable.
-   https://github.com/SampleEnvironment/SECoP/blob/master/protocol/issues/073%20HasLimits%20and%20HasOffset.rst
+   https://github.com/SampleEnvironment/SECoP/blob/master/issues/073%20HasLimits%20and%20HasOffset.rst
 
 5) how to represent Measurables in SECoP
    - discuss further the proposed ideas from last meeting

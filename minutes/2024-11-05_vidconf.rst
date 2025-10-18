@@ -88,7 +88,7 @@ After a minor side discussion about naming in Bluesky, Georg suggests 'Acquisiti
 Klaus ponders around 'collector'/'capture'.
 
 proposed implementation specs:
-https://github.com/SampleEnvironment/SECoP/blob/measurable/protocol/issues/076%20Interface%20for%20Measurable%20hardware.rst
+https://github.com/SampleEnvironment/SECoP/blob/measurable/issues/076%20Interface%20for%20Measurable%20hardware.rst
 
 The implementation seems to be accepted.
 

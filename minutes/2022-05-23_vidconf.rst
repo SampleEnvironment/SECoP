@@ -163,9 +163,9 @@ Agenda
 
 1) discuss the JSON description of the HZB proposal of the orange cryo
 2) Issue 72 (features)
-   https://github.com/SampleEnvironment/SECoP/blob/master/protocol/issues/072%20features.rst
+   https://github.com/SampleEnvironment/SECoP/blob/master/issues/072%20features.rst
 3) Issue 73 (HasLimits and HasOffset)
-   https://github.com/SampleEnvironment/SECoP/blob/master/protocol/issues/073%20HasLimits%20and%20HasOffset.rst
+   https://github.com/SampleEnvironment/SECoP/blob/master/issues/073%20HasLimits%20and%20HasOffset.rst
 4) Ennos proposal on how to encode additional definitions in the descriptive data
 5) other still open issues
 6) next meeting

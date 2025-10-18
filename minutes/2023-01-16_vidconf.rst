@@ -27,12 +27,12 @@ Agenda:
 2) refinement of specs (please no lengthy discussions)
    - *IDN? message (change inserted to spec draft)
    - offset datatype: I can not find a concise and helpful wording for this. See last section of issue 73:
-     https://github.com/SampleEnvironment/SECoP/blob/master/protocol/issues/073%20HasLimits%20and%20HasOffset.rst
+     https://github.com/SampleEnvironment/SECoP/blob/master/issues/073%20HasLimits%20and%20HasOffset.rst
 
 3) issues (discussion only if new proposals are available):
 
  - issue 75: check/checked message
-   https://github.com/SampleEnvironment/SECoP/blob/master/protocol/issues/075%20New%20messages%20check%20and%20checked.rst
+   https://github.com/SampleEnvironment/SECoP/blob/master/issues/075%20New%20messages%20check%20and%20checked.rst
  - 'use_' prefix
  - 'quantity' module property, 'max_' prefix (I have not yet found the time to work on it)
  - Measurable

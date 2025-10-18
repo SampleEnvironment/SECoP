@@ -30,7 +30,7 @@ Agenda
 
 3) Issue 73 (HasOffset, target_limits), see the next proposal:
 
-https://github.com/SampleEnvironment/SECoP/blob/master/protocol/issues/073%20HasLimits%20and%20HasOffset.rst
+https://github.com/SampleEnvironment/SECoP/blob/master/issues/073%20HasLimits%20and%20HasOffset.rst
 
 If we agree on this, the idea to indicate partial changes of the descriptive data may be obsolete.
 I propose to postpone the discussion until the need arises.
