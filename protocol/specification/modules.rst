@@ -79,7 +79,7 @@ Basic Parameters
     A :ref:`tuple <tuple>` of two elements:
 
     - A predefined value from an :ref:`enum <enum>`.  The possible values for
-      each module are given by the ``datainfo`` for the status parameter.
+      each module are given by the `datainfo` for the status parameter.
 
       The integer values for the enum must conform to the assignments given in
       :ref:`status-codes`, while the name are free.  However, it is recommended
@@ -405,13 +405,13 @@ Limits and Offset
 
 .. parameter:: target_limits
 
-    In addition to the range given in the ``datainfo`` property of the
+    In addition to the range given in the `datainfo` property of the
     `target` parameter, a SEC node might offer changeable limits restricting
     the allowed range even more.  `target_limits` is structured as a
     :ref:`tuple <tuple>` with two numeric members indicating the lower and upper end of
     a valid interval for the setting of the `target` parameter.  The
-    ``datainfo`` property of the `target` parameter must match the members of
-    the ``datainfo`` property of `target_limits`.  The SEC node must reply
+    `datainfo` property of the `target` parameter must match the members of
+    the `datainfo` property of `target_limits`.  The SEC node must reply
     with an error in case a given target value does not fit into the interval.
 
 .. _offset:
