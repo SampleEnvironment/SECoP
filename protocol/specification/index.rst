@@ -11,6 +11,7 @@ Specification
     protocol
     semantics
     additional
+    changes
     ../genindex
 
 
