@@ -326,7 +326,7 @@ Binary large object: ``blob``
 
 .. rubric:: Transport
 
-As a single-line base-64 (see :RFC:`4648`) encoded JSON string.
+As a single-line base-64 (see :rfc:`4648`) encoded JSON string.
 
 Example: ``"AA=="`` (a single, zero valued byte)
 
@@ -476,7 +476,7 @@ As a JSON object containing the following items:
     List of the actual length of each dimension in the data.
 
 ``"blob"``
-    The data, encoded as a single-line base64 (see :RFC:`4648`) encoded
+    The data, encoded as a single-line base64 (see :rfc:`4648`) encoded
     JSON-string.
 
 Example: ``{"len": [2, 3], "blob": "AACAPwAAAEAAAEBAAACAQAAAoEAAAMBA"}``
