@@ -1,7 +1,7 @@
 Structure of SECoP
 ==================
 
-.. TODO: insert diagram here
+.. image:: images/secop-img/secop-node-instance.svg
 
 SECoP is a communication protocol with a client-server model.  The server is
 called the **SEC node**, while the client in here is called the **ECS**.
