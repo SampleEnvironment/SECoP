@@ -5,7 +5,7 @@ Data transfer
 -------------
 
 SECoP relies on a stream transport of 8-bit bytes.  Most often this will be a
-TCP conection.  In those cases the SEC node SHOULD support as many parallel
+TCP connection.  In those cases the SEC node SHOULD support as many parallel
 simultaneous connections as technically feasible.
 
 .. important::
@@ -116,7 +116,7 @@ connection continues using the WebSocket protocol in both directions.
 
 Since WebSockets provide reliable framing, every SECoP message is sent in a
 frame.  The line ending added to separate messages over raw TCP is therefore
-unneded, but remains valid.  Messages are sent as TEXT frames.
+unneeded, but remains valid.  Messages are sent as TEXT frames.
 
 Everything else (message structure and semantics) remains unchanged.
 
