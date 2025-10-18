@@ -65,10 +65,10 @@ Referencing Systems
 ~~~~~~~~~~~~~~~~~~~
 
 In the SECNode descriptive data, the optional property ``systems`` is
-introduced.  It is a JSON object with local system names as keys and the schema
-name of the system and a mapping of module names as the value.  For a system to
-be valid, all non-optional modules that are included in the system definition
-have to be present.
+introduced.  It is a JSON object with local system names as keys and a
+description, the schema name of the system and a mapping of module names as the
+value.  For a system to be valid, all non-optional modules that are included in
+the system definition have to be present.
 
 Local system names may not clash with module names on the same SEC node.
 
@@ -77,13 +77,14 @@ Example:
 .. code:: json
 
     "systems": {
-        "cryo1": [
-            "OrangeCryostat",
-            {
+        "cryo1": {
+            "description": "A cryo",
+            "system": "OrangeCryostat",
+            "modules": {
                 "T": "cryo1_T",
                 "HeLevel": "cryo1_helevel",
             },
-        ],
+        },
     },
 
 
@@ -92,36 +93,40 @@ For subsystems:
 .. code:: json
 
     "systems": {
-        "mag5t_x": [
-            "PowerSupply",
-            {
+        "mag5t_x": {
+            "description": "X axis power supply",
+            "system": "PowerSupply",
+            "modules": {
                 "current": "magcur_x",
                 "voltage": "magvolt_x"
             }
-        ],
-        "mag5t_y": [
-            "PowerSupply",
-            {
+        },
+        "mag5t_y": {
+            "description": "Y axis power supply",
+            "system": "PowerSupply",
+            "modules": {
                 "current": "magcur_y",
                 "voltage": "magvolt_y"
             }
-        ],
-        "mag5t_z": [
-            "PowerSupply",
-            {
+        },
+        "mag5t_z": {
+            "description": "Z axis power supply",
+            "system": "PowerSupply",
+            "modules": {
                 "current": "magcur_z",
                 "voltage": "magvolt_z"
             }
-        ],
-        "mag5t": [
-            "VectorMagnet",
-            {
+        },
+        "mag5t": {
+            "description": "5 Tesla magnet",
+            "system": "VectorMagnet",
+            "modules": {
                 "T": "magtemp",
                 "X": "mag5t_x",
                 "Y": "mag5t_y",
                 "Z": "mag5t_z",
             },
-        ],
+        },
     },
 
 
