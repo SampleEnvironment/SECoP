@@ -17,14 +17,20 @@
               during the initial phase, i.e. it must handle the case of receiving
               more than one update for any valid specifier.
 
-    A SEC node might accept a module name as second item of the message
-    (*module-wise activation*), activating only updates on the parameters of the
-    selected module.  In this case, the "active" reply also contains the module
-    name.
+Message flow example:
 
-    A SEC node not implementing module-wise activation MUST NOT send the module name
-    in its reply to an module-wise activation request, and MUST activate all modules
-    (*fallback mode*).
+.. image:: ../images/secop-img/secop-sequence-activate.svg
+    :width: 80%
+
+A SEC node might accept a module name as second item of the message
+(*module-wise activation*), activating only updates on the parameters of the
+selected module.  In this case, the "active" reply also contains the module
+name.
+
+A SEC node not implementing module-wise activation MUST NOT send the module name
+in its reply to an module-wise activation request, and MUST activate all modules
+(*fallback mode*).
+
 
 .. message:: [request] deactivate [<module>]
              [reply] inactive [<module>]
