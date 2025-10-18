@@ -223,7 +223,9 @@ Optional module properties
     lowercase version of a path component must not match the lowercase version
     of any module name on the same SEC node.
 
-    Related issue: :issue:`008 Groups and Hierarchy`
+    .. dropdown:: Related issues
+
+        | :issue:`008 Groups and Hierarchy`
 
 .. mod-property:: meaning
 
