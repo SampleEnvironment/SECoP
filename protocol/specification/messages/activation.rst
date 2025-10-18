@@ -28,6 +28,7 @@
 
 .. message:: [request] deactivate [<module>]
              [reply] inactive [<module>]
+             [reply] error_deactivate [<module>] <error-report>
 
     A parameterless message.  After the "inactive" reply no more updates are
     delivered if not triggered by a read message.

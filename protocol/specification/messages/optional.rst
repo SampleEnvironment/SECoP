@@ -17,8 +17,8 @@ and should reply with a `ProtocolError` error to indicate this.
     command.  This check goes beyond a simple validity check based on the
     accessible's datainfo and may depend on the current configuration of the
     entire SEC node.  Upon successful completion of the check, a `checked`
-    response is sent, containing a `data-report` of the verified value.  The
-    accessible property `checkable` indicates whether an accessible can be
+    response is sent, containing a :ref:`data-report` of the verified value.
+    The accessible property `checkable` indicates whether an accessible can be
     checked.
 
     .. admonition:: Remarks

@@ -32,7 +32,7 @@ Example:
     value to be set.  The value is JSON formatted.  As soon as the set-value is read
     back from the hardware, all clients, having activated the parameter/module in
     question, get an "update" message.  After all side-effects are communicated, a
-    "changed" reply is then send, containing a `data-report` of the read-back value.
+    "changed" reply is then send, containing a :ref:`data-report` of the read-back value.
 
     .. admonition:: Remarks
 

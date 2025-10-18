@@ -59,7 +59,7 @@ The ``<`` or ``>`` marks whether messages are sent to or received from the node.
  Execute command         request        `do mod:cmd value <do>`
       \                  reply          `done mod:cmd data-report <done>`
  Value update event      event          `update mod:param data-report <update>`
- Error reply             reply          `error_action specifier error-report <error>`
+ Error reply             reply          `error_action specifier error-report <error_*>`
  Checking (\*)           request        `check mod:param value <check>`
       \                  reply          `checked mod:param data-report <checked>`
  Logging (\*)            request        `logging mod level <logging>`
