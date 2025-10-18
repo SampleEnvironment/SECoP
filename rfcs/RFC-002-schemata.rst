@@ -144,6 +144,9 @@ SECoP extensions".
   A dictionary of module names and their definitions.  Each item is
   either a reference to an existing interface/feature definition or a
   full inline interface definition.
+``systems``
+  A dictionary of subsystem names and their definitions, analogous to
+  ``modules``.
 
 When a new entity is proposed, the ``version`` starts at 0.  A version of 0
 does not give a stability guarantee, unlike versions larger than 0.  If an
