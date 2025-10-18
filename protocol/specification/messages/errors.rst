@@ -64,9 +64,9 @@ node, the module or the connected hardware.
 
 .. errorclass:: NotCheckable
 
-    The requested check can not be performed on the specified parameter
-    (i.e. on parameters, where no :ref:`checkable <prop-checkable>` property
-    is present, or if it is set to false).
+    The requested check can not be performed on the specified parameter (i.e. on
+    parameters, where no `checkable` property is present, or if it is set to
+    false).
 
 .. errorclass:: WrongType
 
@@ -77,7 +77,7 @@ node, the module or the connected hardware.
 .. errorclass:: RangeError
 
     The requested parameter change or command can not be performed as the
-    argument value is not in the allowed range specified by the ``datainfo``
+    argument value is not in the allowed range specified by the `datainfo`
     property.  This also happens if an unspecified enum variant is tried to
     be used, the size of a blob or string does not match the limits given in
     the descriptive data, or if the number of elements in an array does not

@@ -27,8 +27,7 @@ SECoP Node Structure
   Properties.
 
   Examples of properties would be the datatype of the parameter or the
-  :ref:`readonly <prop-readonly>` flag that shows whether a parameter may be
-  written to or not.
+  `readonly` flag that shows whether a parameter may be written to or not.
 
   To initiate actions that may not necessarily be tied to a parameter, modules
   can also have :ref:`Commands <accessibles>`, like stopping the current
