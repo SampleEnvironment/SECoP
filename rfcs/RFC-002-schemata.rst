@@ -31,7 +31,7 @@ form, while not losing human readability and too much flexibility.
 These entities are:
 
 - Interface classes and features
-- Parameters, commands and properties
+- Parameters, parameter postfixes, commands and properties
 - Data types
 - Systems (see RFC-004)
 
@@ -56,7 +56,8 @@ Each entity has a few common fields:
 
 ``kind``
   The kind of entity, one of ``Repository``, ``System``, ``Interface``,
-  ``Feature``, ``Parameter``, ``Command``, ``Property``, ``Datainfo``.
+  ``Feature``, ``Parameter``, ``ParameterPostfix``, ``Command``, ``Property``,
+  ``Datainfo``.
 ``name``
   The entity's unique name.
 ``version``
@@ -76,7 +77,7 @@ SECoP extensions".
 ``files``
   A list of other YAML file paths, relative to this file, in which the entities
   making up the repository can be found.
-``systems``, ``interfaces``, ``features``, ``parameters``, ``commands``, ``datainfo``
+``systems``, ``interfaces``, ``features``, ``parameters``, ``postfixes``, ``commands``, ``datainfo``
   Lists of references_ to entities that are part of the repository.
 ``properties``
   Dictionary of lists of references_ to properties in the repository, keyed
@@ -104,6 +105,15 @@ SECoP extensions".
 ``optional``
   Boolean, if the parameter is by default optional when added in
   interfaces/features.
+
+**For parameter postfixes:**
+
+``readonly``
+  Boolean, if the parameter should be readonly.
+``datainfo``
+  Specification of the parameter's datainfo_.
+``properties``
+  References_ to the properties that are possible on this entity.
 
 **For commands:**
 
@@ -157,7 +167,9 @@ SECoP extensions".
 When a new entity is proposed, the ``version`` starts at 0.  A version of 0
 does not give a stability guarantee, unlike versions larger than 0.  If an
 entity is accepted and introduced into the specification, the version is
-defined as 1. Changes to the interface afterwards bump the version number.
+defined as the major number of the specification it first appears in.
+Changes to the interface afterwards require a major specification version
+bump and also bump the entity's version number.
 
 Example
 -------
