@@ -61,8 +61,10 @@ Each entity has a few common fields:
   The entity's unique name.
 ``version``
   The version of the definition, as a simple integer.
+``link``
+  A URL linking to the description of the entity.  Optional.
 ``description``
-  A human-readable description. Optional.
+  A human-readable description.
 
 Then, depending on the ``kind``, different keys can be present:
 
@@ -121,14 +123,17 @@ SECoP extensions".
   Specification of the property's `JSON type`_.
 ``optional``
   Boolean, if the property is by default optional.
+``value``
+  If present, forces the property's value to be this - this is mainly
+  useful for Systems.
 
 **For datainfos:**
 
 ``dataty``
   Specification of the datainfo's `JSON type`_ (i.e. transport layer).
-``members``
-  A dictionary of members of the datainfo specification. Each member can have
-  the following properties:
+``dataprops``
+  A dictionary of data properties of the datainfo specification. Each one
+  can have the following properties:
 
   ``dataty``
     Specification of the datainfo property's `JSON type`_.
@@ -319,7 +324,7 @@ Datainfo
 
 ``datainfo`` entries are either strings (the name of the datainfo entity) or
 dictionaries with a key ``type`` (the name of the datainfo entity) and all
-members of the respective datainfo.
+dataprops of the respective datainfo.
 
 ``"any"`` is allowed for unspecified datainfos.
 
