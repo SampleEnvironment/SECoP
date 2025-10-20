@@ -4,7 +4,7 @@ Changes between versions
 This document tracks the various additions and breaking changes made in the
 different versions of the SECoP specification.
 
-Minor version updates like 1.0 -> 1.1 only contain backwards compatible changes,
+Minor version updates like 1.0 → 1.1 only contain backwards compatible changes,
 while major version updates can contain breaking changes.
 
 A SEC node typically only implements one version of the specification.  To
@@ -28,9 +28,10 @@ loss of functionality.
 - The `visibility` property for modules and accessibles has a new format with
   extended possibilities (:issue:`079 hints for readonly access`).
 
-- The `meaning` property for modules has a different format.  `meaning` can now
-  also be given for individual accessibles, and new "meanings" have been added
-  to be better compatible with the NeXuS standard.
+- The `meaning` property for modules has a different format with capabilities to
+  link to external definitions/ontologies.  `meaning` can now also be given for
+  individual accessibles, and new "functions" have been added to be better
+  compatible with the NeXuS standard.
 
 .. TODO not yet in the text!
 
