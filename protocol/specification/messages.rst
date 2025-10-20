@@ -22,7 +22,7 @@ Examples of messages are::
     > change temp:target 15.0
     < update temp:value [15.3, {"t": 1736239123.0}]
 
-The ``<`` or ``>`` marks whether messages are sent to or received from the node.
+The ``>`` or ``<`` marks whether messages are sent to or received from the node.
 
 .. toctree::
     :hidden:

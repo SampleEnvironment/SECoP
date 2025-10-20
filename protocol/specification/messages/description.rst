@@ -4,10 +4,11 @@
 .. message:: [request] describe
              [reply] describing . <structure-report>
 
-    These messages are normally exchanged directly after requesting `*IDN?`.  The
-    reply contains the "structure report", i.e. a JSON object describing the name of
-    modules exported and their parameters, together with the corresponding
-    properties.  This is explained in detail in :ref:`descriptive-data`.
+    These messages are normally exchanged directly after requesting `*IDN?`.
+    The reply contains the "structure report", i.e. a JSON object describing the
+    name of exported modules and their parameters, together with the
+    corresponding properties.  This is explained in detail in
+    :ref:`descriptive-data`.
 
 The dot (second item in the reply message) is a placeholder for extensibility
 reasons and may be changed in a later revision.  A client implementing the

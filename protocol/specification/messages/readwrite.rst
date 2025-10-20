@@ -20,7 +20,7 @@
         > read t1:value
         < reply t1:value [295.13,{"t":1505396348.188}]
         > read t1:status
-        > reply t1:status [[100,"OK"],{"t":1505396348.548}]
+        < reply t1:status [[100,"OK"],{"t":1505396348.548}]
 
 
 .. message:: [request] change <module>:<parameter> <value>

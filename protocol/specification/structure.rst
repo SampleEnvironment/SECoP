@@ -59,9 +59,10 @@ Interface class
     be handled in exactly the same way.
 
 Feature
-    Similar to an interface class, a feature specifies a grouping of elements,
-    however it is not bound to a specific hierarchy and can be added to any
-    module regardless of interface class.
+    Similar to an interface class, a feature specifies a elements and
+    functionality that are supported by a module, however it is not bound to a
+    specific hierarchy and can be added to any module regardless of interface
+    class.
 
 .. index:: parameter
 .. index:: command
@@ -88,7 +89,7 @@ Parameter
     - informational, e.g. `status`
     - controlling the operation of the module, e.g. `pollinterval`
 
-    The main parameter of a module is its value.  Writable parameters may
+    The main parameter of a module is its `value`.  Writable parameters may
     influence the measurement (like PIDs).  Additional parameters may give more
     information about its state (running, target reached), or details about its
     functioning (heater power) for diagnostics purposes.

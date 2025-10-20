@@ -45,7 +45,7 @@ Base classes
     The main purpose is to represent fast settable values (i.e. a switch).
     It must have a `target` parameter in addition to what a `Readable` has.
     It does not have a `stop` command. A module which needs time to reach
-    the target but cannot be stopped has also to be represented as a `Writable`,
+    the target but cannot be stopped should also be represented as a `Writable`,
     with a ``BUSY`` item (code 300...389) in the status enum.
 
 .. baseclass:: Drivable

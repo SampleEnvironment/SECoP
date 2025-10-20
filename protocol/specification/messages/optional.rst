@@ -35,10 +35,16 @@ and should reply with a `ProtocolError` error to indicate this.
           because the checked value is outside the range (`RangeError`)
           specified by the `datainfo` property.
 
-    Example::
+    Examples::
 
         > check mf:target [1.0, 1.0, 2.0]
         < checked mf:target [[1.0, 1.0, 2.0], {}]
+
+        > check mf:target [1.0, 2.0, 2.5]
+        < error_check mf:target ["BadValue", "value outside allowed sphere", {"closest_valid": [0.8, 1.6, 2.0]}]
+
+        > check cryo:target 2.7
+        < error_check cryo:target ["NotCheckable", "", {}]
 
     .. dropdown:: Related issues
 
@@ -90,9 +96,9 @@ and should reply with a `ProtocolError` error to indicate this.
 Logging example::
 
     # note: empty specifier -> select all modules
-    > logging  "error"
+    > logging  "debug"
     # SEC node confirms
-    < logging  "error"
+    < logging  "debug"
     < log mod1:debug "polling value"
     < log mod1:debug "sending request..."
     ...
