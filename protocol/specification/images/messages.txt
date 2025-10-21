@@ -1,4 +1,0 @@
-('messages')
-[['message' <! 'CR'#`\\x0D`>#`ignore on reception
-do not send!` 'LF'#`\\x0A`]*!]
-

@@ -3,11 +3,18 @@
 Data types
 ==========
 
-SECoP defines a very flexible data typing system.  Data info structures are used
-to describe the possible values of parameters and how they are serialized.  They
-may also impose restrictions on the usable values or amount of data.  The data
-info structure consists of the name of the datatype augmented by data properties
-to pinpoint the exact meaning of the data to be described.
+SECoP defines a very flexible data typing system.  The "Data info" structures
+specified here are used to describe the possible values of parameters and how
+they are serialized.  They may also impose restrictions on the usable values or
+amount of data.
+
+The data types are specified as JSON in the `datainfo` property of parameters
+and commands.  An example for a floating-point valued parameter that can be in
+the range (0,100) is:
+
+.. code:: json
+
+    {"type": "double", "min": 0, "max": 100, "fmtstr": "%.3f"}
 
 SECoP defines some basic data types for numeric quantities, like double_,
 scaled_ and int_.  An enum_ is defined for convenience of not having to remember
@@ -27,27 +34,17 @@ For data types that specify limits, they are always inclusive, i.e. the value is
 allowed to be one of the limit values.  Also, both limits may be set to the same
 value, in which case there is just one allowed value.
 
-All data info structures are specified in the descriptive data in the following
-generic form:
-
-.. image:: images/datatype.svg
-    :alt: datatype ::= '{' datatype-name ':' '{' ( datatype-property ( ',' datatype-property )* )? '}'
-
-Here is an overview of all defined data types:
-
-.. contents::
-    :depth: 1
-    :local:
-    :backlinks: entry
-
 Depending on the data type, there are different sets of data properties
 available.
+
+.. note:: There is as of this writing no ``None``/``null`` value or "optional"
+          datatype that can be transported over SECoP.
 
 
 .. _double:
 
-Floating point numbers: ``double``
-----------------------------------
+``double``: Floating point number
+---------------------------------
 
 Datatype to be used for all physical quantities.
 
@@ -59,7 +56,9 @@ JSON can't transport those 'values'.
 If the relative resolution is not given or not better than 1.2e-7, single
 precision floats may be used in the ECS.
 
-Related issue: :issue:`042 Requirements of datatypes`
+.. dropdown:: Related issues
+
+    | :issue:`042 Requirements of datatypes`
 
 .. rubric:: Optional data properties
 
@@ -71,15 +70,15 @@ Related issue: :issue:`042 Requirements of datatypes`
 
 .. note::
 
-    When a SEC Node receives a ``"change"`` or ``"do"`` message with a value
-    outside the allowed range [``"min"``, ``"max"``], it MUST reply with an
-    error message.  For readonly parameters, [``"min"``, ``"max"``] indicate a
-    trusted range.  A SEC-Node might send ``"update"`` or ``"reply"`` messages
-    with values outside the trusted range, for example when the value is an
-    extrapolation of the calibrated range. The idea behind this relaxed rule is,
-    that it is better for a SEC-node to send an acquired value outside the range
-    as it is - rather than change its value just to comply with the specified
-    range.  The decision, how to treat such values is left to the ECS.
+    When a SEC node receives a `change` or `do` message with a value outside the
+    allowed range ``[min, max]``, it MUST reply with an error message.  For
+    readonly parameters, ``[min, max]`` indicate a trusted range.  A SEC node
+    might send `update` or `reply` messages with values outside the trusted
+    range, for example when the value is an extrapolation of the calibrated
+    range.  The idea behind this relaxed rule is, that it is better for a SEC
+    node to send an acquired value outside the range as it is - rather than
+    change its value just to comply with the specified range.  The decision on
+    how to treat such values is left to the ECS.
 
 ``"unit"``
     String giving the unit of the parameter.
@@ -87,7 +86,9 @@ Related issue: :issue:`042 Requirements of datatypes`
     SHOULD be given, if meaningful.  The quantity is unitless if unit is omitted
     or the empty string.  Preferably SI units (including prefix) SHOULD be used.
 
-    Related issue: :issue:`043 Parameters and units`
+    .. dropdown:: Related issues
+
+        | :issue:`043 Parameters and units`
 
 ``"absolute_resolution"``
     A JSON number specifying the smallest difference between distinct values.
@@ -106,7 +107,9 @@ Related issue: :issue:`042 Requirements of datatypes`
 
     ``max(absolute_resolution, abs(value) * relative_resolution)``
 
-    Related issue: :issue:`049 Precision of Floating Point Values`
+    .. dropdown:: Related issues
+
+        | :issue:`049 Precision of Floating Point Values`
 
 ``"fmtstr"``
     A C-style format  string as a hint on how to format numeric parameters for
@@ -114,7 +117,7 @@ Related issue: :issue:`042 Requirements of datatypes`
 
     The string must obey the following syntax:
 
-    .. image:: images/fmtstr.svg
+    .. image:: images/railroad/fmtstr.svg
         :alt: fmtstr ::= "%" "." [1-9]? [0-9] ( "e" | "f" | "g" )
 
 .. rubric:: Example
@@ -132,7 +135,7 @@ Example: ``3.14159265``
 
 .. _scaled:
 
-Scaled integer: ``scaled``
+``scaled``: Scaled integer
 --------------------------
 
 Scaled integers are transported as integers, but the physical value is a
@@ -140,7 +143,9 @@ floating point value.  It is up to the client to perform the conversion when
 reading/writing.  The main motivation for this datatype is for SEC nodes with
 limited capabilities, where floating point calculation is a major effort.
 
-Related issue: :issue:`044 Scaled integers`
+.. dropdown:: Related issues
+
+    | :issue:`044 Scaled integers`
 
 .. rubric:: Mandatory data properties
 
@@ -151,7 +156,7 @@ Related issue: :issue:`044 Scaled integers`
     The limits of the transported integer, ``min <= max``.  The limits of the
     represented floating point value are ``min*scale`` and ``max*scale``.
     See also the note on the ``"min"`` and ``"max"`` properties of the
-    :ref:`float` datatype.
+    double_ datatype.
 
 .. rubric:: Optional data properties
 
@@ -190,21 +195,21 @@ Example: ``1255`` meaning 125.5 in the above example.
 
 .. _int:
 
-Integer: ``int``
+``int``: Integer
 ----------------
 
-Datatype to be used for integer numbers.  For any physical quantity ``double``
-or ``scaled`` **SHOULD** be used.  An integer SHOULD have no unit and it SHOULD
-be representable with signed 24 bits, i.e. all integers SHOULD fit inside -2\
-:sup:`24` ... 2\ :sup:`24`, as some JSON libraries might parse JSON numbers
-with 32bit float too.
+Datatype to be used for integer numbers.  For any physical quantity double_ or
+scaled_ SHOULD be used.  An integer SHOULD have no unit and it SHOULD be
+representable with signed 24 bits, i.e. all integers SHOULD fit inside -2\
+:sup:`24` ... 2\ :sup:`24`, as some JSON libraries might parse JSON numbers with
+32bit float too.
 
 .. rubric:: Mandatory data properties
 
 ``"min"``, ``"max"``
-    Integer limits, ``<min>`` <= ``<max>``.
+    Integer limits, ``min <= max``.
     See also the note on the ``"min"`` and ``"max"`` properties of the
-    :ref:`float` datatype.
+    double_ datatype.
 
 .. rubric:: Optional data properties
 
@@ -227,7 +232,7 @@ Example: ``-55``
 .. _bool:
 .. _boolean:
 
-Boolean: ``bool``
+``bool``: Boolean
 -----------------
 
 .. rubric:: Syntax
@@ -243,7 +248,7 @@ As JSON ``true`` or ``false``.
 
 .. _enum:
 
-Enumerated type: ``enum``
+``enum``: Enumerated type
 -------------------------
 
 Datatype to be used for values that can only have a set of predefined values.
@@ -271,10 +276,10 @@ Example: ``200``
 
 .. _string:
 
-String: ``string``
+``string``: String
 ------------------
 
-For human-readable strings.  Use :ref:`blob <blob>` for binary data.
+For human-readable strings.  Use blob_ for binary data.
 
 .. rubric:: Optional data properties
 
@@ -307,7 +312,7 @@ Example: ``"Hello\n\u2343World!"``
 
 .. _blob:
 
-Binary large object: ``blob``
+``blob``: Binary large object
 -----------------------------
 
 .. rubric:: Mandatory data property
@@ -329,14 +334,17 @@ Binary large object: ``blob``
 
 .. rubric:: Transport
 
-As a single-line base-64 (see :RFC:`4648`) encoded JSON string.
+As a single-line base-64 (see :rfc:`4648`) encoded JSON string.
 
-Example: ``"AA=="`` (a single, zero valued byte)
+Examples:
+
+| ``"AA=="`` (a single, zero valued byte)
+| ``"U0VDb1A="`` (the ASCII string "SECoP")
 
 
 .. _array:
 
-Sequence of uniformly typed items: ``array``
+``array``: Sequence of uniformly typed items
 --------------------------------------------
 
 .. rubric:: Mandatory data properties
@@ -367,8 +375,8 @@ Example: ``[3,4,7,2,1]``
 
 .. _tuple:
 
-Finite sequence of items with individually typed items: ``tuple``
------------------------------------------------------------------
+``tuple``: Fixed sequence of individually typed items
+-----------------------------------------------------
 
 .. rubric:: Mandatory data property
 
@@ -389,9 +397,9 @@ As a JSON array.
 Example: ``[300,"accelerating"]``
 
 
-.. _Struct:
+.. _struct:
 
-Collection of named items: ``struct``
+``struct``: Collection of named items
 -------------------------------------
 
 This data type allows you to combine multiple named data members in a single
@@ -429,13 +437,15 @@ As a JSON object.
 
 Example: ``{"x": 0.5, "y": 1}``
 
-Related issue: :issue:`035 Partial Structs`
+.. dropdown:: Related issues
+
+    | :issue:`035 Partial Structs`
 
 
 .. _matrix:
 
-Binary matrix: ``matrix``
--------------------------
+``matrix``: Binary multi-dimensional matrix
+-------------------------------------------
 
 Type for transferring a medium to large amount of homogeneous arrays with
 potentially multiple dimensions.
@@ -463,13 +473,17 @@ obtaining the data.
 
     Example: ``"<u4"`` is a little-endian encoded 32-bit unsigned integer.
 
+.. rubric:: Optional data property
+
 ``"compression"``
     A string defining if and how the data is each ``blob`` is compressed.
     Currently, no compression types are defined.
 
 .. rubric:: Example
 
-``{"type": "matrix", "elementtype": "<f4", "names": ["x", "y"], "maxlen": [100, 100]}``
+.. code:: json
+
+    {"type": "matrix", "elementtype": "<f4", "names": ["x", "y"], "maxlen": [100, 100]}
 
 .. rubric:: Transport
 
@@ -479,8 +493,8 @@ As a JSON object containing the following items:
     List of the actual length of each dimension in the data.
 
 ``"blob"``
-    The data, encoded as a single-line base64 (see :RFC:`4648`) encoded
-    JSON-string.
+    The data, encoded as a single-line base64 (see :rfc:`4648`) encoded
+    JSON string.
 
 Example: ``{"len": [2, 3], "blob": "AACAPwAAAEAAAEBAAACAQAAAoEAAAMBA"}``
 
@@ -496,14 +510,13 @@ floats is ``[1, 2, 3, 4, 5, 6]``.  Then the matrix looks as follows::
   y=2   5   6
 
 
-
 .. _command:
 
-Commands: ``command``
----------------------
+``command``: Command
+--------------------
 
-If an accessible is a command, its main datatype is ``command``.
-Argument and result data are described within.
+If an accessible is a command, its main datatype is ``command``.  Argument and
+result data are described within.
 
 .. rubric:: Optional data properties
 
@@ -520,18 +533,23 @@ Argument and result data are described within.
 The meaning of result and argument(s) SHOULD be written down in the description
 of the command.
 
-.. rubric:: Example
+.. rubric:: Examples
 
 .. code:: json
 
     {"type": "command", "argument": {"type": "bool"}, "result": {"type": "int"}}
 
+    {"type": "command",
+     "argument": {"type": "struct", "members": {"p": {"type": "double"},
+                                                "i": {"type": "double"},
+                                                "d": {"type": "double"}}},
+     "result": {"type": "tuple", "members": [{"type": "int"}, {"type": "string"}]}}
+
 .. rubric:: Transport
 
 Command values are not transported as such.  But commands may be called
-(i.e. executed) by an ECS.  Example:
+(i.e. executed) by an ECS.  Example calling the command with the type of the
+second example above::
 
-.. code::
-
-    > do module:invert true
-    < done module:invert [72,{t:123456789.2}]
+    > do module:setpid {"p": 100.0, "i": 5.0, "d": 1.2}
+    < done module:setpid [[42, "control active"], {"t": 123456789.2}]

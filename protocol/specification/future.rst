@@ -1,6 +1,6 @@
 .. _future-compatibility:
 
-Future Compatibility
+Future compatibility
 ====================
 
 Notes for implementors of the current specification
@@ -60,10 +60,10 @@ design:
 * Define additional features, listed in an additional property.
 
 
-Message Handling
+Message handling
 ----------------
 
-For this, see :ref:`message-overview`.
+For this, see :ref:`this section <message-compat>`.
 
 
 Binary representations of the protocol
@@ -75,5 +75,5 @@ representation may be developed.  This will essentially keep the structure of
 the messages, but replace the components of a message with shorter, binary
 representations.
 
-Good candidates for this are CBOR (see :RFC:`7049`) and MessagePack (see
+Good candidates for this are CBOR (see :rfc:`7049`) and MessagePack (see
 https://msgpack.org/).

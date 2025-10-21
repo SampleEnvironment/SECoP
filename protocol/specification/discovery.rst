@@ -1,5 +1,5 @@
-SECoP UDP discovery protocol
-============================
+UDP discovery protocol
+======================
 
 Due to the flexibility of the SECoP node system, it is quite likely for multiple
 SEC nodes to be running on a single host.  Therefore, it is not sufficient to
@@ -50,11 +50,15 @@ Example
 Here, whitespace is added for readability.  In practice, the JSON encoder should
 be configured to omit them to leave maximum space for the content.
 
-From client to nodes::
+From client to nodes:
+
+.. code:: json
 
     {"SECoP": "discover"}
 
-From node to client, or for self-announcement::
+From node to client, or for self-announcement:
+
+.. code:: json
 
     {"SECoP": "node",
      "port": 14932,
@@ -76,7 +80,4 @@ Implementation hints
   necessary.
 
 
-See also `SECoP RFC 5`_.
-
-
-.. _SECoP RFC 5: https://github.com/SampleEnvironment/SECoP/blob/master/rfcs/RFC-005-udp-discovery.rst
+See also :ref:`rfc-005`.

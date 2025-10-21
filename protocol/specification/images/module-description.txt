@@ -1,2 +1,0 @@
-('module-description')
-[ [ "{" [ ['module-property' ","]*!]? "\"accessibles\":" 'accessibles-description' [["," 'module-property']*!]? "}" ]#`a JSON object`]

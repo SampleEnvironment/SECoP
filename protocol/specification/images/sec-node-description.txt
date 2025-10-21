@@ -1,2 +1,0 @@
-('SEC-node-description')
-[ [ "{" [ ['node-property' ","]*!]? "\"modules\":" 'module-description' [["," 'node-property']*!]? "}" ]#`a JSON object`]

@@ -1,0 +1,5 @@
+(`MUST generate` 'data-report' `as:`)
+[ ["[" 'json-value' "," 'qualifiers' "]"]#`a json-array with 2 elements`]
+!!!
+(`MUST accept` 'data-report' `as:`)
+[ ["[" 'json-value' "," 'qualifiers' !*['ignored-value' ","] "]"]#`a json-array with >= 2 elements`]

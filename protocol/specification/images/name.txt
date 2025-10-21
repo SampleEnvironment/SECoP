@@ -1,5 +1,0 @@
-('name' `or` 'token')
-["[a-zA-Z]" "[a-zA-Z0-9_]"*`max 62 times`]
-!!!
-('custom-name')
-["_"#`underscore` "[a-zA-Z]" "[a-zA-Z0-9_]"*`max 61 times`]
