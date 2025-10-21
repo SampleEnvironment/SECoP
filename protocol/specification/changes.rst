@@ -30,8 +30,7 @@ loss of functionality.
 
 - The `meaning` property for modules has a different format with capabilities to
   link to external definitions/ontologies.  `meaning` can now also be given for
-  individual accessibles, and new "functions" have been added to be better
-  compatible with the NeXuS standard.
+  individual accessibles, and new "functions" have been added.
 
 .. TODO not yet in the text!
 

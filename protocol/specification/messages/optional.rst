@@ -1,8 +1,11 @@
 ``check``, ``logging``: Optional extensions
 -------------------------------------------
 
-These messages are optional feature - the SEC node does not need to support them
-and should reply with a `ProtocolError` error to indicate this.
+These sets of messages are optional feature - the SEC node does not need to
+support them and should reply with a `ProtocolError` error to indicate this.
+
+Dry run functionality
+~~~~~~~~~~~~~~~~~~~~~
 
 .. message:: [request] check <module>:<accessible> [<value>]
              [reply] checked <module>:<accessible> <data-report>
@@ -50,6 +53,9 @@ and should reply with a `ProtocolError` error to indicate this.
 
         | :issue:`075 New messages check and checked`
 
+
+Logging support
+~~~~~~~~~~~~~~~
 
 .. message:: [request] logging <module>[:<parameter>] <level>
              [reply] logging <module>[:<parameter>] <level>
