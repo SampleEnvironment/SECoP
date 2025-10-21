@@ -117,7 +117,7 @@ precision floats may be used in the ECS.
 
     The string must obey the following syntax:
 
-    .. image:: images/fmtstr.svg
+    .. image:: images/railroad/fmtstr.svg
         :alt: fmtstr ::= "%" "." [1-9]? [0-9] ( "e" | "f" | "g" )
 
 .. rubric:: Example

@@ -1,6 +1,6 @@
 (`MUST accept` 'replies')
 [ <
- ["ISSE&SINE2020,SECoP," 'secop-version' "," 'secop-revision']
+ ["ISSE,SECoP," 'draft-date' "," 'version']
  ["describing" "\\x20.\\x20"#`SPACE dot SPACE` 'structure-report']
  [<"active" "inactive">
  ["\\x20"#`SPACE` ['module' 

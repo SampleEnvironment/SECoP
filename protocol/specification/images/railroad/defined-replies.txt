@@ -1,0 +1,19 @@
+(`defined` 'replies')
+[<
+ ["ISSE,SECoP," 'draft-date'?#`no SPACE!` "," 'version'#`no SPACE!`]
+ ["describing" "\\x20.\\x20"#`SPACE dot SPACE` 'structure-report']
+ [<"active" "inactive"> <!#`global (de-)activation`
+ ["\\x20"#`SPACE` 'module'
+ ]#`module-wise (de-)activation`
+ >]
+ [< 
+  ["pong" "\\x20"#`SPACE` 'token'?]
+  ["done" "\\x20"#`SPACE` 'module' ":" 'command']
+  [<"update" "changed"> "\\x20"#`SPACE` 'module' ":" 'parameter']
+  ["checked" "\\x20"#`SPACE` 'module' ":" 'accessible']
+ >
+ "\\x20"#`SPACE` 'data-report']
+ ["logging" "\\x20"#`SPACE` 'module' [":" 'parameter']? "\\x20"#`SPACE` '"' 'level' '"']
+ ["log" "\\x20"#`SPACE` 'module' ":" 'level' "\\x20"#`SPACE` 'message'#`JSON string`]
+ ["error_" 'action' "\\x20"#`SPACE` 'specifier' "\\x20"#`SPACE` 'error-report']
+>]
