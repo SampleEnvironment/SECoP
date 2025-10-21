@@ -1,6 +1,0 @@
-('specifier')
-[ <
- ['module-name' [":" 'accessible-name']?]
- 'token'
-!
->]

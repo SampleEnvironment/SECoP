@@ -59,22 +59,6 @@ Example of a complete description (JSON has been pretty-printed for clarity):
     }
 
 
-.. dropdown:: Syntax diagrams
-    :icon: code
-
-    .. image:: images/sec-node-description.svg
-       :alt: SEC_node_description ::= '{' ( property ',' )* '"modules":' modules ( ',' property )* '}'
-
-    .. image:: images/property.svg
-       :alt: property ::= name ':' value
-
-    .. image:: images/module-description.svg
-       :alt: module_description ::= '{' ( property ',' )* '"accessibles":' accessibles ( ',' property )* '}'
-
-    .. image:: images/accessible-description.svg
-       :alt: accessible_description ::= '{' property+ '}'
-
-
 SEC node description
 --------------------
 

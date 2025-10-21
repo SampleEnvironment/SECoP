@@ -1,49 +1,55 @@
-<svg class="railroad" viewBox="0 0 996 611" width="796pt" xmlns="http://www.w3.org/2000/svg">
+<svg class="railroad" viewBox="0 0 996 611" width="796pt" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <style type="text/css">
+svg.railroad {
+background-color: hsl(30, 20%, 95%);
+background-size: 15px 15px;
+background-image: linear-gradient(to right, rgba(30, 30, 30, .05) 1px, transparent 1px),
+		  linear-gradient(to bottom, rgba(30, 30, 30, .05) 1px, transparent 1px);
+}
 
-    svg.railroad {
-        background-color: hsl(30, 20%, 95%);
-        background-size: 15px 15px;
-        background-image: linear-gradient(to right, rgba(30, 30, 30, .05) 1px, transparent 1px),
-                          linear-gradient(to bottom, rgba(30, 30, 30, .05) 1px, transparent 1px);
-    }
+svg.railroad rect.railroad_canvas {
+stroke-width: 0px;
+fill: none;
+}
 
-    svg.railroad path {
-        stroke-width: 3px;
-        stroke: black;
-        fill: transparent;
-    }
+svg.railroad path {
+stroke-width: 3px;
+stroke: black;
+fill: none;
+}
 
-    svg.railroad .debug {
-        stroke-width: 1px;
-        stroke: red;
-    }
+svg.railroad .debug {
+stroke-width: 1px;
+stroke: red;
+}
 
-    svg.railroad text {
-        font: 14px monospace;
-        text-anchor: middle;
-    }
+svg.railroad text {
+font: 14px monospace;
+text-anchor: middle;
+}
 
-    svg.railroad .nonterminal text {
-        font-weight: bold;
-    }
+svg.railroad .nonterminal text {
+font-weight: bold;
+}
 
-    svg.railroad text.comment {
-        font: italic 12px monospace;
-    }
+svg.railroad text.comment {
+font: italic 12px monospace;
+}
 
-    svg.railroad rect {
-        stroke-width: 3px;
-        stroke: black;
-        fill:hsl(-290, 70%, 90%);
-    }
+svg.railroad rect {
+stroke-width: 3px;
+stroke: black;
+fill:hsl(-290, 70%, 90%);
+}
 
-    svg.railroad g.labeledbox > rect {
-        stroke-width: 1px;
-        stroke: grey;
-        stroke-dasharray: 5px;
-        fill:rgba(90, 90, 150, .1);
-    }</style>
+svg.railroad g.labeledbox > rect {
+stroke-width: 1px;
+stroke: grey;
+stroke-dasharray: 5px;
+fill:rgba(90, 90, 150, .1);
+}
+</style>
+<rect class="railroad_canvas" height="100%" width="100%"/>
 <g class="verticalgrid">
 <g class="horizontalgrid">
 <g>
@@ -60,31 +66,31 @@ replies</text>
 <path d=" M 10 50 l 5 5 l -5 5 m 5 -5 h 5"/>
 <g class="sequence">
 <g class="choice">
-<path d=" M 30 55 h 24 m 502 0 h 410 m -202 0 l -5 -5 m 0 10 l 5 -5 m 202 0"/>
+<path d=" M 30 55 h 24 m 342 0 h 570 m -282 0 l -5 -5 m 0 10 l 5 -5 m 282 0"/>
 <g class="sequence">
 <g class="terminal">
-<rect height="22" rx="10" ry="10" width="188" x="54" y="44"/>
-<text x="148" y="60">
-ISSE&amp;SINE2020,SECoP,</text>
+<rect height="22" rx="10" ry="10" width="108" x="54" y="44"/>
+<text x="108" y="60">
+ISSE,SECoP,</text>
 </g>
 <g class="nonterminal">
-<rect height="22" width="124" x="252" y="44"/>
-<text x="314" y="60">
-secop-version</text>
+<rect height="22" width="100" x="172" y="44"/>
+<text x="222" y="60">
+draft-date</text>
 </g>
 <g class="terminal">
-<rect height="22" rx="10" ry="10" width="28" x="386" y="44"/>
-<text x="400" y="60">
+<rect height="22" rx="10" ry="10" width="28" x="282" y="44"/>
+<text x="296" y="60">
 ,</text>
 </g>
 <g class="nonterminal">
-<rect height="22" width="132" x="424" y="44"/>
-<text x="490" y="60">
-secop-revision</text>
+<rect height="22" width="76" x="320" y="44"/>
+<text x="358" y="60">
+version</text>
 </g>
-<path d=" M 242 55 h 10"/>
-<path d=" M 376 55 h 10"/>
-<path d=" M 414 55 h 10"/>
+<path d=" M 162 55 h 10"/>
+<path d=" M 272 55 h 10"/>
+<path d=" M 310 55 h 10"/>
 </g>
 <path d=" M 30 55 a 12 12 0 0 1 12 12 v 9 m 912 0 v -9 a 12 12 0 0 1 12 -12"/>
 <path d=" M 42 111 v 41 m 912 0 v -41"/>

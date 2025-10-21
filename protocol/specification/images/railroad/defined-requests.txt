@@ -7,9 +7,11 @@
  ["\\x20"#`SPACE` 'module'#`specifier`
  ]#`module-wise (de-)activation`
  >]
- ["ping" <!#`for manual debuging only` ["\\x20"#`SPACE` 'token'#`specifier`]>]
+ ["ping" <!#`for manual debugging` ["\\x20"#`SPACE` 'token'#`specifier`]>]
+ ["read" "\\x20"#`SPACE` ['module' ":" 'parameter']#`specifier`]
  ["change" "\\x20"#`SPACE` ['module' ":" 'parameter']#`specifier` "\\x20"#`SPACE` 'data']
  ["do" "\\x20"#`SPACE` ['module' ":" 'command']#`specifier` ["\\x20"#`SPACE` 'argument'#`data`]?]
- ["read" "\\x20"#`SPACE` ['module' ":" 'parameter']#`specifier`]
+ ["check" "\\x20"#`SPACE` ['module' ":" 'accessible']#`specifier` "\\x20"#`SPACE` 'value']
+ ["logging" "\\x20"#`SPACE` ['module' [":" 'accessible']?]#`specifier` "\\x20"#`SPACE` '"' 'level' '"']
 >]
 
