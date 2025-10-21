@@ -54,7 +54,7 @@ Base classes
     a motorized needle valve).  It must have a `stop` command in addition to
     what a `Writable` has.  Note that in case the `stop` command has no
     effect, a `Writable` SHOULD be used.  Also, the `status` parameter will
-    indicate a BUSY state for a longer lasting operations.
+    indicate a ``BUSY`` state for a longer lasting operations.
 
 
 .. _features:
