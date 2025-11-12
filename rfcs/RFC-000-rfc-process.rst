@@ -62,7 +62,7 @@ How to contribute
 Here we lay out the steps to follow to change the specification.
 
 - If you do not have a concrete idea, come talk to us to flesh it out.
-- Copy the RFC-000-template.rst file and fill in the details. You can add
+- Copy the RFC-template.rst file and fill in the details. You can add
   sections freely, but try to fill out all the provided ones.
 - Take the next free number and add it to the template file.  Renumbering might
   happen when the PR is merged.

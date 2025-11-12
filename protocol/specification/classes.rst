@@ -83,7 +83,7 @@ The following terms are relevant here:
   quantity.  An acquisition can acquire data for one or more channels at the
   same time.
 
-See also :secop-rfc:`006-acquisition`.
+See also :ref:`rfc-106`.
 
 .. baseclass:: AcquisitionController
 
