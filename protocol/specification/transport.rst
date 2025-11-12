@@ -104,7 +104,7 @@ exchanging raw SECoP messages is not an option.  The best alternative is
 WebSockets (:rfc:`6455`), which are a relatively overhead-free way of
 exchanging messages between two endpoints in an arbitrary pattern.
 
-See also :ref:`rfc-007`.
+See also :ref:`rfc-107`.
 
 Implementation in a SEC node
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
