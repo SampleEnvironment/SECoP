@@ -51,11 +51,11 @@ loss of functionality.
 - The :ref:`matrix <matrix>` data type has been specified for datainfo.
 
 - The `AcquisitionController`, `AcquisitionChannel` and `Acquisition` interface
-  classes have been specified (:ref:`rfc-006`).
+  classes have been specified (:ref:`rfc-106`).
 
-- The UDP discovery protocol has been specified (:ref:`rfc-005`).
+- The UDP discovery protocol has been specified (:ref:`rfc-105`).
 
-- Optional SECoP transport over WebSockets has been specified (:ref:`rfc-007`).
+- Optional SECoP transport over WebSockets has been specified (:ref:`rfc-107`).
 
 
 Version 1.1

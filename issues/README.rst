@@ -3,7 +3,7 @@ Note
 
 SECoP Issues have been replaced by the RFC process, which is described in
 `RFC 1
-<https://github.com/SampleEnvironment/SECoP/blob/master/rfcs/RFC-001-RFC-process.rst>`_.
+<https://github.com/SampleEnvironment/SECoP/blob/master/rfcs/RFC-000-RFC-process.rst>`_.
 
 If there is renewed interest in one of the remaining open issues, please
 migrate to an RFC before restarting discussion.
