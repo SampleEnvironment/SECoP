@@ -1,0 +1,198 @@
+meeting 2025-09-17 (ZOOM)
+@@@@@@@@@@@@@@@@@@@@@@@@@
+
+.. sidebar:: participants
+
+     * Georg Brandl
+     * Peter Braun
+     * Alexander Zaft
+     * Markus Zolliker
+     * Klaus Kiefer
+     * Enrico Faulhaber
+     * Niklas Ekström
+     * Bastian Klemke
+     * Zeus Castillo
+     * Eddy Lelièvre-Berna
+
+.. contents:: Agenda
+    :local:
+    :depth: 3
+
+1) presentation of PLC implementation @ILL
+==========================================
+
+Zeus Castillo presents his implemention of SECoP @ ILL.
+He created an open source Codesys library to be re-used by others.
+Several interesting implementation details are presented.
+Also, a live demo was shown and its details were explained.
+Operation via a simple text client and via the frappy-client worked flawlessly.
+
+Several questions by Georg and Klaus got answered.
+Especially, the way the descriptive data is created raised some questions.
+
+Zeus explained that the format of the configuration file is preliminary and
+that the config file for his code generator just look very similiar to the
+descriptive data, as it was used as a strating point.
+
+Georg asks about some details of JSON parsing/generation.
+Zeus explained his solution.
+
+Eddy, unfortunately, has to leave.
+
+Alexander queries Zeus about how easy to find and understandable the current SECoP specification
+was for him. Zeus reported, that it was easy to find and (after reading it several times)
+also easy to understand. Also, he contacted Markus about unclear things, which were quickly resolved.
+The only difficult part was the example of the 'check' message, as this was the only occurence of a triple-valued device.
+
+Georg queries about whether everything is run within the same task and which cycle times are possible.
+Zeus reported the current solution to be singletask, but it may be split into multiple tasks
+with distinct priorities so that SECoP communications doesn't block higher priority tasks.
+cycle times around 20ms to 50ms are currently used and work fine.
+
+Klaus wonders about how the handshaking define in the SECoP spec is implemented.
+Zeus shows and explains several implementation details, answering this question as well.
+
+Enno wonders about why the implementation on a PLC was choosen.
+A small discussion, including fear of having to update, essentially ends with the coclusion
+that there are some subtle differences between facilities which faviour one, or the other solution.
+
+
+2) approval of previous minutes (2025-10-14/15)
+===============================================
+
+approved.
+
+
+3) discussion process on github
+===============================
+
+XXX: may need to rephrase the topic of this section
+
+Georg points out, that while on https://www.github.com/SampleEnvironment/SECoP ,
+just 'click' on the 'eye' and select 'all-notifications'.
+
+Georg proposes to communicate the possibility to comment on recent activities on the SECoP spec
+via the ISSE newsletter or website.
+
+Georg presents his work on splitting several pages of the current specification
+into multiple smaller sections.
+E.g. There are now individual pages per message and an index.
+A section showing the differences between distinct versions aof the specification is also included.
+
+The presentation is welcome, the work is greatly appreciated.
+
+Zeus points out that, while this new way to structure the pages is much easier to find
+relevant information, more examples e.g. when to use which errorclass may further improve
+the usefulness of the specification.
+
+Klaus points out that we have, by now, mor then 3 defined interface_classes.
+There is the Communicator and the Acquisition classes.
+
+Agreement to activate this version of the specification.
+
+Zeus leaves.
+
+
+4) Acquisition RFC
+==================
+
+Georg shows the current state.
+Markus proposes to just merge this now.
+Agreement on merging this.
+
+
+5) YAML (RFC 2/3) and Systems (RFC 4)
+=====================================
+
+Georg points out that due to the restructuring of the specifiaction,
+some parts of the actual pull-request may not work anymore and need rework.
+
+Markus thinks we don't need to hurry, but it should be done soon.
+klaus points out, that next april the specification has its 10(th) birthday, so
+it would be nice to be finished with this until then.
+
+Georg and Markus discuss details within RFC002 about checking the validity of the
+ParameterPostfixes.
+
+Georg will rework the relevant pieces of the specification to add the systems and yaml files.
+
+
+6) revisiting old issues
+========================
+
+Issue 066 force re-connect
+--------------------------
+
+seems to have been forgotten to include in the spec.
+Agreement to move to the spec.
+
+
+Issue 67 pid control parameter
+------------------------------
+
+Issue got stuck, as there was no agreement.
+Klaus points out that this need to be reconsiderated when we write a system for a temperature controller.
+
+Agreement to leave it as is and solve the issue when writing the systems.
+
+
+Issue 69 optional structs by default
+------------------------------------
+
+A discussion about the usefulness of optional parts of a struct starts.
+The changed reply, however, should always include all struct members.
+
+It turns out, that optional struct members are part of the spec already,
+just that the issue would introduce a breaking change.
+
+Consensus seems to leave this at the current state and close the Issue.
+An example seems to be missing in the spec.
+
+
+Issue 077 prefixes
+------------------
+
+It was already agreed (2023-01-16) that we use postfixes instead of prefixes.
+Peter is going to write a pull-request.
+
+Agreed postfixes are '_enabled', '_min', '_max', and '_limits'.
+
+
+Issue 078 Interacting modules (use case power supplies)
+-------------------------------------------------------
+
+Markus proposes to treat it as a system.
+
+
+- Markus would leave it out of 2.0
+- Georg says it would be good to have at least one system as an example for 2.0
+- Klaus agrees, but mentions it does not have to be in the spec for 2.0 at first
+
+Klaus and Ennno have to leave.
+
+Converting Issues to RFC's
+--------------------------
+
+Georg proposes to convert at least some issues to RFC format. Alexander suggests keeping the issue namespace separate, RFC-9xx may be confusing.
+Proposal from Markus and Georg: issues should keep their numbers, renumber the existing RFCs to 101 to 108 and continue from there.
+
+A.o.B.
+======
+
+Klaus gives some information about the ISSE meeting:
+
+Possible dates for the committee meeting will be:
+
+- 28.11.2025
+- 01.12.2025
+
+Klaus would like a meeting before that.
+
+Date of next Meeting
+====================
+
+There will be a short meeting on 26.11.2025 at 09:00 (alternative: 25.11.2025 09:00). Clarify with Enno.
+
+..
+    -- closed at 15:43  --
+
