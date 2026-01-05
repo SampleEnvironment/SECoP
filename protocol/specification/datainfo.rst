@@ -330,7 +330,7 @@ Example: ``"Hello\n\u2343World!"``
 
 .. code:: json
 
-    {"type": "blob", "min": 1, "max": 64}
+    {"type": "blob", "minbytes": 1, "maxbytes": 64}
 
 .. rubric:: Transport
 
@@ -364,7 +364,7 @@ Examples:
 
 .. code:: json
 
-    {"type": "array", "min": 3, "max": 10, "members": {"type": "int", "min": 0, "max": 9}}
+    {"type": "array", "minlen": 3, "maxlen": 10, "members": {"type": "int", "min": 0, "max": 9}}
 
 .. rubric:: Transport
 
