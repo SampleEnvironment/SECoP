@@ -362,19 +362,53 @@ Coupled modules
     parameter with the name of the controlling module).
 
 
-Limits and offset
-~~~~~~~~~~~~~~~~~
+Parameter postfixes
+~~~~~~~~~~~~~~~~~~~
 
-.. parameter:: target_limits
+In addition to the static ``"min"`` and ``"max"`` data properties given in the `datainfo` property of a parameter, a SEC
+node might offer dynamic limits restricting the allowed range even more.
+These limits can be specified in two mutually exclusive ways, either by
+individual ``<parameter_name>_min`` and/or ``<parameter_name>_max`` parameters, 
+or by a single ``<parameter_name>_limits`` parameter.
 
-    In addition to the range given in the `datainfo` property of the
-    `target` parameter, a SEC node might offer changeable limits restricting
-    the allowed range even more.  `target_limits` is structured as a
-    :ref:`tuple <tuple>` with two numeric members indicating the lower and upper end of
-    a valid interval for the setting of the `target` parameter.  The
-    `datainfo` property of the `target` parameter must match the members of
-    the `datainfo` property of `target_limits`.  The SEC node must reply
-    with an error in case a given target value does not fit into the interval.
+.. note:: These dynamic limits are only allowed for parameters with scalar numeric datatypes.
+
+.. parameter:: <parameter_name>_min
+
+    An individual minimum value (of the same type as ``<parameter_name>``)
+    specifying the dynamic accepted minimum of a parameter. The SEC node must reply with
+    an error in case a given parameter value is below this minimum.
+
+.. parameter:: <parameter_name>_max
+
+    An individual maximum value (of the same type as ``<parameter_name>``)
+    specifying the dynamic accepted maximum of a parameter. The SEC node must reply with
+    an error in case a given parameter value is above this maximum.
+
+.. parameter:: <parameter_name>_limits
+
+    A :ref:`tuple <tuple>` with two numeric members indicating the lower and
+    upper end of a valid interval.  The `datainfo` property of
+    ``<parameter_name>`` must match the members of the `datainfo` property of
+    ``<parameter_name>_limits``.  The SEC node must reply with an error in case
+    a given parameter value does not fit into the interval.
+
+    .. note:: ``<parameter_name>_limits`` and the pair ``<parameter_name>_min`` /
+              ``<parameter_name>_max`` are mutually exclusive and may not coexist at the same
+              time on the same module.
+
+.. parameter:: <parameter_name>_use
+
+    An Enum ``{0: "OFF", 1: "ON"}``, allowing to enable or disable the effect of ``<parameter_name>`` where applicable.
+
+.. dropdown:: Related issues
+
+    | :issue:`0073 HasLimits and HasOffset` 
+    | :issue:`077 predefined parameter name prefixes` 
+
+
+Feature related parameters
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. _offset:
 
