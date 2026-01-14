@@ -397,7 +397,7 @@ or by a single ``<parameter_name>_limits`` parameter.
               ``<parameter_name>_max`` are mutually exclusive and may not coexist at the same
               time on the same module.
 
-.. parameter:: <parameter_name>_use
+.. parameter:: <parameter_name>_enable
 
     An Enum ``{0: "OFF", 1: "ON"}``, allowing to enable or disable the effect of ``<parameter_name>`` where applicable.
 
