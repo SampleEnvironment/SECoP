@@ -1,0 +1,35 @@
+---
+kind: ParameterPostfix
+name: _limits
+version: 2
+description: |
+  Specifies changeable limits of the parameter.
+datainfo:
+  type: tuple
+  members:
+    - parent
+    - parent
+
+---
+kind: ParameterPostfix
+name: _min
+version: 2
+description: |
+  Specifies the changeable minimum of the parameter.
+datainfo: parent
+
+---
+kind: ParameterPostfix
+name: _max
+version: 2
+description: |
+  Specifies the changeable maximum of the parameter.
+datainfo: parent
+
+---
+kind: ParameterPostfix
+name: _enable
+version: 2
+description: |
+  Specifies if the parameter's effect is enabled.
+datainfo: bool

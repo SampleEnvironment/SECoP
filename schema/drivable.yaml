@@ -1,0 +1,12 @@
+---
+kind: Interface
+name: Drivable
+version: 1
+# All accessibles from the base are "inherited".
+base: Writable:1
+description: |
+    A base SECoP interface class for modules whose values changes "slowly",
+    so that the change can be stopped.
+commands:
+  - stop:1
+  - hold:1

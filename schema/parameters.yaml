@@ -1,0 +1,113 @@
+---
+kind: Parameter
+name: value
+version: 1
+datainfo: any
+readonly: true
+description: |
+  The value parameter.
+
+---
+kind: Parameter
+name: status
+version: 1
+datainfo:
+  type: tuple
+  members: [enum, string]
+readonly: true
+description: |
+  The status parameter.
+
+---
+kind: Parameter
+name: target
+version: 1
+datainfo: any
+readonly: false
+description: |
+  The target value for the module. By setting this parameter, a move
+  operation is started.
+
+---
+kind: Parameter
+name: pollinterval
+version: 1
+datainfo: double
+readonly: false
+description: |
+  Hint for polling interval in seconds.
+
+---
+kind: Parameter
+name: offset
+version: 1
+datainfo: number
+readonly: false
+description: |
+  Offset parameter for the HasOffset feature.
+
+---
+kind: Parameter
+name: mode
+version: 1
+datainfo: enum
+readonly: false
+description: |
+  Operation mode of the module.
+
+---
+kind: Parameter
+name: target_limits
+version: 1
+datainfo:
+  type: tuple
+  members: [number, number]
+readonly: true
+description: |
+  Changeble user-defined limits for the target parameter of a module.
+  Has to respect the limits of the target parameter itself.
+
+---
+kind: Parameter
+name: ramp
+version: 1
+datainfo: number
+readonly: false
+description: |
+  Desired ramp. Unit is main-unit/min.
+
+---
+kind: Parameter
+name: setpoint
+version: 1
+datainfo: number
+readonly: true
+description: |
+  ramping setpoint
+
+---
+kind: Parameter
+name: time_to_target
+version: 1
+datainfo: number
+readonly: true
+description: |
+  Expected time to reach the target in seconds
+
+---
+kind: Parameter
+name: controlled_by
+version: 1
+datainfo: string
+readonly: false
+description: |
+  indicates the module this modules value is controlled by.
+
+---
+kind: Parameter
+name: control_active
+version: 1
+datainfo: bool
+readonly: true
+description: |
+  Indicates whether this module is actively controlling.

@@ -1,0 +1,245 @@
+---
+kind: Property
+name: description
+version: 1
+dataty: string
+description: |
+  Human readable description.
+
+---
+kind: Property
+name: equipment_id
+version: 1
+dataty: string
+description: |
+  Worldwide unique identification string.
+
+---
+kind: Property
+name: firmware
+version: 1
+dataty: string
+optional: true
+description: |
+  short string naming the version of the SEC node software.
+
+---
+kind: Property
+name: implementor
+version: 1
+dataty: string
+optional: true
+description: |
+  Globally unique name of the implementor of this SECNode.
+
+---
+kind: Property
+name: timeout
+version: 1
+dataty: number
+optional: true
+description: |
+  Timeout in seconds for the SECNode to send an answer.
+
+---
+kind: Property
+name: interface_classes
+version: 1
+dataty:
+  type: array
+  members: string
+description: |
+  List of the defined interface classes which are implemented for the Module.
+
+---
+kind: Property
+name: features
+version: 1
+dataty:
+  type: array
+  members: string
+description: |
+  List of supported features.
+
+---
+kind: Property
+name: visibility
+version: 1
+dataty:
+  type: oneof
+  values:
+    - user
+    - advanced
+    - expert
+optional: true
+description: |
+  Hint for clients to use for access control and filtering.
+
+---
+kind: Property
+name: visibility
+version: 2
+dataty:
+  type: oneof
+  values:
+    - "www"
+    - "wwr"
+    - "ww-"
+    - "wrr"
+    - "wr-"
+    - "w--"
+    - "rrr"
+    - "rr-"
+    - "r--"
+    - "---"
+optional: true
+description: |
+  Hint for clients to use for access control and filtering.
+
+---
+kind: Property
+name: group
+version: 1
+dataty: string
+optional: true
+description: |
+  Grouping hint for multiple modules.
+
+---
+kind: Property
+name: meaning
+version: 1
+dataty:
+  type: tuple
+  members:
+    - type: oneof
+      values:
+        - temperature
+        - temperature_regulation
+        - magneticfield
+        - magneticfield_regulation
+        - electricfield
+        - electricfield_regulation
+        - pressure
+        - pressure_regulation
+        - rotation_z
+        - rotation_z_regulation
+        - humidity
+        - humidity_regulation
+        - viscosity
+        - viscosity_regulation
+        - flowrate
+        - flowrate_regulation
+        - concentration
+        - concentration_regulation
+    - type: int
+      min: 0
+      max: 50
+optional: true
+description: |
+  Tuple describing one of the predefined meanings and a importance value.
+
+---
+kind: Property
+name: meaning
+version: 2
+dataty:
+  type: struct
+  members:
+    function:
+      type: oneof
+      values:
+        - temperature
+        - temperature_regulation
+        - magneticfield
+        - magneticfield_regulation
+        - electricfield
+        - electricfield_regulation
+        - pressure
+        - pressure_regulation
+        - rotation_z
+        - rotation_z_regulation
+        - humidity
+        - humidity_regulation
+        - viscosity
+        - viscosity_regulation
+        - flowrate
+        - flowrate_regulation
+        - concentration
+        - concentration_regulation
+        - ph
+        - ph_regulation
+        - conductivity
+        - conductivity_regulation
+        - voltage
+        - voltage_regulation
+        - surfacepressure
+        - surfacepressure_regulation
+        - stress
+        - stress_regulation
+        - strain
+        - strain_regulation
+        - shear
+        - shear_regulation
+        - level
+        - level_regulation
+    importance:
+      type: int
+      min: 0
+      max: 50
+    belongs_to: string
+    link: string
+    key: string
+  optional:
+    - function
+    - importance
+    - belongs_to
+    - link
+    - key
+optional: true
+description: |
+  Metadata describing the meaning of the element in a structured way, optionally
+  linking to a knowledge repository.
+
+---
+kind: Property
+name: implementation
+version: 1
+dataty: string
+description: |
+  A string indicating information about the implementation of the module,
+  like a python class name.
+
+---
+kind: Property
+name: readonly
+version: 1
+dataty: bool
+description: |
+  Indicates whether the parameter can be written by the ECS.
+
+---
+kind: Property
+name: datainfo
+version: 1
+dataty: datainfo
+description: |
+  Describes the type of the accessible's (or command argument/result's) value.
+
+---
+kind: Property
+name: constant
+version: 1
+dataty: parent  # same as the parameter with the property
+optional: true
+description: |
+  Indicates a constant value that will not be included in updates, and does
+  not change.
+
+---
+kind: Property
+name: system
+version: 2
+dataty: string
+description: |
+  Gives the defined system schema which this System belongs to.

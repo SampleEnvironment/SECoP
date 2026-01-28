@@ -1,0 +1,193 @@
+---
+kind: Datainfo
+name: double
+version: 1
+description: A floating point value.
+dataty: number
+dataprops:
+  min:
+    dataty: number
+    optional: true
+  max:
+    dataty: number
+    optional: true
+  unit:
+    dataty: string
+    optional: true
+  absolute_resolution:
+    dataty: number
+    optional: true
+  relative_resolution:
+    default: 1.2e-7
+    dataty: number
+    optional: true
+  fmtstr:
+    dataty: string
+    default: "%.6g"
+    optional: true
+
+---
+kind: Datainfo
+name: scaled
+version: 1
+description: A floating point transported as integer with defined scale.
+dataty: int
+dataprops:
+  min:
+    dataty: int
+  max:
+    dataty: int
+  scale:
+    dataty: number
+  unit:
+    dataty: string
+    optional: true
+  absolute_resolution:
+    dataty: number
+    optional: true
+  relative_resolution:
+    default: 1.2e-7
+    dataty: number
+    optional: true
+  fmtstr:
+    dataty: string
+    default: "%.6g"
+    optional: true
+
+---
+kind: Datainfo
+name: int
+version: 1
+description: An integral value.
+dataty: int
+dataprops:
+  min:
+    dataty: int
+  max:
+    dataty: int
+  unit:
+    dataty: string
+    optional: true
+
+---
+kind: Datainfo
+name: bool
+version: 1
+description: A boolean value.
+dataty: bool
+dataprops: {}
+
+---
+kind: Datainfo
+name: enum
+version: 1
+description: Collection of predefined values mapped to integers.
+dataty: int
+dataprops:
+  members:
+    dataty:
+      type: struct
+      members: int
+
+---
+kind: Datainfo
+name: string
+version: 1
+description: A string.
+dataty: string
+dataprops:
+  minchars:
+    optional: true
+    dataty: int
+  maxchars:
+    optional: true
+    dataty: int
+  isUTF8:
+    optional: true
+    dataty: bool
+
+---
+kind: Datainfo
+name: blob
+version: 1
+description: Base64 encoded string for binary types.
+dataty: string
+dataprops:
+  maxbytes:
+    dataty: int
+  minbytes:
+    dataty: int
+    default: 0
+    optional: true
+
+---
+kind: Datainfo
+name: array
+version: 1
+description: Multiple values of the same type.
+dataty: array
+dataprops:
+  members:
+    dataty: datainfo
+  maxlen:
+    dataty: int
+  minlen:
+    default: 0
+    dataty: int
+    optional: true
+
+---
+kind: Datainfo
+name: tuple
+version: 1
+description: Finite sequence of variously typed items.
+dataty: array
+dataprops:
+  members:
+    dataty:
+      type: array
+      members: datainfo
+
+---
+kind: Datainfo
+name: struct
+version: 1
+description: Mixed type collection of named values.
+dataty: struct
+dataprops:
+  members:
+    dataty:
+      type: struct
+      members: datainfo
+  optional:
+    dataty:
+      type: array
+      members: string
+    optional: true
+
+---
+kind: Datainfo
+name: matrix
+version: 2
+description: Binary n-dimensional arrays.
+dataty:
+  type: struct
+  members:
+    len:
+      type: array
+      members: int
+    blob: string
+dataprops:
+  names:
+    dataty:
+      type: array
+      members: string
+  maxlen:
+    dataty:
+      type: array
+      members: int
+  elementtype:
+    dataty: string
+  compression:
+    dataty: string
+    optional: true

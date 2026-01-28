@@ -1,0 +1,18 @@
+---
+kind: Interface
+name: Readable
+version: 1
+description: |
+  Base class for things that can be read, like Sensors.
+parameters:
+  - value:
+      # Refer to the element above to get the definition of this parameter.
+      definition: value:1
+      # A more specific description can be given in addition to the one already
+      # provided in the "target" element above.
+      description: |
+        The main value of the module.
+  - status:
+      definition: status:1
+      description: |
+        Current status of the module.
