@@ -1,0 +1,91 @@
+---
+kind: Repository
+name: "SECoP 1.1"
+version: 1
+link: https://github.com/SampleEnvironment/SECoP/blob/master/protocol/SECoP_Specification_V1.1.rst
+description: |
+  SECoP version 1.1
+
+files:
+  - commands.yaml
+  - communicator.yaml
+  - datatypes.yaml
+  - drivable.yaml
+  - features.yaml
+  - parameters.yaml
+  - properties.yaml
+  - readable.yaml
+  - writable.yaml
+
+systems: []
+interfaces:
+  - Readable:1
+  - Writable:1
+  - Drivable:1
+  - Communicator:1
+features:
+  - HasOffset:1
+parameters:
+  - pollinterval:1
+  - value:1
+  - status:1
+  - target:1
+  - mode:1
+  - offset:1
+  - target_limits:1
+  - ramp:1
+  - setpoint:1
+  - time_to_target:1
+  - controlled_by:1
+  - control_active:1
+postfixes: []
+commands:
+  - go:1
+  - stop:1
+  - hold:1
+  - shutdown:1
+  - reset:1
+  - clear_errors:1
+  - control_off:1
+
+properties:
+  SECNode:
+    - description:1
+    - equipment_id:1
+    - firmware:1
+    - implementor:1
+    - timeout:1
+  System: []
+  Module:
+    - description:1
+    - implementor:1
+    - implementation:1
+    - interface_classes:1
+    - features:1
+    - visibility:1
+    - group:1
+    - meaning:1
+  Parameter:
+    - datainfo:1
+    - description:1
+    - visibility:1
+    - group:1
+    - constant:1
+    - readonly:1
+  Command:
+    - datainfo:1
+    - description:1
+    - visibility:1
+    - group:1
+
+datainfo:
+  - double:1
+  - int:1
+  - scaled:1
+  - bool:1
+  - enum:1
+  - string:1
+  - blob:1
+  - array:1
+  - tuple:1
+  - struct:1

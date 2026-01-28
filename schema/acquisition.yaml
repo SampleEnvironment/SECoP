@@ -1,0 +1,116 @@
+---
+kind: Property
+name: acquisition_channels
+version: 2
+dataty: struct
+description: |
+  Specifies the channels belonging to an AcquisitionController.
+
+---
+kind: Command
+name: prepare
+version: 2
+optional: true
+argument: none
+result: none
+description: |
+  Prepare data acquisition so that "go" is immediate.
+
+---
+kind: Parameter
+name: goal
+version: 2
+optional: true
+readonly: false
+datainfo: parent
+description: |
+  Goal value to reach for stopping data acquisition.
+
+---
+kind: Parameter
+name: roi
+version: 2
+optional: true
+readonly: false
+datainfo:
+  type: array
+  members:
+    type: tuple
+    members:
+      - int
+      - int
+description: |
+  Enables checking the "goal" parameter.
+
+---
+kind: Command
+name: get_data
+version: 2
+optional: true
+argument: none
+result: matrix
+description: |
+  Get the full data from a matrix type channel.
+
+---
+kind: Interface
+name: AcquisitionController
+version: 2
+description: |
+    A base SECoP interface class for modules that control a data acquisition
+    process.
+parameters:
+  - status:1
+commands:
+  - prepare:2
+  - go:
+      definition: go:1
+      optional: false
+      description: Start the data acquisition.
+  - hold:
+      definition: hold:1
+      description: Pause the data acquisition.
+  - stop:
+      definition: stop:1
+      description: Stop the data acquisition.
+properties:
+  - acquisition_channels:2
+
+---
+kind: Interface
+name: AcquisitionChannel
+version: 2
+base: Readable:1
+description: |
+    A base SECoP interface class for a single channel of a multi-channel data
+    acquisition process.
+parameters:
+  - goal:2
+  - roi:2
+commands:
+  - get_data:2
+
+---
+kind: Interface
+name: Acquisition
+version: 2
+base: Readable:1
+description: |
+    A combined AcquisitionController and AcquisitionChannel for a single-channel
+    data acquisition process.
+parameters:
+  - goal:2
+  - roi:2
+commands:
+  - prepare:2
+  - go:
+      definition: go:1
+      optional: false
+      description: Start the data acquisition.
+  - hold:
+      definition: hold:1
+      description: Pause the data acquisition.
+  - stop:
+      definition: stop:1
+      description: Stop the data acquisition.
+  - get_data:2

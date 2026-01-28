@@ -1,0 +1,113 @@
+---
+kind: Repository
+name: "SECoP 2.0"
+version: 1
+# TODO: update to persistent link
+link: https://github.com/SampleEnvironment/SECoP/blob/master/protocol/specification
+description: |
+  SECoP version 2.0
+
+files:
+  - acquisition.yaml
+  - commands.yaml
+  - communicator.yaml
+  - datatypes.yaml
+  - drivable.yaml
+  - features.yaml
+  - parameters.yaml
+  - postfixes.yaml
+  - properties.yaml
+  - readable.yaml
+  - writable.yaml
+
+systems: []
+interfaces:
+  - Readable:1
+  - Writable:1
+  - Drivable:1
+  - Communicator:1
+  - AcquisitionController:2
+  - AcquisitionChannel:2
+  - Acquisition:2
+features:
+  - HasOffset:1
+parameters:
+  - pollinterval:1
+  - value:1
+  - status:1
+  - target:1
+  - mode:1
+  - offset:1
+  - ramp:1
+  - setpoint:1
+  - time_to_target:1
+  - controlled_by:1
+  - control_active:1
+postfixes:
+  - _limits:2
+  - _min:2
+  - _max:2
+  - _enable:2
+commands:
+  - go:1
+  - stop:1
+  - hold:1
+  - shutdown:1
+  - reset:1
+  - clear_errors:1
+  - control_off:1
+
+properties:
+  SECNode:
+    # implicit: modules, systems
+    - description:1
+    - equipment_id:1
+    - firmware:1
+    - implementor:1
+    - timeout:1
+    # todo: schemata
+  System:
+    # implicit: modules
+    - description:1
+    - system:2
+  Module:
+    # implicit: accessibles
+    - description:1
+    - implementor:1
+    - implementation:1
+    - interface_classes:1
+    - features:1
+    - visibility:1
+    - visibility:2
+    - group:1
+    - meaning:1
+    - meaning:2
+  Parameter:
+    - datainfo:1
+    - description:1
+    - visibility:1
+    - visibility:2
+    - group:1
+    - constant:1
+    - readonly:1
+    - meaning:2
+  Command:
+    - datainfo:1
+    - description:1
+    - visibility:1
+    - visibility:2
+    - group:1
+    - meaning:2
+
+datainfo:
+  - double:1
+  - int:1
+  - scaled:1
+  - bool:1
+  - enum:1
+  - string:1
+  - blob:1
+  - array:1
+  - tuple:1
+  - struct:1
+  - matrix:2
