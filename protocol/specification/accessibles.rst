@@ -1,3 +1,5 @@
+.. _accessibles:
+
 Parameters and commands
 =======================
 
