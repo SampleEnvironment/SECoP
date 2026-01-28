@@ -121,6 +121,11 @@ Optional SEC node properties
     well below this value, i.e. this is a reply-timeout.  Default: 10 sec,
     *see* :issue:`004 The Timeout SEC Node Property`.
 
+.. node-property:: schemata
+
+    A list of URLs of :ref:`YAML repositories <schemata>` describing the
+    structure and semantics of the node, see :ref:`schema-links`.
+
 
 .. _module-description:
 

@@ -1,43 +1,33 @@
-- Feature: Schema Definitions and Repository
-- Status: Open
-- Submit Date: 2024-06-18
-- Authors: Alexander Zaft <a.zaft@fz-juelich.de>, Enrico Faulhaber
-  <enrico.faulhaber@frm2.tum.de>, Georg Brandl <g.brandl@fz-juelich.de>
-- Type: Meta/Protocol
-- PR:
-- Version: 2.0
+.. _schemata:
 
-Summary
-=======
+Schema definitions for SECoP interfaces and semantics
+=====================================================
 
-This RFC proposes a possibility to define the structure and meaning of SECoP
-protocol entities at different levels, in a form that is both human readable and
-machine processable.
+See also :ref:`rfc-102` and :ref:`rfc-103`.
 
-A central repository is also proposed describing the entities defined by the
-SECoP specification, providing this information to implementors.
+The SECoP data model described in this specification is comprised of many
+different kinds of entities, such as modules, parameters and properties.
 
-Additional entities that are not yet in the specification, or too specialized to
-be added to it, can be defined in the same way.
+Each of the pre-defined entitites specifies certain semantics -- for example,
+what does the interface class `Readable` mean and which are its required and
+optional parameters and commands.
 
+The goal of this part of the specification is to formalize these definitions in
+a more machine-processable form, while not losing human readability and too much
+flexibility.  This in turn enables automatic validation and checking of a SECoP
+node's interface against the specification.
 
-Goal
-====
+The entities described are:
 
-Many entities of the SECoP data model are defined in the specification. The goal
-of this proposal is to formalize these definitions in a more machine-processable
-form, while not losing human readability and too much flexibility.
-
-These entities are:
-
-- Interface classes and features
-- Parameters, parameter postfixes, commands and properties
-- Data types
-- Systems (see RFC-104)
+- :ref:`systems`
+- :ref:`interface-classes` and :ref:`features`
+- :ref:`Parameters, parameter postfixes, commands <accessibles>`
+- :ref:`Properties <descriptive-data>`
+- :ref:`data-types`
 
 The definitions for standard entities should be accessible in a central
-repository.  SECNodes should link to their respective specifications in order to
-enable three things:
+repository.  SEC nodes should link to their respective specifications in order
+to enable three things:
 
 - The implementors of clients can get a description of the functionality of
   these interface classes.
@@ -45,12 +35,14 @@ enable three things:
 - The structure of the SECNode can be verified to follow the interface.
 
 
-Technical explanation
-=====================
+YAML definitions
+----------------
 
-Definitions are given in the YAML format, in a form similar to object
-descriptions in Kubernetes. Multiple definitions can be placed in the same file,
-using the "document separator"s of YAML.
+Definitions are given in the YAML format, in a form similar to `object
+descriptions in Kubernetes
+<https://kubernetes.io/docs/concepts/overview/working-with-objects/>`_.
+Multiple definitions can be placed in the same file, using the "document
+separator"s of YAML.
 
 Each entity has a few common fields:
 
@@ -61,7 +53,7 @@ Each entity has a few common fields:
 ``name``
   The entity's unique name.
 ``version``
-  The version of the definition, as a simple integer.
+  The revision of this definition, as a simple integer.
 ``link``
   A URL linking to the description of the entity.  Optional.
 ``description``
@@ -164,6 +156,9 @@ SECoP extensions".
   A dictionary of subsystem names and their definitions, analogous to
   ``modules``.
 
+Entity versions
+^^^^^^^^^^^^^^^
+
 When a new entity is proposed, the ``version`` starts at 0.  A version of 0
 does not give a stability guarantee, unlike versions larger than 0.  If an
 entity is accepted and introduced into the specification, the version is
@@ -172,7 +167,7 @@ Changes to the interface afterwards require a major specification version
 bump and also bump the entity's version number.
 
 Example
--------
+^^^^^^^
 
 As an example, a YAML description for some standard entities would look like
 this:
@@ -243,7 +238,7 @@ this:
       - offset:1
 
 Example for a complete system that describes a simple power supply inspired by
-issue 78:
+:issue:`078 Interacting Modules - use case power supply`:
 
 .. code:: yaml
 
@@ -317,7 +312,7 @@ issue 78:
 
 
 References
-----------
+^^^^^^^^^^
 
 A reference to another entity is one of two things:
 
@@ -332,7 +327,7 @@ A reference to another entity is one of two things:
 
 
 Datainfo
---------
+^^^^^^^^
 
 ``datainfo`` entries are either strings (the name of the datainfo entity) or
 dictionaries with a key ``type`` (the name of the datainfo entity) and all
@@ -342,7 +337,7 @@ dataprops of the respective datainfo.
 
 
 JSON type
----------
+^^^^^^^^^
 
 In ``dataty`` entries, you can specify the JSON type:
 
@@ -379,36 +374,36 @@ Special cases:
 - Same type as the parent accessible: ``dataty: parent``
 
 
-Examples
-========
+.. _schema-links:
 
-Current state of the YAML files for SECoP core are maintained as part of the
-"secop-checker", which is a library that allows verification of descriptive data
-against the declared set of YAML specs.
+Linking to schemata
+-------------------
 
-https://forge.frm2.tum.de/review/plugins/gitiles/secop/check
+A schema URL is of the format: ``https://.../file.yaml``, referencing a YAML
+file written according to this chapter.
 
-This is supposed to be moved to the main SECoP GitHub presence once agreed.
+In the SEC node descriptive data, the optional property `schemata` is a list of
+schema URLs.  All given URLs should be parsed by interested consumers (such as
+clients or validators).  The entities specified in all ``Repository``\s they
+contain are merged into the set of entities against which an automatic
+validation is run.
 
-
-Disadvantages, Alternatives
-===========================
-
-Disadvantages
--------------
-
-The definition files must have a stable URL. URLs to a GitHub repository
-should fulfill this condition, but one could think about a more generic
-"stable URL" registry such as DOI if wanted.
-
-Alternatives
-------------
-
-None at the moment.
+This means that once `schemata` is present, all needed Repositorys needed to
+validate all systems, modules, parameters etc. should be linked there.
 
 
-Open Questions
-==============
+Available repositories
+----------------------
 
-If there are points that you know have to be discussed/solved, describe them
-here, maybe with an example.
+The core SECoP repositories for the different specification versions
+are maintained in the SECoP repository at
+
+https://github.com/SampleEnvironment/SECoP/tree/master/schema
+
+To specify a certain SECoP version for a node, at least one of these URLs must
+be present:
+
+- https://raw.githubusercontent.com/SampleEnvironment/SECoP/refs/heads/master/schema/version-1.0.yaml
+- https://raw.githubusercontent.com/SampleEnvironment/SECoP/refs/heads/master/schema/version-1.1.yaml
+- https://raw.githubusercontent.com/SampleEnvironment/SECoP/refs/heads/master/schema/version-2.0.yaml
+- or upcoming later versions

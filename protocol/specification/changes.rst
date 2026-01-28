@@ -40,10 +40,11 @@ loss of functionality.
 
 .. rubric:: Backwards compatible changes
 
-.. TODO machine readable, systems
-
 - The specification text has been generally restructured and edited to improve
   clarity and presentation.
+
+- Machine readable definition of specification entities has been specified
+  (:ref:`rfc-102` and :ref:`rfc-103`).
 
 - The optional `check`/`checked` messages have been added, as well as the
   `checkable` accessible property (:issue:`075 New messages check and checked`).
