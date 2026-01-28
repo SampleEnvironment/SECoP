@@ -1,0 +1,68 @@
+---
+kind: Property
+name: quantity
+version: 1
+dataty: string
+optional: true
+description: |
+  A hint of the physical quantity represented by this parameter.
+
+---
+kind: System
+name: PowerSupply
+version: 1
+description: |
+  A power supply consisting of current and voltage regulation modules.
+  The active module can be switched with the parameter `control_active`.
+modules:
+  current:
+    definition: Drivable:1
+    description: Controls the current.
+    properties:
+      # This property has a general definition, but here the description
+      # defines a required value.
+      - quantity:
+          definition: quantity:1
+          description: Must be set to "current".
+          value: "current"
+    parameters:
+      # This parameter is already defined by Drivable, but the required
+      # datainfo is made more concrete by this definition.
+      - value:
+          datainfo:
+            type: double
+            unit: A
+      # This parameter is completely specific to this module.
+      - voltage_limit:
+          description: |
+            Compliance voltage applied when supply is in current mode.
+          datainfo:
+            type: double
+            unit: V
+          optional: true
+      - power_limit:
+          description: |
+            Power limit applied when supply is in current mode.
+          datainfo:
+            type: double
+            unit: W
+          optional: true
+      - control_active:
+          definition: control_active:1
+          description: |
+            If true, power supply is in current mode.
+            Setting `voltage:control_active` resets this to false.
+  # similar for power, voltage
+  resistance:
+    definition: Readable:1
+    description: Readback for the measured resistance.
+    optional: true
+    parameters:
+      - value:
+          datainfo:
+            type: number
+            unit: Ohm
+    properties:
+      - quantity:
+          definition: quantity:1
+          value: "resistance"

@@ -27,6 +27,9 @@ interface for interacting with the hardware.
 Modules usually have one or more **Base classes** assigned that indicate their
 basic functionality, split into **Interface classes** and **Features**.
 
+Several modules with a tightly coupled functionality can be grouped into
+**Systems**.
+
 .. glossary::
 
     Module
@@ -59,6 +62,14 @@ basic functionality, split into **Interface classes** and **Features**.
         functionality that are supported by a module, however it is not bound to a
         specific hierarchy and can be added to any module regardless of interface
         class.
+
+    System
+        A grouping of modules that interact with predefined semantics and are
+        tightly coupled to a particular piece of collection of hardware, for
+        example a power supply or cryomagnet.
+
+        A System, its modules and their API are usually defined in a `YAML
+        schema <schemata>` to facilitate interpretation and automatic checking.
 
 Each of these modules can have static values which are known at startup and
 dynamic values.  These are called **Properties** and **Parameters**

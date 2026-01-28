@@ -1,0 +1,12 @@
+kind: Interface
+name: Communicator
+version: 1
+description: |
+  A base SECoP interface class for modules who communicate directly with
+  the hardware.
+commands:
+  - communicate:
+      argument: string
+      result: string
+      description: |
+        Communicate with the hardware directly.
