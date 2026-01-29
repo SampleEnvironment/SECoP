@@ -1,0 +1,48 @@
+meeting 2025-05-07 (ZOOM)
+@@@@@@@@@@@@@@@@@@@@@@@@@
+
+.. sidebar:: participants
+
+     * Markus Zolliker
+     * Alexander Zaft
+     * Georg Brandl
+     * Niklas Ekström
+
+.. contents:: Agenda
+    :local:
+    :depth: 3
+
+
+1) approval of the minutes 2025-11-07
+=====================================
+
+They were not sent around, they are available here:
+https://github.com/SampleEnvironment/SECoP/pull/40.
+
+Will be approved next time
+
+Spec change for YAML (RFC 2/3) and Systems (RFC 4)
+==================================================
+
+no updates
+
+Status of clarification of issues for 2.0
+==========================================
+
+no updates
+
+Status of converting old style issues to RFCs
+==========================================
+
+The ones already done can be merged, the rest will be done in time.
+
+Minor point: get rid of capitalized MUST, SHOULD in the spec?
+=============================================================
+
+None of the participants would have something against it, but this needs to be
+discussed again when more can attend.
+
+7) Date of next video meeting
+=============================
+
+As we are only four today, Georg will set up a Nuudel poll.
