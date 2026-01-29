@@ -57,6 +57,10 @@ loss of functionality.
 
 - Optional SECoP transport over WebSockets has been specified (:ref:`rfc-107`).
 
+- Predefined parameter postfixes have been specified to allow enabling/disabling
+  parameters and specifying dynamic limits (:issue:`077 predefined parameter name prefixes`). 
+  The previously explicitly defined `target_limits` parameter follows this `_limits` postfix pattern. 
+
 
 Version 1.1
 -----------
