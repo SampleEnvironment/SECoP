@@ -399,7 +399,7 @@ or by a single ``<parameter_name>_limits`` parameter.
 
 .. parameter:: <parameter_name>_enable
 
-    An Enum ``{0: "OFF", 1: "ON"}``, allowing to enable or disable the effect of ``<parameter_name>`` where applicable.
+    A boolean, allowing to enable or disable the effect of ``<parameter_name>`` where applicable.
 
 .. dropdown:: Related issues
 
