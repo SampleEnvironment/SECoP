@@ -403,7 +403,7 @@ or by a single ``<parameter_name>_limits`` parameter.
 
 .. dropdown:: Related issues
 
-    | :issue:`0073 HasLimits and HasOffset` 
+    | :issue:`073 HasLimits and HasOffset` 
     | :issue:`077 predefined parameter name prefixes` 
 
 
