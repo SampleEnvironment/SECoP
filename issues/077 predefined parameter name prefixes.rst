@@ -33,8 +33,8 @@ prefixed parameters which are used instead of changeable parameter properties.
 
 :note: In the below listing, ``<paramname>`` is a placeholder for the name of the relevant parameter.
 
-``use_<paramname>``
-  an Enum (1:On, 0:Off), allowing to enable or disable the effect of
+``<paramname>_enable``
+  an Enum (0:Off, 1:On), allowing to enable or disable the effect of
   ``<paramname>`` where applicable.
 
 ``limit_<paramname>``
@@ -67,7 +67,14 @@ Possible candidates:
 * keep 'target_limits' (with 's' at end in contrast to '_limit')
 * 'target_max' / 'target_min' in case of single limits
 
-No decision on the actual values yet.
+Decisions made in 2023-02-14_vidconf:
+
+* postfix notation is preferred
+* '_enable' is used instead of '_use'/'_used'/'_enabled' to en-/disable functionalities
+* '_limits' is removed in favor of '_min' and '_max'
+
+Note: In 2023-09-26_vidconf it was suggested that '_on' might be superior to '_enable',
+but no formal decision was recorded. The current specification uses '_enable'.
 
 In 2023-09-26_vidconf it was proposed to include ``<paramname>_check`` as a registed postfix
 for checking the validity of parameter ``<paramname>``.
