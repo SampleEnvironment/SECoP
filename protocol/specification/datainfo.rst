@@ -431,6 +431,17 @@ value.
     {"type": "struct", "members": {"y": {"type": "double"},
                                    "x": {"type": "enum", "members": {"On": 1, "Off": 0}}}}
 
+With optional elements:
+
+.. code:: json
+
+    {"type": "struct",
+     "members": {"x": {"type": "double"}, "y": {"type": "double"}, "t": {"type": "double"}}},
+     "optional": ["t"]}
+
+Here, the ``t`` value does not have to be transmitted by the client and defaults
+to its current value (as makes sense for the respective parameter or command).
+
 .. rubric:: Transport
 
 As a JSON object.
