@@ -1,0 +1,119 @@
+meeting 2026-01-29 (ZOOM)
+@@@@@@@@@@@@@@@@@@@@@@@@@
+
+.. sidebar:: participants
+
+     * Georg Brandl
+     * Peter Braun
+     * Niklas Ekström
+     * Klaus Kiefer
+     * Alexander Zaft
+     * Markus Zolliker
+
+.. contents:: Agenda
+    :local:
+    :depth: 3
+
+
+1) approval of the minutes 2025-12-02
+=====================================
+
+They were not sent around, they are available here:
+https://github.com/SampleEnvironment/SECoP/pull/47.
+
+Will be approved next time.
+
+
+2) In-person meeting for 10 year celebration - scheduling
+=========================================================
+
+There were only two responses to the terminplaner poll.
+
+Klaus proposes also extending it to later dates, so that we can also invite the
+extended community, e.g. ILL, ISIS and HZDR.
+
+April will likely be too late, it should be extended to May and June. A
+tentative date would be 08.06. and 09.06. since everyone present at the meeting
+would be available.
+
+Georg will send around an updated poll.
+
+3) ISSE board meeting preparation
+=================================
+
+The meetings will be sometime in February. The concrete dates are currently not
+known to the present attendees. There will be a one-hour slot for the SECoP
+committee. It's split between a presentation and some discussion.
+
+SECoP 2.0 should be presented, as well as the supplementary tools we made and
+the currently ongoing work. The presentation should be split between us, with a
+maximum of half an hour.
+
+Topics, presenters and timeframe for the presentation are discussed.
+
+Everyone should prepare slides, the division of the talk will be discussed once
+the slides are done. Due to shorness of time, everything should be in the
+slides, no demos etc.
+
+Final list of Topics:
+- SECoP version 2.0 (Georg)
+- Website+Spin (Alexander)
+- Frappy (Markus)
+- Octopy (Niklas is not available, will send a slide)
+- SHALL+SECoP-ophid+webclient (peter)
+- Operando4Nexus, outreach etc. (Klaus)
+
+Peter and Klaus will collect the slides. These should be ready around the 11th
+to have time to iterate.
+
+Klaus gives the proposed date and time of the ISSE meetings.
+12 February 2026
+13.00 - 14:00: Helium Stewardship
+14.00 - 15.00: Sample Environment Database
+
+16 February 2026
+13.00 - 14:00: Sample Environment Communication Protocol
+Optional: 14.00 – 15.00: Soft Matter Sample Environment Equipment
+
+Should the committe meeting not happen, we will have a meeting dedicated to the
+website content (especially the easy-access topic) at that time (16.02. 13:00).
+
+4) Changes to finalize 2.0 spec
+===============================
+
+Feedback for `PR 44 <https://github.com/SampleEnvironment/SECoP/pull/44/>`_ is
+needed to proceed. Everyone should have a look at it.
+
+There is currently no system defined.
+
+Klaus and Peter discuss converting the temperature controller or power supply
+to the new system format.
+
+The question about the locaion of the yaml schemata is not yet finally decided.
+Currently they are in PR 44 and in the secop-check repo.
+
+5) AoB
+======
+
+PIDs for setups/nodes
+---------------------
+
+Peter and Klaus had a discussion about assigning PIDs to equipment within
+ROCK-IT. The option to cite a setup (tag from git repo for the configuration
+and code for example) seems useful, there currently is no "node meaning" due to
+proxying concerns. We have to consider how to support this, whether a node
+property is enough or not.
+
+PR 43
+-----
+
+PR 44 has a boolean for `_enabled` in the schema, 43 still has an enum with
+On/Off as values. Everyone agrees to use a boolean.
+
+An entry in the changelog would be good to have, Peter will add it into PR 43
+or into another change.
+
+6) Date of next video meeting
+=============================
+
+06.03.2026 09:00
