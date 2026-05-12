@@ -4,6 +4,13 @@
 .. message:: [request] *IDN?
              [reply] ISSE,SECoP,<draft-date>,<version>
 
+    This message requests an identification response from the SEC node which
+    allows determining if a communication partner speaks SECoP, and which
+    version of the protocol.
+
+    In addition, the identification message sets the connection to a fresh
+    state, e.g. all updates are deactivated.
+
     The syntax of the identification message differs from other messages, as it
     is meant to be compatible with IEEE 488.2.  The identification request
     ``*IDN?`` is meant to be sent as the first message after establishing a
