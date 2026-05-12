@@ -190,22 +190,4 @@ and/or module properties to be present.  However, it is not only a list of
 mandatory or optional elements, but also indicates to the ECS that it may handle
 this functionality in a specific way.
 
-.. feature:: HasOffset
-
-    This feature indicates that the `value` and `target` parameters of a
-    module represent raw values, which need to be corrected by an offset.  A
-    module with the feature `HasOffset` must have a parameter `offset`,
-    which indicates to all clients that the transmitted raw values for the
-    parameters `value` and `target` are to be converted to corrected values
-    (on the client side) by the following formulas:
-
-    For reading the parameters `value` and `target`:
-
-    | corrected value (client) = value (transmitted) + offset
-    | corrected target (client) = target (transmitted) + offset
-
-    For changing the parameter `target`:
-
-    | target (transmitted) = corrected target (client) - offset
-
-    Mandatory parameter: `offset`
+Currently no features are specified yet.
