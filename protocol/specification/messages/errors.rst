@@ -149,3 +149,29 @@ node, the module or the connected hardware.
 
 .. note:: This list may be extended, if needed.  Clients should treat unknown
           error classes as generic errors.
+
+
+``error_closed`` for "Description Changed"
+------------------------------------------
+
+.. message:: [reply] error_closed
+
+    If the SECoP communication is performed over a serial line, this message is
+    needed to tell a client that the node description has changed.
+
+    In asynchronous mode (activated state), this message is sent immediately,
+    and additionally as a reply on all messages until the connection is reset by
+    an identification message (``*IDN?``).
+
+    If the connection can be closed by the SEC node like for a TCP/IP
+    connection, it should be closed instead.  Sending ``error_closed`` is not
+    needed.
+
+    Example::
+
+        > read t1:value
+        < error_closed
+        > *IDN?
+        < ISSE&SINE2020,SECoP,V2019-09-16,v1.0
+        > read t1:value
+        < reply t1:value [295.13,{"t":1505396348.188}]
