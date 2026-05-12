@@ -410,26 +410,24 @@ or by a single ``<parameter_name>_limits`` parameter.
 Offset
 ~~~~~~
 
-.. _offset:
+.. parameter:: offset
 
-Parameter ``"offset"``:
+    If this parameter is present it indicates the difference between a raw value
+    and the main value of a SECoP module. If this parameter is not readonly,
+    it allows to adjust the parameter ``value`` and possibly other parameters
+    related to it, like ``target``.
 
-If this parameter is present it indicates the difference between a raw value
-and the main value of a SECoP module. If this parameter is not readonly,
-it allows to adjust the parameter ``value`` and possibly other parameters
-related to it, like ``target``.
+    Definition:
 
-Definition:
-
-| ``offset`` = ``value`` - raw value
+    | ``offset`` = ``value`` - raw value
 
 
-When a SEC node receives a ``change`` message for an ``offset``,
-``value`` must be updated before the ``changed`` message is replied to the client.
+    When a SEC node receives a ``change`` message for an ``offset``,
+    ``value`` must be updated before the ``changed`` message is replied to the client.
 
-Whether other parameters like ``target_min``, ``target_max`` or ``target_limits``
-are also changed accordingly is implementation dependent. When they are changed,
-this also must happen before the ``changed`` message is sent back.
+    Whether other parameters like ``target_min``, ``target_max`` or ``target_limits``
+    are also changed accordingly is implementation dependent. When they are changed,
+    this also must happen before the ``changed`` message is sent back.
 
 
 Communication
