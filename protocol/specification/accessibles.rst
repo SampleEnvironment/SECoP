@@ -407,15 +407,28 @@ or by a single ``<parameter_name>_limits`` parameter.
     | :issue:`077 predefined parameter name prefixes` 
 
 
-Feature related parameters
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Offset
+~~~~~~
 
 .. _offset:
 
-.. parameter:: offset
+Parameter ``"offset"``:
 
-    A storage for an offset to be applied when converting SECoP values to ECS
-    values.  See feature `HasOffset`.
+    If this parameter is present it indicates the difference between a raw value
+    and the main value of a SECoP module. If this parameter is not readonly,
+    it allows to adjust the parameter ``value`` and possibly other parameters
+    related to it, like ``target``.
+
+    Definition:
+
+    | ``offset`` = ``value`` - raw value
+
+    When a SEC node receives a ``change`` message for an ``offset``,
+    ``value`` must be updated before the ``changed`` message is replied to the client.
+
+    Whether other parameters like ``target_min``, ``target_max`` or ``target_limits``
+    are also changed accordingly is implementation dependent. When they are changed,
+    this also must happen before the ``changed`` message is sent back.
 
 
 Communication
