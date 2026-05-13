@@ -1,0 +1,80 @@
+meeting 2026-05-12 (ZOOM)
+@@@@@@@@@@@@@@@@@@@@@@@@@
+
+.. sidebar:: participants
+
+     * Georg Brandl
+     * Alexander Zaft
+     * Markus Zolliker
+     * Klaus Kiefer
+     * Enrico Faulhaber
+     * Niklas Ekström
+     * Bastian Klemke
+
+.. contents:: Agenda
+    :local:
+    :depth: 3
+
+
+1) Approval of minutes
+======================
+
+Minutes of previous meeting accepted.
+
+
+2) In person meeting on June 22-23 - preparation
+================================================
+
+Markus wont be able to make it.
+Everybody else seems able to join.
+
+Klaus suggests a restaurant, the Creperie Potsdam, which is accepted.
+The meeting room will be a little smaller.
+Arrival on Monday should be before 13:00, because the canteen closes at 13:30.
+A hotel in Potsdam is recommended for easiest shuttle transfer.
+The program of the second day is planned until 12:30.
+Georg will circulate the program, once its compiled.
+
+Important: Klaus will need the list of attendees until end of May.
+
+
+3) SECoP 2.0 outstanding issues
+===============================
+
+Georg presents the current state of the issues on github.
+As it would be favourable to merge the issues before the next meeting, please,
+everybody has a look on especially the systems-issues (RFCs 102, 103, 104).
+
+Markus dislikes the HasOffset feature in its current form.
+He understands SECoP values as abstracted values to be used as is and not to be corrected
+after transmission via SECoP.
+Enno also likes the correct values to be transferred and ponders if it is actually
+useful to have a ECS-changeable offset.
+Markus points out, that several SE equipment SEC-nodes at PSI include a rotational stage,
+whose offset is expected to be changeable by the ECS.
+Klaus points out, that using the corrected value in SEcP messages seems a good idea,
+but it should be stated how the limits need to be transformed then.
+As there seems to be no solution at hand, Markus proposes to keep the feature as a draft until
+a finally accepted solution is obtained. Nobody objects.
+Markus proposes to use the same convention for the sign of the offset like in nicos.
+
+
+4) ISSE board meeting todos
+===========================
+
+24(th) and 25(th) of June.
+Georg and Klaus discuss the agenda points relevant to the SECoP session on the 24(th).
+Klaus explains the concept behind the Sample Environment (Equipment) database
+for the session on the 25(th).
+
+
+5) AoB
+======
+
+Klaus proposes the have a short sync 2 weeks before the in-persona meeting.
+
+
+6) next meeting
+===============
+
+22(nd) and 23(rd) of June in persona @HZB
