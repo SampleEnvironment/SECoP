@@ -419,11 +419,12 @@ Offset
 
     Definition:
 
-    | ``offset`` = ``value`` - raw value
+    | ``offset`` = raw value - ``value``
 
 
-    When a SEC node receives a ``change`` message for an ``offset``,
-    ``value`` must be updated before the ``changed`` message is replied to the client.
+    When a SEC node receives a ``change`` message for an ``offset``, an activated
+    client must receive the ``update`` message for the ``value`` before the 
+   ``changed`` message is replied to the client.
 
     Whether other parameters like ``target_min``, ``target_max`` or ``target_limits``
     are also changed accordingly is implementation dependent. When they are changed,
