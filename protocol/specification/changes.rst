@@ -32,11 +32,11 @@ loss of functionality.
   link to external definitions/ontologies.  `meaning` can now also be given for
   individual accessibles, and new "functions" have been added.
 
-.. TODO not yet in the text!
-
-    - All :ref:`Struct <struct>` members can now be made optional by specifying
-      ``"optional": true`` in the datainfo (:issue:`069 optional structs by
-      default`).
+- The `HasOffset` feature has been removed; instead, only the `offset` parameter
+  is now specified *with different semantics*: the node needs to take the offset
+  into account when processing `target` and `value`.  The client can inspect and
+  potentially change the offset, but does not need to apply `offset` to `target`
+  and `value` to get a corrected value.
 
 .. rubric:: Backwards compatible changes
 
