@@ -1,0 +1,41 @@
+---
+kind: System
+name: SuperconductingCoilPowerSupply
+version: 0
+base: CoilPowerSupply:0
+description: |
+  A superconducting coil power supply.  Derives from CoilPowerSupply and adds:
+
+  - A ``switch_heater`` Drivable module that controls the superconducting
+    short across the coil leads. 
+
+modules:
+  # -------------------------------------------------------------------------
+  # New module — not present in the base CoilPowerSupply.
+  # -------------------------------------------------------------------------
+  switch_heater:
+    definition: Drivable:1
+    description: |
+      Switch heater that controls the superconducting short (persistent
+      current switch) across the coil leads.
+
+      Energising the heater (ON) makes the switch resistive and forces current
+      through the external leads, allowing the power supply to ramp the field.
+      De-energising (OFF) makes the switch superconducting, trapping the
+      current in the coil and allowing the leads to be ramped to zero.
+    optional: false
+    parameters:
+      - value:
+          definition: value:1
+          datainfo:
+            type: enum
+            members:
+              OFF: 0
+              ON: 1
+      - target:
+          definition: target:1
+          datainfo:
+            type: enum
+            members:
+              OFF: 0
+              ON: 1

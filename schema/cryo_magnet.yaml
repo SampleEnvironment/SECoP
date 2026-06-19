@@ -1,0 +1,28 @@
+---
+kind: System
+name: CryoMagnet
+version: 0
+description: |
+  A cryomagnet combining a coil power supply with a temperature-controlled
+  cryogenic environment.
+
+  The two subsystems are composed following RFC-104 (Systems as Collections
+  of Modules): ``coil`` provides the magnetic field control, and ``cryo``
+  provides the temperature regulation and readout.
+
+  More capable variants (e.g. with a liquid helium cryostat) can derive from
+  this system and substitute a more specific subsystem definition, such as
+  replacing ``coil: CoilPowerSupply:0`` with
+  ``coil: SuperconductingCoilPowerSupply:0``.
+
+systems:
+  coil:
+    definition: CoilPowerSupply:0
+    description: |
+      The coil power supply subsystem, providing magnetic field control.
+
+  cryo:
+    definition: TemperatureEnvironment:0
+    description: |
+      The cryogenic cooling environment, providing temperature regulation
+      and sample temperature readout.
