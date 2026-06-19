@@ -1,0 +1,51 @@
+---
+kind: System
+name: TemperatureEnvironment
+version: 0
+description: |
+  A minimal temperature-controlled sample environment.
+
+  Provides a temperature regulation module and a separate sample temperature
+  readout.  This is the user-level baseline; more capable systems (e.g. a
+  liquid helium cryostat) derive from this one and add further modules and
+  parameters at higher access levels.
+
+modules:
+  temperature_reg:
+    definition: Drivable:1
+    description: |
+      The primary temperature regulation module.
+    properties:
+      - meaning:
+          definition: meaning:2
+          value:
+            function: temperature_regulation
+    parameters:
+      - value:
+          definition: value:1
+          datainfo:
+            type: double
+            unit: K
+      - target:
+          definition: target:1
+          datainfo:
+            type: double
+            unit: K
+
+  temperature_sample:
+    definition: Readable:1
+    description: |
+      Sample temperature readout.  May differ from temperature_reg when the
+      sample is only weakly coupled to the regulation point (e.g. via exchange
+      gas in a cryostat sample space).
+    properties:
+      - meaning:
+          definition: meaning:2
+          value:
+            function: temperature
+    parameters:
+      - value:
+          definition: value:1
+          datainfo:
+            type: double
+            unit: K

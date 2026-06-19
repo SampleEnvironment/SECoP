@@ -1,0 +1,307 @@
+---
+kind: System
+name: LiquidHeliumCryostat
+version: 0
+base: TemperatureEnvironment:0
+description: |
+  A liquid helium cooled wet cryostat with variable temperature insert (VTI)
+  and needle valve.
+
+  Derives from TemperatureEnvironment and adds modules for heater power,
+  cryogen levels, VTI pressure, needle valve position, and additional
+  temperature sensors.
+
+  Access levels are encoded via the visibility property:
+    - user    (no restriction, "www"): the two inherited temperature modules
+    - advanced ("wr-" / "rr-"): additional monitoring and control modules,
+                                  visible to advanced and expert users
+    - expert  ("w--" / "r--"):  cascade-control parameters (controlled_by,
+                                  control_active, ctrlpars, etc.)
+
+modules:
+  # -------------------------------------------------------------------------
+  # Extension of the inherited temperature_reg module with advanced / expert
+  # parameters.  All standard Drivable parameters are already inherited.
+  # -------------------------------------------------------------------------
+  temperature_reg:
+    parameters:
+      - ramp:
+          definition: ramp:1
+          description: Temperature ramp rate in K/min.
+          properties:
+            - visibility:
+                definition: visibility:2
+                value: "w--"
+      - setpoint:
+          definition: setpoint:1
+          properties:
+            - visibility:
+                definition: visibility:2
+                value: "r--"
+      - time_to_target:
+          definition: time_to_target:1
+          properties:
+            - visibility:
+                definition: visibility:2
+                value: "r--"
+      - _ctrlpars:
+          description: |
+            PID regulation parameters together with the current heater range
+            value and needle valve pressure setpoint used by the control loop.
+            Readable by advanced users; writable by experts only.
+          datainfo:
+            type: struct
+            members:
+              p: double
+              i: double
+              d: double
+              _heaterrange_value: double
+              _nv_pressure: double
+          readonly: false
+          optional: true
+          properties:
+            - visibility:
+                definition: visibility:2
+                value: "wr-"
+      - control_active:
+          definition: control_active:1
+          description: |
+            True if temperature_reg is actively running its regulation loop.
+            Goes to False when power_reg or pressure_vti is driven directly.
+          properties:
+            - visibility:
+                definition: visibility:2
+                value: "r--"
+      - _automatic_nv_pressure_mode:
+          description: |
+            When enabled, the needle valve pressure setpoint from ctrlpars is
+            forwarded to pressure_vti automatically.  Disable to allow
+            pressure_vti to be set independently while temperature_reg still
+            controls the heater.
+          datainfo:
+            type: enum
+            members:
+              disabled: 0
+              enabled: 1
+          readonly: false
+          optional: true
+          properties:
+            - visibility:
+                definition: visibility:2
+                value: "w--"
+    commands:
+      - go:
+          definition: go:1
+          optional: true
+      - shutdown:
+          definition: shutdown:1
+          optional: true
+      - clear_errors:
+          definition: clear_errors:1
+          optional: true
+
+  # -------------------------------------------------------------------------
+  # Additional modules — all advanced level or above
+  # -------------------------------------------------------------------------
+
+  power_reg:
+    definition: Drivable:1
+    description: |
+      Heater power applied by the temperature regulation control loop.
+      Advanced users can monitor it; expert users can drive it directly to
+      bypass the temperature loop.
+    optional: false
+    properties:
+      - visibility:
+          definition: visibility:2
+          value: "wr-"
+    parameters:
+      - value:
+          definition: value:1
+          datainfo:
+            type: double
+            unit: W
+      - target:
+          definition: target:1
+          datainfo:
+            type: double
+            unit: W
+      - controlled_by:
+          definition: controlled_by:1
+          description: |
+            Which module is currently driving the heater output.
+          datainfo:
+            type: enum
+            members:
+              self: 0
+              temperature_reg: 1
+          properties:
+            - visibility:
+                definition: visibility:2
+                value: "r--"
+      - _heaterrange_enum:
+          description: |
+            Active heater range as an enumeration.  Exact members are
+            implementation-defined (device-specific heater range steps).
+            Changing this parameter also updates _heaterrange_value.
+          datainfo: enum
+          readonly: false
+          optional: true
+      - _heaterrange_value:
+          description: |
+            Active heater range as a numeric maximum output value.
+            Changing this parameter also updates _heaterrange_enum.
+          datainfo:
+            type: double
+            unit: W
+          readonly: false
+          optional: true
+    commands:
+      - go:
+          definition: go:1
+          optional: true
+      - shutdown:
+          definition: shutdown:1
+          optional: true
+      - clear_errors:
+          definition: clear_errors:1
+          optional: true
+
+  pressure_samplespace:
+    definition: Drivable:1
+    description: |
+      Pressure of the exchange gas in the sample space.  Advanced users can
+      monitor it; expert users can drive it if the cryostat is equipped with
+      an automatic valve.
+    optional: true
+    properties:
+      - visibility:
+          definition: visibility:2
+          value: "wr-"
+    parameters:
+      - value:
+          definition: value:1
+          datainfo:
+            type: double
+            unit: mbar
+      - target:
+          definition: target:1
+          datainfo:
+            type: double
+            unit: mbar
+
+  pressure_vti:
+    definition: Drivable:1
+    description: |
+      Pressure in the VTI.  Together with the pump speed this determines the
+      liquid helium boiling point and thus the base cooling power.  In normal
+      operation the setpoint is provided by temperature_reg via
+      ctrlpars._nv_pressure; expert users can set it directly.
+    optional: false
+    properties:
+      - visibility:
+          definition: visibility:2
+          value: "wr-"
+    parameters:
+      - value:
+          definition: value:1
+          datainfo:
+            type: double
+            unit: mbar
+      - target:
+          definition: target:1
+          datainfo:
+            type: double
+            unit: mbar
+      - controlled_by:
+          definition: controlled_by:1
+          description: |
+            Which module is currently providing the VTI pressure setpoint.
+          datainfo:
+            type: enum
+            members:
+              self: 0
+              temperature_reg: 1
+          properties:
+            - visibility:
+                definition: visibility:2
+                value: "r--"
+      - control_active:
+          definition: control_active:1
+          description: |
+            True if pressure_vti is actively controlling the needle valve
+            position.  Goes to False when position_nv is driven directly.
+          properties:
+            - visibility:
+                definition: visibility:2
+                value: "r--"
+
+  position_nv:
+    definition: Drivable:1
+    description: |
+      Opening position of the needle valve (NV).  Directly determines the
+      flow of liquid helium into the VTI and therefore the VTI pressure.  In
+      normal operation driven by pressure_vti; expert users can set it
+      directly.
+    optional: false
+    properties:
+      - visibility:
+          definition: visibility:2
+          value: "wr-"
+    parameters:
+      - value:
+          definition: value:1
+          datainfo:
+            type: double
+            unit: "%"
+      - target:
+          definition: target:1
+          datainfo:
+            type: double
+            unit: "%"
+      - controlled_by:
+          definition: controlled_by:1
+          description: |
+            Which module is currently providing the needle valve position
+            setpoint.
+          datainfo:
+            type: enum
+            members:
+              self: 0
+              pressure_vti: 1
+          properties:
+            - visibility:
+                definition: visibility:2
+                value: "r--"
+
+  heliumlevel:
+    definition: Readable:1
+    description: |
+      Liquid helium filling level of the cryostat.
+    optional: false
+    properties:
+      - visibility:
+          definition: visibility:2
+          value: "rr-"
+    parameters:
+      - value:
+          definition: value:1
+          datainfo:
+            type: double
+            unit: "%"
+
+  nitrogenlevel:
+    definition: Readable:1
+    description: |
+      Liquid nitrogen filling level of the cryostat.
+    optional: false
+    properties:
+      - visibility:
+          definition: visibility:2
+          value: "rr-"
+    parameters:
+      - value:
+          definition: value:1
+          datainfo:
+            type: double
+            unit: "%"
