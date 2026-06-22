@@ -48,6 +48,16 @@ description: |
 
 ---
 kind: Parameter
+name: offset
+version: 2
+datainfo: number
+readonly: false
+description: |
+  Offset parameter - if present, will be subtracted from the raw
+  value before returning it as the value parameter.
+
+---
+kind: Parameter
 name: mode
 version: 1
 datainfo: enum
