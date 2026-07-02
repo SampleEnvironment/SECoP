@@ -154,8 +154,8 @@ SECoP extensions".
 
 **For systems:**
 
-``base``
-  Reference to the base system this one is derived from.
+``bases``
+  References to the base systems this one is derived from.
 ``modules``
   A dictionary of module names and their definitions.  Each item is
   either a reference to an existing interface/feature definition or a
