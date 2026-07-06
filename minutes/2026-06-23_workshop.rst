@@ -1,0 +1,75 @@
+Minutes 23.06.2026
+@@@@@@@@@@@@@@@@@@
+
+.. sidebar:: participants
+
+     * Georg Brandl
+     * Peter Braun
+     * Niklas Ekström
+     * Enrico Faulhaber
+     * Klaus Kiefer
+     * Bastian Klemke
+     * Alexander Zaft
+     * Markus Zolliker
+
+1) Work session
+===============
+
+Re-checking some of the slides
+------------------------------
+
+Georg updated the slides in the evening, we go through them again.
+There are some minor comments.
+
+The question of when to publish 2.0 is raised.
+Georg mentions that the small changes to the yaml definition discussed yesterday will have to be included. Otherwise it's ready.
+
+SECoP could be released on Thursday, 25th of June 2026.
+
+Enno has concerns about the optionality in systems wrt a combinatorial explosion if too much is optional.
+Markus wants to know if there is already someone in the core group using it.
+Klaus says they are with their sample changer for example.
+
+Peter would like to include an option to have a list of modules in systems (0-infty).
+There are no objections to include a simple variant without max/min/further rules.
+
+Next time, we will have a discussion to try to go from the minimum to the point where we all agree what should be in a system to see and build the first v0 to put in the repo for first use and further discussion. (SampleChanger, cryo, powersupply).
+
+It should be stressed in the ISSE committee meeting that now is the time to contribute.
+
+Work on tutorials, outreach, structure of documentation
+-------------------------------------------------------
+
+Peter made a PR for including guides for handshake, coupled modules, check
+message, and meaning.
+
+The SECoP Octopy guide will be filled with a stub to contact Nicklas.
+Frappy guide needs the addition of the medium complexity example.
+
+There will be a small reordering with the implementation list and the "getting started section"
+
+AI MCP with SECoP?
+------------------
+
+Nicklas brings up the topic of MCP, an interface for LLMs to use some APIs.
+There is some general interest.
+
+We'll keep it in mind for Thursday if someone asks about AI integration.
+
+AoB
+---
+
+There will be a list of next projects.
+
+Klaus will ask Eddy for a slide about the ILL PLC implementation.
+
+A more fun discussion in the end is about visibility, stickers and "SECoP inside" logos.
+
+There could/should be a discussion+session at the ISSE meeting in September. Klaus will be there.
+
+Closing
+-------
+
+Georg thanks everyone for the lively and productive meeting.
+
+Thanks Klaus, Bastian and Peter for hosting!

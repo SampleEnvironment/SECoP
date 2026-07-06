@@ -1,0 +1,50 @@
+Minutes 22.06.2026
+@@@@@@@@@@@@@@@@@@
+
+.. sidebar:: participants
+
+     * Georg Brandl
+     * Peter Braun
+     * Niklas Ekström
+     * Enrico Faulhaber
+     * Klaus Kiefer
+     * Bastian Klemke
+     * Alexander Zaft
+     * Markus Zolliker
+
+
+1) Welcome
+==========
+
+Georg as chair and Klaus as host welcome everyone.
+
+
+2) ISSE talks - presentation of slides, discussion
+==================================================
+
+Peter, Niklas, Markus and Alexander will present their sections, the slides
+will be merged before.
+
+There are some notes for everyone.
+
+3) SECoP 2.0 - outstanding issues
+=================================
+
+RFC 102, 103 and 104 are discussed. There are no blockers.
+
+Systems - concrete ones, demostration
+-------------------------------------
+
+Peter showcases a cryostat system he made with Bastian.
+
+There is some discussion about the details and the method of how to construct
+the hierarchy.
+
+Open questions that are discussed:
+
+- Should there be multiple inheritance?
+- How to deal with missing Features in the system?
+- Base with a lot of optional parts and then restricted sublcasses or a
+  tree of incrementally adding capabilities?
+
+18:00 finish for the day
