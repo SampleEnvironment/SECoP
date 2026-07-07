@@ -79,7 +79,6 @@ properties:
     - visibility:1
     - visibility:2
     - group:1
-    - meaning:1
     - meaning:2
   Parameter:
     - datainfo:1
