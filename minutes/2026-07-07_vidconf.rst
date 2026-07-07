@@ -1,0 +1,70 @@
+meeting 2026-07-07 (ZOOM)
+@@@@@@@@@@@@@@@@@@@@@@@@@
+
+.. sidebar:: participants
+
+     * Georg Brandl
+     * Peter Braun
+     * Niklas Ekström
+     * Enrico Faulhaber
+     * Klaus Kiefer
+     * Bastian Klemke
+     * Alexander Zaft
+     * Markus Zolliker
+
+.. contents:: Agenda
+    :local:
+    :depth: 3
+
+
+1) Approval of minutes
+======================
+
+The minutes from the Berlin in-person meeting are on GitHub as a pull request
+(#53). Put any comments there and then they will be merged. (Conditionally
+approved)
+
+2) Feedback from ISSE Meetings
+==============================
+
+As of yet there was not much resonance after the ISSE Talks. Klaus had a small
+discussion in the context of another meeting.
+
+Extending the core group with other centres is discussed.
+
+Unrelated note: the need for a mailing list came up again.
+
+
+ISSE Conference September
+-------------------------
+
+Klaus mentions the need for a contribution for the ISSE Conference in
+September. Since only Klaus plans to go but also for him there may be
+scheduling difficulties, it will be difficult to have an in-person
+contribution.
+
+Georg would be happy to give a remote talk for 2.0 updates/"News on SECoP".
+
+3) Next Steps for 2.0
+=====================
+
+Checker
+-------
+
+Georg presents the newest state of the SECoP-checker.
+
+He extended for systems checking, the web version is now also more usable and
+nicer.
+
+Loading non-core definitions is still missing.
+
+
+4) AoB
+======
+
+-
+
+5) Next regular Meeting Date
+============================
+
+25th of August, 09:00
